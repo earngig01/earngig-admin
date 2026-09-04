@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Admin Dashboard | EarnGig</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f6fa;
+      color: #17182f;
+    }
+
+    header {
+      background: #0d1038;
+      color: white;
+    }
+
+    .nav {
+      max-width: 1250px;
+      margin: auto;
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo {
+      color: white;
+      text-decoration: none;
+      font-size: 25px;
+      font-weight: 700;
+    }
+
+    .logo span {
+      color: #7c5cff;
+    }
+
+    .admin-badge {
+      font-size: 13px;
+      color: #c9caff;
+      margin-left: auto;
+    }
+
+    .logout-btn {
+      border: 1px solid rgba(255,255,255,.3);
+      background: transparent;
+      color: white;
+      padding: 9px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    main {
+      max-width: 1250px;
+      margin: auto;
+      padding: 35px 20px 60px;
+    }
+
+    .welcome {
+      margin-bottom: 30px;
+    }
+
+    .welcome h1 {
+      margin: 0 0 8px;
+      font-size: 32px;
+    }
+
+    .welcome p {
+      margin: 0;
+      color: #686a7d;
+    }
+
+    /* =========================
+       ADMIN ACTION CARDS
+       ========================= */
+
+    .section-title {
+      margin: 35px 0 15px;
+      font-size: 21px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns:
+        repeat(auto-fit, minmax(230px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 15px;
+      padding: 24px;
+      border: 1px solid #e6e7ee;
+      box-shadow: 0 6px 20px rgba(0,0,0,.04);
+    }
+
+    .card-icon {
+      font-size: 30px;
+      margin-bottom: 15px;
+    }
+
+    .card h2 {
+      margin: 0 0 8px;
+      font-size: 19px;
+    }
+
+    .card p {
+      color: #686a7d;
+      font-size: 14px;
+      line-height: 1.5;
+      min-height: 63px;
+    }
+
+    .card button {
+      width: 100%;
+      margin-top: 12px;
+      padding: 12px;
+      border: 0;
+      border-radius: 9px;
+      background: #6d4aff;
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .card button:hover {
+      opacity: .9;
+    }
+
+    /* =========================
+       STATISTICS
+       ========================= */
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns:
+        repeat(auto-fit, minmax(210px, 1fr));
+      gap: 15px;
+    }
+
+    .stat {
+      background: white;
+      border: 1px solid #e6e7ee;
+      border-radius: 13px;
+      padding: 20px;
+      box-shadow: 0 5px 15px rgba(0,0,0,.03);
+    }
+
+    .stat small {
+      display: block;
+      color: #77798b;
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 25px;
+      line-height: 1.2;
+    }
+
+    .money {
+      font-size: 22px !important;
+    }
+
+    .loading {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 35px;
+      background: white;
+      border-radius: 13px;
+      color: #686a7d;
+      border: 1px solid #e6e7ee;
+    }
+
+    .error-box {
+      grid-column: 1 / -1;
+      padding: 20px;
+      border-radius: 12px;
+      background: #fff5f5;
+      border: 1px solid #f0b5b5;
+      color: #721c24;
+    }
+
+    .refresh-btn {
+      margin-top: 15px;
+      padding: 10px 16px;
+      border: 0;
+      border-radius: 8px;
+      background: #6d4aff;
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* =========================
+       RESPONSIVE
+       ========================= */
+
+    @media (max-width: 650px) {
+
+      .nav {
+        flex-wrap: wrap;
+      }
+
+      .admin-badge {
+        order: 3;
+        width: 100%;
+        margin-left: 0;
+      }
+
+      .welcome h1 {
+        font-size: 27px;
+      }
+
+      main {
+        padding: 25px 15px 45px;
+      }
+    }
+  </style>
+</head>
+
+
+<body>
+
+<header>
+
+  <div class="nav">
+
+    <a
+      class="logo"
+      href="admin-dashboard.html"
+    >
+      Earn<span>Gig</span>
+    </a>
+
+    <div class="admin-badge">
+      ADMIN PORTAL
+    </div>
+
+    <button
+      type="button"
+      class="logout-btn"
+      id="logoutButton"
+    >
+      Logout
+    </button>
+
+  </div>
+
+</header>
+
+
+<main>
+
+  <!-- =========================
+       WELCOME
+       ========================= -->
+
+  <section class="welcome">
+
+    <h1 id="welcomeTitle">
+      Admin Dashboard
+    </h1>
+
+    <p>
+      Manage EarnGig from your secure administration portal.
+    </p>
+
+  </section>
+
+
+  <!-- =========================
+       PLATFORM STATISTICS
+       ========================= -->
+
+  <h2 class="section-title">
+    Platform Overview
+  </h2>
+
+  <section
+    id="stats"
+    class="stats-grid"
+  >
+
+    <div class="loading">
+      Loading real platform statistics...
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       ADMIN MANAGEMENT
+       ========================= -->
+
+  <h2 class="section-title">
+    Management
+  </h2>
+
+  <section class="cards">
+
+
+    <!-- NOVELS -->
+
+    <div class="card">
+
+      <div class="card-icon">
+        📚
+      </div>
+
+      <h2>
+        Novel Review
+      </h2>
+
+      <p>
+        Review submitted novels, process manuscripts,
+        approve submissions and set pricing.
+      </p>
+
+      <button
+        type="button"
+        onclick="location.href='novel-review.html'"
+      >
+        Open Novel Review
+      </button>
+
+    </div>
+
+
+    <!-- USERS -->
+
+    <div class="card">
+
+      <div class="card-icon">
+        👥
+      </div>
+
+      <h2>
+        Users
+      </h2>
+
+      <p>
+        View and manage EarnGig member accounts,
+        account status and administration access.
+      </p>
+
+      <button
+        type="button"
+        onclick="alert('User management will be connected next.')"
+      >
+        Manage Users
+      </button>
+
+    </div>
+
+
+    <!-- WITHDRAWALS -->
+
+    <div class="card">
+
+      <div class="card-icon">
+        💸
+      </div>
+
+      <h2>
+        Withdrawals
+      </h2>
+
+      <p>
+        Review pending withdrawal requests and
+        process member payouts.
+      </p>
+
+      <button
+        type="button"
+        onclick="alert('Withdrawal management will be connected next.')"
+      >
+        Manage Withdrawals
+      </button>
+
+    </div>
+
+
+    <!-- MEMBERSHIPS -->
+
+    <div class="card">
+
+      <div class="card-icon">
+        💳
+      </div>
+
+      <h2>
+        Memberships
+      </h2>
+
+      <p>
+        Review membership payments, renewals and
+        active member accounts.
+      </p>
+
+      <button
+        type="button"
+        onclick="alert('Membership management will be connected next.')"
+      >
+        Manage Memberships
+      </button>
+
+    </div>
+
+
+    <!-- MARKETPLACE -->
+
+    <div class="card">
+
+      <div class="card-icon">
+        🛒
+      </div>
+
+      <h2>
+        Marketplace
+      </h2>
+
+      <p>
+        Manage marketplace listings, orders,
+        sellers and subscriptions.
+      </p>
+
+      <button
+        type="button"
+        onclick="alert('Marketplace management will be connected next.')"
+      >
+        Manage Marketplace
+      </button>
+
+    </div>
+
+
+    <!-- TRANSACTIONS -->
+
+    <div class="card">
+
+      <div class="card-icon">
+        📊
+      </div>
+
+      <h2>
+        Transactions
+      </h2>
+
+      <p>
+        Review wallet activity, rewards, fees and
+        platform transactions.
+      </p>
+
+      <button
+        type="button"
+        onclick="alert('Transaction management will be connected next.')"
+      >
+        View Transactions
+      </button>
+
+    </div>
+
+  </section>
+
+</main>
+
+
+<script>
+
+/* =====================================================
+   ADMIN SECURITY CHECK
+   ===================================================== */
+
+async function checkAdmin() {
+
+  const {
+    data: { user },
+    error
+  } = await supabaseClient.auth.getUser();
+
+
+  if (error || !user) {
+
+    window.location.href = "index.html";
+
+    return null;
+  }
+
+
+  const {
+    data: profile,
+    error: profileError
+  } = await supabaseClient
+    .from("profiles")
+    .select(`
+      full_name,
+      is_admin,
+      account_status
+    `)
+    .eq("id", user.id)
+    .single();
+
+
+  if (
+    profileError ||
+    !profile ||
+    profile.is_admin !== true
+  ) {
+
+    await supabaseClient.auth.signOut();
+
+    alert(
+      "Access denied. Administrator privileges are required."
+    );
+
+    window.location.href = "index.html";
+
+    return null;
+  }
+
+
+  if (
+    profile.account_status &&
+    profile.account_status !== "active"
+  ) {
+
+    await supabaseClient.auth.signOut();
+
+    alert(
+      "This administrator account is not active."
+    );
+
+    window.location.href = "index.html";
+
+    return null;
+  }
+
+
+  document.getElementById(
+    "welcomeTitle"
+  ).textContent =
+    `Welcome, ${profile.full_name || "Administrator"}`;
+
+
+  return user;
+}
+
+
+/* =====================================================
+   LOAD REAL ADMIN STATISTICS
+   ===================================================== */
+
+async function loadStats() {
+
+  const stats =
+    document.getElementById("stats");
+
+
+  stats.innerHTML = `
+    <div class="loading">
+      Loading real platform statistics...
+    </div>
+  `;
+
+
+  try {
+
+    const {
+      data,
+      error
+    } = await supabaseClient.rpc(
+      "get_admin_dashboard_stats"
+    );
+
+
+    if (error) {
+      throw error;
+    }
+
+
+    if (!data) {
+      throw new Error(
+        "No dashboard statistics were returned."
+      );
+    }
+
+
+    stats.innerHTML = `
+
+      <div class="stat">
+
+        <small>
+          Total Members
+        </small>
+
+        <strong>
+          ${Number(
+            data.members || 0
+          ).toLocaleString()}
+        </strong>
+
+      </div>
+
+
+      <div class="stat">
+
+        <small>
+          Wallets
+        </small>
+
+        <strong>
+          ${Number(
+            data.wallets || 0
+          ).toLocaleString()}
+        </strong>
+
+      </div>
+
+
+      <div class="stat">
+
+        <small>
+          Total Wallet Balance
+        </small>
+
+        <strong class="money">
+          ₦${Number(
+            data.total_wallet_balance || 0
+          ).toLocaleString("en-NG")}
+        </strong>
+
+      </div>
+
+
+      <div class="stat">
+
+        <small>
+          Total Earned
+        </small>
+
+        <strong class="money">
+          ₦${Number(
+            data.total_earned || 0
+          ).toLocaleString("en-NG")}
+        </strong>
+
+      </div>
+
+
+      <div class="stat">
+
+        <small>
+          Transactions
+        </small>
+
+        <strong>
+          ${Number(
+            data.transactions || 0
+          ).toLocaleString()}
+        </strong>
+
+      </div>
+
+
+      <div class="stat">
+
+        <small>
+          Pending Withdrawals
+        </small>
+
+        <strong>
+          ${Number(
+            data.pending_withdrawals || 0
+          ).toLocaleString()}
+        </strong>
+
+      </div>
+
+
+      <div class="stat">
+
+        <small>
+          Pending Withdrawal Amount
+        </small>
+
+        <strong class="money">
+          ₦${Number(
+            data.pending_withdrawal_amount || 0
+          ).toLocaleString("en-NG")}
+        </strong>
+
+      </div>
+
+
+      <div class="stat">
+
+        <small>
+          Total Novels
+        </small>
+
+        <strong>
+          ${Number(
+            data.novels || 0
+          ).toLocaleString()}
+        </strong>
+
+      </div>
+
+
+      <div class="stat">
+
+        <small>
+          Published Novels
+        </small>
+
+        <strong>
+          ${Number(
+            data.published_novels || 0
+          ).toLocaleString()}
+        </strong>
+
+      </div>
+
+
+      <div class="stat">
+
+        <small>
+          Pending Novel Submissions
+        </small>
+
+        <strong>
+          ${Number(
+            data.pending_novel_submissions || 0
+          ).toLocaleString()}
+        </strong>
+
+      </div>
+
+
+      <div class="stat">
+
+        <small>
+          Held Writer Earnings
+        </small>
+
+        <strong class="money">
+          ₦${Number(
+            data.held_writer_earnings || 0
+          ).toLocaleString("en-NG")}
+        </strong>
+
+      </div>
+
+
+      <div class="stat">
+
+        <small>
+          Pending Reader Rewards
+        </small>
+
+        <strong class="money">
+          ₦${Number(
+            data.pending_reader_rewards || 0
+          ).toLocaleString("en-NG")}
+        </strong>
+
+      </div>
+
+      <div style="grid-column:1/-1;text-align:right;">
+
+        <button
+          type="button"
+          class="refresh-btn"
+          onclick="loadStats()"
+        >
+          ↻ Refresh Statistics
+        </button>
+
+      </div>
+
+    `;
+
+
+  } catch (error) {
+
+    console.error(
+      "Admin statistics error:",
+      error
+    );
+
+
+    stats.innerHTML = `
+
+      <div class="error-box">
+
+        <strong>
+          Dashboard statistics could not be loaded.
+        </strong>
+
+        <p>
+          ${escapeHtml(
+            error.message ||
+            "Unknown error"
+          )}
+        </p>
+
+        <button
+          type="button"
+          class="refresh-btn"
+          onclick="loadStats()"
+        >
+          Try Again
+        </button>
+
+      </div>
+
+    `;
+  }
+}
+
+
+/* =====================================================
+   HTML ESCAPE
+   ===================================================== */
+
+function escapeHtml(value) {
+
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+
+/* =====================================================
+   LOGOUT
+   ===================================================== */
+
+document
+  .getElementById("logoutButton")
+  .addEventListener(
+    "click",
+    async function() {
+
+      await supabaseClient.auth.signOut();
+
+      window.location.href = "index.html";
+
+    }
+  );
+
+
+/* =====================================================
+   START ADMIN APP
+   ===================================================== */
+
+(async function() {
+
+  const user =
+    await checkAdmin();
+
+
+  if (!user) {
+    return;
+  }
+
+
+  await loadStats();
+
+})();
+
+</script>
+
+</body>
+</html>

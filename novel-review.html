@@ -1182,7 +1182,9 @@ async function loadNovels() {
     data || [];
 
 
-  renderNovels();
+  renderPendingNovels();
+
+renderNovels();
 
 }
 
@@ -2080,7 +2082,9 @@ document
       }
 
 
-      renderNovels();
+      renderPendingNovels();
+
+renderNovels();
 
     }
   );
@@ -2368,7 +2372,9 @@ async function deleteNovel(id) {
     );
 
 
-  renderNovels();
+renderPendingNovels();
+
+renderNovels();
 
 
   if (

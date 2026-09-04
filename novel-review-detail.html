@@ -1335,16 +1335,30 @@ const { data: quizResult, error: quizError } =
   );
 
 if (quizError || !quizResult?.success) {
-  console.error("Quiz generation failed:", quizError || quizResult);
+
+  console.error(
+    "Quiz generation failed:",
+    quizError || quizResult
+  );
+
+  const quizMessage =
+    quizError?.message ||
+    quizResult?.error ||
+    "Unknown quiz generation error";
 
   alert(
-    "The manuscript pages were created, but the AI quiz could not be generated yet.\n\n" +
-    "You can try processing the manuscript again after checking the quiz generator."
+    "Manuscript pages were created successfully.\n\n" +
+    "AI quiz generation failed.\n\n" +
+    "Actual error:\n\n" +
+    quizMessage
   );
+
 } else {
+
   console.log(
     `AI quiz generated successfully: ${quizResult.questions_created} questions`
   );
+
 }
 
       /* =========================

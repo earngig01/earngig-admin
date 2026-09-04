@@ -93,7 +93,88 @@
       margin-top: 8px;
       color: #686a7d;
     }
+.section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
 
+.section-heading h2 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.section-description {
+  margin: 6px 0 0;
+  color: #686a7d;
+  font-size: 14px;
+}
+
+.pending-row {
+  border: 1px solid #e7d99c;
+  background: #fffdf2;
+  border-radius: 12px;
+  padding: 16px;
+
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.pending-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.pending-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  word-break: break-word;
+}
+
+.pending-meta {
+  color: #686a7d;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.pending-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.pending-badge {
+  display: inline-block;
+
+  background: #fff0c2;
+  color: #755600;
+
+  padding: 5px 9px;
+  border-radius: 999px;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+@media (max-width: 700px) {
+
+  .pending-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .pending-actions {
+    width: 100%;
+  }
+
+  .pending-actions .btn {
+    width: 100%;
+  }
+
+}
     /* =========================
        CARD
     ========================= */
@@ -607,11 +688,65 @@
   </div>
 
 
-  <!-- =========================
-       SEARCH / FILTER
-  ========================= -->
+  <!-- =====================================================
+       PENDING NOVEL SUBMISSIONS
+  ===================================================== -->
 
   <section class="card">
+
+    <div class="section-heading">
+
+      <div>
+
+        <h2>
+          Pending Novel Submissions
+        </h2>
+
+        <p class="section-description">
+          New novels waiting for review and approval.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div
+      id="pendingNovelList"
+      class="novel-list"
+    >
+
+      <div class="loading">
+        Checking for pending submissions...
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       ALL NOVELS
+  ===================================================== -->
+
+  <section class="card">
+
+    <div class="section-heading">
+
+      <div>
+
+        <h2>
+          All Novels
+        </h2>
+
+        <p class="section-description">
+          View and manage previously approved and published novels.
+        </p>
+
+      </div>
+
+    </div>
+
 
     <div class="toolbar">
 
@@ -685,7 +820,9 @@
   </section>
 
 </main>
-
+  
+        
+    
 
 <!-- =====================================================
      EDIT NOVEL MODAL
@@ -1006,15 +1143,19 @@ async function loadNovels() {
     await supabaseClient
       .from("novels")
       .select(`
-        id,
-        title,
-        author_name,
-        description,
-        cover_url,
-        genre,
-        page_count,
-        status
-      `)
+  id,
+  title,
+  author_name,
+  description,
+  cover_url,
+  genre,
+  page_count,
+  status,
+  submission_status,
+  manuscript_url,
+  requested_reader_count,
+  created_at
+`)
       .order(
         "title",
         {
@@ -1045,7 +1186,222 @@ async function loadNovels() {
 
 }
 
+/* =====================================================
+   RENDER PENDING NOVELS
+===================================================== */
 
+function renderPendingNovels() {
+
+  const list =
+    document.getElementById(
+      "pendingNovelList"
+    );
+
+
+  if (!list) {
+
+    return;
+
+  }
+
+
+  const pendingNovels =
+    allNovels.filter(
+      novel => {
+
+        const submissionStatus =
+          (
+            novel.submission_status ||
+            ""
+          ).toLowerCase();
+
+
+        const status =
+          (
+            novel.status ||
+            ""
+          ).toLowerCase();
+
+
+        return (
+          submissionStatus === "pending" ||
+          status === "pending"
+        );
+
+      }
+    );
+
+
+  if (!pendingNovels.length) {
+
+    list.innerHTML = `
+      <div class="empty">
+
+        <strong>
+          No pending novel submissions
+        </strong>
+
+        <br><br>
+
+        New writer submissions will appear here.
+
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  list.innerHTML =
+    pendingNovels
+      .map(
+        novel => {
+
+          const submitted =
+            novel.created_at
+            ?
+            new Date(
+              novel.created_at
+            ).toLocaleString()
+            :
+            "Unknown";
+
+
+          return `
+
+            <div
+              class="pending-row"
+            >
+
+              ${
+                novel.cover_url
+                ?
+                `
+                <img
+                  class="novel-cover"
+                  src="${escapeHtml(
+                    novel.cover_url
+                  )}"
+                  alt=""
+                >
+                `
+                :
+                `
+                <div
+                  class="novel-cover"
+                ></div>
+                `
+              }
+
+
+              <div
+                class="pending-info"
+              >
+
+                <div
+                  class="pending-title"
+                >
+
+                  ${escapeHtml(
+                    novel.title ||
+                    "Untitled Novel"
+                  )}
+
+                </div>
+
+
+                <div
+                  class="pending-meta"
+                >
+
+                  <strong>
+                    Writer:
+                  </strong>
+
+                  ${escapeHtml(
+                    novel.author_name ||
+                    "Unknown"
+                  )}
+
+                  <br>
+
+
+                  <strong>
+                    Genre:
+                  </strong>
+
+                  ${escapeHtml(
+                    novel.genre ||
+                    "Not specified"
+                  )}
+
+                  <br>
+
+
+                  <strong>
+                    Submitted:
+                  </strong>
+
+                  ${escapeHtml(
+                    submitted
+                  )}
+
+                  <br>
+
+
+                  <span
+                    class="pending-badge"
+                  >
+                    Awaiting Review
+                  </span>
+
+                </div>
+
+              </div>
+
+
+              <div
+                class="pending-actions"
+              >
+
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  onclick="openFullReview('${novel.id}')"
+                >
+                  Open Full Review
+                </button>
+
+              </div>
+
+            </div>
+
+          `;
+
+        }
+      )
+      .join("");
+
+                    }
+
+  /* =====================================================
+   OPEN FULL NOVEL REVIEW
+===================================================== */
+
+function openFullReview(id) {
+
+  if (!id) {
+
+    return;
+
+  }
+
+
+  window.location.href =
+    `novel-review-detail.html?id=${encodeURIComponent(id)}`;
+
+}
 /* =====================================================
    RENDER NOVELS
 ===================================================== */

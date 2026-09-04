@@ -1281,44 +1281,29 @@ async function processNovelManuscript() {
       }
 
 
-      /* =========================
-         DELETE OLD PAGES
-         ========================= */
+/* =========================
+   SAVE NEW PAGES
+   ========================= */
 
-      const {
-        error: deleteError
-      } = await supabaseClient
-        .from("novel_pages")
-        .delete()
-        .eq(
-          "novel_id",
-          currentNovel.id
-        );
-
-
-      if (deleteError) {
-
-        throw deleteError;
-
-      }
+const {
+  error: upsertError
+} = await supabaseClient
+  .from("novel_pages")
+  .upsert(
+    pages,
+    {
+      onConflict:
+        "novel_id,page_number"
+    }
+  );
 
 
-      /* =========================
-         INSERT NEW PAGES
-         ========================= */
+if (upsertError) {
 
-      const {
-        error: insertError
-      } = await supabaseClient
-        .from("novel_pages")
-        .insert(pages);
+  throw upsertError;
 
-
-      if (insertError) {
-
-        throw insertError;
-
-      }
+}
+    
 /* =========================
    GENERATE AI QUIZ
    ========================= */

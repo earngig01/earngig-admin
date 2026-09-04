@@ -1289,43 +1289,36 @@ async function processNovelManuscript() {
 
 
 /* =========================
-   DELETE OLD PAGES
+   REPLACE NOVEL PAGES
    ========================= */
 
 const {
-  error: deleteError
-} = await supabaseClient
-  .from("novel_pages")
-  .delete()
-  .eq(
-    "novel_id",
-    currentNovel.id
-  );
+  data: replacedCount,
+  error: replaceError
+} =
+  await supabaseClient
+    .rpc(
+      "admin_replace_novel_pages",
+      {
+        p_novel_id:
+          currentNovel.id,
+
+        p_pages:
+          pages
+      }
+    );
 
 
-if (deleteError) {
+if (replaceError) {
 
-  throw deleteError;
+  throw replaceError;
 
 }
 
 
-/* =========================
-   INSERT NEW PAGES
-   ========================= */
-
-const {
-  error: insertError
-} = await supabaseClient
-  .from("novel_pages")
-  .insert(pages);
-
-
-if (insertError) {
-
-  throw insertError;
-
-}
+console.log(
+  `Saved ${replacedCount} novel pages.`
+);
     
 /* =========================
    GENERATE AI QUIZ

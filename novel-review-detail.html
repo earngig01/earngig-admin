@@ -1320,46 +1320,6 @@ console.log(
   `Saved ${replacedCount} novel pages.`
 );
     
-/* =========================
-   GENERATE AI QUIZ
-   ========================= */
-
-const { data: quizResult, error: quizError } =
-  await supabaseClient.functions.invoke(
-    "generate-novel-quiz",
-    {
-      body: {
-        novel_id: currentNovel.id
-      }
-    }
-  );
-
-if (quizError || !quizResult?.success) {
-
-  console.error(
-    "Quiz generation failed:",
-    quizError || quizResult
-  );
-
-  const quizMessage =
-    quizError?.message ||
-    quizResult?.error ||
-    "Unknown quiz generation error";
-
-  alert(
-    "Manuscript pages were created successfully.\n\n" +
-    "AI quiz generation failed.\n\n" +
-    "Actual error:\n\n" +
-    quizMessage
-  );
-
-} else {
-
-  console.log(
-    `AI quiz generated successfully: ${quizResult.questions_created} questions`
-  );
-
-}
 
       /* =========================
          UPDATE NOVEL PAGE COUNT

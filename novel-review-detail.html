@@ -1282,25 +1282,41 @@ async function processNovelManuscript() {
 
 
 /* =========================
-   SAVE NEW PAGES
+   DELETE OLD PAGES
    ========================= */
 
 const {
-  error: upsertError
+  error: deleteError
 } = await supabaseClient
   .from("novel_pages")
-  .upsert(
-    pages,
-    {
-      onConflict:
-        "novel_id,page_number"
-    }
+  .delete()
+  .eq(
+    "novel_id",
+    currentNovel.id
   );
 
 
-if (upsertError) {
+if (deleteError) {
 
-  throw upsertError;
+  throw deleteError;
+
+}
+
+
+/* =========================
+   INSERT NEW PAGES
+   ========================= */
+
+const {
+  error: insertError
+} = await supabaseClient
+  .from("novel_pages")
+  .insert(pages);
+
+
+if (insertError) {
+
+  throw insertError;
 
 }
     

@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Novel Review | EarnGig Admin</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f6fa;
+      color: #17182f;
+    }
+
+    header {
+      background: #0d1038;
+      color: white;
+    }
+
+    .nav {
+      max-width: 1200px;
+      margin: auto;
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo {
+      color: white;
+      text-decoration: none;
+      font-size: 25px;
+      font-weight: 700;
+    }
+
+    .logo span {
+      color: #7c5cff;
+    }
+
+    .back-btn,
+    .logout-btn {
+      padding: 9px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .back-btn {
+      color: white;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,.3);
+    }
+
+    .logout-btn {
+      border: 1px solid rgba(255,255,255,.3);
+      background: transparent;
+      color: white;
+    }
+
+    main {
+      max-width: 1200px;
+      margin: auto;
+      padding: 35px 20px 60px;
+    }
+
+    .page-header {
+      margin-bottom: 25px;
+    }
+
+    .page-header h1 {
+      margin: 0 0 8px;
+      font-size: 30px;
+    }
+
+    .page-header p {
+      margin: 0;
+      color: #686a7d;
+    }
+
+    .message {
+      padding: 16px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    .message.show {
+      display: block;
+    }
+
+    .message.error {
+      background: #fff5f5;
+      border: 1px solid #f0b5b5;
+      color: #721c24;
+    }
+
+    .novel-list {
+      display: grid;
+      gap: 15px;
+    }
+
+    .novel-card {
+      background: white;
+      border: 1px solid #e4e5ec;
+      border-radius: 15px;
+      padding: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      box-shadow: 0 5px 18px rgba(0,0,0,.04);
+    }
+
+    .novel-info {
+      min-width: 0;
+    }
+
+    .novel-info h2 {
+      margin: 0 0 8px;
+      font-size: 20px;
+    }
+
+    .novel-info p {
+      margin: 5px 0;
+      color: #686a7d;
+      font-size: 14px;
+    }
+
+    .status {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 6px 10px;
+      border-radius: 20px;
+      background: #fff3cd;
+      color: #856404;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .review-btn {
+      flex-shrink: 0;
+      border: 0;
+      border-radius: 9px;
+      padding: 12px 18px;
+      background: #6d4aff;
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .review-btn:hover {
+      opacity: .9;
+    }
+
+    .empty {
+      background: white;
+      border: 1px solid #e4e5ec;
+      border-radius: 15px;
+      padding: 45px 20px;
+      text-align: center;
+      color: #686a7d;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 45px;
+      color: #686a7d;
+    }
+
+    @media (max-width: 700px) {
+
+      .novel-card {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .review-btn {
+        width: 100%;
+      }
+
+      .nav {
+        flex-wrap: wrap;
+      }
+    }
+  </style>
+</head>
+
+
+<body>
+
+<header>
+
+  <div class="nav">
+
+    <a
+      class="logo"
+      href="admin-dashboard.html"
+    >
+      Earn<span>Gig</span>
+    </a>
+
+    <a
+      class="back-btn"
+      href="admin-dashboard.html"
+    >
+      ← Dashboard
+    </a>
+
+    <button
+      type="button"
+      class="logout-btn"
+      id="logoutButton"
+    >
+      Logout
+    </button>
+
+  </div>
+
+</header>
+
+
+<main>
+
+  <section class="page-header">
+
+    <h1>
+      Novel Review
+    </h1>
+
+    <p>
+      Review and manage novels submitted by EarnGig writers.
+    </p>
+
+  </section>
+
+
+  <div
+    id="message"
+    class="message"
+  ></div>
+
+
+  <section
+    id="novelList"
+    class="novel-list"
+  >
+
+    <div class="loading">
+      Loading novel submissions...
+    </div>
+
+  </section>
+
+</main>
+
+
+<script>
+
+/* =====================================================
+   SECURITY
+   ===================================================== */
+
+async function checkAdmin() {
+
+  const {
+    data: { user },
+    error
+  } = await supabaseClient.auth.getUser();
+
+
+  if (error || !user) {
+
+    window.location.href =
+      "index.html";
+
+    return null;
+  }
+
+
+  const {
+    data: profile,
+    error: profileError
+  } = await supabaseClient
+    .from("profiles")
+    .select("is_admin, account_status")
+    .eq("id", user.id)
+    .single();
+
+
+  if (
+    profileError ||
+    !profile ||
+    profile.is_admin !== true
+  ) {
+
+    await supabaseClient.auth.signOut();
+
+    alert(
+      "Access denied. Administrator privileges are required."
+    );
+
+    window.location.href =
+      "index.html";
+
+    return null;
+  }
+
+
+  if (
+    profile.account_status &&
+    profile.account_status !== "active"
+  ) {
+
+    await supabaseClient.auth.signOut();
+
+    alert(
+      "This administrator account is not active."
+    );
+
+    window.location.href =
+      "index.html";
+
+    return null;
+  }
+
+
+  return user;
+}
+
+
+/* =====================================================
+   LOAD NOVEL SUBMISSIONS
+   ===================================================== */
+
+async function loadNovels() {
+
+  const list =
+    document.getElementById("novelList");
+
+  const message =
+    document.getElementById("message");
+
+
+  list.innerHTML = `
+    <div class="loading">
+      Loading novel submissions...
+    </div>
+  `;
+
+  message.className = "message";
+
+
+  const {
+    data,
+    error
+  } = await supabaseClient
+    .from("novels")
+    .select(`
+      id,
+      title,
+      author_name,
+      genre,
+      page_count,
+      requested_reader_count,
+      submission_status,
+      status,
+      created_at
+    `)
+    .eq("submission_status", "pending")
+    .order("created_at", {
+      ascending: false
+    });
+
+
+  if (error) {
+
+    console.error(
+      "Novel loading error:",
+      error
+    );
+
+    list.innerHTML = "";
+
+    message.className =
+      "message error show";
+
+    message.textContent =
+      "Could not load novel submissions: " +
+      error.message;
+
+    return;
+  }
+
+
+  if (!data || data.length === 0) {
+
+    list.innerHTML = `
+      <div class="empty">
+
+        <h2>
+          No pending novel submissions
+        </h2>
+
+        <p>
+          New writer submissions will appear here.
+        </p>
+
+      </div>
+    `;
+
+    return;
+  }
+
+
+  list.innerHTML = "";
+
+
+  data.forEach(function(novel) {
+
+    const card =
+      document.createElement("div");
+
+    card.className =
+      "novel-card";
+
+
+    card.innerHTML = `
+
+      <div class="novel-info">
+
+        <h2>
+          ${escapeHtml(
+            novel.title || "Untitled Novel"
+          )}
+        </h2>
+
+        <p>
+          <strong>Writer:</strong>
+          ${escapeHtml(
+            novel.author_name || "Unknown"
+          )}
+        </p>
+
+        <p>
+          <strong>Genre:</strong>
+          ${escapeHtml(
+            novel.genre || "Not specified"
+          )}
+        </p>
+
+        <p>
+          <strong>Requested readers:</strong>
+          ${Number(
+            novel.requested_reader_count || 0
+          ).toLocaleString()}
+        </p>
+
+        <span class="status">
+          Pending Review
+        </span>
+
+      </div>
+
+
+      <button
+        type="button"
+        class="review-btn"
+        onclick="openNovel('${novel.id}')"
+      >
+        Review Novel
+      </button>
+
+    `;
+
+
+    list.appendChild(card);
+
+  });
+
+}
+
+
+/* =====================================================
+   OPEN NOVEL
+   ===================================================== */
+
+function openNovel(novelId) {
+
+  window.location.href =
+    `novel-review-detail.html?id=${encodeURIComponent(novelId)}`;
+
+}
+
+
+/* =====================================================
+   HTML ESCAPE
+   ===================================================== */
+
+function escapeHtml(value) {
+
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+
+/* =====================================================
+   LOGOUT
+   ===================================================== */
+
+document
+  .getElementById("logoutButton")
+  .addEventListener(
+    "click",
+    async function() {
+
+      await supabaseClient.auth.signOut();
+
+      window.location.href =
+        "index.html";
+
+    }
+  );
+
+
+/* =====================================================
+   START
+   ===================================================== */
+
+(async function() {
+
+  const user =
+    await checkAdmin();
+
+
+  if (!user) {
+    return;
+  }
+
+
+  await loadNovels();
+
+})();
+
+</script>
+
+</body>
+</html>

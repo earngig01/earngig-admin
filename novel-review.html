@@ -1578,20 +1578,33 @@ function renderNovels() {
                 class="novel-actions"
               >
 
-                <button
-                  class="btn btn-primary btn-small"
-                  onclick="openNovel('${novel.id}')"
-                >
-                  View / Edit
-                </button>
+              <div class="novel-actions">
 
+  <button
+    type="button"
+    class="btn btn-primary"
+    onclick="openFullReview('${novel.id}')"
+  >
+    Full Review
+  </button>
 
-                <button
-                  class="btn btn-danger btn-small"
-                  onclick="deleteNovel('${novel.id}')"
-                >
-                  Delete
-                </button>
+  <button
+    type="button"
+    class="btn btn-secondary"
+    onclick="openNovel('${novel.id}')"
+  >
+    View / Edit
+  </button>
+
+  <button
+    type="button"
+    class="btn btn-danger"
+    onclick="deleteNovel('${novel.id}')"
+  >
+    Delete
+  </button>
+
+</div>
 
               </div>
 

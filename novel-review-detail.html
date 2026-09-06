@@ -2327,7 +2327,6 @@ async function saveQuizQuestions() {
       "No novel is currently loaded."
     );
 
-
     return;
 
   }
@@ -2354,29 +2353,31 @@ async function saveQuizQuestions() {
     );
 
 
-  if (
-    cards.length === 0
-  ) {
+  if (cards.length === 0) {
 
     alert(
       "Please add at least one quiz question."
     );
-
 
     return;
 
   }
 
 
-  const questions =
-    [];
+  const questions = [];
 
 
   for (
-    const card of cards
+    let index = 0;
+    index < cards.length;
+    index++
   ) {
 
-    const question =
+    const card =
+      cards[index];
+
+
+    const questionText =
       card.querySelector(
         ".quiz-question-text"
       ).value.trim();
@@ -2406,25 +2407,24 @@ async function saveQuizQuestions() {
       ).value.trim();
 
 
-    const correctAnswer =
+    const correctOption =
       card.querySelector(
         ".quiz-correct-answer"
       ).value;
 
 
     if (
-      !question ||
+      !questionText ||
       !optionA ||
       !optionB ||
       !optionC ||
       !optionD ||
-      !correctAnswer
+      !correctOption
     ) {
 
       alert(
         "Please complete every field for each quiz question."
       );
-
 
       return;
 
@@ -2436,23 +2436,33 @@ async function saveQuizQuestions() {
       novel_id:
         currentNovel.id,
 
-      question:
-        question,
+
+      question_text:
+        questionText,
+
 
       option_a:
         optionA,
 
+
       option_b:
         optionB,
+
 
       option_c:
         optionC,
 
+
       option_d:
         optionD,
 
-      correct_answer:
-        correctAnswer
+
+      correct_option:
+        correctOption,
+
+
+      question_order:
+        index + 1
 
     });
 

@@ -2161,35 +2161,37 @@ async function saveQuizQuestions() {
   }
 
   const rows =
-    manualQuizQuestions.map(
-      (q, index) => ({
-        id: crypto.randomUUID(),
+  manualQuizQuestions.map(
+    (q, index) => ({
 
-        novel_id:
-          currentNovel.id,
+      id: crypto.randomUUID(),
 
-        question_text:
-          q.question_text.trim(),
+      novel_id:
+        currentNovel.id,
 
-        option_a_text:
-          q.option_a_text.trim(),
+      question_text:
+        q.question_text.trim(),
 
-        option_b_text:
-          q.option_b_text.trim(),
+      option_a:
+        q.option_a_text.trim(),
 
-        option_c_text:
-          q.option_c_text.trim(),
+      option_b:
+        q.option_b_text.trim(),
 
-        option_d_text:
-          q.option_d_text.trim(),
+      option_c:
+        q.option_c_text.trim(),
 
-        correct_option_text:
-          q.correct_option_text,
+      option_d:
+        q.option_d_text.trim(),
 
-        question_order:
-          index + 1
-      })
-    );
+      correct_option:
+        q.correct_option_text,
+
+      question_order:
+        index + 1
+
+    })
+  );
 
   const {
     error

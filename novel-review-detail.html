@@ -2116,18 +2116,10 @@ function renderQuizQuestions() {
       .join("");
 }
 
-function escapeHtml(value) {
-  return String(value || "")
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-}
 
 async function saveQuizQuestions() {
 
-  if (!currentNovel?.id) {
+  if (!currentNovel || !currentNovel.id) {
 
     alert("Novel information is not loaded.");
 
@@ -2187,17 +2179,18 @@ async function saveQuizQuestions() {
 
 
   /* =========================
-     GET EXISTING QUESTIONS
+     GET LAST QUESTION ORDER
      ========================= */
 
   const {
 
-    data: existingQuestions,
+    data: lastQuestion,
 
-    error: existingError
+    error: lastQuestionError
 
   } =
     await supabaseClient
+
       .from("novel_quiz_questions")
 
       .select(
@@ -2209,18 +2202,27 @@ async function saveQuizQuestions() {
         currentNovel.id
       )
 
+      .order(
+        "question_order",
+        {
+          ascending: false
+        }
+      )
 
-  if (existingError) {
+      .limit(1);
+
+
+  if (lastQuestionError) {
 
     console.error(
-      "Could not check existing questions:",
-      existingError
+      "Could not get last question:",
+      lastQuestionError
     );
 
 
     alert(
-      "Could not check existing quiz questions.\n\n" +
-      existingError.message
+      "Could not check existing questions.\n\n" +
+      lastQuestionError.message
     );
 
 
@@ -2230,7 +2232,7 @@ async function saveQuizQuestions() {
 
 
   /* =========================
-     FIND NEXT QUESTION NUMBER
+     DETERMINE STARTING ORDER
      ========================= */
 
   let nextQuestionOrder = 1;
@@ -2238,38 +2240,33 @@ async function saveQuizQuestions() {
 
   if (
 
-    existingQuestions &&
+    lastQuestion &&
 
-    existingQuestions.length > 0
+    lastQuestion.length > 0
 
   ) {
 
-    const highestOrder =
-      Math.max(
-
-        ...existingQuestions.map(
-
-          question =>
-            Number(
-              question.question_order
-            ) || 0
-
-        )
-
-      );
-
-
     nextQuestionOrder =
-      highestOrder + 1;
+
+      Number(
+        lastQuestion[0].question_order
+      ) + 1;
 
   }
 
 
+  console.log(
+    "Next question order:",
+    nextQuestionOrder
+  );
+
+
   /* =========================
-     CREATE DATABASE ROWS
+     CREATE ROWS
      ========================= */
 
   const rows =
+
     manualQuizQuestions.map(
 
       (q, index) => ({
@@ -2308,24 +2305,31 @@ async function saveQuizQuestions() {
 
         question_order:
 
-          nextQuestionOrder +
-
-          index
+          nextQuestionOrder + index
 
       })
 
     );
 
 
+  console.log(
+    "Saving quiz questions:",
+    rows
+  );
+
+
   /* =========================
-     SAVE QUESTIONS
+     INSERT QUESTIONS
      ========================= */
 
   const {
 
+    data,
+
     error
 
   } =
+
     await supabaseClient
 
       .from(
@@ -2334,7 +2338,9 @@ async function saveQuizQuestions() {
 
       .insert(
         rows
-      );
+      )
+
+      .select();
 
 
   if (error) {
@@ -2359,6 +2365,12 @@ async function saveQuizQuestions() {
   }
 
 
+  console.log(
+    "Saved questions:",
+    data
+  );
+
+
   /* =========================
      SUCCESS
      ========================= */
@@ -2370,15 +2382,19 @@ async function saveQuizQuestions() {
   );
 
 
-  /* Clear the form */
+  /* IMPORTANT:
+     Remove saved questions
+     from the browser memory.
+  */
 
   manualQuizQuestions = [];
 
 
   renderQuizQuestions();
 
-}
-      
+}        
+
+          
 </script>
  </body>
 </html>   

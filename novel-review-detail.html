@@ -2178,7 +2178,9 @@ function renderQuizQuestions() {
               'question_text',
               this.value
             )"
-          >${question.question_text}</textarea>
+          >${escapeHtml(
+  question.question_text
+)}</textarea>
 
           <label>Option A</label>
 

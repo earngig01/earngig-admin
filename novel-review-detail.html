@@ -1283,362 +1283,162 @@ async function processNovelManuscript() {
 
     const arrayBuffer =
       await response.arrayBuffer();
-
-
     const fileName =
       currentNovel.manuscript_url
         .toLowerCase();
 
 
-    let pages = [];
+    let processedPages = 0;
 
 
-    /* =================================================
-       PDF
-       ================================================= */
+    /* =========================
+       PROCESS PDF
+       ========================= */
 
     if (
       fileName.endsWith(".pdf")
     ) {
 
+      if (
+        typeof pdfjsLib ===
+        "undefined"
+      ) {
+
+        throw new Error(
+          "PDF processor could not be loaded."
+        );
+
+      }
+
+
       if (statusBox) {
 
         statusBox.textContent =
-          "Reading PDF pages...";
+          "Processing PDF manuscript...";
 
       }
 
 
       const pdf =
-        await pdfjsLib
-          .getDocument({
-            data: arrayBuffer
-          })
-          .promise;
+        await pdfjsLib.getDocument({
+          data: arrayBuffer
+        }).promise;
 
 
-      for (
-        let i = 1;
-        i <= pdf.numPages;
-        i++
-      ) {
-
-        if (statusBox) {
-
-          statusBox.textContent =
-            `Processing PDF page ${i} of ${pdf.numPages}...`;
-
-        }
-
-
-        const page =
-          await pdf.getPage(i);
-
-
-        const textContent =
-          await page.getTextContent();
-
-
-        const text =
-          textContent.items
-            .map(
-              item =>
-                item.str || ""
-            )
-            .join(" ")
-            .replace(
-              /\s+/g,
-              " "
-            )
-            .trim();
-
-
-        if (!text) {
-
-          throw new Error(
-            `Page ${i} contains no readable text. This PDF may be scanned or image-only.`
-          );
-
-        }
-
-
-        pages.push({
-
-          id:
-            crypto.randomUUID(),
-
-          novel_id:
-            currentNovel.id,
-
-          page_number:
-            i,
-
-          chapter:
-            "",
-
-          title:
-            `Page ${i}`,
-
-          content:
-            `<p>${escapeHtml(text)}</p>`,
-
-          created_at:
-            new Date().toISOString()
-
-        });
-
-      }
+      processedPages =
+        pdf.numPages;
 
     }
 
 
-    /* =================================================
-       DOCX
-       ================================================= */
+    /* =========================
+       PROCESS DOCX
+       ========================= */
 
     else if (
       fileName.endsWith(".docx")
     ) {
 
+      if (
+        typeof mammoth ===
+        "undefined"
+      ) {
+
+        throw new Error(
+          "DOCX processor could not be loaded."
+        );
+
+      }
+
+
       if (statusBox) {
 
         statusBox.textContent =
-          "Reading DOCX manuscript...";
+          "Processing DOCX manuscript...";
 
       }
 
 
       const result =
-        await mammoth.convertToHtml({
-
+        await mammoth.extractRawText({
           arrayBuffer:
             arrayBuffer
-
         });
 
 
-      const html =
-        result.value;
-
-
-      const temp =
-        document.createElement(
-          "div"
-        );
-
-
-      temp.innerHTML =
-        html;
-
-
-      const paragraphs =
-        Array.from(
-          temp.querySelectorAll("p")
-        )
-        .map(
-          p =>
-            p.innerText.trim()
-        )
-        .filter(Boolean);
-
-
-      if (!paragraphs.length) {
-
-        throw new Error(
-          "The DOCX manuscript contains no readable text."
-        );
-
-      }
+      const text =
+        result.value || "";
 
 
       /*
-       * Mammoth does not preserve
-       * reliable physical page numbers.
+       * DOCX files do not contain
+       * a reliable browser-readable
+       * page count.
        *
-       * Create logical reading pages.
+       * We estimate pages using
+       * approximately 500 words
+       * per manuscript page.
        */
 
-      const chunkSize =
-        12;
-
-
-      for (
-        let i = 0;
-        i < paragraphs.length;
-        i += chunkSize
-      ) {
-
-        const chunk =
-          paragraphs.slice(
-            i,
-            i + chunkSize
+      const words =
+        text
+          .trim()
+          .split(/\s+/)
+          .filter(
+            word =>
+              word.length > 0
           );
 
 
-        const content =
-          chunk
-            .map(
-              text =>
-                `<p>${escapeHtml(
-                  text
-                )}</p>`
-            )
-            .join("");
+      const wordCount =
+        words.length;
 
 
-        pages.push({
-
-          id:
-            crypto.randomUUID(),
-
-          novel_id:
-            currentNovel.id,
-
-          page_number:
-            pages.length + 1,
-
-          chapter:
-            "",
-
-          title:
-            `Page ${
-              pages.length + 1
-            }`,
-
-          content:
-            content,
-
-          created_at:
-            new Date().toISOString()
-
-        });
-
-      }
+      processedPages =
+        Math.max(
+          1,
+          Math.ceil(
+            wordCount / 500
+          )
+        );
 
     }
 
 
-    /* =================================================
+    /* =========================
        UNSUPPORTED FILE
-       ================================================= */
+       ========================= */
 
     else {
 
       throw new Error(
-        "Unsupported manuscript format. Please upload PDF or DOCX."
+        "Unsupported manuscript format. Please upload a PDF or DOCX file."
       );
 
     }
 
 
-    /* =================================================
-       CHECK PAGES
-       ================================================= */
+    /* =========================
+       VALIDATE RESULT
+       ========================= */
 
-    if (!pages.length) {
+    if (
+      !Number.isFinite(
+        processedPages
+      ) ||
+      processedPages <= 0
+    ) {
 
       throw new Error(
-        "No readable pages were found."
+        "A valid page count could not be determined."
       );
 
     }
 
 
-    /* =================================================
-       DELETE OLD PAGES
-       ================================================= */
-
-    if (statusBox) {
-
-      statusBox.textContent =
-        "Removing previously processed pages...";
-
-    }
-
-
-    const {
-      error: deleteError
-    } =
-      await supabaseClient
-        .from("novel_pages")
-        .delete()
-        .eq(
-          "novel_id",
-          currentNovel.id
-        );
-
-
-    if (deleteError) {
-
-      throw deleteError;
-
-    }
-
-
-    /* =================================================
-       SAVE NEW PAGES
-       ================================================= */
-
-    if (statusBox) {
-
-      statusBox.textContent =
-        `Saving ${pages.length} pages...`;
-
-    }
-
-
-    const {
-      error: insertError
-    } =
-      await supabaseClient
-        .from("novel_pages")
-        .insert(
-          pages
-        );
-
-
-    if (insertError) {
-
-      throw insertError;
-
-    }
-
-
-    /* =================================================
-       UPDATE PAGE COUNT
-       ================================================= */
-
-    const {
-      error: novelUpdateError
-    } =
-      await supabaseClient
-        .from("novels")
-        .update({
-
-          page_count:
-            pages.length
-
-        })
-        .eq(
-          "id",
-          currentNovel.id
-        );
-
-
-    if (novelUpdateError) {
-
-      throw novelUpdateError;
-
-    }
-
-
-    /* =================================================
-       UPDATE CURRENT NOVEL
-       ================================================= */
-
-    currentNovel.page_count =
-      pages.length;
-
+    /* =========================
+       UPDATE PAGE FIELD
+       ========================= */
 
     const pagesInput =
       document.getElementById(
@@ -1649,20 +1449,58 @@ async function processNovelManuscript() {
     if (pagesInput) {
 
       pagesInput.value =
-        pages.length;
+        processedPages;
 
     }
+
+
+    /* =========================
+       SAVE PAGE COUNT
+       ========================= */
+
+    const {
+      error: updateError
+    } =
+      await supabaseClient
+        .from("novels")
+        .update({
+
+          page_count:
+            processedPages
+
+        })
+        .eq(
+          "id",
+          currentNovel.id
+        );
+
+
+    if (updateError) {
+
+      throw updateError;
+
+    }
+
+
+    currentNovel.page_count =
+      processedPages;
 
 
     if (statusBox) {
 
       statusBox.textContent =
-        `✓ Manuscript processed successfully. ${pages.length} pages were created.`;
+        `Manuscript processed successfully. ${processedPages} page(s) detected.`;
 
     }
 
 
-    return true;
+    showMessage(
+      `Manuscript processed successfully. ${processedPages} page(s) detected.`,
+      "success"
+    );
+
+
+    return processedPages;
 
   }
 
@@ -1679,14 +1517,21 @@ async function processNovelManuscript() {
 
       statusBox.textContent =
         "Processing failed: " +
-        error.message;
+        (
+          error.message ||
+          "Unknown error"
+        );
 
     }
 
 
-    alert(
-      "Manuscript processing failed.\n\n" +
-      error.message
+    showMessage(
+      "Could not process the manuscript: " +
+      (
+        error.message ||
+        "Unknown error"
+      ),
+      "error"
     );
 
 
@@ -1698,472 +1543,27 @@ async function processNovelManuscript() {
 
 
 /* =====================================================
-   APPROVE NOVEL
+   VALIDATE QUALITY
    ===================================================== */
 
-async function approveNovel() {
-
-  if (!currentNovel) {
-
-    alert(
-      "Novel information is not loaded."
-    );
-
-
-    return;
-
-  }
-
-
-  /* =================================================
-     PROCESS MANUSCRIPT FIRST
-     ================================================= */
-
-  const processed =
-    await processNovelManuscript();
-
-
-  if (!processed) {
-
-    return;
-
-  }
-
-
-  /* =================================================
-     GET FORM VALUES
-     ================================================= */
+function validateQuality() {
 
   const quality =
     document.getElementById(
       "quality"
-    ).value;
+    )?.value;
 
 
-  const processedPages =
-    Number(
-      document.getElementById(
-        "pages"
-      ).value
+  if (!quality) {
+
+    alert(
+      "Please select a quality assessment."
     );
 
 
-  const reward =
-    Number(
-      document.getElementById(
-        "reward"
-      ).value
-     );
-
-
-  const readers =
-    Number(
-      document.getElementById(
-        "readers"
-      ).value
-    );
-
-
-  const fee =
-    Number(
-      document.getElementById(
-        "fee"
-      ).value
-    );
-
-
-  const readingPercent =
-    Number(
-      document.getElementById(
-        "readingPercent"
-      ).value
-    );
-
-
-  const notes =
-    document.getElementById(
-      "notes"
-    ).value
-    .trim();
-
-  /* ================================================
-   VALIDATE QUALITY
-   ================================================= */
-
-if (!quality) {
-
-  alert(
-    "Please select a quality assessment."
-  );
-
-  return;
-
-      }
-  /* ================================================
-   VALIDATE PAGES
-   ================================================= */
-
-if (
-  !processedPages ||
-  processedPages <= 0
-) {
-
-  alert(
-    "Please enter a valid page count."
-  );
-
-  return;
-
-}
-
-
-/* ================================================
-   GET REWARD
-   ================================================= */
-
-const reward =
-  Number(
-    document.getElementById(
-      "reward"
-    ).value
-  );
-
-
-if (
-  !reward ||
-  reward <= 0
-) {
-
-  alert(
-    "Please enter a valid reader reward."
-  );
-
-  return;
-
-}
-
-
-/* ================================================
-   GET READERS
-   ================================================= */
-
-const readers =
-  Number(
-    document.getElementById(
-      "readers"
-    ).value
-  );
-
-
-if (
-  !readers ||
-  readers <= 0
-) {
-
-  alert(
-    "Please enter a valid reader target."
-  );
-
-  return;
-
-}
-
-
-/* ================================================
-   GET LISTING FEE
-   ================================================= */
-
-const fee =
-  Number(
-    document.getElementById(
-      "fee"
-    ).value
-  );
-
-
-if (
-  Number.isNaN(fee) ||
-  fee < 0
-) {
-
-  alert(
-    "Please enter a valid listing fee."
-  );
-
-  return;
-
-}
-
-
-/* ================================================
-   GET READING PERCENT
-   ================================================= */
-
-const readingPercent =
-  Number(
-    document.getElementById(
-      "readingPercent"
-    ).value
-  );
-
-
-if (
-  !readingPercent ||
-  readingPercent < 1 ||
-  readingPercent > 100
-) {
-
-  alert(
-    "Required reading must be between 1% and 100%."
-  );
-
-  return;
-
-}
-
-
-/* ================================================
-   GET NOTES
-   ================================================= */
-
-const notes =
-  document.getElementById(
-    "notes"
-  ).value.trim();
-
-
-/* ================================================
-   CONFIRM APPROVAL
-   ================================================= */
-
-const confirmed =
-  confirm(
-    "Approve this novel?\n\n" +
-    `Quality: ${quality}\n` +
-    `Pages: ${processedPages}\n` +
-    `Reader Reward: ₦${reward}\n` +
-    `Readers: ${readers}`
-  );
-
-
-if (!confirmed) {
-
-  return;
-
-}
-
-
-/* ================================================
-   UPDATE NOVEL
-   ================================================= */
-
-try {
-
-  const {
-    error
-  } = await supabaseClient
-    .from("novels")
-    .update({
-
-      page_count:
-        processedPages,
-
-      approved_reader_reward:
-        reward,
-
-      approved_reader_count:
-        readers,
-
-      writer_listing_fee:
-        fee,
-
-      required_reading_percent:
-        readingPercent,
-
-      status:
-        "approved",
-
-      submission_status:
-        "approved"
-
-    })
-    .eq(
-      "id",
-      currentNovel.id
-    );
-
-
-  if (error) {
-
-    throw error;
+    return false;
 
   }
-
-
-  console.log(
-    "Novel quality assessment:",
-    quality
-  );
-
-
-  console.log(
-    "Assessment notes:",
-    notes
-  );
-
-
-  currentNovel.page_count =
-    processedPages;
-
-  currentNovel.approved_reader_reward =
-    reward;
-
-  currentNovel.approved_reader_count =
-    readers;
-
-  currentNovel.writer_listing_fee =
-    fee;
-
-  currentNovel.required_reading_percent =
-    readingPercent;
-
-  currentNovel.status =
-    "approved";
-
-  currentNovel.submission_status =
-    "approved";
-
-
-  showMessage(
-    "Novel approved successfully.",
-    "success"
-  );
-
-
-  alert(
-    "✓ Novel approved successfully."
-  );
-
-
-  await loadNovel();
-
-
-} catch (error) {
-
-  console.error(
-    "Novel approval error:",
-    error
-  );
-
-
-  showMessage(
-    "Could not approve novel: " +
-    error.message,
-    "error"
-  );
-
-
-  alert(
-    "Novel could not be approved.\n\n" +
-    error.message
-  );
-
-}
-
-}
-/* =====================================================
-   SAVE NOVEL ASSESSMENT
-   ===================================================== */
-
-async function saveNovelAssessment(
-  quality,
-  notes
-) {
-
-  /*
-   * This function attempts to save the
-   * quality assessment and notes.
-   *
-   * If your novels table does not have
-   * these columns yet, approval will
-   * still work.
-   */
-
-  const {
-    error
-  } = await supabaseClient
-    .from("novels")
-    .update({
-
-      quality_assessment:
-        quality,
-             assessment_notes:
-          notes,
-
-        page_count:
-          processedPages,
-
-        approved_reader_reward:
-          reward,
-
-        approved_reader_count:
-          readers,
-
-        writer_listing_fee:
-          fee,
-
-        required_reading_percent:
-          readingPercent,
-
-        status:
-          "approved",
-
-        submission_status:
-          "approved"
-
-      })
-      .eq(
-        "id",
-        currentNovel.id
-      );
-
-
-  if (error) {
-
-    console.error(
-      "Novel assessment save error:",
-      error
-    );
-
-    throw error;
-
-  }
-
-
-  /* =========================================
-     UPDATE LOCAL NOVEL DATA
-     ========================================= */
-
-  currentNovel.page_count =
-    processedPages;
-
-  currentNovel.approved_reader_reward =
-    reward;
-
-  currentNovel.approved_reader_count =
-    readers;
-
-  currentNovel.writer_listing_fee =
-    fee;
-
-  currentNovel.required_reading_percent =
-    readingPercent;
-
-  currentNovel.status =
-    "approved";
-
-  currentNovel.submission_status =
-    "approved";
 
 
   return true;
@@ -2172,18 +1572,242 @@ async function saveNovelAssessment(
 
 
 /* =====================================================
-   APPROVE NOVEL
+   VALIDATE PAGES
    ===================================================== */
 
-async function approveNovel() {
+function validatePages() {
+
+  const pages =
+    Number(
+      document.getElementById(
+        "pages"
+      )?.value
+    );
+
+
+  if (
+    !Number.isFinite(
+      pages
+    ) ||
+    pages <= 0
+  ) {
+
+    alert(
+      "Please enter a valid page count."
+    );
+
+
+    return false;
+
+  }
+
+
+  return true;
+
+}
+
+
+/* =====================================================
+   VALIDATE REWARD
+   ===================================================== */
+
+function validateReward() {
+
+  const reward =
+    Number(
+      document.getElementById(
+        "reward"
+      )?.value
+    );
+
+
+  if (
+    !Number.isFinite(
+      reward
+    ) ||
+    reward <= 0
+  ) {
+
+    alert(
+      "Please enter a valid reader reward."
+    );
+
+
+    return false;
+
+  }
+
+
+  return true;
+
+}
+
+
+/* =====================================================
+   VALIDATE READERS
+   ===================================================== */
+
+function validateReaders() {
+
+  const readers =
+    Number(
+      document.getElementById(
+        "readers"
+      )?.value
+    );
+
+
+  if (
+    !Number.isFinite(
+      readers
+    ) ||
+    readers <= 0
+  ) {
+
+    alert(
+      "Please enter a valid approved reader target."
+    );
+
+
+    return false;
+
+  }
+
+
+  return true;
+
+}
+
+
+/* =====================================================
+   VALIDATE LISTING FEE
+   ===================================================== */
+
+function validateFee() {
+
+  const fee =
+    Number(
+      document.getElementById(
+        "fee"
+      )?.value
+    );
+
+
+  if (
+    !Number.isFinite(
+      fee
+    ) ||
+    fee < 0
+  ) {
+
+    alert(
+      "Please enter a valid listing fee."
+    );
+
+
+    return false;
+
+  }
+
+
+  return true;
+
+}
+
+
+/* =====================================================
+   VALIDATE READING PERCENTAGE
+   ===================================================== */
+
+function validateReadingPercent() {
+
+  const readingPercent =
+    Number(
+      document.getElementById(
+        "readingPercent"
+      )?.value
+    );
+
+
+  if (
+    !Number.isFinite(
+      readingPercent
+    ) ||
+    readingPercent <= 0 ||
+    readingPercent > 100
+  ) {
+
+    alert(
+      "Required reading percentage must be between 1 and 100."
+    );
+
+
+    return false;
+
+  }
+
+
+  return true;
+
+}
+
+
+/* =====================================================
+   SAVE NOVEL ASSESSMENT
+   ===================================================== */
+
+async function saveNovelAssessment() {
 
   if (!currentNovel) {
 
     alert(
-      "Novel information is not loaded."
+      "No novel is currently loaded."
     );
 
-    return;
+
+    return false;
+
+  }
+
+
+  if (!validateQuality()) {
+
+    return false;
+
+  }
+
+
+  if (!validatePages()) {
+
+    return false;
+
+  }
+
+
+  if (!validateReward()) {
+
+    return false;
+
+  }
+
+
+  if (!validateReaders()) {
+
+    return false;
+
+  }
+
+
+  if (!validateFee()) {
+
+    return false;
+
+  }
+
+
+  if (!validateReadingPercent()) {
+
+    return false;
 
   }
 
@@ -2240,142 +1864,691 @@ async function approveNovel() {
     ).value.trim();
 
 
-  /* =========================================
-     VALIDATE QUALITY
-     ========================================= */
+  const {
+    error
+  } =
+    await supabaseClient
+      .from("novels")
+      .update({
 
-  if (!quality) {
+        quality_assessment:
+          quality,
 
-    alert(
-      "Please select a quality assessment."
+        assessment_notes:
+          notes,
+
+        page_count:
+          pages,
+
+        approved_reader_reward:
+          reward,
+
+        approved_reader_count:
+          readers,
+
+        writer_listing_fee:
+          fee,
+
+        required_reading_percent:
+          readingPercent
+
+      })
+      .eq(
+        "id",
+        currentNovel.id
+      );
+
+
+  if (error) {
+
+    console.error(
+      "Assessment saving error:",
+      error
     );
+
+
+    showMessage(
+      "Could not save the assessment: " +
+      error.message,
+      "error"
+    );
+
+
+    return false;
+
+  }
+
+
+  currentNovel.quality_assessment =
+    quality;
+
+
+  currentNovel.assessment_notes =
+    notes;
+
+
+  currentNovel.page_count =
+    pages;
+
+
+  currentNovel.approved_reader_reward =
+    reward;
+
+
+  currentNovel.approved_reader_count =
+    readers;
+
+
+  currentNovel.writer_listing_fee =
+    fee;
+
+
+  currentNovel.required_reading_percent =
+    readingPercent;
+
+
+  return true;
+
+}
+
+
+/* =====================================================
+   QUIZ QUESTIONS
+   ===================================================== */
+
+function addQuizQuestion(
+  question = {}
+) {
+
+  const container =
+    document.getElementById(
+      "quizQuestionsContainer"
+    );
+
+
+  if (!container) {
 
     return;
 
   }
 
 
-  /* =========================================
-     VALIDATE PAGES
-     ========================================= */
+  const questionNumber =
+    container.children.length + 1;
+
+
+  const card =
+    document.createElement(
+      "div"
+    );
+
+
+  card.className =
+    "quiz-question-card";
+
+
+  card.innerHTML = `
+
+    <h3>
+      Question ${questionNumber}
+    </h3>
+
+
+    <label>
+      Question
+    </label>
+
+
+    <textarea
+      class="quiz-question-text"
+      placeholder="Enter your question"
+    >${escapeHtml(
+      question.question ||
+      ""
+    )}</textarea>
+
+
+    <label>
+      Option A
+    </label>
+
+
+    <input
+      type="text"
+      class="quiz-option-a"
+      value="${escapeHtml(
+        question.option_a ||
+        ""
+      )}"
+      placeholder="Option A"
+    >
+
+
+    <label>
+      Option B
+    </label>
+
+
+    <input
+      type="text"
+      class="quiz-option-b"
+      value="${escapeHtml(
+        question.option_b ||
+        ""
+      )}"
+      placeholder="Option B"
+    >
+
+
+    <label>
+      Option C
+    </label>
+
+
+    <input
+      type="text"
+      class="quiz-option-c"
+      value="${escapeHtml(
+        question.option_c ||
+        ""
+      )}"
+      placeholder="Option C"
+    >
+
+
+    <label>
+      Option D
+    </label>
+
+
+    <input
+      type="text"
+      class="quiz-option-d"
+      value="${escapeHtml(
+        question.option_d ||
+        ""
+      )}"
+      placeholder="Option D"
+    >
+
+
+    <label>
+      Correct Answer
+    </label>
+
+
+    <select
+      class="quiz-correct-answer"
+    >
+
+      <option
+        value=""
+      >
+        Select correct answer
+      </option>
+
+
+      <option
+        value="A"
+        ${
+          question.correct_answer ===
+          "A"
+            ? "selected"
+            : ""
+        }
+      >
+        A
+      </option>
+
+
+      <option
+        value="B"
+        ${
+          question.correct_answer ===
+          "B"
+            ? "selected"
+            : ""
+        }
+      >
+        B
+      </option>
+
+
+      <option
+        value="C"
+        ${
+          question.correct_answer ===
+          "C"
+            ? "selected"
+            : ""
+        }
+      >
+        C
+      </option>
+
+
+      <option
+        value="D"
+        ${
+          question.correct_answer ===
+          "D"
+            ? "selected"
+            : ""
+        }
+      >
+        D
+      </option>
+
+    </select>
+
+
+    <button
+      type="button"
+      class="btn danger"
+      onclick="removeQuizQuestion(this)"
+    >
+
+      Remove Question
+
+    </button>
+
+  `;
+
+
+  container.appendChild(
+    card
+  );
+
+}
+
+
+/* =====================================================
+   REMOVE QUIZ QUESTION
+   ===================================================== */
+
+function removeQuizQuestion(
+  button
+) {
+
+  const card =
+    button.closest(
+      ".quiz-question-card"
+    );
+
+
+  if (card) {
+
+    card.remove();
+
+  }
+
+
+  const container =
+    document.getElementById(
+      "quizQuestionsContainer"
+    );
+
+
+  if (!container) {
+
+    return;
+
+  }
+
+
+  Array.from(
+    container.children
+  ).forEach(
+    (
+      questionCard,
+      index
+    ) => {
+
+      const heading =
+        questionCard.querySelector(
+          "h3"
+        );
+
+
+      if (heading) {
+
+        heading.textContent =
+          `Question ${index + 1}`;
+
+      }
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   LOAD QUIZ QUESTIONS
+   ===================================================== */
+
+async function loadQuizQuestions() {
+
+  const container =
+    document.getElementById(
+      "quizQuestionsContainer"
+    );
+
+
+  if (!container) {
+
+    return;
+
+  }
+
+
+  container.innerHTML =
+    "";
+
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from(
+        "novel_quiz_questions"
+      )
+      .select(`
+        id,
+        question,
+        option_a,
+        option_b,
+        option_c,
+        option_d,
+        correct_answer
+      `)
+      .eq(
+        "novel_id",
+        novelId
+      )
+      .order(
+        "created_at",
+        {
+          ascending: true
+        }
+      );
+
+
+  if (error) {
+
+    console.error(
+      "Quiz loading error:",
+      error
+    );
+
+
+    return;
+
+  }
+
 
   if (
-    !pages ||
-    pages <= 0
+    data &&
+    data.length > 0
+  ) {
+
+    data.forEach(
+      question => {
+
+        addQuizQuestion(
+          question
+        );
+
+      }
+    );
+
+  }
+
+
+  else {
+
+    addQuizQuestion();
+
+  }
+
+}
+
+
+/* =====================================================
+   SAVE QUIZ QUESTIONS
+   ===================================================== */
+
+async function saveQuizQuestions() {
+
+  if (!currentNovel) {
+
+    alert(
+      "No novel is currently loaded."
+    );
+
+
+    return;
+
+  }
+
+
+  const container =
+    document.getElementById(
+      "quizQuestionsContainer"
+    );
+
+
+  if (!container) {
+
+    return;
+
+  }
+
+
+  const cards =
+    Array.from(
+      container.querySelectorAll(
+        ".quiz-question-card"
+      )
+    );
+
+
+  if (
+    cards.length === 0
   ) {
 
     alert(
-      "Please enter a valid page count."
+      "Please add at least one quiz question."
     );
+
 
     return;
 
   }
 
 
-  /* =========================================
-     VALIDATE REWARD
-     ========================================= */
+  const questions =
+    [];
 
-  if (
-    !reward ||
-    reward <= 0
+
+  for (
+    const card of cards
   ) {
 
-    alert(
-      "Please enter a valid reader reward."
+    const question =
+      card.querySelector(
+        ".quiz-question-text"
+      ).value.trim();
+
+
+    const optionA =
+      card.querySelector(
+        ".quiz-option-a"
+      ).value.trim();
+
+
+    const optionB =
+      card.querySelector(
+        ".quiz-option-b"
+      ).value.trim();
+
+
+    const optionC =
+      card.querySelector(
+        ".quiz-option-c"
+      ).value.trim();
+
+
+    const optionD =
+      card.querySelector(
+        ".quiz-option-d"
+      ).value.trim();
+
+
+    const correctAnswer =
+      card.querySelector(
+        ".quiz-correct-answer"
+      ).value;
+
+
+    if (
+      !question ||
+      !optionA ||
+      !optionB ||
+      !optionC ||
+      !optionD ||
+      !correctAnswer
+    ) {
+
+      alert(
+        "Please complete every field for each quiz question."
+      );
+
+
+      return;
+
+    }
+
+
+    questions.push({
+
+      novel_id:
+        currentNovel.id,
+
+      question:
+        question,
+
+      option_a:
+        optionA,
+
+      option_b:
+        optionB,
+
+      option_c:
+        optionC,
+
+      option_d:
+        optionD,
+
+      correct_answer:
+        correctAnswer
+
+    });
+
+  }
+
+
+  const {
+    error: deleteError
+  } =
+    await supabaseClient
+      .from(
+        "novel_quiz_questions"
+      )
+      .delete()
+      .eq(
+        "novel_id",
+        currentNovel.id
+      );
+
+
+  if (deleteError) {
+
+    console.error(
+      "Quiz deletion error:",
+      deleteError
     );
+
+
+    showMessage(
+      "Could not update the quiz: " +
+      deleteError.message,
+      "error"
+    );
+
 
     return;
 
   }
 
 
-  /* =========================================
-     VALIDATE READERS
-     ========================================= */
+  const {
+    error: insertError
+  } =
+    await supabaseClient
+      .from(
+        "novel_quiz_questions"
+      )
+      .insert(
+        questions
+      );
 
-  if (
-    !readers ||
-    readers <= 0
-  ) {
 
-    alert(
-      "Please enter a valid reader target."
+  if (insertError) {
+
+    console.error(
+      "Quiz saving error:",
+      insertError
     );
+
+
+    showMessage(
+      "Could not save the quiz: " +
+      insertError.message,
+      "error"
+    );
+
 
     return;
 
   }
 
 
-  /* =========================================
-     VALIDATE FEE
-     ========================================= */
+  showMessage(
+    "Quiz saved successfully.",
+    "success"
+  );
 
-  if (
-    Number.isNaN(fee) ||
-    fee < 0
-  ) {
-
-    alert(
-      "Please enter a valid listing fee."
-    );
-
-    return;
-
-  }
+}
 
 
-  /* =========================================
-     VALIDATE READING PERCENT
-     ========================================= */
+/* =====================================================
+   APPROVE NOVEL
+   ===================================================== */
 
-  if (
-    !readingPercent ||
-    readingPercent < 1 ||
-    readingPercent > 100
-  ) {
+async function approveNovel() {
 
-    alert(
-      "Required reading must be between 1% and 100%."
-    );
+  if (!currentNovel) {
 
     return;
 
   }
 
-
-  /* =========================================
-     CHECK MANUSCRIPT
-     ========================================= */
-
-  if (
-    !currentNovel.manuscript_url
-  ) {
-
-    alert(
-      "This novel has no manuscript."
-    );
-
-    return;
-
-  }
-
-
-  /* =========================================
-     CONFIRM APPROVAL
-     ========================================= */
 
   const confirmed =
     confirm(
-      "Approve this novel?\n\n" +
-      "Pages: " +
-      pages +
-      "\n\nReader Reward: ₦" +
-      reward.toLocaleString() +
-      "\n\nReader Target: " +
-      readers.toLocaleString()
+      "Are you sure you want to approve this novel?"
     );
 
 
@@ -2386,40 +2559,41 @@ async function approveNovel() {
   }
 
 
-  try {
-
-    const success =
-      await saveNovelAssessment(
-        quality,
-        notes
-      );
+  const saved =
+    await saveNovelAssessment();
 
 
-    if (!success) {
+  if (!saved) {
 
-      throw new Error(
-        "Novel assessment could not be saved."
-      );
-
-    }
-
-
-    showMessage(
-      "Novel approved successfully.",
-      "success"
-    );
-
-
-    /*
-     * Reload the page data so the new status
-     * and settings are displayed.
-     */
-
-    await loadNovel();
+    return;
 
   }
 
-  catch (error) {
+
+  const {
+    error
+  } =
+    await supabaseClient
+      .from("novels")
+      .update({
+
+        status:
+          "approved",
+
+        submission_status:
+          "approved",
+
+        writer_payment_status:
+          "pending"
+
+      })
+      .eq(
+        "id",
+        currentNovel.id
+      );
+
+
+  if (error) {
 
     console.error(
       "Novel approval error:",
@@ -2429,14 +2603,31 @@ async function approveNovel() {
 
     showMessage(
       "Could not approve the novel: " +
-      (
-        error.message ||
-        "Unknown error."
-      ),
+      error.message,
       "error"
     );
 
+
+    return;
+
   }
+
+
+  currentNovel.status =
+    "approved";
+
+
+  currentNovel.submission_status =
+    "approved";
+
+
+  showMessage(
+    "Novel approved successfully.",
+    "success"
+  );
+
+
+  await loadNovel();
 
 }
 
@@ -2449,10 +2640,6 @@ async function rejectNovel() {
 
   if (!currentNovel) {
 
-    alert(
-      "Novel information is not loaded."
-    );
-
     return;
 
   }
@@ -2461,7 +2648,19 @@ async function rejectNovel() {
   const notes =
     document.getElementById(
       "notes"
-    ).value.trim();
+    )?.value.trim();
+
+
+  if (!notes) {
+
+    alert(
+      "Please enter assessment notes explaining why the novel is being rejected."
+    );
+
+
+    return;
+
+  }
 
 
   const confirmed =
@@ -2477,67 +2676,30 @@ async function rejectNovel() {
   }
 
 
-  try {
-
-    const updateData = {
-
-      status:
-        "rejected",
-
-      submission_status:
-        "rejected"
-
-    };
-
-
-    /*
-     * Save notes if provided.
-     */
-
-    if (notes) {
-
-      updateData.assessment_notes =
-        notes;
-
-    }
-
-
-    const {
-      error
-    } = await supabaseClient
+  const {
+    error
+  } =
+    await supabaseClient
       .from("novels")
-      .update(updateData)
+      .update({
+
+        status:
+          "rejected",
+
+        submission_status:
+          "rejected",
+
+        assessment_notes:
+          notes
+
+      })
       .eq(
         "id",
         currentNovel.id
       );
 
 
-    if (error) {
-
-      throw error;
-
-    }
-
-
-    currentNovel.status =
-      "rejected";
-
-    currentNovel.submission_status =
-      "rejected";
-
-
-    showMessage(
-      "Novel rejected successfully.",
-      "success"
-    );
-
-
-    await loadNovel();
-
-  }
-
-  catch (error) {
+  if (error) {
 
     console.error(
       "Novel rejection error:",
@@ -2547,14 +2709,31 @@ async function rejectNovel() {
 
     showMessage(
       "Could not reject the novel: " +
-      (
-        error.message ||
-        "Unknown error."
-      ),
+      error.message,
       "error"
     );
 
+
+    return;
+
   }
+
+
+  currentNovel.status =
+    "rejected";
+
+
+  currentNovel.submission_status =
+    "rejected";
+
+
+  showMessage(
+    "Novel rejected successfully.",
+    "success"
+  );
+
+
+  await loadNovel();
 
 }
 
@@ -2567,10 +2746,6 @@ async function requestRevision() {
 
   if (!currentNovel) {
 
-    alert(
-      "Novel information is not loaded."
-    );
-
     return;
 
   }
@@ -2579,14 +2754,15 @@ async function requestRevision() {
   const notes =
     document.getElementById(
       "notes"
-    ).value.trim();
+    )?.value.trim();
 
 
   if (!notes) {
 
     alert(
-      "Please enter assessment notes explaining the required revision."
+      "Please enter assessment notes explaining the required revisions."
     );
+
 
     return;
 
@@ -2595,7 +2771,7 @@ async function requestRevision() {
 
   const confirmed =
     confirm(
-      "Request a revision from the writer?"
+      "Send this novel back to the writer for revision?"
     );
 
 
@@ -2606,11 +2782,10 @@ async function requestRevision() {
   }
 
 
-  try {
-
-    const {
-      error
-    } = await supabaseClient
+  const {
+    error
+  } =
+    await supabaseClient
       .from("novels")
       .update({
 
@@ -2630,31 +2805,7 @@ async function requestRevision() {
       );
 
 
-    if (error) {
-
-      throw error;
-
-    }
-
-
-    currentNovel.status =
-      "needs_revision";
-
-    currentNovel.submission_status =
-      "needs_revision";
-
-
-    showMessage(
-      "Revision request sent successfully.",
-      "success"
-    );
-
-
-    await loadNovel();
-
-  }
-
-  catch (error) {
+  if (error) {
 
     console.error(
       "Revision request error:",
@@ -2664,14 +2815,31 @@ async function requestRevision() {
 
     showMessage(
       "Could not request revision: " +
-      (
-        error.message ||
-        "Unknown error."
-      ),
+      error.message,
       "error"
     );
 
+
+    return;
+
   }
+
+
+  currentNovel.status =
+    "needs_revision";
+
+
+  currentNovel.submission_status =
+    "needs_revision";
+
+
+  showMessage(
+    "Revision request sent successfully.",
+    "success"
+  );
+
+
+  await loadNovel();
 
 }
 
@@ -2681,38 +2849,50 @@ async function requestRevision() {
    ===================================================== */
 
 function showMessage(
-  message,
-  type = "success"
+  text,
+  type
 ) {
 
-  const box =
+  const message =
     document.getElementById(
       "message"
     );
 
 
-  if (!box) {
+  if (!message) {
 
     return;
 
   }
 
 
-  box.className =
+  message.textContent =
+    text;
+
+
+  message.className =
     `message show ${type}`;
-
-
-  box.textContent =
-    message;
 
 
   window.scrollTo({
 
     top: 0,
 
-    behavior: "smooth"
+    behavior:
+      "smooth"
 
   });
+
+
+  setTimeout(
+    () => {
+
+      message.className =
+        "message";
+
+    },
+    6000
+  );
 
 }
 
@@ -2721,34 +2901,30 @@ function showMessage(
    ESCAPE HTML
    ===================================================== */
 
-function escapeHtml(value) {
+function escapeHtml(
+  value
+) {
 
-  return String(value ?? "")
+  if (
+    value === null ||
+    value === undefined
+  ) {
 
-    .replaceAll(
-      "&",
-      "&amp;"
-    )
+    return "";
 
-    .replaceAll(
-      "<",
-      "&lt;"
-    )
+  }
 
-    .replaceAll(
-      ">",
-      "&gt;"
-    )
 
-    .replaceAll(
-      '"',
-      "&quot;"
-    )
-
-    .replaceAll(
-      "'",
-      "&#039;"
+  const div =
+    document.createElement(
+      "div"
     );
+
+  div.textContent =
+    String(value);
+
+
+  return div.innerHTML;
 
 }
 
@@ -2757,31 +2933,47 @@ function escapeHtml(value) {
    LOGOUT
    ===================================================== */
 
+async function logout() {
+
+  const confirmed =
+    confirm(
+      "Are you sure you want to log out?"
+    );
+
+
+  if (!confirmed) {
+
+    return;
+
+  }
+
+
+  await supabaseClient
+    .auth
+    .signOut();
+
+
+  window.location.href =
+    "index.html";
+
+}
+
+
 document
   .getElementById(
     "logoutButton"
   )
   .addEventListener(
     "click",
-
-    async function () {
-
-      await supabaseClient.auth.signOut();
-
-
-      window.location.href =
-        "index.html";
-
-    }
-
+    logout
   );
 
 
 /* =====================================================
-   INITIALIZE PAGE
+   INITIALIZATION
    ===================================================== */
 
-(async function initializePage() {
+async function initializePage() {
 
   const user =
     await checkAdmin();
@@ -2796,7 +2988,12 @@ document
 
   await loadNovel();
 
-})(); 
+}
+
+
+initializePage();
+  
+             
 </script>
  </body>
 </html>   

@@ -1972,6 +1972,104 @@ document
 
 let manualQuizQuestions = [];
 
+  async function loadQuizQuestions() {
+
+  if (!currentNovel?.id) {
+
+    return;
+
+  }
+
+
+  const {
+
+    data,
+
+    error
+
+  } =
+    await supabaseClient
+
+      .from("novel_quiz_questions")
+
+      .select(`
+        id,
+        question_text,
+        option_a,
+        option_b,
+        option_c,
+        option_d,
+        correct_option,
+        question_order
+      `)
+
+      .eq(
+        "novel_id",
+        currentNovel.id
+      )
+
+      .order(
+        "question_order",
+        {
+          ascending: true
+        }
+      );
+
+
+  if (error) {
+
+    console.error(
+      "Quiz loading error:",
+      error
+    );
+
+    return;
+
+  }
+
+
+  manualQuizQuestions =
+    (data || []).map(
+      question => ({
+
+        id:
+          question.id,
+
+
+        question_text:
+          question.question_text || "",
+
+
+        option_a_text:
+          question.option_a || "",
+
+
+        option_b_text:
+          question.option_b || "",
+
+
+        option_c_text:
+          question.option_c || "",
+
+
+        option_d_text:
+          question.option_d || "",
+
+
+        correct_option_text:
+          question.correct_option || "",
+
+
+        question_order:
+          question.question_order
+
+      })
+    );
+
+
+  renderQuizQuestions();
+
+  }
 function addQuizQuestion() {
   manualQuizQuestions.push({
     question_text: "",
@@ -2387,10 +2485,7 @@ async function saveQuizQuestions() {
      from the browser memory.
   */
 
-  manualQuizQuestions = [];
-
-
-  renderQuizQuestions();
+  console.log("Quiz saved successfully.");
 
 }        
 

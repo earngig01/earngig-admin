@@ -2518,17 +2518,14 @@ async function saveQuizQuestions() {
   if (insertError) {
 
   console.error(
-    "FULL QUIZ SAVING ERROR:",
+    "Quiz saving error:",
     insertError
   );
 
-  alert(
-    "QUIZ SAVE ERROR:\n\n" +
-    JSON.stringify(
-      insertError,
-      null,
-      2
-    )
+  showMessage(
+    "Could not save the quiz: " +
+    insertError.message,
+    "error"
   );
 
   return;

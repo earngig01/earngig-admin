@@ -2228,21 +2228,27 @@ function renderQuizQuestions() {
       .join("");
 }
 
-  async function saveQuizQuestions() {
+ async function saveQuizQuestions() {
 
   if (!currentNovel?.id) {
 
-    alert("Novel information is not loaded.");
+    alert(
+      "Novel information is not loaded."
+    );
 
     return;
+
   }
 
 
   if (manualQuizQuestions.length === 0) {
 
-    alert("Add at least one quiz question.");
+    alert(
+      "Add at least one quiz question."
+    );
 
     return;
+
   }
 
 
@@ -2274,74 +2280,64 @@ function renderQuizQuestions() {
       );
 
       return;
+
     }
 
   }
 
 
   /* =========================
-     GET LAST QUESTION ORDER
+     CONFIRM
      ========================= */
 
-  const {
-    data: existingQuestions,
-    error: existingError
-  } = await supabaseClient
-    .from("novel_quiz_questions")
-    .select("question_order")
-    .eq(
-      "novel_id",
-      currentNovel.id
+  if (
+    !confirm(
+      "Save these quiz questions?"
     )
-    .order(
-      "question_order",
-      {
-        ascending: false
-      }
-    )
-    .limit(1);
-
-
-  if (existingError) {
-
-    console.error(
-      "Could not check existing questions:",
-      existingError
-    );
-
-    alert(
-      "Could not check existing quiz questions.\n\n" +
-      existingError.message
-    );
+  ) {
 
     return;
+
   }
 
 
   /* =========================
-     DETERMINE NEXT ORDER
+     DELETE OLD QUESTIONS
      ========================= */
 
-  const nextQuestionOrder =
+  const {
+    error: deleteError
+  } =
+    await supabaseClient
+      .from(
+        "novel_quiz_questions"
+      )
+      .delete()
+      .eq(
+        "novel_id",
+        currentNovel.id
+      );
 
-    existingQuestions &&
-    existingQuestions.length > 0
 
-      ? Number(
-          existingQuestions[0].question_order
-        ) + 1
+  if (deleteError) {
 
-      : 1;
+    console.error(
+      "Quiz delete error:",
+      deleteError
+    );
 
+    alert(
+      "Could not replace existing quiz questions.\n\n" +
+      deleteError.message
+    );
 
-  console.log(
-    "Next question order:",
-    nextQuestionOrder
-  );
+    return;
+
+  }
 
 
   /* =========================
-     CREATE ROWS
+     CREATE NEW ROWS
      ========================= */
 
   const rows =
@@ -2373,16 +2369,10 @@ function renderQuizQuestions() {
           q.correct_option_text,
 
         question_order:
-          nextQuestionOrder + index
+          index + 1
 
       })
     );
-
-
-  console.log(
-    "Saving quiz questions:",
-    rows
-  );
 
 
   /* =========================
@@ -2392,12 +2382,13 @@ function renderQuizQuestions() {
   const {
     data,
     error
-  } = await supabaseClient
-    .from(
-      "novel_quiz_questions"
-    )
-    .insert(rows)
-    .select();
+  } =
+    await supabaseClient
+      .from(
+        "novel_quiz_questions"
+      )
+      .insert(rows)
+      .select();
 
 
   if (error) {
@@ -2413,8 +2404,13 @@ function renderQuizQuestions() {
     );
 
     return;
+
   }
 
+
+  /* =========================
+     SUCCESS
+     ========================= */
 
   console.log(
     "Saved questions:",
@@ -2422,25 +2418,20 @@ function renderQuizQuestions() {
   );
 
 
-  /* =========================
-     SUCCESS
-     ========================= */
-
   alert(
     `${rows.length} quiz question(s) saved successfully.`
   );
 
 
-  /* =========================
-     CLEAR FORM AFTER SUCCESS
-     ========================= */
+  showMessage(
+    "Quiz questions saved successfully.",
+    "success"
+  );
 
-  manualQuizQuestions = [];
 
-  renderQuizQuestions();
+  await loadQuizQuestions();
 
-  }       
-          
+ }        
 </script>
  </body>
 </html>   

@@ -2073,16 +2073,28 @@ let manualQuizQuestions = [];
 
   }
 function addQuizQuestion() {
+
   manualQuizQuestions.push({
+
+    id: null,
+
     question_text: "",
+
     option_a_text: "",
+
     option_b_text: "",
+
     option_c_text: "",
+
     option_d_text: "",
+
     correct_option_text: ""
+
   });
 
+
   renderQuizQuestions();
+
 }
 
 function removeQuizQuestion(index) {
@@ -2219,12 +2231,11 @@ function renderQuizQuestions() {
 
 async function saveQuizQuestions() {
 
-  if (!currentNovel || !currentNovel.id) {
+  if (!currentNovel?.id) {
 
     alert("Novel information is not loaded.");
 
     return;
-
   }
 
 
@@ -2233,13 +2244,8 @@ async function saveQuizQuestions() {
     alert("Add at least one quiz question.");
 
     return;
-
   }
 
-
-  /* =========================
-     VALIDATE QUESTIONS
-     ========================= */
 
   for (
     let i = 0;
@@ -2252,19 +2258,12 @@ async function saveQuizQuestions() {
 
 
     if (
-
       !q.question_text.trim() ||
-
       !q.option_a_text.trim() ||
-
       !q.option_b_text.trim() ||
-
       !q.option_c_text.trim() ||
-
       !q.option_d_text.trim() ||
-
       !q.correct_option_text
-
     ) {
 
       alert(
@@ -2272,8 +2271,168 @@ async function saveQuizQuestions() {
       );
 
       return;
-
     }
+
+  }
+
+
+  /* ==========================================
+     GET THE NEXT QUESTION ORDER
+     ========================================== */
+
+  const {
+    data: existingQuestions,
+    error: existingError
+  } = await supabaseClient
+    .from("novel_quiz_questions")
+    .select("question_order")
+    .eq(
+      "novel_id",
+      currentNovel.id
+    )
+    .order(
+      "question_order",
+      {
+        ascending: false
+      }
+    )
+    .limit(1);
+
+
+  if (existingError) {
+
+    console.error(
+      "Existing questions error:",
+      existingError
+    );
+
+    alert(
+      "Could not check existing quiz questions.\n\n" +
+      existingError.message
+    );
+
+    return;
+  }
+
+
+  const nextQuestionOrder =
+
+    existingQuestions &&
+    existingQuestions.length > 0
+
+      ? existingQuestions[0].question_order + 1
+
+      : 1;
+
+
+  /* ==========================================
+     PREPARE NEW QUESTIONS
+     ========================================== */
+
+  const rows =
+    manualQuizQuestions.map(
+      (q, index) => ({
+
+        id:
+          crypto.randomUUID(),
+
+        novel_id:
+          currentNovel.id,
+
+        question_text:
+          q.question_text.trim(),
+
+        option_a:
+          q.option_a_text.trim(),
+
+        option_b:
+          q.option_b_text.trim(),
+
+        option_c:
+          q.option_c_text.trim(),
+
+        option_d:
+          q.option_d_text.trim(),
+
+        correct_option:
+          q.correct_option_text,
+
+        question_order:
+          nextQuestionOrder + index
+
+      })
+    );
+
+
+  /* ==========================================
+     SAVE QUESTIONS
+     ========================================== */
+
+  const {
+    error
+  } = await supabaseClient
+    .from("novel_quiz_questions")
+    .insert(rows);
+
+
+  if (error) {
+
+    console.error(
+      "Quiz save error:",
+      error
+    );
+
+    alert(
+      "Quiz could not be saved.\n\n" +
+      error.message
+    );
+
+    return;
+  }
+
+
+  alert(
+    `${rows.length} quiz question(s) saved successfully.`
+  );
+
+
+  /* ==========================================
+     CLEAR ONLY AFTER SUCCESSFUL SAVE
+     ========================================== */
+
+  manualQuizQuestions = [];
+
+  renderQuizQuestions();
+
+}
+  /* =========================
+     VALIDATE QUESTIONS
+     ========================= */
+
+  for (
+  let i = 0;
+  i < newQuestions.length;
+  i++
+) {
+
+  const q = newQuestions[i];
+
+  if (
+    !q.question_text.trim() ||
+    !q.option_a_text.trim() ||
+    !q.option_b_text.trim() ||
+    !q.option_c_text.trim() ||
+    !q.option_d_text.trim() ||
+    !q.correct_option_text
+  ) {
+
+    alert(
+      `Please complete Question ${i + 1}.`
+    );
+
+    return;
+
+  }
 
   }
 
@@ -2365,51 +2524,66 @@ async function saveQuizQuestions() {
      CREATE ROWS
      ========================= */
 
+  const {
+  data: existingQuestions,
+  error: existingError
+} = await supabaseClient
+  .from("novel_quiz_questions")
+  .select("question_order")
+  .eq("novel_id", currentNovel.id)
+  .order("question_order", {
+    ascending: false
+  })
+  .limit(1);
+
+if (existingError) {
+  alert(
+    "Could not check existing quiz questions.\n\n" +
+    existingError.message
+  );
+
+  return;
+}
+
+const nextQuestionOrder =
+  existingQuestions &&
+  existingQuestions.length > 0
+    ? existingQuestions[0].question_order + 1
+    : 1;
+
   const rows =
+  manualQuizQuestions.map(
+    (q, index) => ({
 
-    manualQuizQuestions.map(
+      id:
+        crypto.randomUUID(),
 
-      (q, index) => ({
+      novel_id:
+        currentNovel.id,
 
-        id:
-          crypto.randomUUID(),
+      question_text:
+        q.question_text.trim(),
 
+      option_a:
+        q.option_a_text.trim(),
 
-        novel_id:
-          currentNovel.id,
+      option_b:
+        q.option_b_text.trim(),
 
+      option_c:
+        q.option_c_text.trim(),
 
-        question_text:
-          q.question_text.trim(),
+      option_d:
+        q.option_d_text.trim(),
 
+      correct_option:
+        q.correct_option_text,
 
-        option_a:
-          q.option_a_text.trim(),
+      question_order:
+        nextQuestionOrder + index
 
-
-        option_b:
-          q.option_b_text.trim(),
-
-
-        option_c:
-          q.option_c_text.trim(),
-
-
-        option_d:
-          q.option_d_text.trim(),
-
-
-        correct_option:
-          q.correct_option_text,
-
-
-        question_order:
-
-          nextQuestionOrder + index
-
-      })
-
-    );
+    })
+  );
 
 
   console.log(

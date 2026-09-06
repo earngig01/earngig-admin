@@ -2318,9 +2318,6 @@ async function loadQuizQuestions() {
 /* =====================================================
    SAVE QUIZ QUESTIONS
    ===================================================== */
-/* =====================================================
-   SAVE QUIZ QUESTIONS
-   ===================================================== */
 
 async function saveQuizQuestions() {
 
@@ -2371,10 +2368,16 @@ async function saveQuizQuestions() {
 
 
   for (
-    const card of cards
+    let index = 0;
+    index < cards.length;
+    index++
   ) {
 
-    const question =
+    const card =
+      cards[index];
+
+
+    const questionText =
       card.querySelector(
         ".quiz-question-text"
       ).value.trim();
@@ -2411,7 +2414,7 @@ async function saveQuizQuestions() {
 
 
     if (
-      !question ||
+      !questionText ||
       !optionA ||
       !optionB ||
       !optionC ||
@@ -2433,34 +2436,42 @@ async function saveQuizQuestions() {
       novel_id:
         currentNovel.id,
 
+
       question:
-        question,
+        questionText,
+
 
       option_a:
         optionA,
 
+
       option_b:
         optionB,
+
 
       option_c:
         optionC,
 
+
       option_d:
         optionD,
 
+
       correct_answer:
-        correctAnswer
+        correctAnswer,
+
+
+      question_order:
+        index + 1
 
     });
 
   }
 
 
-  console.log(
-    "Questions being saved:",
-    questions
-  );
-
+  /* =========================
+     DELETE OLD QUESTIONS
+     ========================= */
 
   const {
     error: deleteError
@@ -2496,8 +2507,11 @@ async function saveQuizQuestions() {
   }
 
 
+  /* =========================
+     INSERT NEW QUESTIONS
+     ========================= */
+
   const {
-    data: insertedQuestions,
     error: insertError
   } =
     await supabaseClient
@@ -2506,8 +2520,7 @@ async function saveQuizQuestions() {
       )
       .insert(
         questions
-      )
-      .select();
+      );
 
 
   if (insertError) {
@@ -2530,20 +2543,12 @@ async function saveQuizQuestions() {
   }
 
 
-  console.log(
-    "Quiz saved successfully:",
-    insertedQuestions
-  );
-
-
   showMessage(
     "Quiz saved successfully.",
     "success"
   );
 
 }
-
-  
       
 
 /* =====================================================

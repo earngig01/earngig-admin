@@ -1557,6 +1557,15 @@ async function approveNovel() {
       "notes"
     ).value.trim();
 
+  if (!quality) {
+
+  alert(
+    "Please select a quality assessment."
+  );
+
+  return;
+
+  }
 
   if (!pages || pages <= 0) {
 

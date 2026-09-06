@@ -2318,6 +2318,9 @@ async function loadQuizQuestions() {
 /* =====================================================
    SAVE QUIZ QUESTIONS
    ===================================================== */
+/* =====================================================
+   SAVE QUIZ QUESTIONS
+   ===================================================== */
 
 async function saveQuizQuestions() {
 
@@ -2368,16 +2371,10 @@ async function saveQuizQuestions() {
 
 
   for (
-    let index = 0;
-    index < cards.length;
-    index++
+    const card of cards
   ) {
 
-    const card =
-      cards[index];
-
-
-    const questionText =
+    const question =
       card.querySelector(
         ".quiz-question-text"
       ).value.trim();
@@ -2407,19 +2404,19 @@ async function saveQuizQuestions() {
       ).value.trim();
 
 
-    const correctOption =
+    const correctAnswer =
       card.querySelector(
         ".quiz-correct-answer"
       ).value;
 
 
     if (
-      !questionText ||
+      !question ||
       !optionA ||
       !optionB ||
       !optionC ||
       !optionD ||
-      !correctOption
+      !correctAnswer
     ) {
 
       alert(
@@ -2436,37 +2433,33 @@ async function saveQuizQuestions() {
       novel_id:
         currentNovel.id,
 
-
-      question_text:
-        questionText,
-
+      question:
+        question,
 
       option_a:
         optionA,
 
-
       option_b:
         optionB,
-
 
       option_c:
         optionC,
 
-
       option_d:
         optionD,
 
-
-      correct_option:
-        correctOption,
-
-
-      question_order:
-        index + 1
+      correct_answer:
+        correctAnswer
 
     });
 
   }
+
+
+  console.log(
+    "Questions being saved:",
+    questions
+  );
 
 
   const {
@@ -2504,6 +2497,7 @@ async function saveQuizQuestions() {
 
 
   const {
+    data: insertedQuestions,
     error: insertError
   } =
     await supabaseClient
@@ -2512,25 +2506,35 @@ async function saveQuizQuestions() {
       )
       .insert(
         questions
-      );
+      )
+      .select();
 
 
   if (insertError) {
 
-  console.error(
-    "Quiz saving error:",
-    insertError
-  );
+    console.error(
+      "Quiz saving error:",
+      insertError
+    );
 
-  showMessage(
-    "Could not save the quiz: " +
-    insertError.message,
-    "error"
-  );
 
-  return;
+    showMessage(
+      "Could not save the quiz: " +
+      insertError.message,
+      "error"
+    );
+
+
+    return;
 
   }
+
+
+  console.log(
+    "Quiz saved successfully:",
+    insertedQuestions
+  );
+
 
   showMessage(
     "Quiz saved successfully.",
@@ -2539,6 +2543,8 @@ async function saveQuizQuestions() {
 
 }
 
+  
+      
 
 /* =====================================================
    APPROVE NOVEL

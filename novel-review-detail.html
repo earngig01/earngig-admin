@@ -2228,8 +2228,7 @@ function renderQuizQuestions() {
       .join("");
 }
 
-
-async function saveQuizQuestions() {
+  async function saveQuizQuestions() {
 
   if (!currentNovel?.id) {
 
@@ -2246,6 +2245,10 @@ async function saveQuizQuestions() {
     return;
   }
 
+
+  /* =========================
+     VALIDATE QUESTIONS
+     ========================= */
 
   for (
     let i = 0;
@@ -2276,9 +2279,9 @@ async function saveQuizQuestions() {
   }
 
 
-  /* ==========================================
-     GET THE NEXT QUESTION ORDER
-     ========================================== */
+  /* =========================
+     GET LAST QUESTION ORDER
+     ========================= */
 
   const {
     data: existingQuestions,
@@ -2302,7 +2305,7 @@ async function saveQuizQuestions() {
   if (existingError) {
 
     console.error(
-      "Existing questions error:",
+      "Could not check existing questions:",
       existingError
     );
 
@@ -2315,19 +2318,31 @@ async function saveQuizQuestions() {
   }
 
 
+  /* =========================
+     DETERMINE NEXT ORDER
+     ========================= */
+
   const nextQuestionOrder =
 
     existingQuestions &&
     existingQuestions.length > 0
 
-      ? existingQuestions[0].question_order + 1
+      ? Number(
+          existingQuestions[0].question_order
+        ) + 1
 
       : 1;
 
 
-  /* ==========================================
-     PREPARE NEW QUESTIONS
-     ========================================== */
+  console.log(
+    "Next question order:",
+    nextQuestionOrder
+  );
+
+
+  /* =========================
+     CREATE ROWS
+     ========================= */
 
   const rows =
     manualQuizQuestions.map(
@@ -2364,228 +2379,6 @@ async function saveQuizQuestions() {
     );
 
 
-  /* ==========================================
-     SAVE QUESTIONS
-     ========================================== */
-
-  const {
-    error
-  } = await supabaseClient
-    .from("novel_quiz_questions")
-    .insert(rows);
-
-
-  if (error) {
-
-    console.error(
-      "Quiz save error:",
-      error
-    );
-
-    alert(
-      "Quiz could not be saved.\n\n" +
-      error.message
-    );
-
-    return;
-  }
-
-
-  alert(
-    `${rows.length} quiz question(s) saved successfully.`
-  );
-
-
-  /* ==========================================
-     CLEAR ONLY AFTER SUCCESSFUL SAVE
-     ========================================== */
-
-  manualQuizQuestions = [];
-
-  renderQuizQuestions();
-
-}
-  /* =========================
-     VALIDATE QUESTIONS
-     ========================= */
-
-  for (
-  let i = 0;
-  i < newQuestions.length;
-  i++
-) {
-
-  const q = newQuestions[i];
-
-  if (
-    !q.question_text.trim() ||
-    !q.option_a_text.trim() ||
-    !q.option_b_text.trim() ||
-    !q.option_c_text.trim() ||
-    !q.option_d_text.trim() ||
-    !q.correct_option_text
-  ) {
-
-    alert(
-      `Please complete Question ${i + 1}.`
-    );
-
-    return;
-
-  }
-
-  }
-
-
-  /* =========================
-     GET LAST QUESTION ORDER
-     ========================= */
-
-  const {
-
-    data: lastQuestion,
-
-    error: lastQuestionError
-
-  } =
-    await supabaseClient
-
-      .from("novel_quiz_questions")
-
-      .select(
-        "question_order"
-      )
-
-      .eq(
-        "novel_id",
-        currentNovel.id
-      )
-
-      .order(
-        "question_order",
-        {
-          ascending: false
-        }
-      )
-
-      .limit(1);
-
-
-  if (lastQuestionError) {
-
-    console.error(
-      "Could not get last question:",
-      lastQuestionError
-    );
-
-
-    alert(
-      "Could not check existing questions.\n\n" +
-      lastQuestionError.message
-    );
-
-
-    return;
-
-  }
-
-
-  /* =========================
-     DETERMINE STARTING ORDER
-     ========================= */
-
-  let nextQuestionOrder = 1;
-
-
-  if (
-
-    lastQuestion &&
-
-    lastQuestion.length > 0
-
-  ) {
-
-    nextQuestionOrder =
-
-      Number(
-        lastQuestion[0].question_order
-      ) + 1;
-
-  }
-
-
-  console.log(
-    "Next question order:",
-    nextQuestionOrder
-  );
-
-
-  /* =========================
-     CREATE ROWS
-     ========================= */
-
-  const {
-  data: existingQuestions,
-  error: existingError
-} = await supabaseClient
-  .from("novel_quiz_questions")
-  .select("question_order")
-  .eq("novel_id", currentNovel.id)
-  .order("question_order", {
-    ascending: false
-  })
-  .limit(1);
-
-if (existingError) {
-  alert(
-    "Could not check existing quiz questions.\n\n" +
-    existingError.message
-  );
-
-  return;
-}
-
-const nextQuestionOrder =
-  existingQuestions &&
-  existingQuestions.length > 0
-    ? existingQuestions[0].question_order + 1
-    : 1;
-
-  const rows =
-  manualQuizQuestions.map(
-    (q, index) => ({
-
-      id:
-        crypto.randomUUID(),
-
-      novel_id:
-        currentNovel.id,
-
-      question_text:
-        q.question_text.trim(),
-
-      option_a:
-        q.option_a_text.trim(),
-
-      option_b:
-        q.option_b_text.trim(),
-
-      option_c:
-        q.option_c_text.trim(),
-
-      option_d:
-        q.option_d_text.trim(),
-
-      correct_option:
-        q.correct_option_text,
-
-      question_order:
-        nextQuestionOrder + index
-
-    })
-  );
-
-
   console.log(
     "Saving quiz questions:",
     rows
@@ -2597,24 +2390,14 @@ const nextQuestionOrder =
      ========================= */
 
   const {
-
     data,
-
     error
-
-  } =
-
-    await supabaseClient
-
-      .from(
-        "novel_quiz_questions"
-      )
-
-      .insert(
-        rows
-      )
-
-      .select();
+  } = await supabaseClient
+    .from(
+      "novel_quiz_questions"
+    )
+    .insert(rows)
+    .select();
 
 
   if (error) {
@@ -2624,18 +2407,12 @@ const nextQuestionOrder =
       error
     );
 
-
     alert(
-
       "Quiz could not be saved.\n\n" +
-
       error.message
-
     );
 
-
     return;
-
   }
 
 
@@ -2650,21 +2427,19 @@ const nextQuestionOrder =
      ========================= */
 
   alert(
-
     `${rows.length} quiz question(s) saved successfully.`
-
   );
 
 
-  /* IMPORTANT:
-     Remove saved questions
-     from the browser memory.
-  */
+  /* =========================
+     CLEAR FORM AFTER SUCCESS
+     ========================= */
 
-  console.log("Quiz saved successfully.");
+  manualQuizQuestions = [];
 
-}        
+  renderQuizQuestions();
 
+  }       
           
 </script>
  </body>

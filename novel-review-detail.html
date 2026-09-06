@@ -2128,14 +2128,26 @@ function escapeHtml(value) {
 async function saveQuizQuestions() {
 
   if (!currentNovel?.id) {
+
     alert("Novel information is not loaded.");
+
     return;
+
   }
 
+
   if (manualQuizQuestions.length === 0) {
+
     alert("Add at least one quiz question.");
+
     return;
+
   }
+
+
+  /* =========================
+     VALIDATE QUESTIONS
+     ========================= */
 
   for (
     let i = 0;
@@ -2143,81 +2155,230 @@ async function saveQuizQuestions() {
     i++
   ) {
 
-    const q = manualQuizQuestions[i];
+    const q =
+      manualQuizQuestions[i];
+
 
     if (
+
       !q.question_text.trim() ||
+
       !q.option_a_text.trim() ||
+
       !q.option_b_text.trim() ||
+
       !q.option_c_text.trim() ||
+
       !q.option_d_text.trim() ||
+
       !q.correct_option_text
+
     ) {
+
       alert(
         `Please complete Question ${i + 1}.`
       );
+
       return;
+
     }
+
   }
 
-  const rows =
-  manualQuizQuestions.map(
-    (q, index) => ({
 
-      id: crypto.randomUUID(),
-
-      novel_id:
-        currentNovel.id,
-
-      question_text:
-        q.question_text.trim(),
-
-      option_a:
-        q.option_a_text.trim(),
-
-      option_b:
-        q.option_b_text.trim(),
-
-      option_c:
-        q.option_c_text.trim(),
-
-      option_d:
-        q.option_d_text.trim(),
-
-      correct_option:
-        q.correct_option_text,
-
-      question_order:
-        index + 1
-
-    })
-  );
+  /* =========================
+     GET EXISTING QUESTIONS
+     ========================= */
 
   const {
-    error
+
+    data: existingQuestions,
+
+    error: existingError
+
   } =
     await supabaseClient
       .from("novel_quiz_questions")
-      .insert(rows);
+
+      .select(
+        "question_order"
+      )
+
+      .eq(
+        "novel_id",
+        currentNovel.id
+      )
+
+
+  if (existingError) {
+
+    console.error(
+      "Could not check existing questions:",
+      existingError
+    );
+
+
+    alert(
+      "Could not check existing quiz questions.\n\n" +
+      existingError.message
+    );
+
+
+    return;
+
+  }
+
+
+  /* =========================
+     FIND NEXT QUESTION NUMBER
+     ========================= */
+
+  let nextQuestionOrder = 1;
+
+
+  if (
+
+    existingQuestions &&
+
+    existingQuestions.length > 0
+
+  ) {
+
+    const highestOrder =
+      Math.max(
+
+        ...existingQuestions.map(
+
+          question =>
+            Number(
+              question.question_order
+            ) || 0
+
+        )
+
+      );
+
+
+    nextQuestionOrder =
+      highestOrder + 1;
+
+  }
+
+
+  /* =========================
+     CREATE DATABASE ROWS
+     ========================= */
+
+  const rows =
+    manualQuizQuestions.map(
+
+      (q, index) => ({
+
+        id:
+          crypto.randomUUID(),
+
+
+        novel_id:
+          currentNovel.id,
+
+
+        question_text:
+          q.question_text.trim(),
+
+
+        option_a:
+          q.option_a_text.trim(),
+
+
+        option_b:
+          q.option_b_text.trim(),
+
+
+        option_c:
+          q.option_c_text.trim(),
+
+
+        option_d:
+          q.option_d_text.trim(),
+
+
+        correct_option:
+          q.correct_option_text,
+
+
+        question_order:
+
+          nextQuestionOrder +
+
+          index
+
+      })
+
+    );
+
+
+  /* =========================
+     SAVE QUESTIONS
+     ========================= */
+
+  const {
+
+    error
+
+  } =
+    await supabaseClient
+
+      .from(
+        "novel_quiz_questions"
+      )
+
+      .insert(
+        rows
+      );
+
 
   if (error) {
+
     console.error(
       "Quiz save error:",
       error
     );
 
+
     alert(
+
       "Quiz could not be saved.\n\n" +
+
       error.message
+
     );
 
+
     return;
+
   }
 
+
+  /* =========================
+     SUCCESS
+     ========================= */
+
   alert(
+
     `${rows.length} quiz question(s) saved successfully.`
+
   );
-                                    }
+
+
+  /* Clear the form */
+
+  manualQuizQuestions = [];
+
+
+  renderQuizQuestions();
+
+}
+      
 </script>
  </body>
 </html>   

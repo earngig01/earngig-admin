@@ -2300,7 +2300,7 @@ function renderQuizQuestions() {
       .join("");
 }
 
- async function saveQuizQuestions() {
+async function saveQuizQuestions() {
 
   if (!currentNovel?.id) {
 
@@ -2326,7 +2326,7 @@ function renderQuizQuestions() {
 
   /* =========================
      VALIDATE QUESTIONS
-     ========================= */
+  ========================= */
 
   for (
     let i = 0;
@@ -2359,31 +2359,14 @@ function renderQuizQuestions() {
 
 
   /* =========================
-     CONFIRM
-     ========================= */
-
-  if (
-    !confirm(
-      "Save these quiz questions?"
-    )
-  ) {
-
-    return;
-
-  }
-
-
-  /* =========================
      DELETE OLD QUESTIONS
-     ========================= */
+  ========================= */
 
   const {
     error: deleteError
   } =
     await supabaseClient
-      .from(
-        "novel_quiz_questions"
-      )
+      .from("novel_quiz_questions")
       .delete()
       .eq(
         "novel_id",
@@ -2399,7 +2382,7 @@ function renderQuizQuestions() {
     );
 
     alert(
-      "Could not replace existing quiz questions.\n\n" +
+      "Could not update quiz questions.\n\n" +
       deleteError.message
     );
 
@@ -2410,7 +2393,7 @@ function renderQuizQuestions() {
 
   /* =========================
      CREATE NEW ROWS
-     ========================= */
+  ========================= */
 
   const rows =
     manualQuizQuestions.map(
@@ -2448,17 +2431,15 @@ function renderQuizQuestions() {
 
 
   /* =========================
-     INSERT QUESTIONS
-     ========================= */
+     SAVE QUESTIONS
+  ========================= */
 
   const {
     data,
     error
   } =
     await supabaseClient
-      .from(
-        "novel_quiz_questions"
-      )
+      .from("novel_quiz_questions")
       .insert(rows)
       .select();
 
@@ -2480,30 +2461,29 @@ function renderQuizQuestions() {
   }
 
 
-  /* =========================
-     SUCCESS
-     ========================= */
-
   console.log(
     "Saved questions:",
     data
   );
 
 
+  /* =========================
+     SUCCESS
+  ========================= */
+
   alert(
     `${rows.length} quiz question(s) saved successfully.`
   );
 
 
-  showMessage(
-    "Quiz questions saved successfully.",
-    "success"
-  );
-
+  /* =========================
+     RELOAD QUESTIONS
+  ========================= */
 
   await loadQuizQuestions();
 
- }        
+} 
+  
 </script>
  </body>
 </html>   

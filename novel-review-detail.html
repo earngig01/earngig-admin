@@ -869,7 +869,33 @@ async function loadNovel() {
 
     </section>
 
+<section class="review-section">
 
+  <h2>Novel Quiz</h2>
+
+  <p>
+    Add comprehension questions manually for this novel.
+  </p>
+
+  <div id="quizQuestionsContainer"></div>
+
+  <button
+    type="button"
+    class="btn btn-secondary"
+    onclick="addQuizQuestion()"
+  >
+    + Add Question
+  </button>
+
+  <button
+    type="button"
+    class="btn btn-primary"
+    onclick="saveQuizQuestions()"
+  >
+    Save Quiz
+  </button>
+
+</section>
     <section class="card">
 
       <h2 class="section-title">
@@ -1948,6 +1974,254 @@ document
   await loadNovel();
 
 })();
+
+
+let manualQuizQuestions = [];
+
+function addQuizQuestion() {
+  manualQuizQuestions.push({
+    question_text: "",
+    option_a_text: "",
+    option_b_text: "",
+    option_c_text: "",
+    option_d_text: "",
+    correct_option_text: ""
+  });
+
+  renderQuizQuestions();
+}
+
+function removeQuizQuestion(index) {
+  manualQuizQuestions.splice(index, 1);
+  renderQuizQuestions();
+}
+
+function updateQuizQuestion(index, field, value) {
+  manualQuizQuestions[index][field] = value;
+}
+
+function renderQuizQuestions() {
+  const container =
+    document.getElementById(
+      "quizQuestionsContainer"
+    );
+
+  if (!container) {
+    return;
+  }
+
+  container.innerHTML =
+    manualQuizQuestions
+      .map((question, index) => `
+        <div class="quiz-question-card">
+
+          <h3>Question ${index + 1}</h3>
+
+          <label>Question</label>
+
+          <textarea
+            rows="3"
+            placeholder="Enter question"
+            onchange="updateQuizQuestion(
+              ${index},
+              'question_text',
+              this.value
+            )"
+          >${question.question_text}</textarea>
+
+          <label>Option A</label>
+
+          <input
+            type="text"
+            placeholder="Option A"
+            value="${escapeHtml(question.option_a_text)}"
+            onchange="updateQuizQuestion(
+              ${index},
+              'option_a_text',
+              this.value
+            )"
+          >
+
+          <label>Option B</label>
+
+          <input
+            type="text"
+            placeholder="Option B"
+            value="${escapeHtml(question.option_b_text)}"
+            onchange="updateQuizQuestion(
+              ${index},
+              'option_b_text',
+              this.value
+            )"
+          >
+
+          <label>Option C</label>
+
+          <input
+            type="text"
+            placeholder="Option C"
+            value="${escapeHtml(question.option_c_text)}"
+            onchange="updateQuizQuestion(
+              ${index},
+              'option_c_text',
+              this.value
+            )"
+          >
+
+          <label>Option D</label>
+
+          <input
+            type="text"
+            placeholder="Option D"
+            value="${escapeHtml(question.option_d_text)}"
+            onchange="updateQuizQuestion(
+              ${index},
+              'option_d_text',
+              this.value
+            )"
+          >
+
+          <label>Correct Answer</label>
+
+          <select
+            onchange="updateQuizQuestion(
+              ${index},
+              'correct_option_text',
+              this.value
+            )"
+          >
+            <option value="">Select correct answer</option>
+            <option value="a"
+              ${question.correct_option_text === "a" ? "selected" : ""}>
+              A
+            </option>
+            <option value="b"
+              ${question.correct_option_text === "b" ? "selected" : ""}>
+              B
+            </option>
+            <option value="c"
+              ${question.correct_option_text === "c" ? "selected" : ""}>
+              C
+            </option>
+            <option value="d"
+              ${question.correct_option_text === "d" ? "selected" : ""}>
+              D
+            </option>
+          </select>
+
+          <button
+            type="button"
+            class="btn btn-danger"
+            onclick="removeQuizQuestion(${index})"
+          >
+            Remove Question
+          </button>
+
+        </div>
+      `)
+      .join("");
+}
+
+function escapeHtml(value) {
+  return String(value || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+async function saveQuizQuestions() {
+
+  if (!currentNovel?.id) {
+    alert("Novel information is not loaded.");
+    return;
+  }
+
+  if (manualQuizQuestions.length === 0) {
+    alert("Add at least one quiz question.");
+    return;
+  }
+
+  for (
+    let i = 0;
+    i < manualQuizQuestions.length;
+    i++
+  ) {
+
+    const q = manualQuizQuestions[i];
+
+    if (
+      !q.question_text.trim() ||
+      !q.option_a_text.trim() ||
+      !q.option_b_text.trim() ||
+      !q.option_c_text.trim() ||
+      !q.option_d_text.trim() ||
+      !q.correct_option_text
+    ) {
+      alert(
+        `Please complete Question ${i + 1}.`
+      );
+      return;
+    }
+  }
+
+  const rows =
+    manualQuizQuestions.map(
+      (q, index) => ({
+        id: crypto.randomUUID(),
+
+        novel_id:
+          currentNovel.id,
+
+        question_text:
+          q.question_text.trim(),
+
+        option_a_text:
+          q.option_a_text.trim(),
+
+        option_b_text:
+          q.option_b_text.trim(),
+
+        option_c_text:
+          q.option_c_text.trim(),
+
+        option_d_text:
+          q.option_d_text.trim(),
+
+        correct_option_text:
+          q.correct_option_text,
+
+        question_order:
+          index + 1
+      })
+    );
+
+  const {
+    error
+  } =
+    await supabaseClient
+      .from("novel_quiz_questions")
+      .insert(rows);
+
+  if (error) {
+    console.error(
+      "Quiz save error:",
+      error
+    );
+
+    alert(
+      "Quiz could not be saved.\n\n" +
+      error.message
+    );
+
+    return;
+  }
+
+  alert(
+    `${rows.length} quiz question(s) saved successfully.`
+  );
+                                    }
 </script>
  </body>
 </html>   

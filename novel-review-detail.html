@@ -2582,7 +2582,50 @@ async function saveQuizQuestions() {
   );
 
 }
-      
+ async function validateQuizBeforeApproval() {
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("novel_quiz_questions")
+      .select("id")
+      .eq(
+        "novel_id",
+        currentNovel.id
+      );
+
+
+  if (error) {
+
+    showMessage(
+      "Could not verify the novel quiz: " +
+      error.message,
+      "error"
+    );
+
+
+    return false;
+
+  }
+
+
+  if (!data || data.length === 0) {
+
+    alert(
+      "Please create and save at least one quiz question before approving this novel."
+    );
+
+
+    return false;
+
+  }
+
+
+  return true;
+
+ }     
 
 /* =====================================================
    APPROVE NOVEL
@@ -2595,7 +2638,15 @@ async function approveNovel() {
     return;
 
   }
+const quizValid =
+  await validateQuizBeforeApproval();
 
+
+if (!quizValid) {
+
+  return;
+
+}
 
   const confirmed =
     confirm(

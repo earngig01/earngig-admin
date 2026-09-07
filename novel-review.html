@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Novel Review | EarnGig Admin</title>
@@ -10,128 +13,404 @@
 
 <style>
 
-/* =========================
-   NOVEL REVIEW PAGE
-========================= */
+/* =========================================
+   EARNGIG ADMIN - NOVEL REVIEW
+========================================= */
 
-.review-page {
+* {
+    box-sizing: border-box;
+}
+
+
+body {
+    margin: 0;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background: #eef0f6;
+
+    color: #2d3345;
+}
+
+
+/* =========================================
+   MAIN CONTAINER
+========================================= */
+
+.container {
+
+    width: min(1180px, calc(100% - 48px));
+
+    margin: auto;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.admin-header {
+
+    background: #181b3d;
+
+    min-height: 105px;
+
+    display: flex;
+
+    align-items: center;
+}
+
+
+.header-container {
+
+    width: min(1180px, calc(100% - 48px));
+
+    margin: auto;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 25px;
+}
+
+
+/* =========================================
+   EARNGIG LOGO
+========================================= */
+
+.logo {
+
+    text-decoration: none;
+
+    font-size: 36px;
+
+    font-weight: 700;
+
+    letter-spacing: -1px;
+
+    color: #ffffff;
+}
+
+
+.logo span {
+
+    color: #9b8cff;
+}
+
+
+/* =========================================
+   HEADER ACTIONS
+========================================= */
+
+.header-actions {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+}
+
+
+.header-btn {
+
+    min-height: 52px;
+
+    padding: 0 22px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border: 1px solid rgba(255,255,255,.28);
+
+    border-radius: 12px;
+
+    background: transparent;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-size: 16px;
+
+    transition: .2s ease;
+}
+
+
+.header-btn:hover {
+
+    background: rgba(255,255,255,.08);
+
+    border-color: rgba(255,255,255,.55);
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================
+   PAGE
+========================================= */
+
+.dashboard-page {
+
+    min-height: calc(100vh - 105px);
+
     padding: 50px 0 70px;
 }
 
 
-/* =========================
-   PAGE HEADER
-========================= */
+/* =========================================
+   PAGE HEADING
+========================================= */
 
-.review-heading {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 25px;
-    margin-bottom: 35px;
+.page-heading {
+
+    margin-bottom: 40px;
 }
 
-.review-heading h1 {
-    margin: 8px 0;
+
+.eyebrow {
+
+    display: block;
+
+    margin-bottom: 12px;
+
+    color: #7761c7;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    letter-spacing: 1.5px;
 }
 
-.review-heading p {
+
+.page-heading h1 {
+
+    margin: 0 0 12px;
+
+    color: #2b3142;
+
+    font-size: 42px;
+
+    font-weight: 700;
+}
+
+
+.page-heading p {
+
     margin: 0;
-    color: #6b7280;
-    font-size: 16px;
+
+    color: #6e7585;
+
+    font-size: 18px;
+
+    line-height: 1.6;
 }
 
 
-/* =========================
-   SECTIONS
-========================= */
+/* =========================================
+   REVIEW SECTIONS
+========================================= */
 
 .review-section {
+
     margin-top: 45px;
 }
 
-.review-section-title {
-    margin-bottom: 8px;
+
+.section-title {
+
+    margin: 0 0 9px;
+
+    color: #2d3345;
+
+    font-size: 30px;
+
+    font-weight: 700;
 }
 
-.review-section-description {
-    color: #6b7280;
-    margin-bottom: 22px;
+
+.section-description {
+
+    margin: 0 0 24px;
+
+    color: #737a8b;
+
+    font-size: 17px;
 }
 
 
-/* =========================
+/* =========================================
    NOVEL LIST
-========================= */
+========================================= */
 
 .novel-list {
+
     display: grid;
+
     gap: 18px;
 }
 
 
-/* =========================
+/* =========================================
    NOVEL CARD
-========================= */
+========================================= */
 
 .novel-card {
+
     display: flex;
-    justify-content: space-between;
+
     align-items: center;
-    gap: 25px;
 
-    background: #ffffff;
-
-    border: 1px solid #e4e5ec;
-
-    border-radius: 16px;
+    gap: 24px;
 
     padding: 22px;
 
-    box-shadow: 0 4px 15px rgba(0,0,0,.04);
+    background: #ffffff;
+
+    border: 1px solid #dfe2eb;
+
+    border-radius: 20px;
+
+    box-shadow:
+
+        0 8px 24px rgba(25,30,55,.06);
 }
 
 
+/* =========================================
+   NOVEL COVER
+========================================= */
+
+.novel-cover {
+
+    width: 105px;
+
+    height: 140px;
+
+    flex-shrink: 0;
+
+    overflow: hidden;
+
+    border-radius: 12px;
+
+    background: #e3e5ec;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border: 1px solid #d9dce5;
+}
+
+
+.novel-cover img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+}
+
+
+.no-cover {
+
+    text-align: center;
+
+    color: #8b92a1;
+
+    font-size: 14px;
+
+    padding: 10px;
+}
+
+
+/* =========================================
+   NOVEL INFORMATION
+========================================= */
+
 .novel-info {
+
     flex: 1;
+
+    min-width: 0;
 }
 
 
 .novel-title {
-    font-size: 20px;
+
+    margin: 0 0 13px;
+
+    color: #2d3345;
+
+    font-size: 25px;
+
+    line-height: 1.3;
+
     font-weight: 700;
-
-    color: #17203a;
-
-    margin-bottom: 8px;
 }
 
 
-.novel-writer {
-    color: #6b7280;
+.novel-meta {
 
-    margin-bottom: 12px;
+    display: grid;
+
+    gap: 8px;
+
+    color: #727989;
+
+    font-size: 16px;
+
+    line-height: 1.4;
 }
 
 
-/* =========================
-   STATUS
-========================= */
+.novel-meta strong {
 
-.novel-status {
-    display: inline-block;
+    color: #555d6e;
+}
 
-    padding: 7px 13px;
+
+/* =========================================
+   STATUS BADGES
+========================================= */
+
+.status {
+
+    display: inline-flex;
+
+    width: fit-content;
+
+    margin-top: 16px;
+
+    padding: 8px 15px;
 
     border-radius: 999px;
 
-    font-size: 13px;
+    font-size: 14px;
 
-    font-weight: 600;
+    font-weight: 700;
 }
 
 
-.status-pending {
+/* Pending */
+
+.status.pending {
 
     background: #fff2d8;
 
@@ -139,173 +418,244 @@
 }
 
 
-.status-approved {
+/* Approved */
 
-    background: #e7f7ec;
+.status.approved {
 
-    color: #237a3b;
+    background: #e5f5e9;
+
+    color: #34734b;
 }
 
 
-/* =========================
+/* Published */
+
+.status.published {
+
+    background: #e9ecf2;
+
+    color: #596273;
+}
+
+
+/* =========================================
    ACTION BUTTONS
-========================= */
+========================================= */
 
 .novel-actions {
 
-    display: flex;
+    width: 165px;
 
-    flex-direction: column;
+    flex-shrink: 0;
+
+    display: grid;
 
     gap: 10px;
-
-    min-width: 150px;
 }
 
 
-.preview-btn {
+.action-btn {
 
-    background: #6f4b8b;
+    width: 100%;
 
-    color: white;
-
-    border: none;
-
-    padding: 12px 20px;
+    min-height: 48px;
 
     border-radius: 10px;
 
-    font-size: 15px;
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 16px;
 
     font-weight: 600;
 
-    cursor: pointer;
-
-    text-align: center;
-
     text-decoration: none;
 
-    transition: .2s;
+    cursor: pointer;
+
+    transition:
+
+        transform .2s ease,
+        box-shadow .2s ease,
+        background .2s ease;
+}
+
+
+.action-btn:hover {
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================
+   FULL PREVIEW
+========================================= */
+
+.preview-btn {
+
+    border: none;
+
+    background: #6548c9;
+
+    color: #ffffff;
+
+    box-shadow:
+
+        0 6px 14px rgba(101,72,201,.20);
 }
 
 
 .preview-btn:hover {
 
-    background: #5d3d77;
-
-    transform: translateY(-1px);
+    background: #563ab8;
 }
 
 
+/* =========================================
+   EDIT
+========================================= */
+
 .edit-btn {
 
-    background: white;
+    background: #ffffff;
 
-    color: #6f4b8b;
+    color: #5c45af;
 
-    border: 1px solid #6f4b8b;
-
-    padding: 11px 20px;
-
-    border-radius: 10px;
-
-    font-size: 15px;
-
-    font-weight: 600;
-
-    cursor: pointer;
-
-    text-align: center;
-
-    text-decoration: none;
-
-    transition: .2s;
+    border: 1px solid #8c76d5;
 }
 
 
 .edit-btn:hover {
 
-    background: #f6f1fa;
+    background: #f5f2ff;
 }
 
 
-/* DELETE BUTTON */
+/* =========================================
+   DELETE
+========================================= */
 
 .delete-btn {
 
-    background: #c62828;
-
-    color: white;
-
     border: none;
 
-    padding: 12px 20px;
+    background: #c92323;
 
-    border-radius: 10px;
-
-    font-size: 15px;
-
-    font-weight: 600;
-
-    cursor: pointer;
-
-    transition: .2s;
+    color: #ffffff;
 }
 
 
 .delete-btn:hover {
 
-    background: #a91f1f;
-
-    transform: translateY(-1px);
+    background: #ae1b1b;
 }
 
 
-/* =========================
+/* =========================================
    EMPTY STATE
-========================= */
+========================================= */
 
 .empty-review {
 
-    text-align: center;
+    padding: 50px 25px;
 
-    padding: 45px 20px;
+    text-align: center;
 
     background: #ffffff;
 
-    border: 1px solid #e4e5ec;
+    border: 1px solid #dfe2eb;
 
-    border-radius: 16px;
+    border-radius: 20px;
 
-    color: #6b7280;
+    color: #737a8b;
 }
 
 
 .empty-review h3 {
 
-    color: #17203a;
+    margin: 0 0 10px;
 
-    margin-bottom: 8px;
+    color: #3b4252;
+
+    font-size: 23px;
 }
 
 
-/* =========================
+.empty-review p {
+
+    margin: 0;
+
+    font-size: 16px;
+}
+
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.admin-footer {
+
+    padding: 28px 0;
+
+    text-align: center;
+
+    color: #777e8d;
+
+    font-size: 14px;
+}
+
+
+/* =========================================
    MOBILE
-========================= */
+========================================= */
 
-@media(max-width:700px) {
+@media (max-width: 850px) {
 
-    .review-heading {
+
+    .admin-header {
+
+        padding: 18px 0;
+
+        min-height: auto;
+    }
+
+
+    .header-container {
 
         flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+
+    .header-actions {
+
+        width: 100%;
+
+        flex-wrap: wrap;
+    }
+
+
+    .header-btn {
+
+        flex: 1;
+    }
+
+
+    .dashboard-page {
+
+        padding-top: 35px;
     }
 
 
     .novel-card {
 
-        flex-direction: column;
+        align-items: flex-start;
 
-        align-items: stretch;
+        flex-wrap: wrap;
     }
 
 
@@ -313,18 +663,84 @@
 
         width: 100%;
 
-        flex-direction: row;
+        grid-template-columns:
 
-        flex-wrap: wrap;
+            1fr 1fr 1fr;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+
+    .container {
+
+        width: min(100% - 28px, 1180px);
     }
 
 
-    .novel-actions a,
-    .novel-actions button {
+    .header-container {
 
-        flex: 1;
+        width: min(100% - 28px, 1180px);
+    }
 
-        min-width: 120px;
+
+    .logo {
+
+        font-size: 32px;
+    }
+
+
+    .page-heading h1 {
+
+        font-size: 34px;
+    }
+
+
+    .section-title {
+
+        font-size: 27px;
+    }
+
+
+    .novel-card {
+
+        gap: 18px;
+
+        padding: 17px;
+    }
+
+
+    .novel-cover {
+
+        width: 90px;
+
+        height: 120px;
+    }
+
+
+    .novel-title {
+
+        font-size: 21px;
+    }
+
+
+    .novel-actions {
+
+        grid-template-columns: 1fr;
+    }
+
+
+    .header-actions {
+
+        flex-direction: column;
+    }
+
+
+    .header-btn {
+
+        width: 100%;
     }
 
 }
@@ -337,194 +753,240 @@
 <body>
 
 
-<header>
+<!-- =========================================
+     HEADER
+========================================= -->
 
-<div class="container nav">
+<header class="admin-header">
 
-<a class="logo" href="index.html">
-
-<span class="logo-mark">E</span>
-
-Earn<span>Gig</span>
-
-</a>
+    <div class="header-container">
 
 
-<span class="admin-badge">
+        <!-- EARNGIG LOGO -->
 
-ADMIN
+        <a href="admin-dashboard.html" class="logo">
 
-</span>
+            Earn<span>Gig</span>
 
-</div>
+        </a>
+
+
+        <!-- NAVIGATION -->
+
+        <div class="header-actions">
+
+
+            <a
+                href="admin-dashboard.html"
+                class="header-btn"
+            >
+                Admin Dashboard
+            </a>
+
+
+            <a
+                href="admin-dashboard.html"
+                class="header-btn"
+            >
+                ← Dashboard
+            </a>
+
+
+            <a
+                href="#"
+                class="header-btn"
+                id="logout-btn"
+            >
+                Logout
+            </a>
+
+
+        </div>
+
+
+    </div>
 
 </header>
 
 
 
-<main class="review-page">
+<!-- =========================================
+     MAIN PAGE
+========================================= -->
+
+<main class="dashboard-page">
+
 
 <div class="container">
 
 
-<!-- =========================
-     PAGE HEADING
-========================= -->
+    <!-- =====================================
+         PAGE HEADING
+    ====================================== -->
 
-<div class="review-heading">
-
-<div>
-
-<span class="eyebrow">
-
-NOVEL ASSESSMENT
-
-</span>
+    <div class="page-heading">
 
 
-<h1>
+        <span class="eyebrow">
 
-Novel Review
+            NOVEL ASSESSMENT
 
-</h1>
+        </span>
 
 
-<p>
+        <h1>
 
-Review new submissions and revisit novels that have already been approved.
+            Novel Review
 
-</p>
+        </h1>
+
+
+        <p>
+
+            Review new submissions and revisit novels
+            that have already been approved.
+
+        </p>
+
+
+    </div>
+
+
+
+    <!-- =====================================
+         PENDING SUBMISSIONS
+    ====================================== -->
+
+    <section class="review-section">
+
+
+        <h2 class="section-title">
+
+            Pending Submissions
+
+        </h2>
+
+
+        <p class="section-description">
+
+            New novels waiting for review and approval.
+
+        </p>
+
+
+        <div
+            id="pending-list"
+            class="novel-list"
+        >
+
+
+            <div class="empty-review">
+
+                <h3>
+
+                    Loading submissions...
+
+                </h3>
+
+
+                <p>
+
+                    Please wait.
+
+                </p>
+
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =====================================
+         APPROVED NOVELS
+    ====================================== -->
+
+    <section class="review-section">
+
+
+        <h2 class="section-title">
+
+            Previously Approved Novels
+
+        </h2>
+
+
+        <p class="section-description">
+
+            Approved novels can still be previewed,
+            edited, and managed.
+
+        </p>
+
+
+        <div
+            id="approved-list"
+            class="novel-list"
+        >
+
+
+            <div class="empty-review">
+
+                <h3>
+
+                    Loading approved novels...
+
+                </h3>
+
+
+                <p>
+
+                    Please wait.
+
+                </p>
+
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
 
 </div>
 
-
-<!-- ADMIN DASHBOARD
-     TOP RIGHT -->
-<a
-class="btn outline"
-href="admin-dashboard.html"
->
-
-Admin Dashboard
-
-</a>
-
-</div>
-
-
-
-<!-- =========================
-     PENDING SUBMISSIONS
-========================= -->
-
-<section class="review-section">
-
-
-<h2 class="review-section-title">
-
-Pending Submissions
-
-</h2>
-
-
-<p class="review-section-description">
-
-New novels waiting for review and approval.
-
-</p>
-
-
-<div
-id="pending-list"
-class="novel-list"
->
-
-<div class="empty-review">
-
-<h3>
-
-Loading submissions...
-
-</h3>
-
-<p>
-
-Please wait.
-
-</p>
-
-</div>
-
-</div>
-
-
-</section>
-
-
-
-<!-- =========================
-     APPROVED NOVELS
-========================= -->
-
-<section class="review-section">
-
-
-<h2 class="review-section-title">
-
-Previously Approved Novels
-
-</h2>
-
-
-<p class="review-section-description">
-
-Revisit, preview, edit, or manage novels that have already been approved.
-
-</p>
-
-
-<div
-id="approved-list"
-class="novel-list"
->
-
-<div class="empty-review">
-
-<h3>
-
-Loading approved novels...
-
-</h3>
-
-</div>
-
-</div>
-
-
-</section>
-
-
-</div>
 
 </main>
 
 
 
-<footer>
+<!-- =========================================
+     FOOTER
+========================================= -->
 
-<div class="container copy">
+<footer class="admin-footer">
 
-© 2026 EarnGig Administration.
 
-</div>
+    <div class="container">
+
+        © 2026 EarnGig Administration.
+
+    </div>
+
 
 </footer>
 
 
 
-<!-- =========================
+<!-- =========================================
      SUPABASE
-========================= -->
+========================================= -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -535,22 +997,34 @@ Loading approved novels...
 <script>
 
 
+/* =========================================
+   ELEMENTS
+========================================= */
+
 const pendingList =
-document.getElementById("pending-list");
+
+    document.getElementById("pending-list");
 
 
 const approvedList =
-document.getElementById("approved-list");
+
+    document.getElementById("approved-list");
+
+
+const logoutButton =
+
+    document.getElementById("logout-btn");
 
 
 
-/* =========================
+/* =========================================
    ESCAPE HTML
-========================= */
+========================================= */
 
 function escapeHtml(value) {
 
-    return String(value || "")
+
+    return String(value ?? "")
 
         .replace(/&/g, "&amp;")
 
@@ -566,27 +1040,34 @@ function escapeHtml(value) {
 
 
 
-/* =========================
-   CHECK ADMIN
-========================= */
+/* =========================================
+   CHECK ADMIN ACCESS
+========================================= */
 
 async function checkAdmin() {
 
 
     const {
 
-        data: { user },
+        data: {
+            user
+        },
 
         error
 
-    } = await supabaseClient.auth.getUser();
+    } = await supabaseClient
+
+        .auth
+
+        .getUser();
 
 
 
     if (error || !user) {
 
-        window.location.href =
-        "login.html";
+
+        window.location.href = "login.html";
+
 
         return null;
 
@@ -612,16 +1093,27 @@ async function checkAdmin() {
 
 
 
-    if (profileError || !profile?.is_admin) {
+    if (profileError) {
+
+
+        console.error(profileError);
+
+
+    }
+
+
+
+    if (!profile?.is_admin) {
 
 
         alert(
+
             "Admin access required."
+
         );
 
 
-        window.location.href =
-        "dashboard.html";
+        window.location.href = "dashboard.html";
 
 
         return null;
@@ -636,128 +1128,214 @@ async function checkAdmin() {
 
 
 
-/* =========================
-   CREATE NOVEL CARD
-========================= */
-
-function createNovelCard(
-    novel,
-    status
-) {
+/* =========================================
+   GET COVER IMAGE
+========================================= */
 
 
-    const statusClass =
-        status === "pending"
+/*
 
-        ? "status-pending"
+This checks different possible column names.
 
-        : "status-approved";
+It means the page can find the cover image
+whether your database uses:
+
+cover_image
+
+cover_url
+
+cover_image_url
+
+image_url
+
+thumbnail
+
+thumbnail_url
+
+cover
+
+image
+
+*/
+
+
+function getCoverImage(novel) {
+
+
+    return (
+
+        novel.cover_image ||
+
+        novel.cover_image_url ||
+
+        novel.cover_url ||
+
+        novel.image_url ||
+
+        novel.thumbnail_url ||
+
+        novel.thumbnail ||
+
+        novel.cover ||
+
+        novel.image ||
+
+        null
+
+    );
+
+}
 
 
 
-    const statusText =
-        status === "pending"
+/* =========================================
+   GET WRITER NAME
+========================================= */
 
-        ? "Pending Review"
+function getWriterName(novel) {
 
-        : "Approved";
+
+    return (
+
+        novel.author_name ||
+
+        novel.writer_name ||
+
+        novel.author ||
+
+        novel.writer ||
+
+        "Unknown writer"
+
+    );
+
+}
+
+
+
+/* =========================================
+   GET GENRE
+========================================= */
+
+function getGenre(novel) {
+
+
+    return (
+
+        novel.genre ||
+
+        novel.category ||
+
+        ""
+
+    );
+
+}
+
+
+
+/* =========================================
+   FORMAT DATE
+========================================= */
+
+function formatDate(dateValue) {
+
+
+    if (!dateValue) {
+
+
+        return "";
+
+
+    }
+
+
+
+    const date =
+
+        new Date(dateValue);
+
+
+
+    if (Number.isNaN(date.getTime())) {
+
+
+        return "";
+
+
+    }
+
+
+
+    return date.toLocaleDateString(
+
+        "en-GB",
+
+        {
+
+            day: "2-digit",
+
+            month: "2-digit",
+
+            year: "numeric"
+
+        }
+
+    );
+
+}
+
+
+
+/* =========================================
+   CREATE COVER HTML
+========================================= */
+
+function createCoverHtml(novel) {
+
+
+    const coverImage =
+
+        getCoverImage(novel);
+
+
+
+    if (!coverImage) {
+
+
+        return `
+
+            <div class="novel-cover">
+
+                <div class="no-cover">
+
+                    No Cover
+
+                </div>
+
+            </div>
+
+        `;
+
+    }
 
 
 
     return `
 
-    <div class="novel-card">
+        <div class="novel-cover">
 
+            <img
 
-        <div class="novel-info">
+                src="${escapeHtml(coverImage)}"
 
+                alt="${escapeHtml(novel.title)} cover"
 
-            <div class="novel-title">
+                onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=&quot;no-cover&quot;>No Cover</div>';"
 
-                ${escapeHtml(novel.title)}
-
-            </div>
-
-
-
-            <div class="novel-writer">
-
-                Writer:
-                ${escapeHtml(
-                    novel.author_name
-                )}
-
-            </div>
-
-
-
-            <span
-            class="novel-status ${statusClass}"
             >
-
-                ${statusText}
-
-            </span>
-
 
         </div>
-
-
-
-        <div class="novel-actions">
-
-
-            <!-- FULL PREVIEW -->
-
-            <a
-
-            class="preview-btn"
-
-            href="novel-review-detail.html?id=${encodeURIComponent(novel.id)}&mode=preview"
-
-            >
-
-            Full Preview
-
-            </a>
-
-
-
-            <!-- EDIT -->
-
-            <a
-
-            class="edit-btn"
-
-            href="novel-review-detail.html?id=${encodeURIComponent(novel.id)}&mode=edit"
-
-            >
-
-            Edit
-
-            </a>
-
-
-
-            <!-- DELETE -->
-
-            <button
-
-            class="delete-btn"
-
-            onclick="deleteNovel('${novel.id}', '${escapeHtml(novel.title).replace(/'/g, "\\'")}')"
-
-            >
-
-            Delete
-
-            </button>
-
-
-        </div>
-
-
-    </div>
 
     `;
 
@@ -765,139 +1343,339 @@ function createNovelCard(
 
 
 
-/* =========================
-   LOAD PENDING NOVELS
-========================= */
+/* =========================================
+   CREATE NOVEL CARD
+========================================= */
 
-async function loadPendingNovels() {
+function createNovelCard(
+
+    novel,
+
+    sectionType
+
+) {
 
 
-    const {
+    const title =
 
-        data,
+        novel.title ||
 
-        error
-
-    } = await supabaseClient
-
-        .from("novels")
-
-        .select(`
-
-            id,
-
-            title,
-
-            author_name,
-
-            submission_status,
-
-            created_at
-
-        `)
-
-        .eq(
-            "submission_status",
-            "pending"
-        )
-
-        .order(
-            "created_at",
-            {
-
-                ascending: true
-
-            }
-        );
+        "Untitled Novel";
 
 
 
-    if (error) {
+    const writer =
+
+        getWriterName(novel);
 
 
-        pendingList.innerHTML = `
 
-        <div class="empty-review">
+    const genre =
 
-            <h3>
-
-                Unable to load submissions
-
-            </h3>
+        getGenre(novel);
 
 
-            <p>
 
-                ${escapeHtml(
-                    error.message
-                )}
+    const submittedDate =
 
-            </p>
-
-        </div>
-
-        `;
+        formatDate(novel.created_at);
 
 
-        return;
+
+    let statusText =
+
+        "Pending Review";
+
+
+    let statusClass =
+
+        "pending";
+
+
+
+    if (sectionType === "approved") {
+
+
+        statusText =
+
+            "Approved";
+
+
+        statusClass =
+
+            "approved";
 
     }
 
 
 
-    if (!data || data.length === 0) {
+    const genreHtml = genre
 
+        ? `
 
-        pendingList.innerHTML = `
+            <div>
 
-        <div class="empty-review">
+                <strong>Genre:</strong>
 
-            <h3>
+                ${escapeHtml(genre)}
 
-                No pending novel submissions
+            </div>
 
-            </h3>
+        `
 
-
-            <p>
-
-                New writer submissions will appear here.
-
-            </p>
-
-        </div>
-
-        `;
-
-
-        return;
-
-    }
+        : "";
 
 
 
-    pendingList.innerHTML =
+    const dateHtml = submittedDate
 
-        data.map(
-            novel =>
+        ? `
 
-            createNovelCard(
-                novel,
-                "pending"
-            )
+            <div>
 
-        ).join("");
+                <strong>Submitted:</strong>
 
+                ${escapeHtml(submittedDate)}
+
+            </div>
+
+        `
+
+        : "";
+
+
+
+    return `
+
+
+        <article class="novel-card">
+
+
+            <!-- COVER IMAGE -->
+
+            ${createCoverHtml(novel)}
+
+
+
+            <!-- NOVEL INFORMATION -->
+
+            <div class="novel-info">
+
+
+                <h3 class="novel-title">
+
+                    ${escapeHtml(title)}
+
+                </h3>
+
+
+                <div class="novel-meta">
+
+
+                    <div>
+
+                        <strong>Writer:</strong>
+
+                        ${escapeHtml(writer)}
+
+                    </div>
+
+
+                    ${genreHtml}
+
+
+                    ${dateHtml}
+
+
+                </div>
+
+
+
+                <span
+
+                    class="status ${statusClass}"
+
+                >
+
+                    ${statusText}
+
+                </span>
+
+
+            </div>
+
+
+
+            <!-- ACTION BUTTONS -->
+
+            <div class="novel-actions">
+
+
+                <!-- FULL PREVIEW -->
+
+                <a
+
+                    href="novel-review-detail.html?id=${encodeURIComponent(novel.id)}&mode=preview"
+
+                    class="action-btn preview-btn"
+
+                >
+
+                    Full Preview
+
+                </a>
+
+
+
+                <!-- EDIT -->
+
+                <a
+
+                    href="novel-review-detail.html?id=${encodeURIComponent(novel.id)}&mode=edit"
+
+                    class="action-btn edit-btn"
+
+                >
+
+                    Edit
+
+                </a>
+
+
+
+                <!-- DELETE -->
+
+                <button
+
+                    type="button"
+
+                    class="action-btn delete-btn"
+
+                    onclick="deleteNovel('${escapeHtml(novel.id)}', '${escapeHtml(title).replace(/'/g, "\\'")}')"
+
+                >
+
+                    Delete
+
+                </button>
+
+
+            </div>
+
+
+        </article>
+
+
+    `;
 
 }
 
 
 
-/* =========================
-   LOAD APPROVED NOVELS
-========================= */
+/* =========================================
+   EMPTY STATE
+========================================= */
 
-async function loadApprovedNovels() {
+function showEmptyState(
+
+    element,
+
+    heading,
+
+    message
+
+) {
+
+
+    element.innerHTML = `
+
+
+        <div class="empty-review">
+
+
+            <h3>
+
+                ${escapeHtml(heading)}
+
+            </h3>
+
+
+            <p>
+
+                ${escapeHtml(message)}
+
+            </p>
+
+
+        </div>
+
+
+    `;
+
+}
+
+
+
+/* =========================================
+   LOAD NOVELS
+========================================= */
+
+async function loadNovels() {
+
+
+    pendingList.innerHTML = `
+
+        <div class="empty-review">
+
+            <h3>
+
+                Loading submissions...
+
+            </h3>
+
+            <p>
+
+                Please wait.
+
+            </p>
+
+        </div>
+
+    `;
+
+
+
+    approvedList.innerHTML = `
+
+        <div class="empty-review">
+
+            <h3>
+
+                Loading approved novels...
+
+            </h3>
+
+            <p>
+
+                Please wait.
+
+            </p>
+
+        </div>
+
+    `;
+
+
+
+    /*
+
+    Select all columns.
+
+    This is intentional so the page can use
+    the correct cover-image column from your
+    existing database.
+
+    */
 
 
     const {
@@ -910,32 +1688,18 @@ async function loadApprovedNovels() {
 
         .from("novels")
 
-        .select(`
-
-            id,
-
-            title,
-
-            author_name,
-
-            submission_status,
-
-            created_at
-
-        `)
-
-        .eq(
-            "submission_status",
-            "approved"
-        )
+        .select("*")
 
         .order(
+
             "created_at",
+
             {
 
                 ascending: false
 
             }
+
         );
 
 
@@ -943,59 +1707,31 @@ async function loadApprovedNovels() {
     if (error) {
 
 
-        approvedList.innerHTML = `
-
-        <div class="empty-review">
-
-            <h3>
-
-                Unable to load approved novels
-
-            </h3>
-
-
-            <p>
-
-                ${escapeHtml(
-                    error.message
-                )}
-
-            </p>
-
-        </div>
-
-        `;
-
-
-        return;
-
-    }
+        console.error(error);
 
 
 
-    if (!data || data.length === 0) {
+        showEmptyState(
+
+            pendingList,
+
+            "Unable to load submissions",
+
+            error.message
+
+        );
 
 
-        approvedList.innerHTML = `
 
-        <div class="empty-review">
+        showEmptyState(
 
-            <h3>
+            approvedList,
 
-                No approved novels yet
+            "Unable to load approved novels",
 
-            </h3>
+            "Please try again."
 
-
-            <p>
-
-                Approved novels will appear here.
-
-            </p>
-
-        </div>
-
-        `;
+        );
 
 
         return;
@@ -1004,34 +1740,222 @@ async function loadApprovedNovels() {
 
 
 
-    approvedList.innerHTML =
+    if (!data) {
 
-        data.map(
-            novel =>
 
-            createNovelCard(
-                novel,
-                "approved"
-            )
+        showEmptyState(
 
-        ).join("");
+            pendingList,
 
+            "No pending submissions",
+
+            "There are currently no novels waiting for review."
+
+        );
+
+
+
+        showEmptyState(
+
+            approvedList,
+
+            "No approved novels",
+
+            "There are currently no approved novels."
+
+        );
+
+
+        return;
+
+    }
+
+
+
+    /* =====================================
+       PENDING NOVELS
+    ====================================== */
+
+
+    const pendingNovels =
+
+        data.filter(novel => {
+
+
+            const status =
+
+                String(
+
+                    novel.submission_status ||
+
+                    novel.status ||
+
+                    ""
+
+                )
+
+                .toLowerCase();
+
+
+            return (
+
+                status === "pending" ||
+
+                status === "pending_review" ||
+
+                status === "submitted"
+
+            );
+
+        });
+
+
+
+
+    /* =====================================
+       APPROVED NOVELS
+    ====================================== */
+
+
+    const approvedNovels =
+
+        data.filter(novel => {
+
+
+            const status =
+
+                String(
+
+                    novel.submission_status ||
+
+                    novel.status ||
+
+                    ""
+
+                )
+
+                .toLowerCase();
+
+
+            return (
+
+                status === "approved" ||
+
+                status === "published" ||
+
+                status === "accepted"
+
+            );
+
+        });
+
+
+
+    /* =====================================
+       DISPLAY PENDING NOVELS
+    ====================================== */
+
+
+    if (pendingNovels.length === 0) {
+
+
+        showEmptyState(
+
+            pendingList,
+
+            "No pending novel submissions",
+
+            "New writer submissions will appear here."
+
+        );
+
+
+    } else {
+
+
+        pendingList.innerHTML =
+
+            pendingNovels
+
+                .map(novel =>
+
+                    createNovelCard(
+
+                        novel,
+
+                        "pending"
+
+                    )
+
+                )
+
+                .join("");
+
+    }
+
+
+
+    /* =====================================
+       DISPLAY APPROVED NOVELS
+    ====================================== */
+
+
+    if (approvedNovels.length === 0) {
+
+
+        showEmptyState(
+
+            approvedList,
+
+            "No previously approved novels",
+
+            "Approved novels will appear here."
+
+        );
+
+
+    } else {
+
+
+        approvedList.innerHTML =
+
+            approvedNovels
+
+                .map(novel =>
+
+                    createNovelCard(
+
+                        novel,
+
+                        "approved"
+
+                    )
+
+                )
+
+                .join("");
+
+    }
 
 }
 
 
 
-/* =========================
+/* =========================================
    DELETE NOVEL
-========================= */
+========================================= */
 
 async function deleteNovel(
+
     novelId,
+
     novelTitle
+
 ) {
 
 
     const confirmed =
+
         confirm(
 
             `Are you sure you want to delete "${novelTitle}"?\n\nThis action cannot be undone.`
@@ -1040,37 +1964,7 @@ async function deleteNovel(
 
 
 
-    if (!confirmed) return;
-
-
-
-    const {
-
-        error
-
-    } = await supabaseClient
-
-        .from("novels")
-
-        .delete()
-
-        .eq(
-            "id",
-            novelId
-        );
-
-
-
-    if (error) {
-
-
-        alert(
-
-            "Unable to delete novel: " +
-
-            error.message
-
-        );
+    if (!confirmed) {
 
 
         return;
@@ -1079,44 +1973,149 @@ async function deleteNovel(
 
 
 
-    alert(
-
-        "Novel deleted successfully."
-
-    );
+    try {
 
 
+        const {
 
-    /* Refresh both sections */
+            error
 
-    await loadPendingNovels();
+        } = await supabaseClient
 
-    await loadApprovedNovels();
+            .from("novels")
+
+            .delete()
+
+            .eq(
+
+                "id",
+
+                novelId
+
+            );
+
+
+
+        if (error) {
+
+
+            throw error;
+
+        }
+
+
+
+        alert(
+
+            "Novel deleted successfully."
+
+        );
+
+
+
+        await loadNovels();
+
+
+
+    }
+
+
+    catch (error) {
+
+
+        console.error(error);
+
+
+
+        alert(
+
+            "Unable to delete the novel: " +
+
+            error.message
+
+        );
+
+    }
 
 }
 
 
 
-/* =========================
+/* =========================================
+   LOGOUT
+========================================= */
+
+logoutButton.addEventListener(
+
+    "click",
+
+    async function(event) {
+
+
+        event.preventDefault();
+
+
+
+        const confirmed =
+
+            confirm(
+
+                "Are you sure you want to log out?"
+
+            );
+
+
+
+        if (!confirmed) {
+
+
+            return;
+
+        }
+
+
+
+        await supabaseClient
+
+            .auth
+
+            .signOut();
+
+
+
+        window.location.href =
+
+            "login.html";
+
+    }
+
+);
+
+
+
+/* =========================================
    START PAGE
-========================= */
+========================================= */
 
 (async function() {
 
 
     const user =
+
         await checkAdmin();
 
 
 
-    if (!user) return;
+    if (!user) {
+
+
+        return;
+
+    }
 
 
 
-    await loadPendingNovels();
-
-
-    await loadApprovedNovels();
+    await loadNovels();
 
 
 })();

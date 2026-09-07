@@ -2347,7 +2347,6 @@ async function loadQuizQuestions() {
 /* =====================================================
    SAVE QUIZ QUESTIONS
    ===================================================== */
-
 async function saveQuizQuestions() {
 
   if (!currentNovel) {
@@ -2436,7 +2435,7 @@ async function saveQuizQuestions() {
       ).value.trim();
 
 
-    const correctAnswer =
+    const correctOption =
       card.querySelector(
         ".quiz-correct-answer"
       ).value;
@@ -2448,7 +2447,7 @@ async function saveQuizQuestions() {
       !optionB ||
       !optionC ||
       !optionD ||
-      !correctAnswer
+      !correctOption
     ) {
 
       alert(
@@ -2460,47 +2459,43 @@ async function saveQuizQuestions() {
     }
 
 
-  questions.push({
+    questions.push({
 
-  novel_id:
-    currentNovel.id,
-
-
-  question_text:
-    questionText,
+      novel_id:
+        currentNovel.id,
 
 
-  option_a:
-    optionA,
+      question_text:
+        questionText,
 
 
-  option_b:
-    optionB,
+      option_a:
+        optionA,
 
 
-  option_c:
-    optionC,
+      option_b:
+        optionB,
 
 
-  option_d:
-    optionD,
+      option_c:
+        optionC,
 
 
-  correct_option:
-    correctAnswer,
+      option_d:
+        optionD,
 
 
-  question_order:
-    index + 1
+      correct_option:
+        correctOption,
 
-});
+
+      question_order:
+        index + 1
+
+    });
 
   }
 
-
-  /* =========================
-     DELETE OLD QUESTIONS
-     ========================= */
 
   const {
     error: deleteError
@@ -2534,6 +2529,48 @@ async function saveQuizQuestions() {
     return;
 
   }
+
+
+  const {
+    error: insertError
+  } =
+    await supabaseClient
+      .from(
+        "novel_quiz_questions"
+      )
+      .insert(
+        questions
+      );
+
+
+  if (insertError) {
+
+    console.error(
+      "Quiz saving error:",
+      insertError
+    );
+
+
+    showMessage(
+      "Could not save the quiz: " +
+      insertError.message,
+      "error"
+    );
+
+
+    return;
+
+  }
+
+
+  showMessage(
+    "Quiz saved successfully.",
+    "success"
+  );
+
+}
+
+
 
 
   /* =========================

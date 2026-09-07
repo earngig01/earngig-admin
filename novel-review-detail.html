@@ -2301,11 +2301,11 @@ async function loadQuizQuestions() {
         novelId
       )
       .order(
-        "created_at",
-        {
-          ascending: true
-        }
-      );
+  "question_order",
+  {
+    ascending: true
+  }
+);
 
 
   if (error) {

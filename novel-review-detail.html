@@ -866,29 +866,57 @@ assessment_notes
           </label>
 
 
-          <select id="quality">
+        <select id="quality">
 
-            <option value="">
-              Select assessment
-            </option>
+  <option value="">
+    Select assessment
+  </option>
 
-            <option value="excellent">
-              Excellent
-            </option>
+  <option
+    value="excellent"
+    ${
+      novel.quality_assessment === "excellent"
+        ? "selected"
+        : ""
+    }
+  >
+    Excellent
+  </option>
 
-            <option value="good">
-              Good
-            </option>
+  <option
+    value="good"
+    ${
+      novel.quality_assessment === "good"
+        ? "selected"
+        : ""
+    }
+  >
+    Good
+  </option>
 
-            <option value="acceptable">
-              Acceptable
-            </option>
+  <option
+    value="acceptable"
+    ${
+      novel.quality_assessment === "acceptable"
+        ? "selected"
+        : ""
+    }
+  >
+    Acceptable
+  </option>
 
-            <option value="needs_revision">
-              Needs Revision
-            </option>
+  <option
+    value="needs_revision"
+    ${
+      novel.quality_assessment === "needs_revision"
+        ? "selected"
+        : ""
+    }
+  >
+    Needs Revision
+  </option>
 
-          </select>
+</select>
 
         </div>
 

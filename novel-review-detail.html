@@ -2259,7 +2259,6 @@ function removeQuizQuestion(
 /* =====================================================
    LOAD QUIZ QUESTIONS
    ===================================================== */
-
 async function loadQuizQuestions() {
 
   const container =
@@ -2275,8 +2274,7 @@ async function loadQuizQuestions() {
   }
 
 
-  container.innerHTML =
-    "";
+  container.innerHTML = "";
 
 
   const {
@@ -2284,29 +2282,27 @@ async function loadQuizQuestions() {
     error
   } =
     await supabaseClient
-      .from(
-        "novel_quiz_questions"
-      )
+      .from("novel_quiz_questions")
       .select(`
-  id,
-  question_text,
-  option_a,
-  option_b,
-  option_c,
-  option_d,
-  correct_answer,
-  question_order
-`)
+        id,
+        question_text,
+        option_a,
+        option_b,
+        option_c,
+        option_d,
+        correct_option,
+        question_order
+      `)
       .eq(
         "novel_id",
         novelId
       )
       .order(
-  "question_order",
-  {
-    ascending: true
-  }
-);
+        "question_order",
+        {
+          ascending: true
+        }
+      );
 
 
   if (error) {
@@ -2314,6 +2310,13 @@ async function loadQuizQuestions() {
     console.error(
       "Quiz loading error:",
       error
+    );
+
+
+    showMessage(
+      "Could not load quiz questions: " +
+      error.message,
+      "error"
     );
 
 
@@ -2338,7 +2341,6 @@ async function loadQuizQuestions() {
     );
 
   }
-
 
   else {
 

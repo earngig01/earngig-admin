@@ -1,50 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Novel Review | EarnGig Admin</title>
 
 <link rel="stylesheet" href="styles.css">
 
-
 <style>
 
 /* =========================
-   PAGE SECTIONS
+   NOVEL REVIEW PAGE
+========================= */
+
+.review-page {
+    padding: 50px 0 70px;
+}
+
+
+/* =========================
+   PAGE HEADER
+========================= */
+
+.review-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 25px;
+    margin-bottom: 35px;
+}
+
+.review-heading h1 {
+    margin: 8px 0;
+}
+
+.review-heading p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 16px;
+}
+
+
+/* =========================
+   SECTIONS
 ========================= */
 
 .review-section {
-
-    margin-top: 35px;
-
+    margin-top: 45px;
 }
 
-
-.section-heading {
-
-    margin-bottom: 18px;
-
+.review-section-title {
+    margin-bottom: 8px;
 }
 
-
-.section-heading h2 {
-
-    margin-bottom: 6px;
-
-    color: #17203a;
-
-}
-
-
-.section-heading p {
-
-    color: #666;
-
+.review-section-description {
+    color: #6b7280;
+    margin-bottom: 22px;
 }
 
 
@@ -52,12 +64,9 @@
    NOVEL LIST
 ========================= */
 
-.submission-list {
-
+.novel-list {
     display: grid;
-
-    gap: 15px;
-
+    gap: 18px;
 }
 
 
@@ -66,64 +75,42 @@
 ========================= */
 
 .novel-card {
-
-    display: grid;
-
-    grid-template-columns: 1fr auto;
-
-    gap: 25px;
-
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-
-    padding: 22px;
+    gap: 25px;
 
     background: #ffffff;
 
     border: 1px solid #e4e5ec;
 
-    border-radius: 14px;
+    border-radius: 16px;
 
-    transition:
-        transform .2s ease,
-        box-shadow .2s ease;
+    padding: 22px;
 
+    box-shadow: 0 4px 15px rgba(0,0,0,.04);
 }
 
 
-.novel-card:hover {
-
-    transform: translateY(-2px);
-
-    box-shadow:
-        0 8px 22px
-        rgba(0,0,0,.08);
-
+.novel-info {
+    flex: 1;
 }
 
-
-/* =========================
-   NOVEL INFORMATION
-========================= */
 
 .novel-title {
-
-    font-size: 18px;
-
+    font-size: 20px;
     font-weight: 700;
 
     color: #17203a;
 
     margin-bottom: 8px;
-
 }
 
 
 .novel-writer {
+    color: #6b7280;
 
-    color: #666;
-
-    margin-bottom: 10px;
-
+    margin-bottom: 12px;
 }
 
 
@@ -132,17 +119,15 @@
 ========================= */
 
 .novel-status {
-
     display: inline-block;
 
-    padding: 7px 12px;
+    padding: 7px 13px;
 
     border-radius: 999px;
 
     font-size: 13px;
 
     font-weight: 600;
-
 }
 
 
@@ -151,16 +136,14 @@
     background: #fff2d8;
 
     color: #9a6700;
-
 }
 
 
 .status-approved {
 
-    background: #dcfce7;
+    background: #e7f7ec;
 
-    color: #166534;
-
+    color: #237a3b;
 }
 
 
@@ -177,53 +160,104 @@
     gap: 10px;
 
     min-width: 150px;
-
-}
-
-
-.action-btn {
-
-    display: inline-block;
-
-    text-align: center;
-
-    padding: 11px 16px;
-
-    border-radius: 9px;
-
-    text-decoration: none;
-
-    font-weight: 600;
-
-    transition: opacity .2s ease;
-
-}
-
-
-.action-btn:hover {
-
-    opacity: .85;
-
 }
 
 
 .preview-btn {
 
-    background: #6f4bdb;
+    background: #6f4b8b;
 
     color: white;
 
+    border: none;
+
+    padding: 12px 20px;
+
+    border-radius: 10px;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    text-align: center;
+
+    text-decoration: none;
+
+    transition: .2s;
+}
+
+
+.preview-btn:hover {
+
+    background: #5d3d77;
+
+    transform: translateY(-1px);
 }
 
 
 .edit-btn {
 
-    background: #ffffff;
+    background: white;
 
-    color: #6f4bdb;
+    color: #6f4b8b;
 
-    border: 1px solid #6f4bdb;
+    border: 1px solid #6f4b8b;
 
+    padding: 11px 20px;
+
+    border-radius: 10px;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    text-align: center;
+
+    text-decoration: none;
+
+    transition: .2s;
+}
+
+
+.edit-btn:hover {
+
+    background: #f6f1fa;
+}
+
+
+/* DELETE BUTTON */
+
+.delete-btn {
+
+    background: #c62828;
+
+    color: white;
+
+    border: none;
+
+    padding: 12px 20px;
+
+    border-radius: 10px;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+
+.delete-btn:hover {
+
+    background: #a91f1f;
+
+    transform: translateY(-1px);
 }
 
 
@@ -243,13 +277,15 @@
 
     border-radius: 16px;
 
+    color: #6b7280;
 }
 
 
 .empty-review h3 {
 
-    margin-bottom: 8px;
+    color: #17203a;
 
+    margin-bottom: 8px;
 }
 
 
@@ -259,26 +295,36 @@
 
 @media(max-width:700px) {
 
+    .review-heading {
+
+        flex-direction: column;
+    }
+
+
     .novel-card {
 
-        grid-template-columns: 1fr;
+        flex-direction: column;
 
+        align-items: stretch;
     }
 
 
     .novel-actions {
 
+        width: 100%;
+
         flex-direction: row;
 
-        min-width: 0;
-
+        flex-wrap: wrap;
     }
 
 
-    .action-btn {
+    .novel-actions a,
+    .novel-actions button {
 
         flex: 1;
 
+        min-width: 120px;
     }
 
 }
@@ -290,10 +336,6 @@
 
 <body>
 
-
-<!-- =========================
-     HEADER
-========================= -->
 
 <header>
 
@@ -314,27 +356,22 @@ ADMIN
 
 </span>
 
-
 </div>
 
 </header>
 
 
 
-<!-- =========================
-     MAIN PAGE
-========================= -->
-
-<main class="dashboard-page">
-
+<main class="review-page">
 
 <div class="container">
 
 
-<!-- PAGE HEADING -->
+<!-- =========================
+     PAGE HEADING
+========================= -->
 
-<div class="dashboard-heading">
-
+<div class="review-heading">
 
 <div>
 
@@ -358,10 +395,11 @@ Review new submissions and revisit novels that have already been approved.
 
 </p>
 
-
 </div>
 
 
+<!-- ADMIN DASHBOARD
+     TOP RIGHT -->
 <a
 class="btn outline"
 href="admin-dashboard.html"
@@ -371,42 +409,35 @@ Admin Dashboard
 
 </a>
 
-
 </div>
 
 
 
 <!-- =========================
-     PENDING NOVELS
+     PENDING SUBMISSIONS
 ========================= -->
 
-<div class="review-section">
+<section class="review-section">
 
 
-<div class="section-heading">
-
-<h2>
+<h2 class="review-section-title">
 
 Pending Submissions
 
 </h2>
 
 
-<p>
+<p class="review-section-description">
 
 New novels waiting for review and approval.
 
 </p>
 
 
-</div>
-
-
 <div
 id="pending-list"
-class="submission-list"
+class="novel-list"
 >
-
 
 <div class="empty-review">
 
@@ -416,21 +447,18 @@ Loading submissions...
 
 </h3>
 
-
 <p>
 
 Please wait.
 
 </p>
 
+</div>
 
 </div>
 
 
-</div>
-
-
-</div>
+</section>
 
 
 
@@ -438,36 +466,27 @@ Please wait.
      APPROVED NOVELS
 ========================= -->
 
-<div class="review-section">
+<section class="review-section">
 
 
-<div class="section-heading">
-
-
-<h2>
+<h2 class="review-section-title">
 
 Previously Approved Novels
 
 </h2>
 
 
-<p>
+<p class="review-section-description">
 
-These novels have already been approved.
-You can still preview and edit them at any time.
+Revisit, preview, edit, or manage novels that have already been approved.
 
 </p>
 
 
-</div>
-
-
-
 <div
 id="approved-list"
-class="submission-list"
+class="novel-list"
 >
-
 
 <div class="empty-review">
 
@@ -477,37 +496,27 @@ Loading approved novels...
 
 </h3>
 
+</div>
 
 </div>
 
 
-</div>
+</section>
 
 
 </div>
-
-
-
-</div>
-
 
 </main>
 
 
 
-<!-- =========================
-     FOOTER
-========================= -->
-
 <footer>
-
 
 <div class="container copy">
 
 © 2026 EarnGig Administration.
 
 </div>
-
 
 </footer>
 
@@ -526,13 +535,12 @@ Loading approved novels...
 <script>
 
 
-/* =========================
-   ELEMENTS
-========================= */
+const pendingList =
+document.getElementById("pending-list");
 
-const pendingList = document.getElementById("pending-list");
 
-const approvedList = document.getElementById("approved-list");
+const approvedList =
+document.getElementById("approved-list");
 
 
 
@@ -541,7 +549,6 @@ const approvedList = document.getElementById("approved-list");
 ========================= */
 
 function escapeHtml(value) {
-
 
     return String(value || "")
 
@@ -554,7 +561,6 @@ function escapeHtml(value) {
         .replace(/"/g, "&quot;")
 
         .replace(/'/g, "&#039;");
-
 
 }
 
@@ -579,12 +585,10 @@ async function checkAdmin() {
 
     if (error || !user) {
 
-
-        window.location.href = "login.html";
-
+        window.location.href =
+        "login.html";
 
         return null;
-
 
     }
 
@@ -592,7 +596,9 @@ async function checkAdmin() {
 
     const {
 
-        data: profile
+        data: profile,
+
+        error: profileError
 
     } = await supabaseClient
 
@@ -606,24 +612,25 @@ async function checkAdmin() {
 
 
 
-    if (!profile?.is_admin) {
+    if (profileError || !profile?.is_admin) {
 
 
-        alert("Admin access required.");
+        alert(
+            "Admin access required."
+        );
 
 
-        window.location.href = "dashboard.html";
+        window.location.href =
+        "dashboard.html";
 
 
         return null;
-
 
     }
 
 
 
     return user;
-
 
 }
 
@@ -633,12 +640,14 @@ async function checkAdmin() {
    CREATE NOVEL CARD
 ========================= */
 
-function createNovelCard(novel, type) {
+function createNovelCard(
+    novel,
+    status
+) {
 
 
     const statusClass =
-
-        type === "pending"
+        status === "pending"
 
         ? "status-pending"
 
@@ -647,8 +656,7 @@ function createNovelCard(novel, type) {
 
 
     const statusText =
-
-        type === "pending"
+        status === "pending"
 
         ? "Pending Review"
 
@@ -656,14 +664,7 @@ function createNovelCard(novel, type) {
 
 
 
-    const detailUrl =
-
-        `novel-review-detail.html?id=${encodeURIComponent(novel.id)}`;
-
-
-
     return `
-
 
     <div class="novel-card">
 
@@ -682,8 +683,9 @@ function createNovelCard(novel, type) {
             <div class="novel-writer">
 
                 Writer:
-
-                ${escapeHtml(novel.author_name)}
+                ${escapeHtml(
+                    novel.author_name
+                )}
 
             </div>
 
@@ -708,11 +710,14 @@ function createNovelCard(novel, type) {
             <!-- FULL PREVIEW -->
 
             <a
-            href="${detailUrl}"
-            class="action-btn preview-btn"
+
+            class="preview-btn"
+
+            href="novel-review-detail.html?id=${encodeURIComponent(novel.id)}&mode=preview"
+
             >
 
-                Full Preview
+            Full Preview
 
             </a>
 
@@ -721,13 +726,32 @@ function createNovelCard(novel, type) {
             <!-- EDIT -->
 
             <a
-            href="${detailUrl}"
-            class="action-btn edit-btn"
+
+            class="edit-btn"
+
+            href="novel-review-detail.html?id=${encodeURIComponent(novel.id)}&mode=edit"
+
             >
 
-                Edit
+            Edit
 
             </a>
+
+
+
+            <!-- DELETE -->
+
+            <button
+
+            class="delete-btn"
+
+            onclick="deleteNovel('${novel.id}', '${escapeHtml(novel.title).replace(/'/g, "\\'")}')"
+
+            >
+
+            Delete
+
+            </button>
 
 
         </div>
@@ -735,19 +759,17 @@ function createNovelCard(novel, type) {
 
     </div>
 
-
     `;
-
 
 }
 
 
 
 /* =========================
-   LOAD NOVELS
+   LOAD PENDING NOVELS
 ========================= */
 
-async function loadNovels() {
+async function loadPendingNovels() {
 
 
     const {
@@ -758,9 +780,7 @@ async function loadNovels() {
 
     } = await supabaseClient
 
-
         .from("novels")
-
 
         .select(`
 
@@ -776,101 +796,61 @@ async function loadNovels() {
 
         `)
 
+        .eq(
+            "submission_status",
+            "pending"
+        )
 
         .order(
-
             "created_at",
-
             {
 
-                ascending: false
+                ascending: true
 
             }
-
         );
 
 
 
-    /* ERROR */
-
     if (error) {
 
 
-        const errorMessage = `
-
+        pendingList.innerHTML = `
 
         <div class="empty-review">
 
-
             <h3>
 
-                Unable to load novels
+                Unable to load submissions
 
             </h3>
 
 
             <p>
 
-                ${escapeHtml(error.message)}
+                ${escapeHtml(
+                    error.message
+                )}
 
             </p>
 
-
         </div>
-
 
         `;
 
 
-
-        pendingList.innerHTML = errorMessage;
-
-        approvedList.innerHTML = errorMessage;
-
-
         return;
-
 
     }
 
 
 
-    /* =========================
-       SEPARATE NOVELS
-    ========================= */
-
-    const pendingNovels =
-
-        data.filter(novel =>
-
-            novel.submission_status === "pending"
-
-        );
-
-
-
-    const approvedNovels =
-
-        data.filter(novel =>
-
-            novel.submission_status === "approved"
-
-        );
-
-
-
-    /* =========================
-       DISPLAY PENDING
-    ========================= */
-
-    if (pendingNovels.length === 0) {
+    if (!data || data.length === 0) {
 
 
         pendingList.innerHTML = `
 
-
         <div class="empty-review">
-
 
             <h3>
 
@@ -885,54 +865,120 @@ async function loadNovels() {
 
             </p>
 
-
         </div>
-
 
         `;
 
 
-    }
-
-
-    else {
-
-
-        pendingList.innerHTML =
-
-            pendingNovels
-
-                .map(novel =>
-
-                    createNovelCard(
-
-                        novel,
-
-                        "pending"
-
-                    )
-
-                )
-
-                .join("");
-
+        return;
 
     }
 
 
 
-    /* =========================
-       DISPLAY APPROVED
-    ========================= */
+    pendingList.innerHTML =
 
-    if (approvedNovels.length === 0) {
+        data.map(
+            novel =>
+
+            createNovelCard(
+                novel,
+                "pending"
+            )
+
+        ).join("");
+
+
+}
+
+
+
+/* =========================
+   LOAD APPROVED NOVELS
+========================= */
+
+async function loadApprovedNovels() {
+
+
+    const {
+
+        data,
+
+        error
+
+    } = await supabaseClient
+
+        .from("novels")
+
+        .select(`
+
+            id,
+
+            title,
+
+            author_name,
+
+            submission_status,
+
+            created_at
+
+        `)
+
+        .eq(
+            "submission_status",
+            "approved"
+        )
+
+        .order(
+            "created_at",
+            {
+
+                ascending: false
+
+            }
+        );
+
+
+
+    if (error) {
 
 
         approvedList.innerHTML = `
 
-
         <div class="empty-review">
 
+            <h3>
+
+                Unable to load approved novels
+
+            </h3>
+
+
+            <p>
+
+                ${escapeHtml(
+                    error.message
+                )}
+
+            </p>
+
+        </div>
+
+        `;
+
+
+        return;
+
+    }
+
+
+
+    if (!data || data.length === 0) {
+
+
+        approvedList.innerHTML = `
+
+        <div class="empty-review">
 
             <h3>
 
@@ -943,44 +989,109 @@ async function loadNovels() {
 
             <p>
 
-                Approved novels will remain available here for review.
+                Approved novels will appear here.
 
             </p>
 
-
         </div>
-
 
         `;
 
 
-    }
-
-
-    else {
-
-
-        approvedList.innerHTML =
-
-            approvedNovels
-
-                .map(novel =>
-
-                    createNovelCard(
-
-                        novel,
-
-                        "approved"
-
-                    )
-
-                )
-
-                .join("");
-
+        return;
 
     }
 
+
+
+    approvedList.innerHTML =
+
+        data.map(
+            novel =>
+
+            createNovelCard(
+                novel,
+                "approved"
+            )
+
+        ).join("");
+
+
+}
+
+
+
+/* =========================
+   DELETE NOVEL
+========================= */
+
+async function deleteNovel(
+    novelId,
+    novelTitle
+) {
+
+
+    const confirmed =
+        confirm(
+
+            `Are you sure you want to delete "${novelTitle}"?\n\nThis action cannot be undone.`
+
+        );
+
+
+
+    if (!confirmed) return;
+
+
+
+    const {
+
+        error
+
+    } = await supabaseClient
+
+        .from("novels")
+
+        .delete()
+
+        .eq(
+            "id",
+            novelId
+        );
+
+
+
+    if (error) {
+
+
+        alert(
+
+            "Unable to delete novel: " +
+
+            error.message
+
+        );
+
+
+        return;
+
+    }
+
+
+
+    alert(
+
+        "Novel deleted successfully."
+
+    );
+
+
+
+    /* Refresh both sections */
+
+    await loadPendingNovels();
+
+    await loadApprovedNovels();
 
 }
 
@@ -993,13 +1104,19 @@ async function loadNovels() {
 (async function() {
 
 
-    const user = await checkAdmin();
+    const user =
+        await checkAdmin();
+
 
 
     if (!user) return;
 
 
-    await loadNovels();
+
+    await loadPendingNovels();
+
+
+    await loadApprovedNovels();
 
 
 })();

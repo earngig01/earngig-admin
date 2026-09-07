@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Novel Review | EarnGig Admin</title>
+
+<link rel="stylesheet" href="styles.css">
+
+
+<style>
+
+/* =========================
+   PAGE SECTIONS
+========================= */
+
+.review-section {
+
+    margin-top: 35px;
+
+}
+
+
+.section-heading {
+
+    margin-bottom: 18px;
+
+}
+
+
+.section-heading h2 {
+
+    margin-bottom: 6px;
+
+    color: #17203a;
+
+}
+
+
+.section-heading p {
+
+    color: #666;
+
+}
+
+
+/* =========================
+   NOVEL LIST
+========================= */
+
+.submission-list {
+
+    display: grid;
+
+    gap: 15px;
+
+}
+
+
+/* =========================
+   NOVEL CARD
+========================= */
+
+.novel-card {
+
+    display: grid;
+
+    grid-template-columns: 1fr auto;
+
+    gap: 25px;
+
+    align-items: center;
+
+    padding: 22px;
+
+    background: #ffffff;
+
+    border: 1px solid #e4e5ec;
+
+    border-radius: 14px;
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+
+}
+
+
+.novel-card:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 22px
+        rgba(0,0,0,.08);
+
+}
+
+
+/* =========================
+   NOVEL INFORMATION
+========================= */
+
+.novel-title {
+
+    font-size: 18px;
+
+    font-weight: 700;
+
+    color: #17203a;
+
+    margin-bottom: 8px;
+
+}
+
+
+.novel-writer {
+
+    color: #666;
+
+    margin-bottom: 10px;
+
+}
+
+
+/* =========================
+   STATUS
+========================= */
+
+.novel-status {
+
+    display: inline-block;
+
+    padding: 7px 12px;
+
+    border-radius: 999px;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+}
+
+
+.status-pending {
+
+    background: #fff2d8;
+
+    color: #9a6700;
+
+}
+
+
+.status-approved {
+
+    background: #dcfce7;
+
+    color: #166534;
+
+}
+
+
+/* =========================
+   ACTION BUTTONS
+========================= */
+
+.novel-actions {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+
+    min-width: 150px;
+
+}
+
+
+.action-btn {
+
+    display: inline-block;
+
+    text-align: center;
+
+    padding: 11px 16px;
+
+    border-radius: 9px;
+
+    text-decoration: none;
+
+    font-weight: 600;
+
+    transition: opacity .2s ease;
+
+}
+
+
+.action-btn:hover {
+
+    opacity: .85;
+
+}
+
+
+.preview-btn {
+
+    background: #6f4bdb;
+
+    color: white;
+
+}
+
+
+.edit-btn {
+
+    background: #ffffff;
+
+    color: #6f4bdb;
+
+    border: 1px solid #6f4bdb;
+
+}
+
+
+/* =========================
+   EMPTY STATE
+========================= */
+
+.empty-review {
+
+    text-align: center;
+
+    padding: 45px 20px;
+
+    background: #ffffff;
+
+    border: 1px solid #e4e5ec;
+
+    border-radius: 16px;
+
+}
+
+
+.empty-review h3 {
+
+    margin-bottom: 8px;
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:700px) {
+
+    .novel-card {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .novel-actions {
+
+        flex-direction: row;
+
+        min-width: 0;
+
+    }
+
+
+    .action-btn {
+
+        flex: 1;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header>
+
+<div class="container nav">
+
+<a class="logo" href="index.html">
+
+<span class="logo-mark">E</span>
+
+Earn<span>Gig</span>
+
+</a>
+
+
+<span class="admin-badge">
+
+ADMIN
+
+</span>
+
+
+</div>
+
+</header>
+
+
+
+<!-- =========================
+     MAIN PAGE
+========================= -->
+
+<main class="dashboard-page">
+
+
+<div class="container">
+
+
+<!-- PAGE HEADING -->
+
+<div class="dashboard-heading">
+
+
+<div>
+
+<span class="eyebrow">
+
+NOVEL ASSESSMENT
+
+</span>
+
+
+<h1>
+
+Novel Review
+
+</h1>
+
+
+<p>
+
+Review new submissions and revisit novels that have already been approved.
+
+</p>
+
+
+</div>
+
+
+<a
+class="btn outline"
+href="admin-dashboard.html"
+>
+
+Admin Dashboard
+
+</a>
+
+
+</div>
+
+
+
+<!-- =========================
+     PENDING NOVELS
+========================= -->
+
+<div class="review-section">
+
+
+<div class="section-heading">
+
+<h2>
+
+Pending Submissions
+
+</h2>
+
+
+<p>
+
+New novels waiting for review and approval.
+
+</p>
+
+
+</div>
+
+
+<div
+id="pending-list"
+class="submission-list"
+>
+
+
+<div class="empty-review">
+
+<h3>
+
+Loading submissions...
+
+</h3>
+
+
+<p>
+
+Please wait.
+
+</p>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+<!-- =========================
+     APPROVED NOVELS
+========================= -->
+
+<div class="review-section">
+
+
+<div class="section-heading">
+
+
+<h2>
+
+Previously Approved Novels
+
+</h2>
+
+
+<p>
+
+These novels have already been approved.
+You can still preview and edit them at any time.
+
+</p>
+
+
+</div>
+
+
+
+<div
+id="approved-list"
+class="submission-list"
+>
+
+
+<div class="empty-review">
+
+<h3>
+
+Loading approved novels...
+
+</h3>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+</div>
+
+
+</main>
+
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+
+<div class="container copy">
+
+© 2026 EarnGig Administration.
+
+</div>
+
+
+</footer>
+
+
+
+<!-- =========================
+     SUPABASE
+========================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="supabase.js"></script>
+
+
+
+<script>
+
+
+/* =========================
+   ELEMENTS
+========================= */
+
+const pendingList = document.getElementById("pending-list");
+
+const approvedList = document.getElementById("approved-list");
+
+
+
+/* =========================
+   ESCAPE HTML
+========================= */
+
+function escapeHtml(value) {
+
+
+    return String(value || "")
+
+        .replace(/&/g, "&amp;")
+
+        .replace(/</g, "&lt;")
+
+        .replace(/>/g, "&gt;")
+
+        .replace(/"/g, "&quot;")
+
+        .replace(/'/g, "&#039;");
+
+
+}
+
+
+
+/* =========================
+   CHECK ADMIN
+========================= */
+
+async function checkAdmin() {
+
+
+    const {
+
+        data: { user },
+
+        error
+
+    } = await supabaseClient.auth.getUser();
+
+
+
+    if (error || !user) {
+
+
+        window.location.href = "login.html";
+
+
+        return null;
+
+
+    }
+
+
+
+    const {
+
+        data: profile
+
+    } = await supabaseClient
+
+        .from("profiles")
+
+        .select("is_admin")
+
+        .eq("id", user.id)
+
+        .single();
+
+
+
+    if (!profile?.is_admin) {
+
+
+        alert("Admin access required.");
+
+
+        window.location.href = "dashboard.html";
+
+
+        return null;
+
+
+    }
+
+
+
+    return user;
+
+
+}
+
+
+
+/* =========================
+   CREATE NOVEL CARD
+========================= */
+
+function createNovelCard(novel, type) {
+
+
+    const statusClass =
+
+        type === "pending"
+
+        ? "status-pending"
+
+        : "status-approved";
+
+
+
+    const statusText =
+
+        type === "pending"
+
+        ? "Pending Review"
+
+        : "Approved";
+
+
+
+    const detailUrl =
+
+        `novel-review-detail.html?id=${encodeURIComponent(novel.id)}`;
+
+
+
+    return `
+
+
+    <div class="novel-card">
+
+
+        <div class="novel-info">
+
+
+            <div class="novel-title">
+
+                ${escapeHtml(novel.title)}
+
+            </div>
+
+
+
+            <div class="novel-writer">
+
+                Writer:
+
+                ${escapeHtml(novel.author_name)}
+
+            </div>
+
+
+
+            <span
+            class="novel-status ${statusClass}"
+            >
+
+                ${statusText}
+
+            </span>
+
+
+        </div>
+
+
+
+        <div class="novel-actions">
+
+
+            <!-- FULL PREVIEW -->
+
+            <a
+            href="${detailUrl}"
+            class="action-btn preview-btn"
+            >
+
+                Full Preview
+
+            </a>
+
+
+
+            <!-- EDIT -->
+
+            <a
+            href="${detailUrl}"
+            class="action-btn edit-btn"
+            >
+
+                Edit
+
+            </a>
+
+
+        </div>
+
+
+    </div>
+
+
+    `;
+
+
+}
+
+
+
+/* =========================
+   LOAD NOVELS
+========================= */
+
+async function loadNovels() {
+
+
+    const {
+
+        data,
+
+        error
+
+    } = await supabaseClient
+
+
+        .from("novels")
+
+
+        .select(`
+
+            id,
+
+            title,
+
+            author_name,
+
+            submission_status,
+
+            created_at
+
+        `)
+
+
+        .order(
+
+            "created_at",
+
+            {
+
+                ascending: false
+
+            }
+
+        );
+
+
+
+    /* ERROR */
+
+    if (error) {
+
+
+        const errorMessage = `
+
+
+        <div class="empty-review">
+
+
+            <h3>
+
+                Unable to load novels
+
+            </h3>
+
+
+            <p>
+
+                ${escapeHtml(error.message)}
+
+            </p>
+
+
+        </div>
+
+
+        `;
+
+
+
+        pendingList.innerHTML = errorMessage;
+
+        approvedList.innerHTML = errorMessage;
+
+
+        return;
+
+
+    }
+
+
+
+    /* =========================
+       SEPARATE NOVELS
+    ========================= */
+
+    const pendingNovels =
+
+        data.filter(novel =>
+
+            novel.submission_status === "pending"
+
+        );
+
+
+
+    const approvedNovels =
+
+        data.filter(novel =>
+
+            novel.submission_status === "approved"
+
+        );
+
+
+
+    /* =========================
+       DISPLAY PENDING
+    ========================= */
+
+    if (pendingNovels.length === 0) {
+
+
+        pendingList.innerHTML = `
+
+
+        <div class="empty-review">
+
+
+            <h3>
+
+                No pending novel submissions
+
+            </h3>
+
+
+            <p>
+
+                New writer submissions will appear here.
+
+            </p>
+
+
+        </div>
+
+
+        `;
+
+
+    }
+
+
+    else {
+
+
+        pendingList.innerHTML =
+
+            pendingNovels
+
+                .map(novel =>
+
+                    createNovelCard(
+
+                        novel,
+
+                        "pending"
+
+                    )
+
+                )
+
+                .join("");
+
+
+    }
+
+
+
+    /* =========================
+       DISPLAY APPROVED
+    ========================= */
+
+    if (approvedNovels.length === 0) {
+
+
+        approvedList.innerHTML = `
+
+
+        <div class="empty-review">
+
+
+            <h3>
+
+                No approved novels yet
+
+            </h3>
+
+
+            <p>
+
+                Approved novels will remain available here for review.
+
+            </p>
+
+
+        </div>
+
+
+        `;
+
+
+    }
+
+
+    else {
+
+
+        approvedList.innerHTML =
+
+            approvedNovels
+
+                .map(novel =>
+
+                    createNovelCard(
+
+                        novel,
+
+                        "approved"
+
+                    )
+
+                )
+
+                .join("");
+
+
+    }
+
+
+}
+
+
+
+/* =========================
+   START PAGE
+========================= */
+
+(async function() {
+
+
+    const user = await checkAdmin();
+
+
+    if (!user) return;
+
+
+    await loadNovels();
+
+
+})();
+
+
+</script>
+
+
+</body>
+
+</html>

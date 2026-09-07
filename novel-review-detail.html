@@ -1038,10 +1038,13 @@ assessment_notes
           </label>
 
 
-          <textarea
-            id="notes"
-            placeholder="Enter assessment notes for the writer..."
-          ></textarea>
+        <textarea
+  id="notes"
+  placeholder="Enter assessment notes for the writer..."
+>${escapeHtml(
+  novel.assessment_notes ||
+  ""
+)}</textarea>
 
         </div>
 

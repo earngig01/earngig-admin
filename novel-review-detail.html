@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
@@ -14,23 +13,17 @@
   <title>Novel Review | EarnGig Admin</title>
 
 
-  <!-- =========================
-       SUPABASE
-       ========================= -->
+  <!-- SUPABASE -->
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
-  <!-- =========================
-       PDF PROCESSOR
-       ========================= -->
+  <!-- PDF PROCESSOR -->
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 
 
-  <!-- =========================
-       DOCX PROCESSOR
-       ========================= -->
+  <!-- DOCX PROCESSOR -->
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.11.0/mammoth.browser.min.js"></script>
 
@@ -43,24 +36,15 @@
   </script>
 
 
-  <!-- =========================
-       SUPABASE CONFIG
-       ========================= -->
+  <!-- SUPABASE CONFIG -->
 
   <script src="supabase.js"></script>
 
 
   <style>
 
-
-    /* =====================================================
-       GLOBAL
-       ===================================================== */
-
     * {
-
       box-sizing: border-box;
-
     }
 
 
@@ -79,9 +63,9 @@
     }
 
 
-    /* =====================================================
+    /* =========================
        HEADER
-       ===================================================== */
+       ========================= */
 
     header {
 
@@ -98,15 +82,13 @@
 
       margin: auto;
 
-      padding:
-        18px
-        20px;
+      padding: 18px 20px;
 
       display: flex;
 
       align-items: center;
 
-      gap: 12px;
+      gap: 15px;
 
     }
 
@@ -120,8 +102,6 @@
       font-size: 25px;
 
       font-weight: 700;
-
-      white-space: nowrap;
 
     }
 
@@ -162,22 +142,12 @@
 
       font: inherit;
 
-      white-space: nowrap;
-
     }
 
 
-    .nav-btn:hover {
-
-      background:
-        rgba(255,255,255,.08);
-
-    }
-
-
-    /* =====================================================
+    /* =========================
        MAIN
-       ===================================================== */
+       ========================= */
 
     main {
 
@@ -218,14 +188,12 @@
 
       color: #686a7d;
 
-      line-height: 1.6;
-
     }
 
 
-    /* =====================================================
+    /* =========================
        CARD
-       ===================================================== */
+       ========================= */
 
     .card {
 
@@ -248,9 +216,9 @@
     }
 
 
-    /* =====================================================
+    /* =========================
        NOVEL HEADER
-       ===================================================== */
+       ========================= */
 
     .novel-header {
 
@@ -275,11 +243,7 @@
 
       border-radius: 10px;
 
-      background: #eeeeee;
-
-      border:
-        1px solid
-        #e4e5ec;
+      background: #eee;
 
     }
 
@@ -297,7 +261,7 @@
 
       color: #686a7d;
 
-      line-height: 1.9;
+      line-height: 1.7;
 
     }
 
@@ -313,9 +277,9 @@
     }
 
 
-    /* =====================================================
+    /* =========================
        STATUS
-       ===================================================== */
+       ========================= */
 
     .status {
 
@@ -336,8 +300,6 @@
       font-weight: 700;
 
       margin-top: 10px;
-
-      text-transform: capitalize;
 
     }
 
@@ -378,9 +340,9 @@
     }
 
 
-    /* =====================================================
+    /* =========================
        SECTIONS
-       ===================================================== */
+       ========================= */
 
     .section-title {
 
@@ -415,9 +377,9 @@
     }
 
 
-    /* =====================================================
+    /* =========================
        FORM
-       ===================================================== */
+       ========================= */
 
     .form-grid {
 
@@ -495,14 +457,12 @@
 
       font-size: 12px;
 
-      line-height: 1.5;
-
     }
 
 
-    /* =====================================================
+    /* =========================
        BUTTONS
-       ===================================================== */
+       ========================= */
 
     .decision-actions {
 
@@ -530,13 +490,6 @@
       cursor: pointer;
 
       font: inherit;
-
-    }
-
-
-    .btn:hover {
-
-      opacity: .92;
 
     }
 
@@ -586,9 +539,9 @@
     }
 
 
-    /* =====================================================
+    /* =========================
        MESSAGE
-       ===================================================== */
+       ========================= */
 
     .message {
 
@@ -638,9 +591,9 @@
     }
 
 
-    /* =====================================================
+    /* =========================
        PROCESSOR
-       ===================================================== */
+       ========================= */
 
     .processor-status {
 
@@ -655,8 +608,6 @@
       color: #4d4f62;
 
       display: none;
-
-      line-height: 1.5;
 
     }
 
@@ -679,9 +630,9 @@
     }
 
 
-    /* =====================================================
+    /* =========================
        QUIZ
-       ===================================================== */
+       ========================= */
 
     .review-section {
 
@@ -716,8 +667,6 @@
       color: #686a7d;
 
       margin-bottom: 20px;
-
-      line-height: 1.6;
 
     }
 
@@ -773,63 +722,11 @@
     }
 
 
-    .quiz-actions {
-
-      display: flex;
-
-      flex-wrap: wrap;
-
-      gap: 12px;
-
-      margin-top: 10px;
-
-    }
-
-
-    /* =====================================================
+    /* =========================
        MOBILE
-       ===================================================== */
+       ========================= */
 
     @media (max-width: 700px) {
-
-
-      .nav {
-
-        padding:
-          14px
-          16px;
-
-      }
-
-
-      .nav-btn {
-
-        padding:
-          8px
-          10px;
-
-        font-size: 13px;
-
-      }
-
-
-      main {
-
-        padding:
-          25px
-          15px
-          50px;
-
-      }
-
-
-      .card,
-      .review-section {
-
-        padding: 18px;
-
-      }
-
 
       .novel-header {
 
@@ -876,9 +773,7 @@
 
       }
 
-
     }
-
 
   </style>
 
@@ -888,14 +783,13 @@
 <body>
 
 
-<!-- =====================================================
+<!-- =========================
      HEADER
-     ===================================================== -->
+     ========================= -->
 
 <header>
 
   <div class="nav">
-
 
     <a
       class="logo"
@@ -930,35 +824,28 @@
 
     </button>
 
-
   </div>
 
 </header>
 
 
-<!-- =====================================================
+<!-- =========================
      MAIN
-     ===================================================== -->
+     ========================= -->
 
 <main>
 
 
   <section class="page-header">
 
-
     <h1>
-
       Novel Review
-
     </h1>
 
 
     <p>
-
       Review the manuscript and configure the novel before approval.
-
     </p>
-
 
   </section>
 
@@ -973,13 +860,11 @@
     id="pageContent"
   >
 
-
     <div class="loading">
 
       Loading novel...
 
     </div>
-
 
   </div>
 
@@ -1015,7 +900,6 @@ const novelId =
 
 if (!novelId) {
 
-
   alert(
     "No novel was selected."
   );
@@ -1024,12 +908,11 @@ if (!novelId) {
   window.location.href =
     "novel-review.html";
 
-
 }
 
 
 /* =====================================================
-   CHECK ADMIN
+   SECURITY
    ===================================================== */
 
 async function checkAdmin() {
@@ -1044,18 +927,13 @@ async function checkAdmin() {
       .getUser();
 
 
-  if (
-    error ||
-    !user
-  ) {
-
+  if (error || !user) {
 
     window.location.href =
       "index.html";
 
 
     return null;
-
 
   }
 
@@ -1077,19 +955,10 @@ async function checkAdmin() {
 
 
   if (
-
-
     profileError ||
-
-
     !profile ||
-
-
     profile.is_admin !== true
-
-
   ) {
-
 
     await supabaseClient
       .auth
@@ -1107,21 +976,13 @@ async function checkAdmin() {
 
     return null;
 
-
   }
 
 
   if (
-
-
     profile.account_status &&
-
-
     profile.account_status !== "active"
-
-
   ) {
-
 
     await supabaseClient
       .auth
@@ -1139,7 +1000,6 @@ async function checkAdmin() {
 
     return null;
 
-
   }
 
 
@@ -1148,7 +1008,6 @@ async function checkAdmin() {
 
 
   return user;
-
 
 }
 
@@ -1166,17 +1025,6 @@ async function loadNovel() {
     );
 
 
-  pageContent.innerHTML = `
-
-    <div class="loading">
-
-      Loading novel...
-
-    </div>
-
-  `;
-
-
   const {
     data: novel,
     error
@@ -1186,41 +1034,23 @@ async function loadNovel() {
       .select(`
 
         id,
-
         title,
-
         author_name,
-
         description,
-
         cover_url,
-
         genre,
-
         page_count,
-
         requested_reader_count,
-
         approved_reader_count,
-
         approved_reader_reward,
-
         writer_listing_fee,
-
         writer_payment_status,
-
         submission_status,
-
         status,
-
         manuscript_url,
-
         created_at,
-
         required_reading_percent,
-
         quality_assessment,
-
         assessment_notes
 
       `)
@@ -1231,11 +1061,7 @@ async function loadNovel() {
       .single();
 
 
-  if (
-    error ||
-    !novel
-  ) {
-
+  if (error || !novel) {
 
     console.error(
       "Novel loading error:",
@@ -1245,16 +1071,11 @@ async function loadNovel() {
 
     pageContent.innerHTML = `
 
-
       <div class="card">
 
-
         <h2>
-
           Novel could not be loaded
-
         </h2>
-
 
         <p>
 
@@ -1265,15 +1086,12 @@ async function loadNovel() {
 
         </p>
 
-
       </div>
-
 
     `;
 
 
     return false;
-
 
   }
 
@@ -1287,77 +1105,48 @@ async function loadNovel() {
 
 
   if (
-    novel.status ===
-    "published"
+    novel.status === "published"
   ) {
-
 
     statusClass =
       "published";
 
-
   }
 
-
   else if (
-    novel.status ===
-    "approved"
+    novel.status === "approved"
   ) {
-
 
     statusClass =
       "approved";
 
-
   }
 
-
   else if (
-    novel.status ===
-    "rejected"
+    novel.status === "rejected"
   ) {
-
 
     statusClass =
       "rejected";
 
-
   }
 
-
   else if (
-    novel.status ===
-    "needs_revision"
+    novel.status === "needs_revision"
   ) {
-
 
     statusClass =
       "needs_revision";
 
-
   }
-
-
-  const submittedDate =
-    novel.created_at
-
-      ?
-
-      new Date(
-        novel.created_at
-      ).toLocaleString()
-
-      :
-
-      "Unknown";
 
 
   pageContent.innerHTML = `
 
 
-    <!-- =================================================
+    <!-- =========================
          NOVEL INFORMATION
-         ================================================= -->
+         ========================= -->
 
     <section class="card">
 
@@ -1374,23 +1163,15 @@ async function loadNovel() {
 
             id="novelCover"
 
-            src="${escapeHtml(
-
+            src="${
               novel.cover_url ||
-
               "https://via.placeholder.com/300x420?text=No+Cover"
-
-            )}"
+            }"
 
             alt="${escapeHtml(
-
               novel.title ||
-
               "Novel"
-
             )} cover"
-
-            onerror="this.src='https://via.placeholder.com/300x420?text=No+Cover'"
 
           >
 
@@ -1403,15 +1184,10 @@ async function loadNovel() {
 
           <h2 class="novel-title">
 
-
             ${escapeHtml(
-
               novel.title ||
-
               "Untitled Novel"
-
             )}
-
 
           </h2>
 
@@ -1420,18 +1196,12 @@ async function loadNovel() {
 
 
             <strong>
-
               Writer:
-
             </strong>
 
-
             ${escapeHtml(
-
               novel.author_name ||
-
               "Unknown"
-
             )}
 
 
@@ -1439,18 +1209,12 @@ async function loadNovel() {
 
 
             <strong>
-
               Genre:
-
             </strong>
 
-
             ${escapeHtml(
-
               novel.genre ||
-
               "Not specified"
-
             )}
 
 
@@ -1458,33 +1222,36 @@ async function loadNovel() {
 
 
             <strong>
-
               Submitted:
-
             </strong>
 
 
-            ${escapeHtml(
-              submittedDate
-            )}
+            ${
+              novel.created_at
+
+                ?
+
+                new Date(
+                  novel.created_at
+                ).toLocaleString()
+
+                :
+
+                "Unknown"
+            }
 
 
             <br>
 
 
             <strong>
-
               Requested Readers:
-
             </strong>
 
 
             ${Number(
-
               novel.requested_reader_count ||
-
               0
-
             ).toLocaleString()}
 
 
@@ -1495,17 +1262,11 @@ async function loadNovel() {
             class="status ${statusClass}"
           >
 
-
             ${escapeHtml(
-
               novel.submission_status ||
-
               novel.status ||
-
               "Unknown"
-
             )}
-
 
           </span>
 
@@ -1520,23 +1281,16 @@ async function loadNovel() {
 
 
         <strong>
-
           Description
-
         </strong>
 
 
         <p>
 
-
           ${escapeHtml(
-
             novel.description ||
-
             "No description provided."
-
           )}
-
 
         </p>
 
@@ -1547,9 +1301,9 @@ async function loadNovel() {
     </section>
 
 
-    <!-- =================================================
+    <!-- =========================
          MANUSCRIPT
-         ================================================= -->
+         ========================= -->
 
     <section class="card">
 
@@ -1565,53 +1319,42 @@ async function loadNovel() {
 
 
         ${
-
           novel.manuscript_url
 
             ?
 
             `
 
-
-              <p>
-
-                The writer uploaded a manuscript.
-
-              </p>
+            <p>
+              The writer uploaded a manuscript.
+            </p>
 
 
-              <button
+            <button
 
-                type="button"
+              type="button"
 
-                class="btn secondary"
+              class="btn secondary"
 
-                onclick="viewManuscript()"
+              onclick="viewManuscript()"
 
-              >
+            >
 
-                📄 View Manuscript
+              📄 View Manuscript
 
-              </button>
-
+            </button>
 
             `
-
 
             :
 
             `
 
-
-              <p>
-
-                No manuscript has been uploaded.
-
-              </p>
-
+            <p>
+              No manuscript has been uploaded.
+            </p>
 
             `
-
 
         }
 
@@ -1631,9 +1374,9 @@ async function loadNovel() {
     </section>
 
 
-    <!-- =================================================
+    <!-- =========================
          APPROVAL AND PRICING
-         ================================================= -->
+         ========================= -->
 
     <section class="card">
 
@@ -1675,9 +1418,7 @@ async function loadNovel() {
               value="excellent"
 
               ${
-
-                novel.quality_assessment ===
-                "excellent"
+                novel.quality_assessment === "excellent"
 
                   ?
 
@@ -1701,9 +1442,7 @@ async function loadNovel() {
               value="good"
 
               ${
-
-                novel.quality_assessment ===
-                "good"
+                novel.quality_assessment === "good"
 
                   ?
 
@@ -1727,9 +1466,7 @@ async function loadNovel() {
               value="acceptable"
 
               ${
-
-                novel.quality_assessment ===
-                "acceptable"
+                novel.quality_assessment === "acceptable"
 
                   ?
 
@@ -1753,9 +1490,7 @@ async function loadNovel() {
               value="needs_revision"
 
               ${
-
-                novel.quality_assessment ===
-                "needs_revision"
+                novel.quality_assessment === "needs_revision"
 
                   ?
 
@@ -1801,11 +1536,8 @@ async function loadNovel() {
             min="1"
 
             value="${Number(
-
               novel.page_count ||
-
               0
-
             )}"
 
           >
@@ -1813,8 +1545,8 @@ async function loadNovel() {
 
           <div class="help">
 
-            Process the manuscript to automatically
-            detect the page count.
+            Actual processed manuscript pages
+            will be synchronized after processing.
 
           </div>
 
@@ -1843,11 +1575,8 @@ async function loadNovel() {
             min="1"
 
             value="${Number(
-
               novel.approved_reader_reward ||
-
               0
-
             )}"
 
           >
@@ -1877,13 +1606,9 @@ async function loadNovel() {
             min="1"
 
             value="${Number(
-
               novel.approved_reader_count ||
-
               novel.requested_reader_count ||
-
               0
-
             )}"
 
           >
@@ -1913,11 +1638,8 @@ async function loadNovel() {
             min="0"
 
             value="${Number(
-
               novel.writer_listing_fee ||
-
               0
-
             )}"
 
           >
@@ -1926,7 +1648,7 @@ async function loadNovel() {
         </div>
 
 
-        <!-- READING PERCENT -->
+        <!-- REQUIRED READING -->
 
         <div class="form-group">
 
@@ -1949,11 +1671,8 @@ async function loadNovel() {
             max="100"
 
             value="${Number(
-
               novel.required_reading_percent ||
-
               100
-
             )}"
 
           >
@@ -1981,11 +1700,8 @@ async function loadNovel() {
             placeholder="Enter assessment notes for the writer..."
 
           >${escapeHtml(
-
             novel.assessment_notes ||
-
             ""
-
           )}</textarea>
 
 
@@ -1998,9 +1714,9 @@ async function loadNovel() {
     </section>
 
 
-    <!-- =================================================
+    <!-- =========================
          QUIZ
-         ================================================= -->
+         ========================= -->
 
     <section class="review-section">
 
@@ -2015,61 +1731,51 @@ async function loadNovel() {
       <p>
 
         Add comprehension questions for this novel.
-        At least one complete question must be saved
-        before the novel can be approved.
 
       </p>
 
 
       <div
-
         id="quizQuestionsContainer"
-
       ></div>
 
 
-      <div class="quiz-actions">
+      <button
+
+        type="button"
+
+        class="btn secondary"
+
+        onclick="addQuizQuestion()"
+
+      >
+
+        + Add Question
+
+      </button>
 
 
-        <button
+      <button
 
-          type="button"
+        type="button"
 
-          class="btn secondary"
+        class="btn primary"
 
-          onclick="addQuizQuestion()"
+        onclick="saveQuizQuestions()"
 
-        >
+      >
 
-          + Add Question
+        Save Quiz
 
-        </button>
-
-
-        <button
-
-          type="button"
-
-          class="btn primary"
-
-          onclick="saveQuizQuestions()"
-
-        >
-
-          Save Quiz
-
-        </button>
-
-
-      </div>
+      </button>
 
 
     </section>
 
 
-    <!-- =================================================
+    <!-- =========================
          DECISION
-         ================================================= -->
+         ========================= -->
 
     <section class="card">
 
@@ -2158,7 +1864,6 @@ async function loadNovel() {
 
   return true;
 
-
 }
 
 
@@ -2174,7 +1879,6 @@ async function viewManuscript() {
     !currentNovel.manuscript_url
   ) {
 
-
     alert(
       "No manuscript was uploaded."
     );
@@ -2182,62 +1886,25 @@ async function viewManuscript() {
 
     return;
 
-
   }
 
 
-  try {
+  const {
+    data,
+    error
+  } =
+    await supabaseClient.storage
+      .from("novel-manuscripts")
+      .createSignedUrl(
 
+        currentNovel.manuscript_url,
 
-    const {
-      data,
-      error
-    } =
-      await supabaseClient
-        .storage
-        .from("novel-manuscripts")
-        .createSignedUrl(
+        3600
 
-          currentNovel.manuscript_url,
-
-          3600
-
-        );
-
-
-    if (error) {
-
-      throw error;
-
-    }
-
-
-    if (
-      !data ||
-      !data.signedUrl
-    ) {
-
-      throw new Error(
-        "Could not create manuscript URL."
       );
 
-    }
 
-
-    window.open(
-
-      data.signedUrl,
-
-      "_blank"
-
-    );
-
-
-  }
-
-
-  catch (error) {
-
+  if (error) {
 
     console.error(
       "Signed URL error:",
@@ -2246,19 +1913,20 @@ async function viewManuscript() {
 
 
     alert(
-
       "Could not open the manuscript:\n\n" +
-
-      (
-        error.message ||
-        "Unknown error"
-      )
-
+      error.message
     );
 
 
+    return;
+
   }
 
+
+  window.open(
+    data.signedUrl,
+    "_blank"
+  );
 
 }
 
@@ -2275,14 +1943,12 @@ async function processNovelManuscript() {
     !currentNovel.manuscript_url
   ) {
 
-
     alert(
       "No manuscript was found for this novel."
     );
 
 
     return false;
-
 
   }
 
@@ -2295,7 +1961,6 @@ async function processNovelManuscript() {
 
   if (statusBox) {
 
-
     statusBox.className =
       "processor-status show";
 
@@ -2303,23 +1968,17 @@ async function processNovelManuscript() {
     statusBox.textContent =
       "Downloading and processing manuscript. Please wait...";
 
-
   }
 
 
   try {
 
 
-    /* =========================================
-       CREATE SIGNED URL
-       ========================================= */
-
     const {
       data: signedData,
       error: signedError
     } =
-      await supabaseClient
-        .storage
+      await supabaseClient.storage
         .from("novel-manuscripts")
         .createSignedUrl(
 
@@ -2337,10 +1996,6 @@ async function processNovelManuscript() {
     }
 
 
-    /* =========================================
-       DOWNLOAD FILE
-       ========================================= */
-
     const response =
       await fetch(
         signedData.signedUrl
@@ -2349,11 +2004,9 @@ async function processNovelManuscript() {
 
     if (!response.ok) {
 
-
       throw new Error(
         "The manuscript could not be downloaded."
       );
-
 
     }
 
@@ -2371,14 +2024,12 @@ async function processNovelManuscript() {
       0;
 
 
-    /* =========================================
+    /* =========================
        PROCESS PDF
-       ========================================= */
+       ========================= */
 
     if (
-      fileName.endsWith(
-        ".pdf"
-      )
+      fileName.endsWith(".pdf")
     ) {
 
 
@@ -2387,51 +2038,42 @@ async function processNovelManuscript() {
         "undefined"
       ) {
 
-
         throw new Error(
           "PDF processor could not be loaded."
         );
-
 
       }
 
 
       if (statusBox) {
 
-
         statusBox.textContent =
           "Processing PDF manuscript...";
-
 
       }
 
 
       const pdf =
-        await pdfjsLib
-          .getDocument({
+        await pdfjsLib.getDocument({
 
-            data:
-              arrayBuffer
+          data:
+            arrayBuffer
 
-          })
-          .promise;
+        }).promise;
 
 
       processedPages =
         pdf.numPages;
 
-
     }
 
 
-    /* =========================================
+    /* =========================
        PROCESS DOCX
-       ========================================= */
+       ========================= */
 
     else if (
-      fileName.endsWith(
-        ".docx"
-      )
+      fileName.endsWith(".docx")
     ) {
 
 
@@ -2440,21 +2082,17 @@ async function processNovelManuscript() {
         "undefined"
       ) {
 
-
         throw new Error(
           "DOCX processor could not be loaded."
         );
-
 
       }
 
 
       if (statusBox) {
 
-
         statusBox.textContent =
           "Processing DOCX manuscript...";
-
 
       }
 
@@ -2500,56 +2138,31 @@ async function processNovelManuscript() {
 
         );
 
-
     }
 
-
-    /* =========================================
-       UNSUPPORTED FILE
-       ========================================= */
 
     else {
 
-
       throw new Error(
-
         "Unsupported manuscript format. Please upload a PDF or DOCX file."
-
       );
-
 
     }
 
 
-    /* =========================================
-       VALIDATE PAGE COUNT
-       ========================================= */
-
     if (
-
-
       !Number.isFinite(
         processedPages
       ) ||
-
-
       processedPages <= 0
-
-
     ) {
-
 
       throw new Error(
         "A valid page count could not be determined."
       );
 
-
     }
 
-
-    /* =========================================
-       UPDATE INPUT
-       ========================================= */
 
     const pagesInput =
       document.getElementById(
@@ -2559,17 +2172,11 @@ async function processNovelManuscript() {
 
     if (pagesInput) {
 
-
       pagesInput.value =
         processedPages;
 
-
     }
 
-
-    /* =========================================
-       SAVE PAGE COUNT
-       ========================================= */
 
     const {
       error: updateError
@@ -2604,11 +2211,8 @@ async function processNovelManuscript() {
 
     if (statusBox) {
 
-
       statusBox.textContent =
-
         `Manuscript processed successfully. ${processedPages} page(s) detected.`;
-
 
     }
 
@@ -2639,16 +2243,12 @@ async function processNovelManuscript() {
 
     if (statusBox) {
 
-
       statusBox.textContent =
-
         "Processing failed: " +
-
         (
           error.message ||
           "Unknown error"
         );
-
 
     }
 
@@ -2656,7 +2256,6 @@ async function processNovelManuscript() {
     showMessage(
 
       "Could not process the manuscript: " +
-
       (
         error.message ||
         "Unknown error"
@@ -2669,9 +2268,7 @@ async function processNovelManuscript() {
 
     return false;
 
-
   }
-
 
 }
 
@@ -2691,7 +2288,6 @@ function validateQuality() {
 
   if (!quality) {
 
-
     alert(
       "Please select a quality assessment."
     );
@@ -2699,12 +2295,10 @@ function validateQuality() {
 
     return false;
 
-
   }
 
 
   return true;
-
 
 }
 
@@ -2718,27 +2312,16 @@ function validatePages() {
 
   const pages =
     Number(
-
       document.getElementById(
         "pages"
       )?.value
-
     );
 
 
   if (
-
-
-    !Number.isFinite(
-      pages
-    ) ||
-
-
+    !Number.isFinite(pages) ||
     pages <= 0
-
-
   ) {
-
 
     alert(
       "Please enter a valid page count."
@@ -2747,12 +2330,10 @@ function validatePages() {
 
     return false;
 
-
   }
 
 
   return true;
-
 
 }
 
@@ -2766,27 +2347,16 @@ function validateReward() {
 
   const reward =
     Number(
-
       document.getElementById(
         "reward"
       )?.value
-
     );
 
 
   if (
-
-
-    !Number.isFinite(
-      reward
-    ) ||
-
-
+    !Number.isFinite(reward) ||
     reward <= 0
-
-
   ) {
-
 
     alert(
       "Please enter a valid reader reward."
@@ -2795,12 +2365,10 @@ function validateReward() {
 
     return false;
 
-
   }
 
 
   return true;
-
 
 }
 
@@ -2814,27 +2382,16 @@ function validateReaders() {
 
   const readers =
     Number(
-
       document.getElementById(
         "readers"
       )?.value
-
     );
 
 
   if (
-
-
-    !Number.isFinite(
-      readers
-    ) ||
-
-
+    !Number.isFinite(readers) ||
     readers <= 0
-
-
   ) {
-
 
     alert(
       "Please enter a valid approved reader target."
@@ -2843,12 +2400,10 @@ function validateReaders() {
 
     return false;
 
-
   }
 
 
   return true;
-
 
 }
 
@@ -2862,27 +2417,16 @@ function validateFee() {
 
   const fee =
     Number(
-
       document.getElementById(
         "fee"
       )?.value
-
     );
 
 
   if (
-
-
-    !Number.isFinite(
-      fee
-    ) ||
-
-
+    !Number.isFinite(fee) ||
     fee < 0
-
-
   ) {
-
 
     alert(
       "Please enter a valid listing fee."
@@ -2891,12 +2435,10 @@ function validateFee() {
 
     return false;
 
-
   }
 
 
   return true;
-
 
 }
 
@@ -2910,30 +2452,17 @@ function validateReadingPercent() {
 
   const readingPercent =
     Number(
-
       document.getElementById(
         "readingPercent"
       )?.value
-
     );
 
 
   if (
-
-
-    !Number.isFinite(
-      readingPercent
-    ) ||
-
-
+    !Number.isFinite(readingPercent) ||
     readingPercent <= 0 ||
-
-
     readingPercent > 100
-
-
   ) {
-
 
     alert(
       "Required reading percentage must be between 1 and 100."
@@ -2942,12 +2471,10 @@ function validateReadingPercent() {
 
     return false;
 
-
   }
 
 
   return true;
-
 
 }
 
@@ -2961,14 +2488,12 @@ async function saveNovelAssessment() {
 
   if (!currentNovel) {
 
-
     alert(
       "No novel is currently loaded."
     );
 
 
     return false;
-
 
   }
 
@@ -3023,51 +2548,41 @@ async function saveNovelAssessment() {
 
   const pages =
     Number(
-
       document.getElementById(
         "pages"
       ).value
-
     );
 
 
   const reward =
     Number(
-
       document.getElementById(
         "reward"
       ).value
-
     );
 
 
   const readers =
     Number(
-
       document.getElementById(
         "readers"
       ).value
-
     );
 
 
   const fee =
     Number(
-
       document.getElementById(
         "fee"
       ).value
-
     );
 
 
   const readingPercent =
     Number(
-
       document.getElementById(
         "readingPercent"
       ).value
-
     );
 
 
@@ -3083,7 +2598,6 @@ async function saveNovelAssessment() {
     await supabaseClient
       .from("novels")
       .update({
-
 
         quality_assessment:
           quality,
@@ -3112,7 +2626,6 @@ async function saveNovelAssessment() {
         required_reading_percent:
           readingPercent
 
-
       })
       .eq(
 
@@ -3125,7 +2638,6 @@ async function saveNovelAssessment() {
 
   if (error) {
 
-
     console.error(
       "Assessment saving error:",
       error
@@ -3135,7 +2647,6 @@ async function saveNovelAssessment() {
     showMessage(
 
       "Could not save the assessment: " +
-
       error.message,
 
       "error"
@@ -3144,7 +2655,6 @@ async function saveNovelAssessment() {
 
 
     return false;
-
 
   }
 
@@ -3178,7 +2688,6 @@ async function saveNovelAssessment() {
 
 
   return true;
-
 
 }
 
@@ -3243,11 +2752,8 @@ function addQuizQuestion(
       placeholder="Enter your question"
 
     >${escapeHtml(
-
       question.question_text ||
-
       ""
-
     )}</textarea>
 
 
@@ -3265,11 +2771,8 @@ function addQuizQuestion(
       class="quiz-option-a"
 
       value="${escapeHtml(
-
         question.option_a ||
-
         ""
-
       )}"
 
       placeholder="Option A"
@@ -3291,11 +2794,8 @@ function addQuizQuestion(
       class="quiz-option-b"
 
       value="${escapeHtml(
-
         question.option_b ||
-
         ""
-
       )}"
 
       placeholder="Option B"
@@ -3317,11 +2817,8 @@ function addQuizQuestion(
       class="quiz-option-c"
 
       value="${escapeHtml(
-
         question.option_c ||
-
         ""
-
       )}"
 
       placeholder="Option C"
@@ -3343,11 +2840,8 @@ function addQuizQuestion(
       class="quiz-option-d"
 
       value="${escapeHtml(
-
         question.option_d ||
-
         ""
-
       )}"
 
       placeholder="Option D"
@@ -3379,17 +2873,11 @@ function addQuizQuestion(
         value="A"
 
         ${
-
           question.correct_option === "A"
-
             ?
-
             "selected"
-
             :
-
             ""
-
         }
 
       >
@@ -3404,17 +2892,11 @@ function addQuizQuestion(
         value="B"
 
         ${
-
           question.correct_option === "B"
-
             ?
-
             "selected"
-
             :
-
             ""
-
         }
 
       >
@@ -3429,17 +2911,11 @@ function addQuizQuestion(
         value="C"
 
         ${
-
           question.correct_option === "C"
-
             ?
-
             "selected"
-
             :
-
             ""
-
         }
 
       >
@@ -3454,17 +2930,11 @@ function addQuizQuestion(
         value="D"
 
         ${
-
           question.correct_option === "D"
-
             ?
-
             "selected"
-
             :
-
             ""
-
         }
 
       >
@@ -3499,7 +2969,6 @@ function addQuizQuestion(
     card
   );
 
-
 }
 
 
@@ -3520,24 +2989,9 @@ function removeQuizQuestion(
 
   if (card) {
 
-
     card.remove();
 
-
   }
-
-
-  renumberQuizQuestions();
-
-
-}
-
-
-/* =====================================================
-   RENUMBER QUESTIONS
-   ===================================================== */
-
-function renumberQuizQuestions() {
 
 
   const container =
@@ -3557,7 +3011,6 @@ function renumberQuizQuestions() {
     container.children
   ).forEach(
 
-
     (
       questionCard,
       index
@@ -3572,19 +3025,14 @@ function renumberQuizQuestions() {
 
       if (heading) {
 
-
         heading.textContent =
           `Question ${index + 1}`;
 
-
       }
-
 
     }
 
-
   );
-
 
 }
 
@@ -3618,25 +3066,16 @@ async function loadQuizQuestions() {
     error
   } =
     await supabaseClient
-      .from(
-        "novel_quiz_questions"
-      )
+      .from("novel_quiz_questions")
       .select(`
 
         id,
-
         question_text,
-
         option_a,
-
         option_b,
-
         option_c,
-
         option_d,
-
         correct_option,
-
         question_order
 
       `)
@@ -3644,7 +3083,7 @@ async function loadQuizQuestions() {
 
         "novel_id",
 
-        currentNovel.id
+        novelId
 
       )
       .order(
@@ -3660,25 +3099,15 @@ async function loadQuizQuestions() {
 
   if (error) {
 
-
     console.error(
       "Quiz loading error:",
       error
     );
 
 
-    /*
-      We still add an empty question
-      so the admin can create a quiz.
-    */
-
-    addQuizQuestion();
-
-
     showMessage(
 
-      "Could not load existing quiz questions: " +
-
+      "Could not load quiz questions: " +
       error.message,
 
       "error"
@@ -3688,59 +3117,56 @@ async function loadQuizQuestions() {
 
     return;
 
-
   }
 
 
   if (
-
-
     data &&
-
-
     data.length > 0
-
-
   ) {
 
 
     data.forEach(
 
-
       question => {
-
 
         addQuizQuestion(
           question
         );
 
-
       }
 
-
     );
-
 
   }
 
 
   else {
 
-
     addQuizQuestion();
 
-
   }
-
 
 }
 
 
 /* =====================================================
-   COLLECT QUIZ QUESTIONS
+   SAVE QUIZ QUESTIONS
    ===================================================== */
 
-function collectQuizQuestions() {
+async function saveQuizQuestions() {
+
+
+  if (!currentNovel) {
+
+    alert(
+      "No novel is currently loaded."
+    );
+
+
+    return false;
+
+  }
 
 
   const container =
@@ -3751,16 +3177,7 @@ function collectQuizQuestions() {
 
   if (!container) {
 
-
-    return {
-
-      success: false,
-
-      message:
-        "Quiz container could not be found."
-
-    };
-
+    return false;
 
   }
 
@@ -3775,20 +3192,14 @@ function collectQuizQuestions() {
     );
 
 
-  if (
-    cards.length === 0
-  ) {
+  if (cards.length === 0) {
+
+    alert(
+      "Please add at least one quiz question."
+    );
 
 
-    return {
-
-      success: false,
-
-      message:
-        "Please add at least one quiz question."
-
-    };
-
+    return false;
 
   }
 
@@ -3799,15 +3210,11 @@ function collectQuizQuestions() {
 
   for (
 
-
     let index = 0;
-
 
     index < cards.length;
 
-
     index++
-
 
   ) {
 
@@ -3819,92 +3226,57 @@ function collectQuizQuestions() {
     const questionText =
       card.querySelector(
         ".quiz-question-text"
-      )?.value.trim();
+      ).value.trim();
 
 
     const optionA =
       card.querySelector(
         ".quiz-option-a"
-      )?.value.trim();
+      ).value.trim();
 
 
     const optionB =
       card.querySelector(
         ".quiz-option-b"
-      )?.value.trim();
+      ).value.trim();
 
 
     const optionC =
       card.querySelector(
         ".quiz-option-c"
-      )?.value.trim();
+      ).value.trim();
 
 
     const optionD =
       card.querySelector(
         ".quiz-option-d"
-      )?.value.trim();
+      ).value.trim();
 
 
     const correctOption =
       card.querySelector(
         ".quiz-correct-answer"
-      )?.value;
+      ).value;
 
 
     if (
-      !questionText
-    ) {
 
-
-      return {
-
-        success: false,
-
-        message:
-          `Please enter a question for Question ${index + 1}.`
-
-      };
-
-
-    }
-
-
-    if (
+      !questionText ||
       !optionA ||
       !optionB ||
       !optionC ||
-      !optionD
-    ) {
-
-
-      return {
-
-        success: false,
-
-        message:
-          `Please complete all options for Question ${index + 1}.`
-
-      };
-
-
-    }
-
-
-    if (
+      !optionD ||
       !correctOption
+
     ) {
 
 
-      return {
+      alert(
+        `Please complete every field for Question ${index + 1}.`
+      );
 
-        success: false,
 
-        message:
-          `Please select the correct answer for Question ${index + 1}.`
-
-      };
-
+      return false;
 
     }
 
@@ -3946,129 +3318,119 @@ function collectQuizQuestions() {
 
     });
 
-
   }
-
-
-  return {
-
-
-    success: true,
-
-
-    questions:
-      questions
-
-
-  };
-
-
-}
-
-
-/* =====================================================
-   VALIDATE QUIZ FORM
-   ===================================================== */
-
-function validateQuizForm() {
-
-
-  const result =
-    collectQuizQuestions();
-
-
-  if (!result.success) {
-
-
-    alert(
-      result.message
-    );
-
-
-    return false;
-
-
-  }
-
-
-  return true;
-
-
-}
-
-
-/* =====================================================
-   SAVE QUIZ QUESTIONS
-   ===================================================== */
-
-async function saveQuizQuestions(
-  silent = false
-) {
-
-
-  if (!currentNovel) {
-
-
-    if (!silent) {
-
-
-      alert(
-        "No novel is currently loaded."
-      );
-
-
-    }
-
-
-    return false;
-
-
-  }
-
-
-  const result =
-    collectQuizQuestions();
-
-
-  if (!result.success) {
-
-
-    if (!silent) {
-
-
-      alert(
-        result.message
-      );
-
-
-    }
-
-
-    return false;
-
-
-  }
-
-
-  const questions =
-    result.questions;
 
 
   try {
 
 
-    /* =========================================
-       DELETE EXISTING QUESTIONS
-       ========================================= */
+    /* ===============================================
+       REMOVE EXTRA OLD QUESTIONS
+       =============================================== */
 
     const {
-      error: deleteError
+      error: deleteExtraError
     } =
       await supabaseClient
-        .from(
-          "novel_quiz_questions"
-        )
+        .from("novel_quiz_questions")
         .delete()
+        .eq(
+
+          "novel_id",
+
+          currentNovel.id
+
+        )
+        .gt(
+
+          "question_order",
+
+          questions.length
+
+        );
+
+
+    if (deleteExtraError) {
+
+      console.error(
+        "Extra quiz deletion error:",
+        deleteExtraError
+      );
+
+    }
+
+
+    /* ===============================================
+       UPSERT QUESTIONS
+
+       This is the important fix.
+
+       Existing questions with the same:
+
+       novel_id + question_order
+
+       will be UPDATED.
+
+       New questions will be INSERTED.
+
+       This prevents duplicate key errors.
+       =============================================== */
+
+    const {
+      data: savedQuestions,
+      error: saveError
+    } =
+      await supabaseClient
+        .from("novel_quiz_questions")
+        .upsert(
+
+          questions,
+
+          {
+
+            onConflict:
+              "novel_id,question_order"
+
+          }
+
+        )
+        .select();
+
+
+    if (saveError) {
+
+      console.error(
+        "Quiz saving error:",
+        saveError
+      );
+
+
+      showMessage(
+
+        "Could not save the quiz: " +
+        saveError.message,
+
+        "error"
+
+      );
+
+
+      return false;
+
+    }
+
+
+    /* ===============================================
+       VERIFY QUIZ WAS SAVED
+       =============================================== */
+
+    const {
+      data: verificationData,
+      error: verificationError
+    } =
+      await supabaseClient
+        .from("novel_quiz_questions")
+        .select("id")
         .eq(
 
           "novel_id",
@@ -4078,86 +3440,55 @@ async function saveQuizQuestions(
         );
 
 
-    if (deleteError) {
-
-
-      console.error(
-        "Quiz deletion error:",
-        deleteError
-      );
-
-
-      throw new Error(
-        deleteError.message
-      );
-
-
-    }
-
-
-    /* =========================================
-       INSERT NEW QUESTIONS
-       ========================================= */
-
-    const {
-      error: insertError
-    } =
-      await supabaseClient
-        .from(
-          "novel_quiz_questions"
-        )
-        .insert(
-          questions
-        );
-
-
-    if (insertError) {
-
+    if (verificationError) {
 
       console.error(
-        "Quiz saving error:",
-        insertError
+        "Quiz verification error:",
+        verificationError
       );
-
-
-      throw new Error(
-        insertError.message
-      );
-
-
-    }
-
-
-    console.log(
-
-      "Quiz saved successfully:",
-
-      {
-
-        novelId:
-          currentNovel.id,
-
-        questionCount:
-          questions.length
-
-      }
-
-    );
-
-
-    if (!silent) {
 
 
       showMessage(
 
-        `${questions.length} quiz question(s) saved successfully.`,
+        "Quiz may not have been saved correctly: " +
+        verificationError.message,
 
-        "success"
+        "error"
 
       );
 
 
+      return false;
+
     }
+
+
+    if (
+      !verificationData ||
+      verificationData.length === 0
+    ) {
+
+      showMessage(
+
+        "The quiz could not be verified after saving.",
+
+        "error"
+
+      );
+
+
+      return false;
+
+    }
+
+
+    showMessage(
+
+      `Quiz saved successfully. ${verificationData.length} question(s) saved.`,
+
+      "success"
+
+    );
 
 
     return true;
@@ -4175,31 +3506,22 @@ async function saveQuizQuestions(
     );
 
 
-    if (!silent) {
+    showMessage(
 
+      "Could not save the quiz: " +
+      (
+        error.message ||
+        "Unknown error"
+      ),
 
-      showMessage(
+      "error"
 
-        "Could not save the quiz: " +
-
-        (
-          error.message ||
-          "Unknown error"
-        ),
-
-        "error"
-
-      );
-
-
-    }
+    );
 
 
     return false;
 
-
   }
-
 
 }
 
@@ -4213,10 +3535,41 @@ async function validateQuizBeforeApproval() {
 
   if (!currentNovel) {
 
+    return false;
+
+  }
+
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("novel_quiz_questions")
+      .select(
+        "id"
+      )
+      .eq(
+
+        "novel_id",
+
+        currentNovel.id
+
+      );
+
+
+  if (error) {
+
+    console.error(
+      "Quiz validation error:",
+      error
+    );
+
 
     showMessage(
 
-      "No novel is currently loaded.",
+      "Could not verify the novel quiz: " +
+      error.message,
 
       "error"
 
@@ -4225,28 +3578,18 @@ async function validateQuizBeforeApproval() {
 
     return false;
 
-
   }
 
 
-  /*
-    IMPORTANT:
+  if (
+    !data ||
+    data.length === 0
+  ) {
 
-    We validate the quiz currently
-    displayed on the page.
+    alert(
+      "Please create and save at least one quiz question before approving this novel."
+    );
 
-    This prevents the approval system
-    from falsely saying that no quiz
-    exists when the quiz was successfully
-    created.
-  */
-
-
-  const quizValid =
-    validateQuizForm();
-
-
-  if (!quizValid) {
 
     return false;
 
@@ -4254,7 +3597,6 @@ async function validateQuizBeforeApproval() {
 
 
   return true;
-
 
 }
 
@@ -4273,9 +3615,9 @@ async function approveNovel() {
   }
 
 
-  /* =========================================
-     VALIDATE QUIZ FORM
-     ========================================= */
+  /* ===============================================
+     FIRST VERIFY THE QUIZ EXISTS IN SUPABASE
+     =============================================== */
 
   const quizValid =
     await validateQuizBeforeApproval();
@@ -4288,63 +3630,28 @@ async function approveNovel() {
   }
 
 
-  /* =========================================
-     VALIDATE ASSESSMENT
-     ========================================= */
+  /* ===============================================
+     SAVE ASSESSMENT
+     =============================================== */
 
-  if (!validateQuality()) {
-
-    return;
-
-  }
+  const saved =
+    await saveNovelAssessment();
 
 
-  if (!validatePages()) {
+  if (!saved) {
 
     return;
 
   }
 
 
-  if (!validateReward()) {
-
-    return;
-
-  }
-
-
-  if (!validateReaders()) {
-
-    return;
-
-  }
-
-
-  if (!validateFee()) {
-
-    return;
-
-  }
-
-
-  if (!validateReadingPercent()) {
-
-    return;
-
-  }
-
-
-  /* =========================================
+  /* ===============================================
      CONFIRM APPROVAL
-     ========================================= */
+     =============================================== */
 
   const confirmed =
     confirm(
-
-      "Are you sure you want to approve this novel?\n\n" +
-
-      "The quiz and assessment will be saved before approval."
-
+      "Are you sure you want to approve this novel?"
     );
 
 
@@ -4355,155 +3662,72 @@ async function approveNovel() {
   }
 
 
-  try {
+  const reward =
+    Number(
+      currentNovel.approved_reader_reward
+    );
 
 
-    /* =========================================
-       SAVE QUIZ AGAIN
+  if (
 
-       IMPORTANT:
+    !Number.isFinite(
+      reward
+    ) ||
 
-       This ensures that the quiz currently
-       displayed on the page is saved before
-       approval.
+    reward <= 0
 
-       Therefore approval does not depend on
-       a separate SELECT query detecting
-       the quiz.
-       ========================================= */
-
-    const quizSaved =
-      await saveQuizQuestions(
-        true
-      );
-
-
-    if (!quizSaved) {
-
-
-      throw new Error(
-
-        "The quiz could not be saved. The novel cannot be approved without a saved quiz."
-
-      );
-
-
-    }
-
-
-    /* =========================================
-       SAVE ASSESSMENT
-       ========================================= */
-
-    const assessmentSaved =
-      await saveNovelAssessment();
-
-
-    if (!assessmentSaved) {
-
-
-      throw new Error(
-
-        "The assessment could not be saved."
-
-      );
-
-
-    }
-
-
-    /* =========================================
-       APPROVE NOVEL
-       ========================================= */
-
-    const {
-      data,
-      error
-    } =
-      await supabaseClient
-        .from(
-          "novels"
-        )
-        .update({
-
-
-          status:
-            "approved",
-
-
-          submission_status:
-            "approved",
-
-
-          writer_payment_status:
-            "pending"
-
-
-        })
-        .eq(
-
-          "id",
-
-          currentNovel.id
-
-        )
-        .select()
-        .single();
-
-
-    if (error) {
-
-
-      throw new Error(
-        error.message
-      );
-
-
-    }
-
-
-    if (!data) {
-
-
-      throw new Error(
-
-        "The novel approval could not be confirmed."
-
-      );
-
-
-    }
-
-
-    currentNovel.status =
-      "approved";
-
-
-    currentNovel.submission_status =
-      "approved";
-
-
-    currentNovel.writer_payment_status =
-      "pending";
+  ) {
 
 
     showMessage(
 
-      "Novel approved successfully. The quiz and assessment were saved.",
+      "Invalid reader reward amount.",
 
-      "success"
+      "error"
 
     );
 
 
-    await loadNovel();
-
+    return;
 
   }
 
 
-  catch (error) {
+  /* ===============================================
+     APPROVE NOVEL
+     =============================================== */
 
+  const {
+    error
+  } =
+    await supabaseClient
+      .from("novels")
+      .update({
+
+
+        status:
+          "approved",
+
+
+        submission_status:
+          "approved",
+
+
+        writer_payment_status:
+          "pending"
+
+
+      })
+      .eq(
+
+        "id",
+
+        currentNovel.id
+
+      );
+
+
+  if (error) {
 
     console.error(
       "Novel approval error:",
@@ -4514,19 +3738,40 @@ async function approveNovel() {
     showMessage(
 
       "Could not approve the novel: " +
-
-      (
-        error.message ||
-        "Unknown error"
-      ),
+      error.message,
 
       "error"
 
     );
 
 
+    return;
+
   }
 
+
+  currentNovel.status =
+    "approved";
+
+
+  currentNovel.submission_status =
+    "approved";
+
+
+  currentNovel.writer_payment_status =
+    "pending";
+
+
+  showMessage(
+
+    "Novel approved successfully.",
+
+    "success"
+
+  );
+
+
+  await loadNovel();
 
 }
 
@@ -4553,25 +3798,19 @@ async function rejectNovel() {
 
   if (!notes) {
 
-
     alert(
-
       "Please enter assessment notes explaining why the novel is being rejected."
-
     );
 
 
     return;
-
 
   }
 
 
   const confirmed =
     confirm(
-
       "Are you sure you want to reject this novel?"
-
     );
 
 
@@ -4614,7 +3853,6 @@ async function rejectNovel() {
 
   if (error) {
 
-
     console.error(
       "Novel rejection error:",
       error
@@ -4624,7 +3862,6 @@ async function rejectNovel() {
     showMessage(
 
       "Could not reject the novel: " +
-
       error.message,
 
       "error"
@@ -4633,7 +3870,6 @@ async function rejectNovel() {
 
 
     return;
-
 
   }
 
@@ -4661,7 +3897,6 @@ async function rejectNovel() {
 
   await loadNovel();
 
-
 }
 
 
@@ -4687,25 +3922,19 @@ async function requestRevision() {
 
   if (!notes) {
 
-
     alert(
-
       "Please enter assessment notes explaining the required revisions."
-
     );
 
 
     return;
-
 
   }
 
 
   const confirmed =
     confirm(
-
       "Send this novel back to the writer for revision?"
-
     );
 
 
@@ -4748,7 +3977,6 @@ async function requestRevision() {
 
   if (error) {
 
-
     console.error(
       "Revision request error:",
       error
@@ -4758,7 +3986,6 @@ async function requestRevision() {
     showMessage(
 
       "Could not request revision: " +
-
       error.message,
 
       "error"
@@ -4767,7 +3994,6 @@ async function requestRevision() {
 
 
     return;
-
 
   }
 
@@ -4794,7 +4020,6 @@ async function requestRevision() {
 
 
   await loadNovel();
-
 
 }
 
@@ -4832,35 +4057,26 @@ function showMessage(
 
   window.scrollTo({
 
-
     top: 0,
-
 
     behavior:
       "smooth"
-
 
   });
 
 
   setTimeout(
 
-
     () => {
-
 
       message.className =
         "message";
 
-
     },
-
 
     6000
 
-
   );
-
 
 }
 
@@ -4876,18 +4092,13 @@ function escapeHtml(
 
   if (
 
-
     value === null ||
-
 
     value === undefined
 
-
   ) {
 
-
     return "";
-
 
   }
 
@@ -4904,7 +4115,6 @@ function escapeHtml(
 
   return div.innerHTML;
 
-
 }
 
 
@@ -4917,9 +4127,7 @@ async function logout() {
 
   const confirmed =
     confirm(
-
       "Are you sure you want to log out?"
-
     );
 
 
@@ -4938,7 +4146,6 @@ async function logout() {
   window.location.href =
     "index.html";
 
-
 }
 
 
@@ -4952,100 +4159,32 @@ document
   )
   .addEventListener(
 
-
     "click",
 
-
     logout
-
 
   );
 
 
 /* =====================================================
-   INITIALIZE PAGE
+   INITIALIZATION
    ===================================================== */
 
 async function initializePage() {
 
 
-  try {
+  const user =
+    await checkAdmin();
 
 
-    const user =
-      await checkAdmin();
+  if (!user) {
 
-
-    if (!user) {
-
-      return;
-
-    }
-
-
-    await loadNovel();
-
+    return;
 
   }
 
 
-  catch (error) {
-
-
-    console.error(
-      "Page initialization error:",
-      error
-    );
-
-
-    const pageContent =
-      document.getElementById(
-        "pageContent"
-      );
-
-
-    if (pageContent) {
-
-
-      pageContent.innerHTML = `
-
-
-        <div class="card">
-
-
-          <h2>
-
-            Something went wrong
-
-          </h2>
-
-
-          <p>
-
-
-            ${escapeHtml(
-
-              error.message ||
-
-              "The page could not be initialized."
-
-            )}
-
-
-          </p>
-
-
-        </div>
-
-
-      `;
-
-
-    }
-
-
-  }
-
+  await loadNovel();
 
 }
 

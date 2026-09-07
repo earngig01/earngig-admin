@@ -2661,16 +2661,28 @@ if (!quizValid) {
   }
 
 
-  const saved =
-    await saveNovelAssessment();
+const saved =
+  await saveNovelAssessment();
 
+if (!saved) {
+  return;
+}
 
-  if (!saved) {
+const reward =
+  Number(currentNovel.approved_reader_reward);
 
-    return;
+if (
+  !Number.isFinite(reward) ||
+  reward <= 0
+) {
 
-  }
+  showMessage(
+    "Invalid reader reward amount.",
+    "error"
+  );
 
+  return;
+}
 
   const {
     error

@@ -1,0 +1,2852 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Membership | EarnGig Admin</title>
+
+
+  <!-- SUPABASE -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script src="supabase.js"></script>
+
+
+  <style>
+
+
+    /* =========================================
+       GLOBAL
+    ========================================= */
+
+    * {
+
+      box-sizing:
+        border-box;
+
+    }
+
+
+    body {
+
+      margin:
+        0;
+
+      font-family:
+        Arial,
+        sans-serif;
+
+      background:
+        #f5f6fa;
+
+      color:
+        #17182f;
+
+    }
+
+
+    button,
+    input {
+
+      font-family:
+        inherit;
+
+    }
+
+
+    /* =========================================
+       HEADER
+    ========================================= */
+
+    header {
+
+      background:
+        #0d1038;
+
+      color:
+        white;
+
+    }
+
+
+    .nav {
+
+      max-width:
+        1250px;
+
+      margin:
+        auto;
+
+      padding:
+        16px 20px;
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      gap:
+        18px;
+
+    }
+
+
+    .logo {
+
+      color:
+        white;
+
+      text-decoration:
+        none;
+
+      font-size:
+        24px;
+
+      font-weight:
+        700;
+
+    }
+
+
+    .logo span {
+
+      color:
+        #7c5cff;
+
+    }
+
+
+    .admin-badge {
+
+      margin-left:
+        auto;
+
+      font-size:
+        12px;
+
+      font-weight:
+        700;
+
+      letter-spacing:
+        .5px;
+
+      color:
+        #c9caff;
+
+    }
+
+
+    .dashboard-btn {
+
+      text-decoration:
+        none;
+
+      color:
+        white;
+
+      border:
+        1px solid
+        rgba(255,255,255,.35);
+
+      padding:
+        8px 14px;
+
+      border-radius:
+        8px;
+
+      font-size:
+        13px;
+
+    }
+
+
+    .dashboard-btn:hover {
+
+      background:
+        rgba(255,255,255,.08);
+
+    }
+
+
+    /* =========================================
+       MAIN
+    ========================================= */
+
+    main {
+
+      max-width:
+        1250px;
+
+      margin:
+        auto;
+
+      padding:
+        30px 20px 60px;
+
+    }
+
+
+    /* =========================================
+       PAGE HEADING
+    ========================================= */
+
+    .page-heading {
+
+      margin-bottom:
+        25px;
+
+    }
+
+
+    .eyebrow {
+
+      display:
+        inline-block;
+
+      font-size:
+        11px;
+
+      font-weight:
+        700;
+
+      letter-spacing:
+        1px;
+
+      color:
+        #6d4aff;
+
+      margin-bottom:
+        7px;
+
+    }
+
+
+    .page-heading h1 {
+
+      margin:
+        0 0 8px;
+
+      font-size:
+        30px;
+
+    }
+
+
+    .page-heading p {
+
+      margin:
+        0;
+
+      color:
+        #686a7d;
+
+      font-size:
+        14px;
+
+      line-height:
+        1.5;
+
+    }
+
+
+    /* =========================================
+       SECTION TITLE
+    ========================================= */
+
+    .section-title {
+
+      margin:
+        28px 0 14px;
+
+      font-size:
+        19px;
+
+    }
+
+
+    /* =========================================
+       STATISTICS
+    ========================================= */
+
+    .stats-grid {
+
+      display:
+        grid;
+
+      grid-template-columns:
+        repeat(
+          auto-fit,
+          minmax(180px, 1fr)
+        );
+
+      gap:
+        14px;
+
+    }
+
+
+    .stat-card {
+
+      background:
+        white;
+
+      border:
+        1px solid #e6e7ee;
+
+      border-radius:
+        11px;
+
+      padding:
+        16px 18px;
+
+    }
+
+
+    .stat-card small {
+
+      display:
+        block;
+
+      color:
+        #77798b;
+
+      font-size:
+        12px;
+
+      margin-bottom:
+        7px;
+
+    }
+
+
+    .stat-card strong {
+
+      display:
+        block;
+
+      font-size:
+        24px;
+
+    }
+
+
+    /* =========================================
+       CATEGORY GRID
+    ========================================= */
+
+    .category-grid {
+
+      display:
+        grid;
+
+      grid-template-columns:
+        repeat(
+          auto-fit,
+          minmax(220px, 1fr)
+        );
+
+      gap:
+        14px;
+
+    }
+
+
+    .category-card {
+
+      background:
+        white;
+
+      border:
+        1px solid #e6e7ee;
+
+      border-radius:
+        11px;
+
+      padding:
+        18px;
+
+    }
+
+
+    .category-icon {
+
+      font-size:
+        24px;
+
+      margin-bottom:
+        10px;
+
+    }
+
+
+    .category-card h2 {
+
+      margin:
+        0 0 7px;
+
+      font-size:
+        17px;
+
+    }
+
+
+    .category-card p {
+
+      margin:
+        0;
+
+      color:
+        #686a7d;
+
+      font-size:
+        13px;
+
+      line-height:
+        1.5;
+
+    }
+
+
+    .category-info {
+
+      margin-top:
+        15px;
+
+      padding-top:
+        12px;
+
+      border-top:
+        1px solid #eeeeee;
+
+    }
+
+
+    .category-info small {
+
+      display:
+        block;
+
+      color:
+        #77798b;
+
+      font-size:
+        11px;
+
+      margin-bottom:
+        5px;
+
+    }
+
+
+    .category-info strong {
+
+      font-size:
+        19px;
+
+    }
+
+
+    .category-card button {
+
+      width:
+        100%;
+
+      margin-top:
+        15px;
+
+      padding:
+        10px;
+
+      border:
+        0;
+
+      border-radius:
+        8px;
+
+      background:
+        #6d4aff;
+
+      color:
+        white;
+
+      font-size:
+        13px;
+
+      font-weight:
+        700;
+
+      cursor:
+        pointer;
+
+    }
+
+
+    .category-card button:hover {
+
+      opacity:
+        .9;
+
+    }
+
+
+    /* =========================================
+       LIST HEADER
+    ========================================= */
+
+    .list-header {
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        space-between;
+
+      gap:
+        12px;
+
+      margin-bottom:
+        18px;
+
+      flex-wrap:
+        wrap;
+
+    }
+
+
+    .back-btn {
+
+      border:
+        0;
+
+      background:
+        #17182f;
+
+      color:
+        white;
+
+      padding:
+        9px 14px;
+
+      border-radius:
+        8px;
+
+      font-size:
+        13px;
+
+      font-weight:
+        600;
+
+      cursor:
+        pointer;
+
+    }
+
+
+    .back-btn:hover {
+
+      opacity:
+        .9;
+
+    }
+
+
+    .refresh-btn {
+
+      border:
+        0;
+
+      background:
+        #6d4aff;
+
+      color:
+        white;
+
+      padding:
+        9px 14px;
+
+      border-radius:
+        8px;
+
+      font-size:
+        13px;
+
+      font-weight:
+        700;
+
+      cursor:
+        pointer;
+
+    }
+
+
+    /* =========================================
+       SEARCH
+    ========================================= */
+
+    .search-box {
+
+      width:
+        100%;
+
+      margin-bottom:
+        16px;
+
+    }
+
+
+    .search-box input {
+
+      width:
+        100%;
+
+      padding:
+        12px 14px;
+
+      border:
+        1px solid #dedfe8;
+
+      border-radius:
+        9px;
+
+      outline:
+        none;
+
+      font-size:
+        14px;
+
+      background:
+        white;
+
+    }
+
+
+    .search-box input:focus {
+
+      border-color:
+        #6d4aff;
+
+    }
+
+
+    /* =========================================
+       MEMBER LIST
+    ========================================= */
+
+    .member-list {
+
+      display:
+        grid;
+
+      gap:
+        12px;
+
+    }
+
+
+    .member-card {
+
+      background:
+        white;
+
+      border:
+        1px solid #e6e7ee;
+
+      border-radius:
+        11px;
+
+      padding:
+        16px 18px;
+
+    }
+
+
+    .member-top {
+
+      display:
+        flex;
+
+      align-items:
+        flex-start;
+
+      justify-content:
+        space-between;
+
+      gap:
+        15px;
+
+      margin-bottom:
+        14px;
+
+      flex-wrap:
+        wrap;
+
+    }
+
+
+    .member-name {
+
+      margin:
+        0 0 5px;
+
+      font-size:
+        18px;
+
+    }
+
+
+    .member-email {
+
+      margin:
+        0;
+
+      color:
+        #686a7d;
+
+      font-size:
+        13px;
+
+    }
+
+
+    /* =========================================
+       STATUS BADGES
+    ========================================= */
+
+    .status-badge {
+
+      display:
+        inline-block;
+
+      padding:
+        6px 10px;
+
+      border-radius:
+        20px;
+
+      font-size:
+        11px;
+
+      font-weight:
+        700;
+
+      text-transform:
+        uppercase;
+
+    }
+
+
+    .status-active {
+
+      background:
+        #dcfce7;
+
+      color:
+        #15803d;
+
+    }
+
+
+    .status-inactive {
+
+      background:
+        #fee2e2;
+
+      color:
+        #b91c1c;
+
+    }
+
+
+    .status-unknown {
+
+      background:
+        #f3f4f6;
+
+      color:
+        #555;
+
+    }
+
+
+    /* =========================================
+       DETAILS
+    ========================================= */
+
+    .details-grid {
+
+      display:
+        grid;
+
+      grid-template-columns:
+        repeat(
+          auto-fit,
+          minmax(180px, 1fr)
+        );
+
+      gap:
+        10px;
+
+    }
+
+
+    .detail {
+
+      background:
+        #fafafa;
+
+      border:
+        1px solid #eeeeee;
+
+      border-radius:
+        8px;
+
+      padding:
+        11px;
+
+    }
+
+
+    .detail small {
+
+      display:
+        block;
+
+      color:
+        #77798b;
+
+      font-size:
+        11px;
+
+      margin-bottom:
+        5px;
+
+    }
+
+
+    .detail strong {
+
+      display:
+        block;
+
+      font-size:
+        13px;
+
+      word-break:
+        break-word;
+
+    }
+
+
+    /* =========================================
+       LOADING
+    ========================================= */
+
+    .loading {
+
+      text-align:
+        center;
+
+      padding:
+        30px;
+
+      background:
+        white;
+
+      border:
+        1px solid #e6e7ee;
+
+      border-radius:
+        11px;
+
+      color:
+        #686a7d;
+
+    }
+
+
+    /* =========================================
+       EMPTY
+    ========================================= */
+
+    .empty-state {
+
+      text-align:
+        center;
+
+      padding:
+        40px 20px;
+
+      background:
+        white;
+
+      border:
+        1px solid #e6e7ee;
+
+      border-radius:
+        11px;
+
+      color:
+        #686a7d;
+
+    }
+
+
+    .empty-icon {
+
+      font-size:
+        32px;
+
+      margin-bottom:
+        10px;
+
+    }
+
+
+    .empty-state h3 {
+
+      margin:
+        0 0 7px;
+
+      color:
+        #17182f;
+
+      font-size:
+        18px;
+
+    }
+
+
+    .empty-state p {
+
+      margin:
+        0;
+
+      font-size:
+        13px;
+
+    }
+
+
+    /* =========================================
+       ERROR
+    ========================================= */
+
+    .error-box {
+
+      background:
+        #fff5f5;
+
+      border:
+        1px solid #f0b5b5;
+
+      color:
+        #721c24;
+
+      padding:
+        16px;
+
+      border-radius:
+        10px;
+
+    }
+
+
+    .error-box strong {
+
+      display:
+        block;
+
+      margin-bottom:
+        6px;
+
+    }
+
+
+    .error-box p {
+
+      margin:
+        0;
+
+      font-size:
+        13px;
+
+    }
+
+
+    /* =========================================
+       MOBILE
+    ========================================= */
+
+    @media (
+      max-width: 650px
+    ) {
+
+
+      .nav {
+
+        flex-wrap:
+          wrap;
+
+      }
+
+
+      .admin-badge {
+
+        margin-left:
+          0;
+
+      }
+
+
+      main {
+
+        padding:
+          25px 15px 45px;
+
+      }
+
+
+      .page-heading h1 {
+
+        font-size:
+          26px;
+
+      }
+
+
+      .member-top {
+
+        flex-direction:
+          column;
+
+      }
+
+
+    }
+
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================
+     HEADER
+========================================= -->
+
+<header>
+
+
+  <div class="nav">
+
+
+    <a
+      href="admin-dashboard.html"
+      class="logo"
+    >
+
+      Earn<span>Gig</span>
+
+    </a>
+
+
+    <div class="admin-badge">
+
+      ADMIN PORTAL
+
+    </div>
+
+
+    <a
+      href="admin-dashboard.html"
+      class="dashboard-btn"
+    >
+
+      ← Admin Dashboard
+
+    </a>
+
+
+  </div>
+
+
+</header>
+
+
+
+<!-- =========================================
+     MAIN
+========================================= -->
+
+<main>
+
+
+  <!-- =======================================
+       PAGE HEADING
+  ======================================== -->
+
+  <section
+    class="page-heading"
+  >
+
+
+    <span
+      class="eyebrow"
+    >
+
+      ADMINISTRATION
+
+    </span>
+
+
+    <h1
+      id="pageTitle"
+    >
+
+      Membership
+
+    </h1>
+
+
+    <p
+      id="pageDescription"
+    >
+
+      View and manage registered EarnGig members.
+
+    </p>
+
+
+  </section>
+
+
+
+  <!-- =======================================
+       OVERVIEW
+  ======================================== -->
+
+  <section
+    id="overviewSection"
+  >
+
+
+    <h2
+      class="section-title"
+    >
+
+      Member Statistics
+
+    </h2>
+
+
+    <div
+      class="stats-grid"
+      id="statsGrid"
+    >
+
+
+      <div
+        class="loading"
+      >
+
+        Loading member statistics...
+
+      </div>
+
+
+    </div>
+
+
+
+    <h2
+      class="section-title"
+    >
+
+      Membership Management
+
+    </h2>
+
+
+    <div
+      class="category-grid"
+    >
+
+
+      <!-- ALL MEMBERS -->
+
+      <div
+        class="category-card"
+      >
+
+
+        <div
+          class="category-icon"
+        >
+
+          👥
+
+        </div>
+
+
+        <h2>
+
+          All Members
+
+        </h2>
+
+
+        <p>
+
+          View all registered members
+          on the EarnGig platform.
+
+        </p>
+
+
+        <div
+          class="category-info"
+        >
+
+
+          <small>
+
+            Total Members
+
+          </small>
+
+
+          <strong
+            id="totalCount"
+          >
+
+            0
+
+          </strong>
+
+
+        </div>
+
+
+        <button
+          type="button"
+          onclick="openStatus('all')"
+        >
+
+          View All Members →
+
+        </button>
+
+
+      </div>
+
+
+
+      <!-- ACTIVE -->
+
+      <div
+        class="category-card"
+      >
+
+
+        <div
+          class="category-icon"
+        >
+
+          🟢
+
+        </div>
+
+
+        <h2>
+
+          Active Members
+
+        </h2>
+
+
+        <p>
+
+          Members with active
+          EarnGig accounts.
+
+        </p>
+
+
+        <div
+          class="category-info"
+        >
+
+
+          <small>
+
+            Active Members
+
+          </small>
+
+
+          <strong
+            id="activeCount"
+          >
+
+            0
+
+          </strong>
+
+
+        </div>
+
+
+        <button
+          type="button"
+          onclick="openStatus('active')"
+        >
+
+          View Active Members →
+
+        </button>
+
+
+      </div>
+
+
+
+      <!-- INACTIVE -->
+
+      <div
+        class="category-card"
+      >
+
+
+        <div
+          class="category-icon"
+        >
+
+          🔴
+
+        </div>
+
+
+        <h2>
+
+          Inactive Members
+
+        </h2>
+
+
+        <p>
+
+          Members whose accounts
+          are currently inactive.
+
+        </p>
+
+
+        <div
+          class="category-info"
+        >
+
+
+          <small>
+
+            Inactive Members
+
+          </small>
+
+
+          <strong
+            id="inactiveCount"
+          >
+
+            0
+
+          </strong>
+
+
+        </div>
+
+
+        <button
+          type="button"
+          onclick="openStatus('inactive')"
+        >
+
+          View Inactive Members →
+
+        </button>
+
+
+      </div>
+
+
+    </div>
+
+
+  </section>
+
+
+
+  <!-- =======================================
+       MEMBER LIST
+  ======================================== -->
+
+  <section
+    id="listSection"
+    style="display:none;"
+  >
+
+
+    <div
+      class="list-header"
+    >
+
+
+      <button
+        type="button"
+        class="back-btn"
+        onclick="goToOverview()"
+      >
+
+        ← All Membership
+
+      </button>
+
+
+      <button
+        type="button"
+        class="refresh-btn"
+        onclick="loadMembers()"
+      >
+
+        ↻ Refresh
+
+      </button>
+
+
+    </div>
+
+
+
+    <!-- SEARCH -->
+
+    <div
+      class="search-box"
+    >
+
+
+      <input
+
+        type="text"
+
+        id="searchInput"
+
+        placeholder="
+          Search by name or email...
+        "
+
+        oninput="searchMembers()"
+
+      >
+
+
+    </div>
+
+
+
+    <!-- MEMBER LIST -->
+
+    <div
+      class="member-list"
+      id="memberList"
+    >
+
+    </div>
+
+
+  </section>
+
+
+</main>
+
+
+
+<!-- =========================================
+     JAVASCRIPT
+========================================= -->
+
+<script>
+
+
+/* =========================================
+   GLOBAL
+========================================= */
+
+
+let currentAdmin =
+  null;
+
+
+let allMembers =
+  [];
+
+
+/* =========================================
+   GET CURRENT VIEW
+========================================= */
+
+
+function getCurrentStatus() {
+
+
+  const params =
+    new URLSearchParams(
+      window.location.search
+    );
+
+
+  const status =
+    params.get(
+      "status"
+    );
+
+
+  const allowed = [
+
+    "all",
+
+    "active",
+
+    "inactive"
+
+  ];
+
+
+  if (
+
+    allowed.includes(
+      status
+    )
+
+  ) {
+
+    return status;
+
+  }
+
+
+  return null;
+
+}
+
+
+/* =========================================
+   ESCAPE HTML
+========================================= */
+
+
+function escapeHtml(value) {
+
+
+  if (
+
+    value === null ||
+
+    value === undefined
+
+  ) {
+
+    return "—";
+
+  }
+
+
+  return String(value)
+
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+
+    .replace(
+      /</g,
+      "&lt;"
+    )
+
+    .replace(
+      />/g,
+      "&gt;"
+    )
+
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+
+    .replace(
+      /'/g,
+      "&#039;"
+    );
+
+}
+
+
+/* =========================================
+   FORMAT DATE
+========================================= */
+
+
+function formatDate(date) {
+
+
+  if (!date) {
+
+    return "—";
+
+  }
+
+
+  try {
+
+
+    return new Date(date)
+
+      .toLocaleDateString(
+
+        "en-NG",
+
+        {
+
+          year:
+            "numeric",
+
+          month:
+            "short",
+
+          day:
+            "numeric"
+
+        }
+
+      );
+
+
+  }
+
+
+  catch (error) {
+
+
+    return "—";
+
+  }
+
+}
+
+
+/* =========================================
+   GET MEMBER NAME
+========================================= */
+
+
+function getMemberName(member) {
+
+
+  if (!member) {
+
+    return "Unknown Member";
+
+  }
+
+
+  return (
+
+    member.full_name ||
+
+    member.name ||
+
+    member.username ||
+
+    member.display_name ||
+
+    member.email ||
+
+    "Unknown Member"
+
+  );
+
+}
+
+
+/* =========================================
+   GET MEMBER STATUS
+========================================= */
+
+
+function getMemberStatus(member) {
+
+
+  const status =
+
+    String(
+
+      member.account_status ||
+
+      member.status ||
+
+      "active"
+
+    )
+
+    .toLowerCase();
+
+
+  if (
+
+    status ===
+    "inactive"
+
+  ) {
+
+    return "inactive";
+
+  }
+
+
+  return "active";
+
+}
+
+
+/* =========================================
+   ADMIN CHECK
+========================================= */
+
+
+async function checkAdmin() {
+
+
+  const {
+
+    data:
+    {
+      user
+    },
+
+    error
+
+  }
+
+  =
+
+  await supabaseClient
+
+    .auth
+
+    .getUser();
+
+
+  if (
+
+    error ||
+
+    !user
+
+  ) {
+
+
+    window.location.href =
+      "index.html";
+
+
+    return null;
+
+  }
+
+
+
+  /* LOAD PROFILE */
+
+
+  const {
+
+    data:
+    profile,
+
+    error:
+    profileError
+
+  }
+
+  =
+
+  await supabaseClient
+
+    .from(
+      "profiles"
+    )
+
+    .select(
+
+      `
+        is_admin,
+        account_status
+      `
+
+    )
+
+    .eq(
+      "id",
+      user.id
+    )
+
+    .single();
+
+
+  if (
+
+    profileError ||
+
+    !profile ||
+
+    profile.is_admin !== true
+
+  ) {
+
+
+    alert(
+
+      "Access denied. Administrator privileges are required."
+
+    );
+
+
+    window.location.href =
+      "index.html";
+
+
+    return null;
+
+  }
+
+
+  if (
+
+    profile.account_status &&
+
+    profile.account_status !==
+    "active"
+
+  ) {
+
+
+    alert(
+
+      "This administrator account is not active."
+
+    );
+
+
+    window.location.href =
+      "index.html";
+
+
+    return null;
+
+  }
+
+
+  currentAdmin =
+    user;
+
+
+  return user;
+
+}
+
+
+/* =========================================
+   OPEN MEMBER CATEGORY
+========================================= */
+
+
+function openStatus(status) {
+
+
+  window.location.href =
+
+    "admin-membership.html?status="
+
+    +
+
+    encodeURIComponent(
+      status
+    );
+
+}
+
+
+/* =========================================
+   GO BACK
+========================================= */
+
+
+function goToOverview() {
+
+
+  window.location.href =
+    "admin-membership.html";
+
+}
+
+
+/* =========================================
+   LOAD MEMBERS
+========================================= */
+
+
+async function loadMembers() {
+
+
+  const status =
+    getCurrentStatus();
+
+
+  /* SHOW LOADING */
+
+
+  if (status) {
+
+
+    document.getElementById(
+      "memberList"
+    ).innerHTML = `
+
+      <div
+        class="loading"
+      >
+
+        Loading members...
+
+      </div>
+
+    `;
+
+
+  }
+
+
+  try {
+
+
+    const {
+
+      data:
+      members,
+
+      error
+
+    }
+
+    =
+
+    await supabaseClient
+
+      .from(
+        "profiles"
+      )
+
+      .select(
+        "*"
+      )
+
+      .order(
+
+        "created_at",
+
+        {
+
+          ascending:
+            false
+
+        }
+
+      );
+
+
+    if (error) {
+
+      throw error;
+
+    }
+
+
+    allMembers =
+      members || [];
+
+
+    /* OVERVIEW */
+
+
+    if (!status) {
+
+
+      updateStatistics();
+
+
+      return;
+
+    }
+
+
+    /* LIST */
+
+
+    displayMembers(
+      status
+    );
+
+
+  }
+
+
+  catch (error) {
+
+
+    console.error(
+
+      "Member loading error:",
+
+      error
+
+    );
+
+
+    if (status) {
+
+
+      document.getElementById(
+        "memberList"
+      ).innerHTML = `
+
+        <div
+          class="error-box"
+        >
+
+
+          <strong>
+
+            Members could not be loaded.
+
+          </strong>
+
+
+          <p>
+
+            ${escapeHtml(
+              error.message ||
+              "Unknown error"
+            )}
+
+          </p>
+
+
+        </div>
+
+      `;
+
+
+    }
+
+
+    else {
+
+
+      document.getElementById(
+        "statsGrid"
+      ).innerHTML = `
+
+        <div
+          class="error-box"
+        >
+
+
+          <strong>
+
+            Member statistics could not be loaded.
+
+          </strong>
+
+
+          <p>
+
+            ${escapeHtml(
+              error.message ||
+              "Unknown error"
+            )}
+
+          </p>
+
+
+        </div>
+
+      `;
+
+
+    }
+
+
+  }
+
+}
+
+
+/* =========================================
+   UPDATE STATISTICS
+========================================= */
+
+
+function updateStatistics() {
+
+
+  const active =
+
+    allMembers.filter(
+
+      member =>
+
+        getMemberStatus(
+          member
+        )
+
+        ===
+
+        "active"
+
+    );
+
+
+  const inactive =
+
+    allMembers.filter(
+
+      member =>
+
+        getMemberStatus(
+          member
+        )
+
+        ===
+
+        "inactive"
+
+    );
+
+
+
+  /* STAT CARDS */
+
+
+  document.getElementById(
+    "statsGrid"
+  ).innerHTML = `
+
+
+    <div
+      class="stat-card"
+    >
+
+      <small>
+
+        Total Members
+
+      </small>
+
+
+      <strong>
+
+        ${allMembers.length}
+
+      </strong>
+
+    </div>
+
+
+
+    <div
+      class="stat-card"
+    >
+
+      <small>
+
+        Active Members
+
+      </small>
+
+
+      <strong>
+
+        ${active.length}
+
+      </strong>
+
+    </div>
+
+
+
+    <div
+      class="stat-card"
+    >
+
+      <small>
+
+        Inactive Members
+
+      </small>
+
+
+      <strong>
+
+        ${inactive.length}
+
+      </strong>
+
+    </div>
+
+
+  `;
+
+
+
+  /* CATEGORY COUNTS */
+
+
+  document.getElementById(
+    "totalCount"
+  ).textContent =
+
+    allMembers.length;
+
+
+  document.getElementById(
+    "activeCount"
+  ).textContent =
+
+    active.length;
+
+
+  document.getElementById(
+    "inactiveCount"
+  ).textContent =
+
+    inactive.length;
+
+}
+
+
+/* =========================================
+   DISPLAY MEMBERS
+========================================= */
+
+
+function displayMembers(
+  status
+) {
+
+
+  const pageTitle =
+    document.getElementById(
+      "pageTitle"
+    );
+
+
+  const pageDescription =
+    document.getElementById(
+      "pageDescription"
+    );
+
+
+  /* TITLES */
+
+
+  const titles = {
+
+
+    all:
+
+      "All Members",
+
+
+    active:
+
+      "Active Members",
+
+
+    inactive:
+
+      "Inactive Members"
+
+  };
+
+
+  const descriptions = {
+
+
+    all:
+
+      "View all registered EarnGig members.",
+
+
+    active:
+
+      "View members with active accounts.",
+
+
+    inactive:
+
+      "View members with inactive accounts."
+
+  };
+
+
+  pageTitle.textContent =
+    titles[status];
+
+
+  pageDescription.textContent =
+    descriptions[status];
+
+
+
+  /* FILTER MEMBERS */
+
+
+  let members =
+    [];
+
+
+  if (
+
+    status ===
+    "all"
+
+  ) {
+
+
+    members =
+      allMembers;
+
+
+  }
+
+
+  else {
+
+
+    members =
+      allMembers.filter(
+
+        member =>
+
+          getMemberStatus(
+            member
+          )
+
+          ===
+
+          status
+
+      );
+
+
+  }
+
+
+  renderMembers(
+    members,
+    status
+  );
+
+}
+
+
+/* =========================================
+   RENDER MEMBERS
+========================================= */
+
+
+function renderMembers(
+  members,
+  status
+) {
+
+
+  const memberList =
+    document.getElementById(
+      "memberList"
+    );
+
+
+  if (
+
+    !members ||
+
+    members.length === 0
+
+  ) {
+
+
+    memberList.innerHTML = `
+
+      <div
+        class="empty-state"
+      >
+
+
+        <div
+          class="empty-icon"
+        >
+
+          👤
+
+        </div>
+
+
+        <h3>
+
+          No members found
+
+        </h3>
+
+
+        <p>
+
+          There are currently no
+          ${escapeHtml(status)}
+          members to display.
+
+        </p>
+
+
+      </div>
+
+    `;
+
+
+    return;
+
+  }
+
+
+  memberList.innerHTML =
+
+    members.map(
+
+      member =>
+
+        createMemberCard(
+          member
+        )
+
+    )
+
+    .join("");
+
+}
+
+
+/* =========================================
+   CREATE MEMBER CARD
+========================================= */
+
+
+function createMemberCard(
+  member
+) {
+
+
+  const name =
+    getMemberName(
+      member
+    );
+
+
+  const email =
+
+    member.email ||
+
+    "No email";
+
+
+  const status =
+    getMemberStatus(
+      member
+    );
+
+
+  const statusClass =
+
+    status === "active"
+
+      ?
+
+      "status-active"
+
+      :
+
+      "status-inactive";
+
+
+  return `
+
+
+    <article
+      class="member-card"
+    >
+
+
+      <div
+        class="member-top"
+      >
+
+
+        <div>
+
+
+          <h2
+            class="member-name"
+          >
+
+            ${escapeHtml(
+              name
+            )}
+
+          </h2>
+
+
+          <p
+            class="member-email"
+          >
+
+            ${escapeHtml(
+              email
+            )}
+
+          </p>
+
+
+        </div>
+
+
+
+        <span
+
+          class="
+            status-badge
+            ${statusClass}
+          "
+
+        >
+
+          ${escapeHtml(
+            status
+          )}
+
+        </span>
+
+
+      </div>
+
+
+
+      <div
+        class="details-grid"
+      >
+
+
+        <div
+          class="detail"
+        >
+
+
+          <small>
+
+            Member ID
+
+          </small>
+
+
+          <strong>
+
+            ${escapeHtml(
+              member.id
+            )}
+
+          </strong>
+
+
+        </div>
+
+
+
+        <div
+          class="detail"
+        >
+
+
+          <small>
+
+            Joined
+
+          </small>
+
+
+          <strong>
+
+            ${formatDate(
+              member.created_at
+            )}
+
+          </strong>
+
+
+        </div>
+
+
+
+        <div
+          class="detail"
+        >
+
+
+          <small>
+
+            Account Status
+
+          </small>
+
+
+          <strong>
+
+            ${escapeHtml(
+              status
+            )}
+
+          </strong>
+
+
+        </div>
+
+
+      </div>
+
+
+    </article>
+
+
+  `;
+
+}
+
+
+/* =========================================
+   SEARCH MEMBERS
+========================================= */
+
+
+function searchMembers() {
+
+
+  const input =
+    document.getElementById(
+      "searchInput"
+    );
+
+
+  const search =
+    input.value
+      .toLowerCase()
+      .trim();
+
+
+  const status =
+    getCurrentStatus();
+
+
+  let members =
+    [];
+
+
+  if (
+
+    status ===
+    "all"
+
+  ) {
+
+
+    members =
+      allMembers;
+
+
+  }
+
+
+  else {
+
+
+    members =
+      allMembers.filter(
+
+        member =>
+
+          getMemberStatus(
+            member
+          )
+
+          ===
+
+          status
+
+      );
+
+
+  }
+
+
+  const filtered =
+    members.filter(
+
+      member => {
+
+
+        const name =
+          getMemberName(
+            member
+          )
+          .toLowerCase();
+
+
+        const email =
+          String(
+
+            member.email ||
+
+            ""
+
+          )
+          .toLowerCase();
+
+
+        return (
+
+          name.includes(
+            search
+          )
+
+          ||
+
+          email.includes(
+            search
+          )
+
+        );
+
+
+      }
+
+    );
+
+
+  renderMembers(
+    filtered,
+    status
+  );
+
+}
+
+
+/* =========================================
+   START APPLICATION
+========================================= */
+
+
+(async function() {
+
+
+  const admin =
+    await checkAdmin();
+
+
+  if (!admin) {
+
+    return;
+
+  }
+
+
+  const status =
+    getCurrentStatus();
+
+
+  if (status) {
+
+
+    document.getElementById(
+      "overviewSection"
+    ).style.display =
+      "none";
+
+
+    document.getElementById(
+      "listSection"
+    ).style.display =
+      "block";
+
+
+  }
+
+
+  else {
+
+
+    document.getElementById(
+      "overviewSection"
+    ).style.display =
+      "block";
+
+
+    document.getElementById(
+      "listSection"
+    ).style.display =
+      "none";
+
+
+  }
+
+
+  await loadMembers();
+
+
+})();
+
+
+</script>
+
+
+</body>
+
+</html>

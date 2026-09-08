@@ -1,0 +1,1749 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Memberships | EarnGig Admin
+  </title>
+
+
+  <!-- SUPABASE -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script src="supabase.js"></script>
+
+
+  <style>
+
+
+    /* =========================================
+       GLOBAL
+    ========================================= */
+
+    * {
+
+      box-sizing:
+        border-box;
+
+    }
+
+
+    body {
+
+      margin:
+        0;
+
+      font-family:
+        Arial,
+        sans-serif;
+
+      background:
+        #f5f6fa;
+
+      color:
+        #17182f;
+
+    }
+
+
+    button {
+
+      font-family:
+        inherit;
+
+    }
+
+
+
+    /* =========================================
+       HEADER
+    ========================================= */
+
+    header {
+
+      background:
+        #0d1038;
+
+      color:
+        white;
+
+    }
+
+
+    .nav {
+
+      max-width:
+        1250px;
+
+      margin:
+        auto;
+
+      padding:
+        18px 20px;
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      gap:
+        20px;
+
+    }
+
+
+    .logo {
+
+      color:
+        white;
+
+      text-decoration:
+        none;
+
+      font-size:
+        25px;
+
+      font-weight:
+        700;
+
+    }
+
+
+    .logo span {
+
+      color:
+        #7c5cff;
+
+    }
+
+
+    .admin-badge {
+
+      margin-left:
+        auto;
+
+      font-size:
+        13px;
+
+      color:
+        #c9caff;
+
+    }
+
+
+    .dashboard-btn {
+
+      border:
+        1px solid
+        rgba(255,255,255,.35);
+
+      background:
+        transparent;
+
+      color:
+        white;
+
+      text-decoration:
+        none;
+
+      padding:
+        9px 15px;
+
+      border-radius:
+        8px;
+
+      font-size:
+        14px;
+
+    }
+
+
+    .dashboard-btn:hover {
+
+      background:
+        rgba(255,255,255,.08);
+
+    }
+
+
+
+    /* =========================================
+       MAIN
+    ========================================= */
+
+    main {
+
+      max-width:
+        1250px;
+
+      margin:
+        auto;
+
+      padding:
+        35px 20px 60px;
+
+    }
+
+
+
+    /* =========================================
+       PAGE HEADER
+    ========================================= */
+
+    .page-heading {
+
+      margin-bottom:
+        30px;
+
+    }
+
+
+    .eyebrow {
+
+      display:
+        inline-block;
+
+      font-size:
+        12px;
+
+      font-weight:
+        700;
+
+      letter-spacing:
+        1px;
+
+      color:
+        #6d4aff;
+
+      margin-bottom:
+        8px;
+
+    }
+
+
+    .page-heading h1 {
+
+      margin:
+        0 0 10px;
+
+      font-size:
+        32px;
+
+    }
+
+
+    .page-heading p {
+
+      margin:
+        0;
+
+      color:
+        #686a7d;
+
+      line-height:
+        1.5;
+
+    }
+
+
+
+    /* =========================================
+       SECTION TITLE
+    ========================================= */
+
+    .section-title {
+
+      margin:
+        30px 0 15px;
+
+      font-size:
+        21px;
+
+    }
+
+
+
+    /* =========================================
+       STATISTICS
+    ========================================= */
+
+    .stats-grid {
+
+      display:
+        grid;
+
+      grid-template-columns:
+        repeat(
+          auto-fit,
+          minmax(190px, 1fr)
+        );
+
+      gap:
+        14px;
+
+    }
+
+
+    .stat-card {
+
+      background:
+        white;
+
+      border:
+        1px solid
+        #e6e7ee;
+
+      border-radius:
+        12px;
+
+      padding:
+        17px;
+
+      box-shadow:
+        0 5px 15px
+        rgba(0,0,0,.03);
+
+    }
+
+
+    .stat-card small {
+
+      display:
+        block;
+
+      color:
+        #77798b;
+
+      font-size:
+        12px;
+
+      margin-bottom:
+        7px;
+
+    }
+
+
+    .stat-card strong {
+
+      display:
+        block;
+
+      font-size:
+        23px;
+
+    }
+
+
+
+    /* =========================================
+       MEMBERSHIP LIST
+    ========================================= */
+
+    .membership-list {
+
+      display:
+        grid;
+
+      gap:
+        14px;
+
+    }
+
+
+    .membership-card {
+
+      background:
+        white;
+
+      border:
+        1px solid
+        #e6e7ee;
+
+      border-radius:
+        13px;
+
+      padding:
+        18px;
+
+      box-shadow:
+        0 5px 15px
+        rgba(0,0,0,.03);
+
+    }
+
+
+    .membership-top {
+
+      display:
+        flex;
+
+      justify-content:
+        space-between;
+
+      align-items:
+        flex-start;
+
+      gap:
+        15px;
+
+      flex-wrap:
+        wrap;
+
+      margin-bottom:
+        14px;
+
+    }
+
+
+    .member-name {
+
+      margin:
+        0 0 5px;
+
+      font-size:
+        18px;
+
+    }
+
+
+    .member-id {
+
+      margin:
+        0;
+
+      color:
+        #77798b;
+
+      font-size:
+        12px;
+
+      word-break:
+        break-word;
+
+    }
+
+
+    .details-grid {
+
+      display:
+        grid;
+
+      grid-template-columns:
+        repeat(
+          auto-fit,
+          minmax(180px, 1fr)
+        );
+
+      gap:
+        10px;
+
+    }
+
+
+    .detail {
+
+      background:
+        #fafafa;
+
+      border:
+        1px solid
+        #eeeeee;
+
+      border-radius:
+        8px;
+
+      padding:
+        11px;
+
+    }
+
+
+    .detail small {
+
+      display:
+        block;
+
+      color:
+        #77798b;
+
+      font-size:
+        11px;
+
+      margin-bottom:
+        5px;
+
+    }
+
+
+    .detail strong {
+
+      font-size:
+        14px;
+
+      word-break:
+        break-word;
+
+    }
+
+
+
+    /* =========================================
+       STATUS
+    ========================================= */
+
+    .status-badge {
+
+      display:
+        inline-block;
+
+      padding:
+        6px 10px;
+
+      border-radius:
+        20px;
+
+      font-size:
+        11px;
+
+      font-weight:
+        700;
+
+      text-transform:
+        uppercase;
+
+    }
+
+
+    .status-active {
+
+      background:
+        #dcfce7;
+
+      color:
+        #15803d;
+
+    }
+
+
+    .status-inactive {
+
+      background:
+        #fee2e2;
+
+      color:
+        #b91c1c;
+
+    }
+
+
+    .status-unknown {
+
+      background:
+        #e5e7eb;
+
+      color:
+        #4b5563;
+
+    }
+
+
+
+    /* =========================================
+       LOADING
+    ========================================= */
+
+    .loading {
+
+      text-align:
+        center;
+
+      padding:
+        30px;
+
+      background:
+        white;
+
+      border:
+        1px solid
+        #e6e7ee;
+
+      border-radius:
+        12px;
+
+      color:
+        #686a7d;
+
+    }
+
+
+    .error-box {
+
+      padding:
+        18px;
+
+      background:
+        #fff5f5;
+
+      border:
+        1px solid
+        #f0b5b5;
+
+      border-radius:
+        12px;
+
+      color:
+        #721c24;
+
+    }
+
+
+    .empty-state {
+
+      text-align:
+        center;
+
+      padding:
+        35px 20px;
+
+      background:
+        white;
+
+      border:
+        1px solid
+        #e6e7ee;
+
+      border-radius:
+        12px;
+
+      color:
+        #686a7d;
+
+    }
+
+
+
+    /* =========================================
+       REFRESH
+    ========================================= */
+
+    .refresh-row {
+
+      display:
+        flex;
+
+      justify-content:
+        flex-end;
+
+      margin-bottom:
+        15px;
+
+    }
+
+
+    .refresh-btn {
+
+      border:
+        0;
+
+      background:
+        #6d4aff;
+
+      color:
+        white;
+
+      padding:
+        10px 15px;
+
+      border-radius:
+        8px;
+
+      font-weight:
+        700;
+
+      cursor:
+        pointer;
+
+    }
+
+
+    .refresh-btn:hover {
+
+      opacity:
+        .9;
+
+    }
+
+
+
+    /* =========================================
+       MOBILE
+    ========================================= */
+
+    @media (
+      max-width: 650px
+    ) {
+
+
+      .nav {
+
+        flex-wrap:
+          wrap;
+
+      }
+
+
+      .admin-badge {
+
+        margin-left:
+          0;
+
+        order:
+          3;
+
+        width:
+          100%;
+
+      }
+
+
+      main {
+
+        padding:
+          25px 15px 45px;
+
+      }
+
+
+      .page-heading h1 {
+
+        font-size:
+          27px;
+
+      }
+
+
+    }
+
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================
+     HEADER
+========================================= -->
+
+<header>
+
+  <div class="nav">
+
+
+    <a
+      href="admin-dashboard.html"
+      class="logo"
+    >
+
+      Earn<span>Gig</span>
+
+    </a>
+
+
+    <div class="admin-badge">
+
+      ADMIN PORTAL
+
+    </div>
+
+
+    <a
+      href="admin-dashboard.html"
+      class="dashboard-btn"
+    >
+
+      ← Admin Dashboard
+
+    </a>
+
+
+  </div>
+
+</header>
+
+
+
+<!-- =========================================
+     MAIN
+========================================= -->
+
+<main>
+
+
+  <!-- PAGE HEADER -->
+
+  <section
+    class="page-heading"
+  >
+
+
+    <span
+      class="eyebrow"
+    >
+
+      ADMINISTRATION
+
+    </span>
+
+
+    <h1>
+
+      Membership Management
+
+    </h1>
+
+
+    <p>
+
+      Review member accounts and membership information.
+
+    </p>
+
+
+  </section>
+
+
+
+  <!-- STATISTICS -->
+
+  <h2
+    class="section-title"
+  >
+
+    Membership Overview
+
+  </h2>
+
+
+  <div
+    class="stats-grid"
+    id="statsGrid"
+  >
+
+
+    <div
+      class="loading"
+    >
+
+      Loading membership statistics...
+
+    </div>
+
+
+  </div>
+
+
+
+  <!-- MEMBERS -->
+
+  <h2
+    class="section-title"
+  >
+
+    Members
+
+  </h2>
+
+
+  <div
+    class="refresh-row"
+  >
+
+
+    <button
+      type="button"
+      class="refresh-btn"
+      onclick="loadMemberships()"
+    >
+
+      ↻ Refresh
+
+    </button>
+
+
+  </div>
+
+
+  <div
+    class="membership-list"
+    id="membershipList"
+  >
+
+
+    <div
+      class="loading"
+    >
+
+      Loading members...
+
+    </div>
+
+
+  </div>
+
+
+</main>
+
+
+
+<!-- =========================================
+     JAVASCRIPT
+========================================= -->
+
+<script>
+
+
+/* =========================================
+   ESCAPE HTML
+========================================= */
+
+function escapeHtml(value) {
+
+
+  if (
+
+    value === null ||
+
+    value === undefined
+
+  ) {
+
+    return "—";
+
+  }
+
+
+  return String(value)
+
+    .replaceAll(
+      "&",
+      "&amp;"
+    )
+
+    .replaceAll(
+      "<",
+      "&lt;"
+    )
+
+    .replaceAll(
+      ">",
+      "&gt;"
+    )
+
+    .replaceAll(
+      '"',
+      "&quot;"
+    )
+
+    .replaceAll(
+      "'",
+      "&#039;"
+    );
+
+}
+
+
+
+/* =========================================
+   ADMIN CHECK
+========================================= */
+
+async function checkAdmin() {
+
+
+  try {
+
+
+    const {
+
+      data:
+      {
+        user
+      },
+
+      error
+
+    }
+
+    =
+
+    await supabaseClient
+
+      .auth
+
+      .getUser();
+
+
+    if (
+
+      error ||
+
+      !user
+
+    ) {
+
+
+      window.location.href =
+        "index.html";
+
+
+      return null;
+
+    }
+
+
+
+    const {
+
+      data:
+      profile,
+
+      error:
+      profileError
+
+    }
+
+    =
+
+    await supabaseClient
+
+      .from(
+        "profiles"
+      )
+
+      .select(
+        `
+          is_admin,
+          account_status
+        `
+      )
+
+      .eq(
+        "id",
+        user.id
+      )
+
+      .single();
+
+
+
+    if (
+
+      profileError ||
+
+      !profile ||
+
+      profile.is_admin !== true
+
+    ) {
+
+
+      await supabaseClient
+        .auth
+        .signOut();
+
+
+      alert(
+        "Access denied."
+      );
+
+
+      window.location.href =
+        "index.html";
+
+
+      return null;
+
+    }
+
+
+
+    if (
+
+      profile.account_status &&
+
+      profile.account_status !==
+      "active"
+
+    ) {
+
+
+      await supabaseClient
+        .auth
+        .signOut();
+
+
+      alert(
+        "Administrator account is inactive."
+      );
+
+
+      window.location.href =
+        "index.html";
+
+
+      return null;
+
+    }
+
+
+    return user;
+
+
+  }
+
+
+  catch (error) {
+
+
+    console.error(
+      "Admin check error:",
+      error
+    );
+
+
+    return null;
+
+  }
+
+
+}
+
+
+
+/* =========================================
+   LOAD MEMBERSHIPS
+========================================= */
+
+async function loadMemberships() {
+
+
+  const statsGrid =
+    document.getElementById(
+      "statsGrid"
+    );
+
+
+  const membershipList =
+    document.getElementById(
+      "membershipList"
+    );
+
+
+
+  statsGrid.innerHTML = `
+
+    <div
+      class="loading"
+    >
+
+      Loading membership statistics...
+
+    </div>
+
+  `;
+
+
+
+  membershipList.innerHTML = `
+
+    <div
+      class="loading"
+    >
+
+      Loading members...
+
+    </div>
+
+  `;
+
+
+
+  try {
+
+
+    /*
+      We only request columns that are
+      expected to exist in your profiles
+      table based on your existing admin code.
+    */
+
+
+    const {
+
+      data:
+      members,
+
+      error
+
+    }
+
+    =
+
+    await supabaseClient
+
+      .from(
+        "profiles"
+      )
+
+      .select(
+        `
+          id,
+          full_name,
+          account_status,
+          is_admin
+        `
+      )
+
+      .order(
+        "full_name",
+        {
+          ascending:
+            true
+        }
+      );
+
+
+    if (error) {
+
+      throw error;
+
+    }
+
+
+    const allMembers =
+      members || [];
+
+
+
+    /* =====================================
+       STATISTICS
+    ===================================== */
+
+
+    const activeMembers =
+      allMembers.filter(
+
+        member =>
+
+          String(
+
+            member.account_status ||
+            "active"
+
+          )
+
+          .toLowerCase()
+
+          ===
+
+          "active"
+
+      );
+
+
+    const inactiveMembers =
+      allMembers.filter(
+
+        member =>
+
+          String(
+
+            member.account_status ||
+            ""
+
+          )
+
+          .toLowerCase()
+
+          !==
+
+          "active"
+
+      );
+
+
+    const administrators =
+      allMembers.filter(
+
+        member =>
+
+          member.is_admin === true
+
+      );
+
+
+    statsGrid.innerHTML = `
+
+
+      <div
+        class="stat-card"
+      >
+
+        <small>
+
+          Total Members
+
+        </small>
+
+
+        <strong>
+
+          ${allMembers.length}
+
+        </strong>
+
+      </div>
+
+
+
+      <div
+        class="stat-card"
+      >
+
+        <small>
+
+          Active Members
+
+        </small>
+
+
+        <strong>
+
+          ${activeMembers.length}
+
+        </strong>
+
+      </div>
+
+
+
+      <div
+        class="stat-card"
+      >
+
+        <small>
+
+          Inactive Members
+
+        </small>
+
+
+        <strong>
+
+          ${inactiveMembers.length}
+
+        </strong>
+
+      </div>
+
+
+
+      <div
+        class="stat-card"
+      >
+
+        <small>
+
+          Administrators
+
+        </small>
+
+
+        <strong>
+
+          ${administrators.length}
+
+        </strong>
+
+      </div>
+
+
+    `;
+
+
+
+    /* =====================================
+       EMPTY STATE
+    ===================================== */
+
+
+    if (
+
+      allMembers.length === 0
+
+    ) {
+
+
+      membershipList.innerHTML = `
+
+
+        <div
+          class="empty-state"
+        >
+
+          <h3>
+
+            No members found
+
+          </h3>
+
+
+          <p>
+
+            There are currently no member
+            profiles to display.
+
+          </p>
+
+
+        </div>
+
+
+      `;
+
+
+      return;
+
+    }
+
+
+
+    /* =====================================
+       DISPLAY MEMBERS
+    ===================================== */
+
+
+    membershipList.innerHTML =
+
+      allMembers
+
+      .map(
+
+        member => {
+
+
+          const accountStatus =
+
+            String(
+
+              member.account_status ||
+              "active"
+
+            )
+
+            .toLowerCase();
+
+
+
+          let statusClass =
+
+            "status-unknown";
+
+
+
+          if (
+
+            accountStatus ===
+            "active"
+
+          ) {
+
+
+            statusClass =
+              "status-active";
+
+          }
+
+
+          else {
+
+
+            statusClass =
+              "status-inactive";
+
+          }
+
+
+
+          const memberType =
+
+            member.is_admin === true
+
+              ?
+
+              "Administrator"
+
+              :
+
+              "Member";
+
+
+
+          return `
+
+
+            <article
+              class="membership-card"
+            >
+
+
+              <div
+                class="membership-top"
+              >
+
+
+                <div>
+
+
+                  <h3
+                    class="member-name"
+                  >
+
+                    ${escapeHtml(
+                      member.full_name ||
+                      "Unnamed Member"
+                    )}
+
+                  </h3>
+
+
+                  <p
+                    class="member-id"
+                  >
+
+                    ID:
+                    ${escapeHtml(
+                      member.id
+                    )}
+
+                  </p>
+
+
+                </div>
+
+
+
+                <span
+                  class="
+                    status-badge
+                    ${statusClass}
+                  "
+                >
+
+                  ${escapeHtml(
+                    accountStatus
+                  )}
+
+                </span>
+
+
+              </div>
+
+
+
+              <div
+                class="details-grid"
+              >
+
+
+                <div
+                  class="detail"
+                >
+
+                  <small>
+
+                    Account Type
+
+                  </small>
+
+
+                  <strong>
+
+                    ${memberType}
+
+                  </strong>
+
+                </div>
+
+
+
+                <div
+                  class="detail"
+                >
+
+                  <small>
+
+                    Account Status
+
+                  </small>
+
+
+                  <strong>
+
+                    ${escapeHtml(
+                      accountStatus
+                    )}
+
+                  </strong>
+
+                </div>
+
+
+              </div>
+
+
+            </article>
+
+
+          `;
+
+
+        }
+
+      )
+
+      .join("");
+
+
+  }
+
+
+  catch (error) {
+
+
+    console.error(
+      "Membership loading error:",
+      error
+    );
+
+
+
+    const errorMessage =
+
+      escapeHtml(
+
+        error.message ||
+
+        "Unknown error"
+
+      );
+
+
+
+    statsGrid.innerHTML = `
+
+
+      <div
+        class="error-box"
+      >
+
+        <strong>
+
+          Membership statistics could
+          not be loaded.
+
+        </strong>
+
+
+        <p>
+
+          ${errorMessage}
+
+        </p>
+
+
+      </div>
+
+
+    `;
+
+
+
+    membershipList.innerHTML = `
+
+
+      <div
+        class="error-box"
+      >
+
+        <strong>
+
+          Members could not be loaded.
+
+        </strong>
+
+
+        <p>
+
+          ${errorMessage}
+
+        </p>
+
+
+      </div>
+
+
+    `;
+
+
+  }
+
+
+}
+
+
+
+/* =========================================
+   START APPLICATION
+========================================= */
+
+(async function() {
+
+
+  const admin =
+
+    await checkAdmin();
+
+
+  if (!admin) {
+
+    return;
+
+  }
+
+
+  await loadMemberships();
+
+
+})();
+
+
+</script>
+
+
+</body>
+
+</html>

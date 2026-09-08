@@ -3,593 +3,1223 @@
 
 <head>
 
-<meta charset="UTF-8">
+  <meta charset="UTF-8">
 
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
->
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-<title>Withdrawals | EarnGig Admin</title>
+  <title>Withdrawals | EarnGig Admin</title>
 
 
-<!-- SUPABASE -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="supabase.js"></script>
+  <!-- SUPABASE -->
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<style>
+  <script src="supabase.js"></script>
 
-/* =========================================
-   GLOBAL
-========================================= */
 
-* {
-  box-sizing: border-box;
-}
+  <style>
 
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f5f6fa;
-  color: #17182f;
-}
 
-button {
-  font-family: inherit;
-}
+    /* =========================================
+       GLOBAL
+    ========================================= */
 
+    * {
+      box-sizing: border-box;
+    }
 
-/* =========================================
-   HEADER
-========================================= */
 
-header {
-  background: #0d1038;
-  color: white;
-}
+    body {
 
-.nav {
-  max-width: 1250px;
-  margin: auto;
-  padding: 18px 20px;
+      margin: 0;
 
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
+      font-family:
+        Arial,
+        sans-serif;
 
-.logo {
-  color: white;
-  text-decoration: none;
-  font-size: 25px;
-  font-weight: bold;
-}
+      background:
+        #f5f6fa;
 
-.logo span {
-  color: #7c5cff;
-}
+      color:
+        #17182f;
 
-.admin-badge {
-  margin-left: auto;
-  color: #c9caff;
-  font-size: 13px;
-  font-weight: bold;
-}
+    }
 
-.dashboard-btn {
-  color: white;
-  text-decoration: none;
 
-  border: 1px solid rgba(255,255,255,.4);
+    button,
+    select {
 
-  padding: 9px 15px;
+      font-family:
+        inherit;
 
-  border-radius: 8px;
-}
+    }
 
 
-/* =========================================
-   MAIN
-========================================= */
+    /* =========================================
+       HEADER
+    ========================================= */
 
-main {
-  max-width: 1250px;
-  margin: auto;
-  padding: 35px 20px 60px;
-}
+    header {
 
+      background:
+        #0d1038;
 
-/* =========================================
-   PAGE HEADER
-========================================= */
+      color:
+        white;
 
-.page-heading {
-  margin-bottom: 35px;
-}
+    }
 
-.eyebrow {
-  display: block;
 
-  color: #6d4aff;
+    .nav {
 
-  font-size: 12px;
+      max-width:
+        1250px;
 
-  font-weight: bold;
+      margin:
+        auto;
 
-  letter-spacing: 1px;
+      padding:
+        16px 20px;
 
-  margin-bottom: 8px;
-}
+      display:
+        flex;
 
-.page-heading h1 {
-  margin: 0 0 10px;
-  font-size: 32px;
-}
+      align-items:
+        center;
 
-.page-heading p {
-  margin: 0;
-  color: #686a7d;
-}
+      justify-content:
+        space-between;
 
+      gap:
+        20px;
 
-/* =========================================
-   SECTION TITLE
-========================================= */
+    }
 
-.section-title {
-  margin: 35px 0 15px;
-  font-size: 21px;
-}
 
+    .logo {
 
-/* =========================================
-   STATISTICS
-========================================= */
+      color:
+        white;
 
-.stats-grid {
+      text-decoration:
+        none;
 
-  display: grid;
+      font-size:
+        25px;
 
-  grid-template-columns:
-    repeat(auto-fit, minmax(210px, 1fr));
+      font-weight:
+        700;
 
-  gap: 15px;
+    }
 
-}
 
-.stat-card {
+    .logo span {
 
-  background: white;
+      color:
+        #7c5cff;
 
-  border: 1px solid #e6e7ee;
+    }
 
-  border-radius: 13px;
 
-  padding: 20px;
+    .admin-badge {
 
-}
+      font-size:
+        13px;
 
-.stat-card small {
+      color:
+        #c9caff;
 
-  display: block;
+      margin-left:
+        auto;
 
-  color: #77798b;
+    }
 
-  margin-bottom: 8px;
 
-}
+    .dashboard-btn {
 
-.stat-card strong {
+      text-decoration:
+        none;
 
-  font-size: 25px;
+      border:
+        1px solid
+        rgba(255,255,255,.35);
 
-}
+      color:
+        white;
 
+      padding:
+        9px 15px;
 
-/* =========================================
-   CATEGORY GRID
-========================================= */
+      border-radius:
+        8px;
 
-.category-grid {
+      font-size:
+        14px;
 
-  display: grid;
+    }
 
-  grid-template-columns:
-    repeat(auto-fit, minmax(240px, 1fr));
 
-  gap: 18px;
+    .dashboard-btn:hover {
 
-}
+      background:
+        rgba(255,255,255,.08);
 
-.category-card {
+    }
 
-  background: white;
 
-  border: 1px solid #e6e7ee;
+    /* =========================================
+       MAIN
+    ========================================= */
 
-  border-radius: 14px;
+    main {
 
-  padding: 22px;
+      max-width:
+        1250px;
 
-}
+      margin:
+        auto;
 
-.category-icon {
+      padding:
+        32px 20px 60px;
 
-  font-size: 30px;
+    }
 
-  margin-bottom: 12px;
 
-}
+    /* =========================================
+       PAGE HEADER
+    ========================================= */
 
-.category-card h2 {
+    .page-heading {
 
-  margin: 0 0 10px;
+      margin-bottom:
+        28px;
 
-  font-size: 20px;
+    }
 
-}
 
-.category-card p {
+    .eyebrow {
 
-  margin: 0;
+      display:
+        inline-block;
 
-  color: #686a7d;
+      font-size:
+        12px;
 
-  line-height: 1.5;
+      font-weight:
+        700;
 
-}
+      letter-spacing:
+        1px;
 
-.category-info {
+      color:
+        #6d4aff;
 
-  margin-top: 18px;
+      margin-bottom:
+        8px;
 
-  padding-top: 15px;
+    }
 
-  border-top: 1px solid #eee;
 
-}
+    .page-heading h1 {
 
-.category-info small {
+      margin:
+        0 0 8px;
 
-  display: block;
+      font-size:
+        32px;
 
-  color: #77798b;
+    }
 
-}
 
-.category-info strong {
+    .page-heading p {
 
-  display: block;
+      margin:
+        0;
 
-  margin-top: 5px;
+      color:
+        #686a7d;
 
-  font-size: 20px;
+      line-height:
+        1.5;
 
-}
+    }
 
-.category-card button {
 
-  width: 100%;
+    /* =========================================
+       SECTION TITLE
+    ========================================= */
 
-  margin-top: 20px;
+    .section-title {
 
-  padding: 12px;
+      margin:
+        30px 0 14px;
 
-  border: none;
+      font-size:
+        21px;
 
-  border-radius: 8px;
+    }
 
-  background: #6d4aff;
 
-  color: white;
+    /* =========================================
+       STATISTICS
+    ========================================= */
 
-  font-weight: bold;
+    .stats-grid {
 
-  cursor: pointer;
+      display:
+        grid;
 
-}
+      grid-template-columns:
+        repeat(
+          auto-fit,
+          minmax(180px, 1fr)
+        );
 
+      gap:
+        12px;
 
-/* =========================================
-   LIST HEADER
-========================================= */
+    }
 
-.list-header {
 
-  display: flex;
+    .stat-card {
 
-  justify-content: space-between;
+      background:
+        white;
 
-  align-items: center;
+      border:
+        1px solid #e6e7ee;
 
-  margin-bottom: 25px;
+      border-radius:
+        12px;
 
-}
+      padding:
+        16px;
 
-.back-btn {
+      box-shadow:
+        0 4px 12px
+        rgba(0,0,0,.03);
 
-  border: none;
+    }
 
-  background: #17182f;
 
-  color: white;
+    .stat-card small {
 
-  padding: 10px 15px;
+      display:
+        block;
 
-  border-radius: 8px;
+      color:
+        #77798b;
 
-  cursor: pointer;
+      font-size:
+        12px;
 
-}
+      margin-bottom:
+        6px;
 
-.refresh-btn {
+    }
 
-  border: none;
 
-  background: #6d4aff;
+    .stat-card strong {
 
-  color: white;
+      display:
+        block;
 
-  padding: 10px 15px;
+      font-size:
+        22px;
 
-  border-radius: 8px;
+      line-height:
+        1.2;
 
-  cursor: pointer;
+    }
 
-}
 
+    .stat-money {
 
-/* =========================================
-   WITHDRAWAL LIST
-========================================= */
+      font-size:
+        18px !important;
 
-.withdrawal-list {
+    }
 
-  display: grid;
 
-  gap: 18px;
+    /* =========================================
+       CATEGORY CARDS
+    ========================================= */
 
-}
+    .category-grid {
 
-.withdrawal-card {
+      display:
+        grid;
 
-  background: white;
+      grid-template-columns:
+        repeat(
+          auto-fit,
+          minmax(230px, 1fr)
+        );
 
-  border: 1px solid #e6e7ee;
+      gap:
+        15px;
 
-  border-radius: 14px;
+    }
 
-  padding: 22px;
 
-}
+    .category-card {
 
-.withdrawal-top {
+      background:
+        white;
 
-  display: flex;
+      border:
+        1px solid #e6e7ee;
 
-  justify-content: space-between;
+      border-radius:
+        14px;
 
-  align-items: center;
+      padding:
+        20px;
 
-  margin-bottom: 20px;
+      box-shadow:
+        0 5px 15px
+        rgba(0,0,0,.04);
 
-}
+    }
 
-.withdrawal-amount {
 
-  margin: 10px 0 0;
+    .category-icon {
 
-  font-size: 27px;
+      font-size:
+        27px;
 
-}
+      margin-bottom:
+        12px;
 
+    }
 
-/* =========================================
-   STATUS
-========================================= */
 
-.status-badge {
+    .category-card h2 {
 
-  display: inline-block;
+      margin:
+        0 0 8px;
 
-  padding: 7px 12px;
+      font-size:
+        19px;
 
-  border-radius: 20px;
+    }
 
-  font-size: 12px;
 
-  font-weight: bold;
+    .category-card p {
 
-  text-transform: uppercase;
+      margin:
+        0;
 
-}
+      color:
+        #686a7d;
 
-.status-pending {
+      font-size:
+        13px;
 
-  background: #fff4cc;
-  color: #9a6700;
+      line-height:
+        1.5;
 
-}
+      min-height:
+        40px;
 
-.status-approved {
+    }
 
-  background: #dbeafe;
-  color: #1d4ed8;
 
-}
+    .category-info {
 
-.status-processed {
+      margin-top:
+        15px;
 
-  background: #dcfce7;
-  color: #15803d;
+      padding-top:
+        12px;
 
-}
+      border-top:
+        1px solid #eeeeee;
 
-.status-rejected {
+    }
 
-  background: #fee2e2;
-  color: #b91c1c;
 
-}
+    .category-info small {
 
+      color:
+        #77798b;
 
-/* =========================================
-   DETAILS
-========================================= */
+      display:
+        block;
 
-.details-grid {
+      margin-bottom:
+        4px;
 
-  display: grid;
+      font-size:
+        12px;
 
-  grid-template-columns:
-    repeat(auto-fit, minmax(180px, 1fr));
+    }
 
-  gap: 15px;
 
-}
+    .category-info strong {
 
-.detail {
+      font-size:
+        18px;
 
-  background: #fafafa;
+    }
 
-  border: 1px solid #eee;
 
-  border-radius: 8px;
+    .category-card button {
 
-  padding: 13px;
+      width:
+        100%;
 
-}
+      margin-top:
+        16px;
 
-.detail small {
+      padding:
+        11px;
 
-  display: block;
+      border:
+        0;
 
-  color: #77798b;
+      border-radius:
+        8px;
 
-  margin-bottom: 6px;
+      background:
+        #6d4aff;
 
-}
+      color:
+        white;
 
-.detail strong {
+      font-weight:
+        700;
 
-  word-break: break-word;
+      cursor:
+        pointer;
 
-}
+    }
 
 
-/* =========================================
-   ACTIONS
-========================================= */
+    .category-card button:hover {
 
-.withdrawal-actions {
+      opacity:
+        .9;
 
-  display: flex;
+    }
 
-  gap: 10px;
 
-  margin-top: 20px;
+    /* =========================================
+       LIST HEADER
+    ========================================= */
 
-}
+    .list-header {
 
-.action-btn {
+      display:
+        flex;
 
-  border: none;
+      align-items:
+        center;
 
-  padding: 11px 16px;
+      justify-content:
+        space-between;
 
-  border-radius: 8px;
+      gap:
+        15px;
 
-  color: white;
+      margin-bottom:
+        22px;
 
-  font-weight: bold;
+      flex-wrap:
+        wrap;
 
-  cursor: pointer;
+    }
 
-}
 
-.approve-btn {
-  background: #2563eb;
-}
+    .back-btn {
 
-.process-btn {
-  background: #16a34a;
-}
+      border:
+        0;
 
-.reject-btn {
-  background: #dc2626;
-}
+      background:
+        #17182f;
 
+      color:
+        white;
 
-/* =========================================
-   LOADING / EMPTY / ERROR
-========================================= */
+      padding:
+        10px 15px;
 
-.loading,
-.empty-state,
-.error-box {
+      border-radius:
+        8px;
 
-  background: white;
+      font-weight:
+        600;
 
-  border: 1px solid #e6e7ee;
+      cursor:
+        pointer;
 
-  border-radius: 13px;
+    }
 
-  padding: 35px;
 
-  text-align: center;
+    .back-btn:hover {
 
-}
+      opacity:
+        .9;
 
-.loading {
-  color: #686a7d;
-}
+    }
 
-.empty-state {
-  color: #686a7d;
-}
 
-.error-box {
+    .refresh-btn {
 
-  background: #fff5f5;
+      border:
+        0;
 
-  border-color: #f0b5b5;
+      background:
+        #6d4aff;
 
-  color: #991b1b;
+      color:
+        white;
 
-}
+      padding:
+        10px 16px;
 
-.error-box p {
-  margin-top: 10px;
-}
+      border-radius:
+        8px;
 
+      font-weight:
+        700;
 
-/* =========================================
-   MOBILE
-========================================= */
+      cursor:
+        pointer;
 
-@media (max-width: 650px) {
+    }
 
-  .nav {
-    flex-wrap: wrap;
-  }
 
-  .admin-badge {
-    margin-left: 0;
-  }
+    .refresh-btn:hover {
 
-  main {
-    padding: 25px 15px 45px;
-  }
+      opacity:
+        .9;
 
-  .list-header {
-    flex-wrap: wrap;
-    gap: 10px;
-  }
+    }
 
-}
 
-</style>
+    /* =========================================
+       WITHDRAWAL LIST
+    ========================================= */
+
+    .withdrawal-list {
+
+      display:
+        grid;
+
+      gap:
+        16px;
+
+    }
+
+
+    /* =========================================
+       COMPACT WITHDRAWAL CARD
+    ========================================= */
+
+    .withdrawal-card {
+
+      background:
+        white;
+
+      border:
+        1px solid #e1e3ea;
+
+      border-radius:
+        14px;
+
+      padding:
+        18px 20px;
+
+      box-shadow:
+        0 4px 14px
+        rgba(0,0,0,.03);
+
+    }
+
+
+    .withdrawal-compact-grid {
+
+      display:
+        grid;
+
+      grid-template-columns:
+
+        minmax(140px, 1.1fr)
+
+        minmax(140px, 1fr)
+
+        minmax(180px, 1.4fr)
+
+        minmax(160px, 1.2fr)
+
+        minmax(110px, .8fr)
+
+        minmax(130px, 1fr)
+
+        minmax(180px, 1.2fr);
+
+      gap:
+        12px;
+
+      align-items:
+        center;
+
+    }
+
+
+    /* =========================================
+       AMOUNT SECTION
+    ========================================= */
+
+    .amount-section {
+
+      padding:
+        4px 2px;
+
+    }
+
+
+    .withdrawal-amount {
+
+      margin:
+        8px 0 0;
+
+      font-size:
+        26px;
+
+      line-height:
+        1.1;
+
+      white-space:
+        nowrap;
+
+    }
+
+
+    /* =========================================
+       STATUS BADGES
+    ========================================= */
+
+    .status-badge {
+
+      display:
+        inline-block;
+
+      padding:
+        6px 11px;
+
+      border-radius:
+        20px;
+
+      font-size:
+        11px;
+
+      font-weight:
+        700;
+
+      text-transform:
+        uppercase;
+
+      letter-spacing:
+        .4px;
+
+    }
+
+
+    .status-pending {
+
+      background:
+        #fff4cc;
+
+      color:
+        #9a6700;
+
+    }
+
+
+    .status-approved {
+
+      background:
+        #dbeafe;
+
+      color:
+        #1d4ed8;
+
+    }
+
+
+    .status-processed {
+
+      background:
+        #dcfce7;
+
+      color:
+        #15803d;
+
+    }
+
+
+    .status-rejected {
+
+      background:
+        #fee2e2;
+
+      color:
+        #b91c1c;
+
+    }
+
+
+    /* =========================================
+       COMPACT DETAIL BOX
+    ========================================= */
+
+    .compact-detail {
+
+      background:
+        #fafafa;
+
+      border:
+        1px solid #eeeeee;
+
+      border-radius:
+        9px;
+
+      padding:
+        12px 13px;
+
+      min-height:
+        76px;
+
+      display:
+        flex;
+
+      flex-direction:
+        column;
+
+      justify-content:
+        center;
+
+    }
+
+
+    .compact-detail small {
+
+      display:
+        block;
+
+      color:
+        #77798b;
+
+      font-size:
+        11px;
+
+      margin-bottom:
+        6px;
+
+    }
+
+
+    .compact-detail strong {
+
+      display:
+        block;
+
+      font-size:
+        14px;
+
+      color:
+        #2b2d3b;
+
+      word-break:
+        break-word;
+
+    }
+
+
+    /* =========================================
+       ACTION SECTION
+    ========================================= */
+
+    .action-section {
+
+      display:
+        flex;
+
+      flex-direction:
+        column;
+
+      gap:
+        8px;
+
+      justify-content:
+        center;
+
+    }
+
+
+    .action-btn {
+
+      border:
+        0;
+
+      padding:
+        12px 14px;
+
+      border-radius:
+        8px;
+
+      font-weight:
+        700;
+
+      cursor:
+        pointer;
+
+      width:
+        100%;
+
+      white-space:
+        nowrap;
+
+    }
+
+
+    .approve-btn {
+
+      background:
+        #2563eb;
+
+      color:
+        white;
+
+    }
+
+
+    .process-btn {
+
+      background:
+        #168b49;
+
+      color:
+        white;
+
+    }
+
+
+    .reject-btn {
+
+      background:
+        #dc2626;
+
+      color:
+        white;
+
+    }
+
+
+    .action-btn:hover {
+
+      opacity:
+        .88;
+
+    }
+
+
+    .action-btn:disabled {
+
+      opacity:
+        .5;
+
+      cursor:
+        not-allowed;
+
+    }
+
+
+    .requested-date {
+
+      text-align:
+        center;
+
+      font-size:
+        12px;
+
+      color:
+        #77798b;
+
+      white-space:
+        nowrap;
+
+    }
+
+
+    /* =========================================
+       PROCESSED / REJECTED DATE
+    ========================================= */
+
+    .history-date {
+
+      margin-top:
+        10px;
+
+      text-align:
+        right;
+
+      font-size:
+        12px;
+
+      color:
+        #77798b;
+
+    }
+
+
+    /* =========================================
+       LOADING
+    ========================================= */
+
+    .loading {
+
+      text-align:
+        center;
+
+      padding:
+        35px 20px;
+
+      background:
+        white;
+
+      border:
+        1px solid #e6e7ee;
+
+      border-radius:
+        13px;
+
+      color:
+        #686a7d;
+
+    }
+
+
+    /* =========================================
+       EMPTY STATE
+    ========================================= */
+
+    .empty-state {
+
+      text-align:
+        center;
+
+      padding:
+        45px 20px;
+
+      background:
+        white;
+
+      border:
+        1px solid #e6e7ee;
+
+      border-radius:
+        13px;
+
+      color:
+        #686a7d;
+
+    }
+
+
+    .empty-icon {
+
+      font-size:
+        34px;
+
+      margin-bottom:
+        10px;
+
+    }
+
+
+    .empty-state h3 {
+
+      margin:
+        0 0 8px;
+
+      color:
+        #17182f;
+
+    }
+
+
+    .empty-state p {
+
+      margin:
+        0;
+
+    }
+
+
+    /* =========================================
+       ERROR
+    ========================================= */
+
+    .error-box {
+
+      padding:
+        20px;
+
+      border-radius:
+        12px;
+
+      background:
+        #fff5f5;
+
+      border:
+        1px solid #f0b5b5;
+
+      color:
+        #721c24;
+
+    }
+
+
+    /* =========================================
+       TABLET
+    ========================================= */
+
+    @media (
+      max-width: 1150px
+    ) {
+
+      .withdrawal-compact-grid {
+
+        grid-template-columns:
+
+          minmax(150px, 1fr)
+
+          minmax(150px, 1fr)
+
+          minmax(180px, 1fr);
+
+      }
+
+
+      .amount-section {
+
+        grid-column:
+          span 1;
+
+      }
+
+
+      .action-section {
+
+        grid-column:
+          span 1;
+
+      }
+
+    }
+
+
+    /* =========================================
+       MOBILE
+    ========================================= */
+
+    @media (
+      max-width: 650px
+    ) {
+
+      .nav {
+
+        flex-wrap:
+          wrap;
+
+      }
+
+
+      .admin-badge {
+
+        margin-left:
+          0;
+
+        order:
+          3;
+
+      }
+
+
+      main {
+
+        padding:
+          25px 15px 45px;
+
+      }
+
+
+      .page-heading h1 {
+
+        font-size:
+          27px;
+
+      }
+
+
+      .withdrawal-card {
+
+        padding:
+          15px;
+
+      }
+
+
+      .withdrawal-compact-grid {
+
+        grid-template-columns:
+          1fr;
+
+      }
+
+
+      .amount-section {
+
+        padding-bottom:
+          8px;
+
+      }
+
+
+      .compact-detail {
+
+        min-height:
+          auto;
+
+      }
+
+
+      .action-section {
+
+        width:
+          100%;
+
+      }
+
+
+      .requested-date {
+
+        text-align:
+          left;
+
+      }
+
+    }
+
+
+  </style>
 
 </head>
 
@@ -605,16 +1235,21 @@ main {
 
   <div class="nav">
 
+
     <a
       href="admin-dashboard.html"
       class="logo"
     >
+
       Earn<span>Gig</span>
+
     </a>
 
 
     <div class="admin-badge">
+
       ADMIN PORTAL
+
     </div>
 
 
@@ -622,8 +1257,11 @@ main {
       href="admin-dashboard.html"
       class="dashboard-btn"
     >
+
       ← Admin Dashboard
+
     </a>
+
 
   </div>
 
@@ -638,263 +1276,445 @@ main {
 <main>
 
 
-<section class="page-heading">
+  <!-- =======================================
+       PAGE HEADER
+  ======================================== -->
 
-  <span class="eyebrow">
-    ADMINISTRATION
-  </span>
-
-  <h1 id="pageTitle">
-    Withdrawal Requests
-  </h1>
-
-  <p id="pageDescription">
-    Review and manage member withdrawal requests.
-  </p>
-
-</section>
-
-
-
-<!-- =========================================
-     OVERVIEW
-========================================= -->
-
-<section id="overviewSection">
-
-
-  <h2 class="section-title">
-    Withdrawal Statistics
-  </h2>
-
-
-  <div
-    class="stats-grid"
-    id="statsGrid"
+  <section
+    class="page-heading"
   >
 
-    <div class="loading">
-      Loading withdrawal statistics...
-    </div>
 
-  </div>
-
-
-
-  <h2 class="section-title">
-    Withdrawal Management
-  </h2>
-
-
-  <div class="category-grid">
-
-
-    <!-- PENDING -->
-
-    <div class="category-card">
-
-      <div class="category-icon">
-        🟡
-      </div>
-
-      <h2>
-        Pending Withdrawals
-      </h2>
-
-      <p>
-        Withdrawal requests awaiting administrator review.
-      </p>
-
-      <div class="category-info">
-
-        <small>
-          Pending Requests
-        </small>
-
-        <strong id="pendingCount">
-          0
-        </strong>
-
-      </div>
-
-      <button
-        onclick="openStatus('pending')"
-      >
-        View Pending Withdrawals →
-      </button>
-
-    </div>
-
-
-
-    <!-- APPROVED -->
-
-    <div class="category-card">
-
-      <div class="category-icon">
-        🔵
-      </div>
-
-      <h2>
-        Approved Withdrawals
-      </h2>
-
-      <p>
-        Approved requests awaiting payment processing.
-      </p>
-
-      <div class="category-info">
-
-        <small>
-          Approved Requests
-        </small>
-
-        <strong id="approvedCount">
-          0
-        </strong>
-
-      </div>
-
-      <button
-        onclick="openStatus('approved')"
-      >
-        View Approved Withdrawals →
-      </button>
-
-    </div>
-
-
-
-    <!-- PROCESSED -->
-
-    <div class="category-card">
-
-      <div class="category-icon">
-        🟢
-      </div>
-
-      <h2>
-        Processed Withdrawals
-      </h2>
-
-      <p>
-        Withdrawals that have been successfully paid.
-      </p>
-
-      <div class="category-info">
-
-        <small>
-          Processed Requests
-        </small>
-
-        <strong id="processedCount">
-          0
-        </strong>
-
-      </div>
-
-      <button
-        onclick="openStatus('processed')"
-      >
-        View Processed Withdrawals →
-      </button>
-
-    </div>
-
-
-
-    <!-- REJECTED -->
-
-    <div class="category-card">
-
-      <div class="category-icon">
-        🔴
-      </div>
-
-      <h2>
-        Rejected Withdrawals
-      </h2>
-
-      <p>
-        Withdrawal requests that were rejected.
-      </p>
-
-      <div class="category-info">
-
-        <small>
-          Rejected Requests
-        </small>
-
-        <strong id="rejectedCount">
-          0
-        </strong>
-
-      </div>
-
-      <button
-        onclick="openStatus('rejected')"
-      >
-        View Rejected Withdrawals →
-      </button>
-
-    </div>
-
-
-  </div>
-
-</section>
-
-
-
-<!-- =========================================
-     LIST SECTION
-========================================= -->
-
-<section
-  id="listSection"
-  style="display:none;"
->
-
-
-  <div class="list-header">
-
-    <button
-      class="back-btn"
-      onclick="goToOverview()"
+    <span
+      class="eyebrow"
     >
-      ← All Withdrawals
-    </button>
+
+      ADMINISTRATION
+
+    </span>
 
 
-    <button
-      class="refresh-btn"
-      onclick="loadWithdrawals()"
+    <h1
+      id="pageTitle"
     >
-      ↻ Refresh
-    </button>
 
-  </div>
+      Withdrawal Requests
+
+    </h1>
 
 
-  <div
-    id="withdrawalList"
-    class="withdrawal-list"
+    <p
+      id="pageDescription"
+    >
+
+      Review and manage member withdrawal requests.
+
+    </p>
+
+
+  </section>
+
+
+
+  <!-- =======================================
+       OVERVIEW
+  ======================================== -->
+
+  <section
+    id="overviewSection"
   >
-  </div>
 
 
-</section>
+    <h2
+      class="section-title"
+    >
+
+      Withdrawal Statistics
+
+    </h2>
+
+
+
+    <div
+      class="stats-grid"
+      id="statsGrid"
+    >
+
+
+      <div class="loading">
+
+        Loading withdrawal statistics...
+
+      </div>
+
+
+    </div>
+
+
+
+    <h2
+      class="section-title"
+    >
+
+      Withdrawal Management
+
+    </h2>
+
+
+
+    <div
+      class="category-grid"
+    >
+
+
+      <!-- PENDING -->
+
+      <div
+        class="category-card"
+      >
+
+
+        <div
+          class="category-icon"
+        >
+
+          🟡
+
+        </div>
+
+
+        <h2>
+
+          Pending Withdrawals
+
+        </h2>
+
+
+        <p>
+
+          Withdrawal requests awaiting
+          administrator review.
+
+        </p>
+
+
+        <div
+          class="category-info"
+        >
+
+
+          <small>
+
+            Pending Requests
+
+          </small>
+
+
+          <strong
+            id="pendingCount"
+          >
+
+            0
+
+          </strong>
+
+
+        </div>
+
+
+        <button
+          type="button"
+          onclick="openStatus('pending')"
+        >
+
+          View Pending Withdrawals →
+
+        </button>
+
+
+      </div>
+
+
+
+      <!-- APPROVED -->
+
+      <div
+        class="category-card"
+      >
+
+
+        <div
+          class="category-icon"
+        >
+
+          🔵
+
+        </div>
+
+
+        <h2>
+
+          Approved Withdrawals
+
+        </h2>
+
+
+        <p>
+
+          Approved requests awaiting
+          payment processing.
+
+        </p>
+
+
+        <div
+          class="category-info"
+        >
+
+
+          <small>
+
+            Approved Requests
+
+          </small>
+
+
+          <strong
+            id="approvedCount"
+          >
+
+            0
+
+          </strong>
+
+
+        </div>
+
+
+        <button
+          type="button"
+          onclick="openStatus('approved')"
+        >
+
+          View Approved Withdrawals →
+
+        </button>
+
+
+      </div>
+
+
+
+      <!-- PROCESSED -->
+
+      <div
+        class="category-card"
+      >
+
+
+        <div
+          class="category-icon"
+        >
+
+          🟢
+
+        </div>
+
+
+        <h2>
+
+          Processed Withdrawals
+
+        </h2>
+
+
+        <p>
+
+          Withdrawals that have been
+          successfully paid.
+
+        </p>
+
+
+        <div
+          class="category-info"
+        >
+
+
+          <small>
+
+            Processed Requests
+
+          </small>
+
+
+          <strong
+            id="processedCount"
+          >
+
+            0
+
+          </strong>
+
+
+        </div>
+
+
+        <button
+          type="button"
+          onclick="openStatus('processed')"
+        >
+
+          View Processed Withdrawals →
+
+        </button>
+
+
+      </div>
+
+
+
+      <!-- REJECTED -->
+
+      <div
+        class="category-card"
+      >
+
+
+        <div
+          class="category-icon"
+        >
+
+          🔴
+
+        </div>
+
+
+        <h2>
+
+          Rejected Withdrawals
+
+        </h2>
+
+
+        <p>
+
+          Withdrawal requests that
+          were rejected.
+
+        </p>
+
+
+        <div
+          class="category-info"
+        >
+
+
+          <small>
+
+            Rejected Requests
+
+          </small>
+
+
+          <strong
+            id="rejectedCount"
+          >
+
+            0
+
+          </strong>
+
+
+        </div>
+
+
+        <button
+          type="button"
+          onclick="openStatus('rejected')"
+        >
+
+          View Rejected Withdrawals →
+
+        </button>
+
+
+      </div>
+
+
+    </div>
+
+
+  </section>
+
+
+
+  <!-- =======================================
+       WITHDRAWAL LIST
+  ======================================== -->
+
+  <section
+    id="listSection"
+    style="display:none;"
+  >
+
+
+    <div
+      class="list-header"
+    >
+
+
+      <button
+        type="button"
+        class="back-btn"
+        onclick="goToOverview()"
+      >
+
+        ← All Withdrawals
+
+      </button>
+
+
+
+      <button
+        type="button"
+        class="refresh-btn"
+        onclick="loadWithdrawals()"
+      >
+
+        ↻ Refresh
+
+      </button>
+
+
+    </div>
+
+
+
+    <div
+      class="withdrawal-list"
+      id="withdrawalList"
+    >
+
+    </div>
+
+
+  </section>
 
 
 </main>
 
 
 
+<!-- =========================================
+     JAVASCRIPT
+========================================= -->
+
 <script>
 
 
 /* =========================================
-   GLOBAL
+   GLOBAL VARIABLES
 ========================================= */
 
 let allWithdrawals = [];
@@ -906,27 +1726,36 @@ let allWithdrawals = [];
 
 function getCurrentStatus() {
 
+
   const params =
     new URLSearchParams(
       window.location.search
     );
 
+
   const status =
     params.get("status");
 
 
-  const allowed = [
+  const allowedStatuses = [
 
     "pending",
+
     "approved",
+
     "processed",
+
     "rejected"
 
   ];
 
 
   if (
-    allowed.includes(status)
+
+    allowedStatuses.includes(
+      status
+    )
+
   ) {
 
     return status;
@@ -945,23 +1774,32 @@ function getCurrentStatus() {
 
 function formatMoney(amount) {
 
+
+  const value =
+    Number(amount || 0);
+
+
   return new Intl.NumberFormat(
 
     "en-NG",
 
     {
 
-      style: "currency",
+      style:
+        "currency",
 
-      currency: "NGN",
+      currency:
+        "NGN",
 
-      minimumFractionDigits: 0
+      minimumFractionDigits:
+        0,
+
+      maximumFractionDigits:
+        2
 
     }
 
-  ).format(
-    Number(amount || 0)
-  );
+  ).format(value);
 
 }
 
@@ -972,6 +1810,7 @@ function formatMoney(amount) {
 
 function formatDate(date) {
 
+
   if (!date) {
 
     return "—";
@@ -981,12 +1820,36 @@ function formatDate(date) {
 
   try {
 
-    return new Date(date)
-      .toLocaleString("en-NG");
+    return new Date(
+      date
+    ).toLocaleString(
+
+      "en-NG",
+
+      {
+
+        year:
+          "numeric",
+
+        month:
+          "short",
+
+        day:
+          "numeric",
+
+        hour:
+          "2-digit",
+
+        minute:
+          "2-digit"
+
+      }
+
+    );
 
   }
 
-  catch {
+  catch (error) {
 
     return "—";
 
@@ -1001,9 +1864,13 @@ function formatDate(date) {
 
 function escapeHtml(value) {
 
+
   if (
+
     value === null ||
+
     value === undefined
+
   ) {
 
     return "—";
@@ -1013,15 +1880,30 @@ function escapeHtml(value) {
 
   return String(value)
 
-    .replace(/&/g, "&amp;")
+    .replaceAll(
+      "&",
+      "&amp;"
+    )
 
-    .replace(/</g, "&lt;")
+    .replaceAll(
+      "<",
+      "&lt;"
+    )
 
-    .replace(/>/g, "&gt;")
+    .replaceAll(
+      ">",
+      "&gt;"
+    )
 
-    .replace(/"/g, "&quot;")
+    .replaceAll(
+      '"',
+      "&quot;"
+    )
 
-    .replace(/'/g, "&#039;");
+    .replaceAll(
+      "'",
+      "&#039;"
+    );
 
 }
 
@@ -1032,18 +1914,26 @@ function escapeHtml(value) {
 
 function openStatus(status) {
 
+
   window.location.href =
-    "admin-withdrawals.html?status=" +
-    encodeURIComponent(status);
+
+    "admin-withdrawals.html?status="
+
+    +
+
+    encodeURIComponent(
+      status
+    );
 
 }
 
 
 /* =========================================
-   GO OVERVIEW
+   GO TO OVERVIEW
 ========================================= */
 
 function goToOverview() {
+
 
   window.location.href =
     "admin-withdrawals.html";
@@ -1064,12 +1954,16 @@ async function loadWithdrawals() {
 
   if (status) {
 
+
     document.getElementById(
       "withdrawalList"
     ).innerHTML = `
 
       <div class="loading">
-        Loading ${escapeHtml(status)} withdrawals...
+
+        Loading ${escapeHtml(status)}
+        withdrawals...
+
       </div>
 
     `;
@@ -1080,51 +1974,67 @@ async function loadWithdrawals() {
   try {
 
 
-    /* CHECK SUPABASE */
+    const {
 
-    if (
-      typeof supabaseClient ===
-      "undefined"
-    ) {
+      data:
+      withdrawals,
 
-      throw new Error(
-        "Supabase client was not loaded. Check supabase.js."
-      );
+      error
 
     }
 
+    =
 
-    /* LOAD WITHDRAWALS */
+    await supabaseClient
 
-    const result =
-      await supabaseClient
+      .from(
+        "withdrawals"
+      )
 
-        .from("withdrawals")
+      .select(
 
-        .select("*")
+        `
+          id,
+          user_id,
+          amount,
+          fee,
+          net_amount,
+          bank_name,
+          account_number,
+          account_name,
+          status,
+          requested_at
+        `
 
-        .order(
-          "requested_at",
-          {
-            ascending: false
-          }
-        );
+      )
+
+      .order(
+
+        "requested_at",
+
+        {
+
+          ascending:
+            false
+
+        }
+
+      );
 
 
-    if (result.error) {
+    if (error) {
 
-      throw result.error;
+      throw error;
 
     }
 
 
     allWithdrawals =
-      result.data || [];
+      withdrawals || [];
 
-
-    /* OVERVIEW */
 
     if (!status) {
+
 
       updateStatistics();
 
@@ -1132,8 +2042,6 @@ async function loadWithdrawals() {
 
     }
 
-
-    /* STATUS LIST */
 
     displayStatusWithdrawals(
       status
@@ -1152,14 +2060,18 @@ async function loadWithdrawals() {
     );
 
 
-    const message =
+    const errorMessage =
       escapeHtml(
+
         error.message ||
+
         "Unknown error"
+
       );
 
 
     if (status) {
+
 
       document.getElementById(
         "withdrawalList"
@@ -1168,11 +2080,15 @@ async function loadWithdrawals() {
         <div class="error-box">
 
           <strong>
-            Unable to load withdrawals.
+
+            Withdrawals could not be loaded.
+
           </strong>
 
           <p>
-            ${message}
+
+            ${errorMessage}
+
           </p>
 
         </div>
@@ -1181,7 +2097,9 @@ async function loadWithdrawals() {
 
     }
 
+
     else {
+
 
       document.getElementById(
         "statsGrid"
@@ -1190,11 +2108,15 @@ async function loadWithdrawals() {
         <div class="error-box">
 
           <strong>
-            Unable to load withdrawal statistics.
+
+            Withdrawal statistics could not be loaded.
+
           </strong>
 
           <p>
-            ${message}
+
+            ${errorMessage}
+
           </p>
 
         </div>
@@ -1202,6 +2124,7 @@ async function loadWithdrawals() {
       `;
 
     }
+
 
   }
 
@@ -1218,13 +2141,19 @@ function updateStatistics() {
   const pending =
     allWithdrawals.filter(
 
-      item =>
+      withdrawal =>
 
         String(
-          item.status || "pending"
+
+          withdrawal.status ||
+
+          "pending"
+
         )
         .toLowerCase()
+
         ===
+
         "pending"
 
     );
@@ -1233,13 +2162,19 @@ function updateStatistics() {
   const approved =
     allWithdrawals.filter(
 
-      item =>
+      withdrawal =>
 
         String(
-          item.status || ""
+
+          withdrawal.status ||
+
+          ""
+
         )
         .toLowerCase()
+
         ===
+
         "approved"
 
     );
@@ -1248,13 +2183,19 @@ function updateStatistics() {
   const processed =
     allWithdrawals.filter(
 
-      item =>
+      withdrawal =>
 
         String(
-          item.status || ""
+
+          withdrawal.status ||
+
+          ""
+
         )
         .toLowerCase()
+
         ===
+
         "processed"
 
     );
@@ -1263,13 +2204,19 @@ function updateStatistics() {
   const rejected =
     allWithdrawals.filter(
 
-      item =>
+      withdrawal =>
 
         String(
-          item.status || ""
+
+          withdrawal.status ||
+
+          ""
+
         )
         .toLowerCase()
+
         ===
+
         "rejected"
 
     );
@@ -1278,10 +2225,16 @@ function updateStatistics() {
   const pendingAmount =
     pending.reduce(
 
-      (total, item) =>
+      (
+        total,
+        withdrawal
+      ) =>
 
         total +
-        Number(item.amount || 0),
+
+        Number(
+          withdrawal.amount || 0
+        ),
 
       0
 
@@ -1291,10 +2244,16 @@ function updateStatistics() {
   const approvedAmount =
     approved.reduce(
 
-      (total, item) =>
+      (
+        total,
+        withdrawal
+      ) =>
 
         total +
-        Number(item.amount || 0),
+
+        Number(
+          withdrawal.amount || 0
+        ),
 
       0
 
@@ -1304,10 +2263,35 @@ function updateStatistics() {
   const processedAmount =
     processed.reduce(
 
-      (total, item) =>
+      (
+        total,
+        withdrawal
+      ) =>
 
         total +
-        Number(item.amount || 0),
+
+        Number(
+          withdrawal.amount || 0
+        ),
+
+      0
+
+    );
+
+
+  const rejectedAmount =
+    rejected.reduce(
+
+      (
+        total,
+        withdrawal
+      ) =>
+
+        total +
+
+        Number(
+          withdrawal.amount || 0
+        ),
 
       0
 
@@ -1332,19 +2316,17 @@ function updateStatistics() {
     </div>
 
 
-
     <div class="stat-card">
 
       <small>
         Pending Amount
       </small>
 
-      <strong>
+      <strong class="stat-money">
         ${formatMoney(pendingAmount)}
       </strong>
 
     </div>
-
 
 
     <div class="stat-card">
@@ -1360,19 +2342,17 @@ function updateStatistics() {
     </div>
 
 
-
     <div class="stat-card">
 
       <small>
         Approved Amount
       </small>
 
-      <strong>
+      <strong class="stat-money">
         ${formatMoney(approvedAmount)}
       </strong>
 
     </div>
-
 
 
     <div class="stat-card">
@@ -1388,15 +2368,40 @@ function updateStatistics() {
     </div>
 
 
-
     <div class="stat-card">
 
       <small>
         Processed Amount
       </small>
 
-      <strong>
+      <strong class="stat-money">
         ${formatMoney(processedAmount)}
+      </strong>
+
+    </div>
+
+
+    <div class="stat-card">
+
+      <small>
+        Rejected Requests
+      </small>
+
+      <strong>
+        ${rejected.length}
+      </strong>
+
+    </div>
+
+
+    <div class="stat-card">
+
+      <small>
+        Rejected Amount
+      </small>
+
+      <strong class="stat-money">
+        ${formatMoney(rejectedAmount)}
       </strong>
 
     </div>
@@ -1432,10 +2437,24 @@ function updateStatistics() {
 
 
 /* =========================================
-   DISPLAY STATUS
+   DISPLAY STATUS WITHDRAWALS
 ========================================= */
 
-function displayStatusWithdrawals(status) {
+function displayStatusWithdrawals(
+  status
+) {
+
+
+  const pageTitle =
+    document.getElementById(
+      "pageTitle"
+    );
+
+
+  const pageDescription =
+    document.getElementById(
+      "pageDescription"
+    );
 
 
   const titles = {
@@ -1455,30 +2474,58 @@ function displayStatusWithdrawals(status) {
   };
 
 
-  document.getElementById(
-    "pageTitle"
-  ).textContent =
+  const descriptions = {
+
+    pending:
+      "Review withdrawal requests awaiting administrator action.",
+
+    approved:
+      "Review approved withdrawals awaiting payment processing.",
+
+    processed:
+      "View withdrawals that have been successfully processed.",
+
+    rejected:
+      "View withdrawal requests that were rejected."
+
+  };
+
+
+  pageTitle.textContent =
     titles[status];
 
 
-  const filtered =
+  pageDescription.textContent =
+    descriptions[status];
+
+
+  const withdrawals =
     allWithdrawals.filter(
 
-      item =>
+      withdrawal =>
 
         String(
-          item.status || "pending"
+
+          withdrawal.status ||
+
+          "pending"
+
         )
         .toLowerCase()
+
         ===
+
         status
 
     );
 
 
   if (
-    filtered.length === 0
+
+    withdrawals.length === 0
+
   ) {
+
 
     document.getElementById(
       "withdrawalList"
@@ -1486,18 +2533,31 @@ function displayStatusWithdrawals(status) {
 
       <div class="empty-state">
 
+        <div class="empty-icon">
+
+          📭
+
+        </div>
+
         <h3>
-          No ${escapeHtml(status)} withdrawals
+
+          No ${escapeHtml(status)}
+          withdrawals
+
         </h3>
 
         <p>
-          There are currently no ${escapeHtml(status)}
+
+          There are currently no
+          ${escapeHtml(status)}
           withdrawal requests.
+
         </p>
 
       </div>
 
     `;
+
 
     return;
 
@@ -1508,7 +2568,7 @@ function displayStatusWithdrawals(status) {
     "withdrawalList"
   ).innerHTML =
 
-    filtered.map(
+    withdrawals.map(
 
       withdrawal =>
 
@@ -1516,40 +2576,56 @@ function displayStatusWithdrawals(status) {
           withdrawal
         )
 
-    ).join("");
+    )
+    .join("");
 
 }
 
 
 /* =========================================
-   CREATE CARD
+   CREATE COMPACT WITHDRAWAL CARD
 ========================================= */
 
-function createWithdrawalCard(withdrawal) {
+function createWithdrawalCard(
+  withdrawal
+) {
 
 
   const status =
 
     String(
-      withdrawal.status || "pending"
+
+      withdrawal.status ||
+
+      "pending"
+
     )
     .toLowerCase();
 
 
-  let actions = "";
+  let actions =
+    "";
 
 
   /* PENDING */
 
+
   if (
-    status === "pending"
+
+    status ===
+    "pending"
+
   ) {
+
 
     actions = `
 
-      <div class="withdrawal-actions">
+      <div class="action-section">
+
 
         <button
+
+          type="button"
 
           class="
             action-btn
@@ -1564,11 +2640,15 @@ function createWithdrawalCard(withdrawal) {
           "
 
         >
+
           ✓ Approve
+
         </button>
 
 
         <button
+
+          type="button"
 
           class="
             action-btn
@@ -1583,8 +2663,20 @@ function createWithdrawalCard(withdrawal) {
           "
 
         >
+
           ✕ Reject
+
         </button>
+
+
+        <div class="requested-date">
+
+          ${formatDate(
+            withdrawal.requested_at
+          )}
+
+        </div>
+
 
       </div>
 
@@ -1595,15 +2687,23 @@ function createWithdrawalCard(withdrawal) {
 
   /* APPROVED */
 
-  if (
-    status === "approved"
+
+  else if (
+
+    status ===
+    "approved"
+
   ) {
+
 
     actions = `
 
-      <div class="withdrawal-actions">
+      <div class="action-section">
+
 
         <button
+
+          type="button"
 
           class="
             action-btn
@@ -1618,8 +2718,45 @@ function createWithdrawalCard(withdrawal) {
           "
 
         >
+
           ✓ Mark as Processed
+
         </button>
+
+
+        <div class="requested-date">
+
+          ${formatDate(
+            withdrawal.requested_at
+          )}
+
+        </div>
+
+
+      </div>
+
+    `;
+
+  }
+
+
+  /* PROCESSED / REJECTED */
+
+
+  else {
+
+
+    actions = `
+
+      <div class="action-section">
+
+        <div class="requested-date">
+
+          ${formatDate(
+            withdrawal.requested_at
+          )}
+
+        </div>
 
       </div>
 
@@ -1630,18 +2767,32 @@ function createWithdrawalCard(withdrawal) {
 
   return `
 
-    <article class="withdrawal-card">
+
+    <article
+      class="withdrawal-card"
+    >
 
 
-      <div class="withdrawal-top">
+      <div
+        class="withdrawal-compact-grid"
+      >
 
-        <div>
+
+        <!-- AMOUNT -->
+
+
+        <div
+          class="amount-section"
+        >
+
 
           <span
+
             class="
               status-badge
-              status-${status}
+              status-${escapeHtml(status)}
             "
+
           >
 
             ${escapeHtml(status)}
@@ -1649,7 +2800,9 @@ function createWithdrawalCard(withdrawal) {
           </span>
 
 
-          <h2 class="withdrawal-amount">
+          <h2
+            class="withdrawal-amount"
+          >
 
             ${formatMoney(
               withdrawal.amount
@@ -1657,117 +2810,162 @@ function createWithdrawalCard(withdrawal) {
 
           </h2>
 
+
         </div>
 
-      </div>
 
 
+        <!-- BANK -->
 
-      <div class="details-grid">
 
+        <div
+          class="compact-detail"
+        >
 
-        <div class="detail">
 
           <small>
+
             Bank Name
+
           </small>
 
+
           <strong>
+
             ${escapeHtml(
               withdrawal.bank_name
             )}
+
           </strong>
+
 
         </div>
 
 
 
-        <div class="detail">
+        <!-- ACCOUNT NAME -->
+
+
+        <div
+          class="compact-detail"
+        >
+
 
           <small>
+
             Account Name
+
           </small>
 
+
           <strong>
+
             ${escapeHtml(
               withdrawal.account_name
             )}
+
           </strong>
+
 
         </div>
 
 
 
-        <div class="detail">
+        <!-- ACCOUNT NUMBER -->
+
+
+        <div
+          class="compact-detail"
+        >
+
 
           <small>
+
             Account Number
+
           </small>
 
+
           <strong>
+
             ${escapeHtml(
               withdrawal.account_number
             )}
+
           </strong>
+
 
         </div>
 
 
 
-        <div class="detail">
+        <!-- FEE -->
+
+
+        <div
+          class="compact-detail"
+        >
+
 
           <small>
+
             Fee
+
           </small>
 
+
           <strong>
+
             ${formatMoney(
               withdrawal.fee
             )}
+
           </strong>
+
 
         </div>
 
 
 
-        <div class="detail">
+        <!-- NET AMOUNT -->
+
+
+        <div
+          class="compact-detail"
+        >
+
 
           <small>
+
             Net Amount
+
           </small>
 
+
           <strong>
+
             ${formatMoney(
               withdrawal.net_amount
             )}
+
           </strong>
+
 
         </div>
 
 
 
-        <div class="detail">
+        <!-- ACTION -->
 
-          <small>
-            Requested
-          </small>
 
-          <strong>
-            ${formatDate(
-              withdrawal.requested_at
-            )}
-          </strong>
-
-        </div>
+        ${actions}
 
 
       </div>
 
 
-      ${actions}
-
-
     </article>
+
 
   `;
 
@@ -1775,54 +2973,72 @@ function createWithdrawalCard(withdrawal) {
 
 
 /* =========================================
-   UPDATE STATUS
+   UPDATE WITHDRAWAL STATUS
 ========================================= */
 
 async function updateWithdrawalStatus(
 
   withdrawalId,
+
   newStatus
 
 ) {
 
 
   let message =
-    "Are you sure?";
+    "";
 
 
   if (
-    newStatus === "approved"
+
+    newStatus ===
+    "approved"
+
   ) {
 
+
     message =
+
       "Are you sure you want to approve this withdrawal?";
 
   }
 
 
-  if (
-    newStatus === "rejected"
+  else if (
+
+    newStatus ===
+    "rejected"
+
   ) {
 
+
     message =
+
       "Are you sure you want to reject this withdrawal?";
 
   }
 
 
-  if (
-    newStatus === "processed"
+  else if (
+
+    newStatus ===
+    "processed"
+
   ) {
 
+
     message =
-      "Confirm this withdrawal has been paid.";
+
+      "Confirm that this withdrawal has been paid and processed.";
 
   }
 
 
-  if (
-    !confirm(message)
-  ) {
+  const confirmed =
+    confirm(message);
+
+
+  if (!confirmed) {
 
     return;
 
@@ -1832,35 +3048,44 @@ async function updateWithdrawalStatus(
   try {
 
 
-    const result =
-      await supabaseClient.rpc(
+    const {
 
-        "admin_set_withdrawal_status",
+      data,
 
-        {
+      error
 
-          p_withdrawal_id:
-            withdrawalId,
+    }
 
-          p_status:
-            newStatus
+    =
 
-        }
+    await supabaseClient.rpc(
 
-      );
+      "admin_set_withdrawal_status",
+
+      {
+
+        p_withdrawal_id:
+          withdrawalId,
+
+        p_status:
+          newStatus
+
+      }
+
+    );
 
 
-    if (
-      result.error
-    ) {
+    if (error) {
 
-      throw result.error;
+      throw error;
 
     }
 
 
     alert(
-      "Withdrawal successfully updated."
+
+      `Withdrawal successfully changed to ${newStatus}.`
+
     );
 
 
@@ -1873,7 +3098,13 @@ async function updateWithdrawalStatus(
   catch (error) {
 
 
-    console.error(error);
+    console.error(
+
+      "Withdrawal update error:",
+
+      error
+
+    );
 
 
     alert(
@@ -1881,8 +3112,11 @@ async function updateWithdrawalStatus(
       "Unable to update withdrawal: " +
 
       (
+
         error.message ||
+
         "Unknown error"
+
       )
 
     );
@@ -1893,17 +3127,18 @@ async function updateWithdrawalStatus(
 
 
 /* =========================================
-   START APP
+   START APPLICATION
 ========================================= */
 
-(async function startApp() {
+(async function() {
 
 
   const status =
     getCurrentStatus();
 
 
-  /* SHOW CORRECT SECTION */
+  /* LIST VIEW */
+
 
   if (status) {
 
@@ -1919,8 +3154,11 @@ async function updateWithdrawalStatus(
     ).style.display =
       "block";
 
-
   }
+
+
+  /* OVERVIEW */
+
 
   else {
 
@@ -1938,8 +3176,6 @@ async function updateWithdrawalStatus(
 
   }
 
-
-  /* LOAD DATA */
 
   await loadWithdrawals();
 

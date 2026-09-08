@@ -10,12 +10,10 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>User Details | EarnGig Admin</title>
+    <title>User Details - EarnGig Admin</title>
 
 
-    <!-- =====================================
-         SUPABASE
-    ====================================== -->
+    <!-- SUPABASE -->
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -23,14 +21,12 @@
     <style>
 
 
-        /* =====================================
-           GLOBAL
-        ====================================== */
-
         * {
 
             box-sizing: border-box;
+
             margin: 0;
+
             padding: 0;
 
         }
@@ -38,7 +34,9 @@
 
         body {
 
-            font-family: Arial, sans-serif;
+            font-family:
+                Arial,
+                sans-serif;
 
             background: #f5f6fa;
 
@@ -49,7 +47,8 @@
 
         /* =====================================
            HEADER
-        ====================================== */
+        ===================================== */
+
 
         .header {
 
@@ -98,8 +97,6 @@
 
             font-size: 14px;
 
-            font-weight: 600;
-
         }
 
 
@@ -110,9 +107,11 @@
         }
 
 
+
         /* =====================================
            CONTAINER
-        ====================================== */
+        ===================================== */
+
 
         .container {
 
@@ -127,9 +126,11 @@
         }
 
 
+
         /* =====================================
            LOADING
-        ====================================== */
+        ===================================== */
+
 
         .loading-card {
 
@@ -149,9 +150,11 @@
         }
 
 
+
         /* =====================================
            ERROR
-        ====================================== */
+        ===================================== */
+
 
         .error {
 
@@ -167,14 +170,11 @@
 
             margin-bottom: 20px;
 
-            line-height: 1.5;
+            border:
+                1px solid #fecaca;
 
         }
 
-
-        /* =====================================
-           WARNING
-        ====================================== */
 
         .warning {
 
@@ -182,9 +182,9 @@
 
             background: #fff7ed;
 
-            color: #9a3412;
+            color: #9a5b16;
 
-            padding: 15px;
+            padding: 18px;
 
             border-radius: 10px;
 
@@ -198,9 +198,11 @@
         }
 
 
+
         /* =====================================
            USER PROFILE
-        ====================================== */
+        ===================================== */
+
 
         .profile-card {
 
@@ -289,10 +291,6 @@
         }
 
 
-        /* =====================================
-           STATUS BADGES
-        ====================================== */
-
         .badge {
 
             display: inline-block;
@@ -304,7 +302,7 @@
 
             font-size: 12px;
 
-            font-weight: 600;
+            font-weight: 500;
 
         }
 
@@ -327,6 +325,15 @@
         }
 
 
+        .pending {
+
+            background: #fef3c7;
+
+            color: #92400e;
+
+        }
+
+
         .unknown {
 
             background: #f3f4f6;
@@ -336,9 +343,11 @@
         }
 
 
+
         /* =====================================
            GRID
-        ====================================== */
+        ===================================== */
+
 
         .grid {
 
@@ -357,9 +366,11 @@
         }
 
 
+
         /* =====================================
            CARD
-        ====================================== */
+        ===================================== */
+
 
         .card {
 
@@ -384,9 +395,11 @@
         }
 
 
+
         /* =====================================
            INFORMATION ROWS
-        ====================================== */
+        ===================================== */
+
 
         .info-row {
 
@@ -432,9 +445,11 @@
         }
 
 
+
         /* =====================================
            STAT CARDS
-        ====================================== */
+        ===================================== */
+
 
         .stat-number {
 
@@ -443,8 +458,6 @@
             font-weight: bold;
 
             margin-bottom: 6px;
-
-            word-break: break-word;
 
         }
 
@@ -458,9 +471,11 @@
         }
 
 
+
         /* =====================================
            FULL WIDTH CARD
-        ====================================== */
+        ===================================== */
+
 
         .full-card {
 
@@ -495,9 +510,11 @@
         }
 
 
+
         /* =====================================
            TABLE
-        ====================================== */
+        ===================================== */
+
 
         .table-wrapper {
 
@@ -511,8 +528,6 @@
             width: 100%;
 
             border-collapse: collapse;
-
-            min-width: 700px;
 
         }
 
@@ -529,6 +544,8 @@
 
             color: #666;
 
+            white-space: nowrap;
+
         }
 
 
@@ -541,14 +558,16 @@
 
             font-size: 14px;
 
-            vertical-align: top;
+            word-break: break-word;
 
         }
 
 
+
         /* =====================================
            EMPTY
-        ====================================== */
+        ===================================== */
+
 
         .empty {
 
@@ -561,11 +580,26 @@
         }
 
 
-        /* =====================================
-           CURRENT SUBSCRIPTION
-        ====================================== */
+        .unavailable {
 
-        .subscription-details {
+            text-align: center;
+
+            padding: 40px;
+
+            color: #92400e;
+
+            background: #fffbeb;
+
+        }
+
+
+
+        /* =====================================
+           CURRENT MEMBERSHIP
+        ===================================== */
+
+
+        .membership-grid {
 
             display: grid;
 
@@ -582,7 +616,7 @@
         }
 
 
-        .subscription-label {
+        .membership-item-label {
 
             color: #777;
 
@@ -593,9 +627,107 @@
         }
 
 
+        .membership-item-value {
+
+            font-weight: bold;
+
+            word-break: break-word;
+
+        }
+
+
+
+        /* =====================================
+           STATUS TAGS
+        ===================================== */
+
+
+        .status-tag {
+
+            display: inline-block;
+
+            padding:
+                5px 10px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+
+            font-weight: 500;
+
+            text-transform: capitalize;
+
+        }
+
+
+        .status-active {
+
+            background: #dcfce7;
+
+            color: #15803d;
+
+        }
+
+
+        .status-completed {
+
+            background: #dcfce7;
+
+            color: #15803d;
+
+        }
+
+
+        .status-confirmed {
+
+            background: #dcfce7;
+
+            color: #15803d;
+
+        }
+
+
+        .status-pending {
+
+            background: #fef3c7;
+
+            color: #92400e;
+
+        }
+
+
+        .status-failed {
+
+            background: #fee2e2;
+
+            color: #b91c1c;
+
+        }
+
+
+        .status-refunded {
+
+            background: #f3f4f6;
+
+            color: #555;
+
+        }
+
+
+        .status-unknown {
+
+            background: #f3f4f6;
+
+            color: #555;
+
+        }
+
+
+
         /* =====================================
            MOBILE
-        ====================================== */
+        ===================================== */
+
 
         @media (max-width: 600px) {
 
@@ -646,9 +778,10 @@
             }
 
 
-            .stat-number {
+            .membership-grid {
 
-                font-size: 23px;
+                grid-template-columns:
+                    1fr;
 
             }
 
@@ -657,6 +790,7 @@
 
 
     </style>
+
 
 </head>
 
@@ -668,6 +802,7 @@
 <!-- =====================================
      HEADER
 ===================================== -->
+
 
 <div class="header">
 
@@ -693,13 +828,13 @@
      MAIN
 ===================================== -->
 
+
 <div class="container">
 
 
 
-    <!-- =====================================
-         ERROR
-    ====================================== -->
+    <!-- FATAL ERROR -->
+
 
     <div
         id="errorBox"
@@ -710,9 +845,8 @@
 
 
 
-    <!-- =====================================
-         WARNING
-    ====================================== -->
+    <!-- PARTIAL ACCESS WARNING -->
+
 
     <div
         id="warningBox"
@@ -723,9 +857,8 @@
 
 
 
-    <!-- =====================================
-         LOADING
-    ====================================== -->
+    <!-- LOADING -->
+
 
     <div
         id="loadingBox"
@@ -738,9 +871,8 @@
 
 
 
-    <!-- =====================================
-         USER CONTENT
-    ====================================== -->
+    <!-- USER CONTENT -->
+
 
     <div
         id="userContent"
@@ -751,7 +883,8 @@
 
         <!-- =====================================
              USER PROFILE
-        ====================================== -->
+        ===================================== -->
+
 
         <div class="profile-card">
 
@@ -788,6 +921,8 @@
                         class="profile-email"
                     >
 
+                        —
+
                     </div>
 
 
@@ -814,12 +949,12 @@
 
         <!-- =====================================
              QUICK STATS
-        ====================================== -->
+        ===================================== -->
+
 
         <div class="grid">
 
 
-            <!-- WALLET BALANCE -->
 
             <div class="card">
 
@@ -829,7 +964,7 @@
                     class="stat-number"
                 >
 
-                    Loading...
+                    ₦0
 
                 </div>
 
@@ -845,8 +980,6 @@
 
 
 
-            <!-- TOTAL EARNED -->
-
             <div class="card">
 
 
@@ -855,7 +988,7 @@
                     class="stat-number"
                 >
 
-                    Loading...
+                    ₦0
 
                 </div>
 
@@ -871,8 +1004,6 @@
 
 
 
-            <!-- SUBSCRIPTIONS -->
-
             <div class="card">
 
 
@@ -881,14 +1012,14 @@
                     class="stat-number"
                 >
 
-                    Loading...
+                    0
 
                 </div>
 
 
                 <div class="stat-label">
 
-                    Total Subscriptions
+                    Membership Payments
 
                 </div>
 
@@ -896,8 +1027,6 @@
             </div>
 
 
-
-            <!-- TRANSACTIONS -->
 
             <div class="card">
 
@@ -907,7 +1036,7 @@
                     class="stat-number"
                 >
 
-                    Loading...
+                    0
 
                 </div>
 
@@ -927,14 +1056,16 @@
 
 
         <!-- =====================================
-             INFORMATION
-        ====================================== -->
+             USER INFORMATION
+        ===================================== -->
+
 
         <div class="grid">
 
 
 
             <!-- USER INFORMATION -->
+
 
             <div class="card">
 
@@ -1046,9 +1177,8 @@
 
 
 
-            <!-- =====================================
-                 ACCOUNT INFORMATION
-            ====================================== -->
+            <!-- ACCOUNT INFORMATION -->
+
 
             <div class="card">
 
@@ -1136,9 +1266,8 @@
 
 
 
-            <!-- =====================================
-                 WALLET INFORMATION
-            ====================================== -->
+            <!-- WALLET INFORMATION -->
+
 
             <div class="card">
 
@@ -1166,7 +1295,7 @@
                         class="info-value"
                     >
 
-                        Loading...
+                        ₦0
 
                     </div>
 
@@ -1190,7 +1319,7 @@
                         class="info-value"
                     >
 
-                        Loading...
+                        ₦0
 
                     </div>
 
@@ -1214,7 +1343,7 @@
                         class="info-value"
                     >
 
-                        Loading...
+                        ₦0
 
                     </div>
 
@@ -1230,8 +1359,9 @@
 
 
         <!-- =====================================
-             CURRENT SUBSCRIPTION
-        ====================================== -->
+             CURRENT MEMBERSHIP
+        ===================================== -->
+
 
         <div class="full-card">
 
@@ -1241,7 +1371,7 @@
 
                 <h2>
 
-                    Current Subscription
+                    Current Membership
 
                 </h2>
 
@@ -1255,7 +1385,7 @@
                 class="empty"
             >
 
-                Loading subscription information...
+                Loading membership information...
 
             </div>
 
@@ -1265,8 +1395,9 @@
 
 
         <!-- =====================================
-             SUBSCRIPTION HISTORY
-        ====================================== -->
+             MEMBERSHIP HISTORY
+        ===================================== -->
+
 
         <div class="full-card">
 
@@ -1276,7 +1407,7 @@
 
                 <h2>
 
-                    Subscription History
+                    Membership History
 
                 </h2>
 
@@ -1296,15 +1427,103 @@
 
                         <tr>
 
-                            <th>Plan</th>
-
-                            <th>Amount</th>
 
                             <th>Status</th>
 
                             <th>Started</th>
 
-                            <th>Expires</th>
+                            <th>Period Start</th>
+
+                            <th>Period End</th>
+
+                            <th>Payment Count</th>
+
+
+                        </tr>
+
+
+                    </thead>
+
+
+
+                    <tbody
+                        id="membershipTable"
+                    >
+
+
+                        <tr>
+
+
+                            <td
+                                colspan="5"
+                                class="empty"
+                            >
+
+                                Loading memberships...
+
+                            </td>
+
+
+                        </tr>
+
+
+                    </tbody>
+
+
+                </table>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =====================================
+             MEMBERSHIP PAYMENTS
+        ===================================== -->
+
+
+        <div class="full-card">
+
+
+            <div class="card-header">
+
+
+                <h2>
+
+                    Membership Payment History
+
+                </h2>
+
+
+            </div>
+
+
+
+            <div class="table-wrapper">
+
+
+                <table>
+
+
+                    <thead>
+
+
+                        <tr>
+
+
+                            <th>Reference</th>
+
+                            <th>Amount</th>
+
+                            <th>Payment Type</th>
+
+                            <th>Status</th>
+
+                            <th>Paid At</th>
+
 
                         </tr>
 
@@ -1326,7 +1545,7 @@
                                 class="empty"
                             >
 
-                                Loading subscriptions...
+                                Loading payments...
 
                             </td>
 
@@ -1349,7 +1568,8 @@
 
         <!-- =====================================
              RECENT TRANSACTIONS
-        ====================================== -->
+        ===================================== -->
+
 
         <div class="full-card">
 
@@ -1379,6 +1599,7 @@
 
                         <tr>
 
+
                             <th>Type</th>
 
                             <th>Amount</th>
@@ -1388,6 +1609,7 @@
                             <th>Description</th>
 
                             <th>Date</th>
+
 
                         </tr>
 
@@ -1440,12 +1662,13 @@
      JAVASCRIPT
 ===================================== -->
 
+
 <script>
 
 
 
 /* =====================================
-   SUPABASE CONFIGURATION
+   SUPABASE
 ===================================== */
 
 
@@ -1455,7 +1678,6 @@ const SUPABASE_URL =
 
 const SUPABASE_PUBLISHABLE_KEY =
     "sb_publishable_CLTeqgEB6JSQ7Kqq6rQARw_RV31Ccg3";
-
 
 
 const supabaseClient =
@@ -1476,12 +1698,24 @@ const supabaseClient =
 
 const urlParams =
     new URLSearchParams(
+
         window.location.search
+
     );
 
 
 const userId =
     urlParams.get("id");
+
+
+
+/* =====================================
+   TRACK UNAVAILABLE TABLES
+===================================== */
+
+
+const unavailableSections =
+    [];
 
 
 
@@ -1497,7 +1731,9 @@ function escapeHtml(value) {
 
         value === null ||
 
-        value === undefined
+        value === undefined ||
+
+        value === ""
 
     ) {
 
@@ -1532,18 +1768,7 @@ function formatMoney(amount) {
 
 
     const value =
-        Number(amount ?? 0);
-
-
-    if (
-
-        Number.isNaN(value)
-
-    ) {
-
-        return "₦0";
-
-    }
+        Number(amount || 0);
 
 
     return new Intl.NumberFormat(
@@ -1718,6 +1943,163 @@ function getUserName(user) {
 
 
 /* =====================================
+   FORMAT STATUS
+===================================== */
+
+
+function formatStatus(status) {
+
+
+    if (!status) {
+
+        return "Unknown";
+
+    }
+
+
+    return String(status)
+
+        .replace(/_/g, " ")
+
+        .replace(
+
+            /\b\w/g,
+
+            letter =>
+
+                letter.toUpperCase()
+
+        );
+
+
+}
+
+
+
+/* =====================================
+   GET STATUS CLASS
+===================================== */
+
+
+function getStatusClass(status) {
+
+
+    const value =
+        String(
+            status || ""
+        )
+        .toLowerCase();
+
+
+    if (
+
+        value === "active"
+
+    ) {
+
+        return "status-active";
+
+    }
+
+
+    if (
+
+        value === "completed"
+
+    ) {
+
+        return "status-completed";
+
+    }
+
+
+    if (
+
+        value === "confirmed"
+
+    ) {
+
+        return "status-confirmed";
+
+    }
+
+
+    if (
+
+        value === "pending"
+
+    ) {
+
+        return "status-pending";
+
+    }
+
+
+    if (
+
+        value === "failed"
+
+    ) {
+
+        return "status-failed";
+
+    }
+
+
+    if (
+
+        value === "refunded"
+
+    ) {
+
+        return "status-refunded";
+
+    }
+
+
+    return "status-unknown";
+
+
+}
+
+
+
+/* =====================================
+   CREATE STATUS TAG
+===================================== */
+
+
+function createStatusTag(status) {
+
+
+    const tag =
+        document.createElement(
+            "span"
+        );
+
+
+    tag.className =
+        "status-tag " +
+
+        getStatusClass(
+            status
+        );
+
+
+    tag.textContent =
+        formatStatus(
+            status
+        );
+
+
+    return tag;
+
+
+}
+
+
+
+/* =====================================
    SHOW ERROR
 ===================================== */
 
@@ -1748,7 +2130,7 @@ function showError(message) {
 ===================================== */
 
 
-function showWarning(message) {
+function showWarning() {
 
 
     const warningBox =
@@ -1757,8 +2139,31 @@ function showWarning(message) {
         );
 
 
+    if (
+
+        unavailableSections.length === 0
+
+    ) {
+
+        warningBox.style.display =
+            "none";
+
+        return;
+
+    }
+
+
     warningBox.textContent =
-        message;
+
+        "Some information could not be loaded. " +
+
+        "The database may be restricting administrator access " +
+
+        "to: " +
+
+        unavailableSections.join(", ") +
+
+        ".";
 
 
     warningBox.style.display =
@@ -1770,151 +2175,28 @@ function showWarning(message) {
 
 
 /* =====================================
-   CHECK ADMIN ACCESS
+   ADD UNAVAILABLE SECTION
 ===================================== */
 
 
-async function checkAdmin() {
-
-
-    const {
-
-        data: {
-
-            user
-
-        },
-
-        error
-
-    }
-
-    = await supabaseClient
-
-        .auth
-
-        .getUser();
-
+function addUnavailableSection(
+    section
+) {
 
 
     if (
 
-        error ||
-
-        !user
-
-    ) {
-
-
-        window.location.href =
-            "index.html";
-
-
-        return false;
-
-
-    }
-
-
-
-    const {
-
-        data: profile,
-
-        error: profileError
-
-    }
-
-    = await supabaseClient
-
-        .from("profiles")
-
-        .select(
-
-            "is_admin, account_status"
-
+        !unavailableSections.includes(
+            section
         )
 
-        .eq(
-
-            "id",
-
-            user.id
-
-        )
-
-        .single();
-
-
-
-    if (
-
-        profileError ||
-
-        !profile ||
-
-        profile.is_admin !== true
-
     ) {
 
-
-        await supabaseClient
-            .auth
-            .signOut();
-
-
-        alert(
-
-            "Access denied. Administrator privileges are required."
-
+        unavailableSections.push(
+            section
         );
 
-
-        window.location.href =
-            "index.html";
-
-
-        return false;
-
-
     }
-
-
-
-    if (
-
-        profile.account_status &&
-
-        String(
-            profile.account_status
-        ).toLowerCase() !== "active"
-
-    ) {
-
-
-        await supabaseClient
-            .auth
-            .signOut();
-
-
-        alert(
-
-            "This administrator account is not active."
-
-        );
-
-
-        window.location.href =
-            "index.html";
-
-
-        return false;
-
-
-    }
-
-
-    return true;
 
 
 }
@@ -1970,7 +2252,9 @@ async function loadUser() {
 
         }
 
-        = await supabaseClient
+        =
+
+        await supabaseClient
 
             .from("profiles")
 
@@ -1990,7 +2274,9 @@ async function loadUser() {
 
         if (userError) {
 
+
             throw userError;
+
 
         }
 
@@ -1998,9 +2284,13 @@ async function loadUser() {
 
         if (!user) {
 
+
             throw new Error(
+
                 "User not found."
+
             );
+
 
         }
 
@@ -2017,75 +2307,36 @@ async function loadUser() {
 
 
 
-        /*
-        ======================================
-        LOAD ALL RELATED DATA
-        ======================================
-        */
+        /* =====================================
+           LOAD DATA IN PARALLEL
+        ===================================== */
 
 
-        const results =
-            await Promise.allSettled([
+        await Promise.allSettled([
 
 
-                loadWallet(),
+            loadWallet(),
 
 
-                loadSubscriptions(),
+            loadMemberships(),
 
 
-                loadTransactions()
+            loadMembershipPayments(),
 
 
-            ]);
+            loadTransactions()
 
 
-
-        /*
-        ======================================
-        CHECK FAILED REQUESTS
-        ======================================
-        */
-
-
-        const failedRequests =
-            results.filter(
-
-                result =>
-
-                    result.status ===
-                    "rejected"
-
-            );
+        ]);
 
 
 
-        if (
-
-            failedRequests.length > 0
-
-        ) {
+        /* =====================================
+           DISPLAY WARNINGS
+        ===================================== */
 
 
-            console.warn(
-
-                "Some user information could not be loaded:",
-
-                failedRequests
-
-            );
-
-
-            showWarning(
-
-                "Some information could not be loaded. " +
-
-                "The database may be restricting administrator access to one or more tables."
-
-            );
-
-
-        }
+        showWarning();
 
 
 
@@ -2117,11 +2368,8 @@ async function loadUser() {
 
 
         console.error(
-
             "User loading error:",
-
             error
-
         );
 
 
@@ -2138,9 +2386,11 @@ async function loadUser() {
             "Unable to load user: " +
 
             (
+
                 error.message ||
 
                 "Unknown error"
+
             )
 
         );
@@ -2176,12 +2426,13 @@ function displayUserProfile(user) {
 
 
     const firstLetter =
-        String(name)
+        name
 
             .charAt(0)
 
-            .toUpperCase();
+            .toUpperCase() ||
 
+        "U";
 
 
     document
@@ -2192,14 +2443,12 @@ function displayUserProfile(user) {
         firstLetter;
 
 
-
     document
         .getElementById(
             "userName"
         )
         .textContent =
         name;
-
 
 
     document
@@ -2210,14 +2459,12 @@ function displayUserProfile(user) {
         email;
 
 
-
     document
         .getElementById(
             "infoName"
         )
         .textContent =
         name;
-
 
 
     document
@@ -2228,14 +2475,12 @@ function displayUserProfile(user) {
         email;
 
 
-
     document
         .getElementById(
             "infoUsername"
         )
         .textContent =
         username;
-
 
 
     document
@@ -2246,18 +2491,14 @@ function displayUserProfile(user) {
         user.id || "—";
 
 
-
     document
         .getElementById(
             "infoJoined"
         )
         .textContent =
         formatDateTime(
-
             user.created_at
-
         );
-
 
 
     document
@@ -2266,32 +2507,8 @@ function displayUserProfile(user) {
         )
         .textContent =
         formatDateTime(
-
             user.updated_at
-
         );
-
-
-
-    /*
-    ======================================
-    ACCOUNT STATUS
-    ======================================
-    */
-
-
-    const accountStatus =
-        String(
-
-            user.account_status ||
-
-            user.status ||
-
-            "active"
-
-        )
-
-        .toLowerCase();
 
 
 
@@ -2304,49 +2521,51 @@ function displayUserProfile(user) {
 
 
 
-    if (
-
-        accountStatus === "inactive"
-
-    ) {
+    if (user.status) {
 
 
         statusText =
-            "Inactive";
+            formatStatus(
+                user.status
+            );
 
 
-        statusClass =
-            "inactive";
+        if (
+
+            String(
+                user.status
+            )
+            .toLowerCase() ===
+
+            "inactive"
+
+        ) {
 
 
-    }
+            statusClass =
+                "inactive";
 
 
-    else if (
-
-        accountStatus !== "active"
-
-    ) {
+        }
 
 
-        statusText =
+        else if (
 
-            accountStatus
+            String(
+                user.status
+            )
+            .toLowerCase() ===
 
-                .charAt(0)
+            "pending"
 
-                .toUpperCase()
-
-            +
-
-            accountStatus
-
-                .slice(1);
+        ) {
 
 
+            statusClass =
+                "pending";
 
-        statusClass =
-            "unknown";
+
+        }
 
 
     }
@@ -2383,124 +2602,95 @@ function displayUserProfile(user) {
 
 
 /* =====================================
-   UPDATE WALLET DISPLAY
-===================================== */
-
-
-function updateWalletDisplay(
-
-    balance,
-
-    totalEarned,
-
-    referralEarned
-
-) {
-
-
-
-    document
-        .getElementById(
-            "walletBalance"
-        )
-        .textContent =
-        formatMoney(
-            balance
-        );
-
-
-
-    document
-        .getElementById(
-            "totalEarned"
-        )
-        .textContent =
-        formatMoney(
-            totalEarned
-        );
-
-
-
-    document
-        .getElementById(
-            "infoBalance"
-        )
-        .textContent =
-        formatMoney(
-            balance
-        );
-
-
-
-    document
-        .getElementById(
-            "infoTotalEarned"
-        )
-        .textContent =
-        formatMoney(
-            totalEarned
-        );
-
-
-
-    document
-        .getElementById(
-            "infoReferralEarned"
-        )
-        .textContent =
-        formatMoney(
-            referralEarned
-        );
-
-
-}
-
-
-
-/* =====================================
    LOAD WALLET
+
+   TABLE STRUCTURE:
+
+   wallets
+   - user_id
+   - balance
+   - total_earned
+   - referral_earned
+   - updated_at
 ===================================== */
 
 
 async function loadWallet() {
 
 
-    const {
-
-        data: wallet,
-
-        error
-
-    }
-
-    = await supabaseClient
-
-        .from("wallets")
-
-        .select("*")
-
-        .eq(
-
-            "user_id",
-
-            userId
-
-        )
-
-        .maybeSingle();
+    try {
 
 
+        const {
 
-    if (error) {
-
-
-        console.error(
-
-            "Wallet query failed:",
+            data: wallet,
 
             error
 
-        );
+        }
+
+        =
+
+        await supabaseClient
+
+            .from("wallets")
+
+            .select(
+
+                `
+                user_id,
+                balance,
+                total_earned,
+                referral_earned,
+                updated_at
+                `
+
+            )
+
+            .eq(
+
+                "user_id",
+
+                userId
+
+            )
+
+            .maybeSingle();
+
+
+
+        if (error) {
+
+
+            console.error(
+                "Wallet error:",
+                error
+            );
+
+
+            addUnavailableSection(
+                "Wallet"
+            );
+
+
+            return;
+
+
+        }
+
+
+
+        const balance =
+            wallet?.balance || 0;
+
+
+        const totalEarned =
+            wallet?.total_earned || 0;
+
+
+        const referralEarned =
+            wallet?.referral_earned || 0;
+
 
 
         document
@@ -2508,7 +2698,10 @@ async function loadWallet() {
                 "walletBalance"
             )
             .textContent =
-            "Unavailable";
+            formatMoney(
+                balance
+            );
+
 
 
         document
@@ -2516,7 +2709,10 @@ async function loadWallet() {
                 "totalEarned"
             )
             .textContent =
-            "Unavailable";
+            formatMoney(
+                totalEarned
+            );
+
 
 
         document
@@ -2524,7 +2720,10 @@ async function loadWallet() {
                 "infoBalance"
             )
             .textContent =
-            "Unable to load";
+            formatMoney(
+                balance
+            );
+
 
 
         document
@@ -2532,7 +2731,10 @@ async function loadWallet() {
                 "infoTotalEarned"
             )
             .textContent =
-            "Unable to load";
+            formatMoney(
+                totalEarned
+            );
+
 
 
         document
@@ -2540,120 +2742,29 @@ async function loadWallet() {
                 "infoReferralEarned"
             )
             .textContent =
-            "Unable to load";
-
-
-        throw error;
-
-
-    }
-
-
-
-    /*
-    ======================================
-    NO WALLET
-    ======================================
-    */
-
-
-    if (!wallet) {
-
-
-        console.warn(
-
-            "No wallet found for user:",
-
-            userId
-
-        );
-
-
-        updateWalletDisplay(
-
-            0,
-
-            0,
-
-            0
-
-        );
-
-
-        return;
+            formatMoney(
+                referralEarned
+            );
 
 
     }
 
 
-
-    console.log(
-
-        "Wallet loaded:",
-
-        wallet
-
-    );
+    catch (error) {
 
 
-
-    /*
-    ======================================
-    GET WALLET VALUES
-    ======================================
-
-    The first value found will be used.
-
-    This supports common column names
-    while keeping your original fields.
-    */
+        console.error(
+            "Wallet loading error:",
+            error
+        );
 
 
-    const balance =
-
-        wallet.balance ??
-
-        wallet.available_balance ??
-
-        wallet.wallet_balance ??
-
-        0;
+        addUnavailableSection(
+            "Wallet"
+        );
 
 
-
-    const totalEarned =
-
-        wallet.total_earned ??
-
-        wallet.earned ??
-
-        wallet.total_income ??
-
-        0;
-
-
-
-    const referralEarned =
-
-        wallet.referral_earned ??
-
-        wallet.referral_earnings ??
-
-        wallet.referral_income ??
-
-        0;
-
-
-
-    updateWalletDisplay(
-
-        balance,
-
-        totalEarned,
-
-        referralEarned
-
-    );
+    }
 
 
 }
@@ -2661,16 +2772,31 @@ async function loadWallet() {
 
 
 /* =====================================
-   LOAD SUBSCRIPTIONS
+   LOAD MEMBERSHIPS
+
+   TABLE STRUCTURE:
+
+   memberships
+   - id
+   - user_id
+   - status
+   - started_at
+   - current_period_start
+   - current_period_end
+   - last_payment_at
+   - next_payment_at
+   - payment_count
+   - created_at
+   - updated_at
 ===================================== */
 
 
-async function loadSubscriptions() {
+async function loadMemberships() {
 
 
     const table =
         document.getElementById(
-            "subscriptionTable"
+            "membershipTable"
         );
 
 
@@ -2680,52 +2806,887 @@ async function loadSubscriptions() {
         );
 
 
+    try {
 
-    const {
 
-        data: subscriptions,
+        const {
 
-        error
+            data: memberships,
 
-    }
+            error
 
-    = await supabaseClient
+        }
 
-        .from("subscriptions")
+        =
 
-        .select("*")
+        await supabaseClient
 
-        .eq(
+            .from("memberships")
 
-            "user_id",
+            .select(
 
-            userId
+                `
+                id,
+                user_id,
+                status,
+                started_at,
+                current_period_start,
+                current_period_end,
+                last_payment_at,
+                next_payment_at,
+                payment_count,
+                created_at,
+                updated_at
+                `
 
-        )
+            )
 
-        .order(
+            .eq(
 
-            "created_at",
+                "user_id",
 
-            {
+                userId
 
-                ascending: false
+            )
+
+            .order(
+
+                "created_at",
+
+                {
+
+                    ascending: false
+
+                }
+
+            );
+
+
+
+        if (error) {
+
+
+            console.error(
+                "Membership error:",
+                error
+            );
+
+
+            addUnavailableSection(
+                "Memberships"
+            );
+
+
+            table.innerHTML = `
+
+                <tr>
+
+                    <td
+                        colspan="5"
+                        class="unavailable"
+                    >
+
+                        Membership information is unavailable.
+
+                    </td>
+
+                </tr>
+
+            `;
+
+
+            currentSubscription.innerHTML =
+
+                `<div class="unavailable">
+
+                    Membership information is unavailable.
+
+                </div>`;
+
+
+            return;
+
+
+        }
+
+
+
+        const list =
+            memberships || [];
+
+
+
+        /* =====================================
+           CURRENT MEMBERSHIP
+        ===================================== */
+
+
+        const currentMembership =
+            list.find(
+
+                membership => {
+
+
+                    const status =
+                        String(
+
+                            membership.status ||
+
+                            ""
+
+                        )
+                        .toLowerCase();
+
+
+
+                    return (
+
+                        status === "active"
+
+                    );
+
+
+                }
+
+            )
+
+            ||
+
+            list.find(
+
+                membership => {
+
+
+                    const endDate =
+                        membership.current_period_end;
+
+
+                    if (!endDate) {
+
+                        return false;
+
+                    }
+
+
+                    return (
+
+                        new Date(
+                            endDate
+                        )
+
+                        >
+
+                        new Date()
+
+                    );
+
+
+                }
+
+            )
+
+            ||
+
+            null;
+
+
+
+        if (currentMembership) {
+
+
+            currentSubscription.innerHTML = `
+
+
+                <div class="membership-grid">
+
+
+                    <div>
+
+
+                        <div class="membership-item-label">
+
+                            Status
+
+                        </div>
+
+
+                        <div
+                            class="membership-item-value"
+                        >
+
+                            ${escapeHtml(
+
+                                formatStatus(
+
+                                    currentMembership.status
+
+                                )
+
+                            )}
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <div>
+
+
+                        <div class="membership-item-label">
+
+                            Started
+
+                        </div>
+
+
+                        <div
+                            class="membership-item-value"
+                        >
+
+                            ${formatDate(
+
+                                currentMembership.started_at
+
+                            )}
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <div>
+
+
+                        <div class="membership-item-label">
+
+                            Current Period Start
+
+                        </div>
+
+
+                        <div
+                            class="membership-item-value"
+                        >
+
+                            ${formatDate(
+
+                                currentMembership.current_period_start
+
+                            )}
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <div>
+
+
+                        <div class="membership-item-label">
+
+                            Current Period End
+
+                        </div>
+
+
+                        <div
+                            class="membership-item-value"
+                        >
+
+                            ${formatDate(
+
+                                currentMembership.current_period_end
+
+                            )}
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <div>
+
+
+                        <div class="membership-item-label">
+
+                            Payment Count
+
+                        </div>
+
+
+                        <div
+                            class="membership-item-value"
+                        >
+
+                            ${escapeHtml(
+
+                                currentMembership.payment_count || 0
+
+                            )}
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <div>
+
+
+                        <div class="membership-item-label">
+
+                            Next Payment
+
+                        </div>
+
+
+                        <div
+                            class="membership-item-value"
+                        >
+
+                            ${formatDate(
+
+                                currentMembership.next_payment_at
+
+                            )}
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+            `;
+
+
+        }
+
+
+        else {
+
+
+            currentSubscription.innerHTML =
+
+                `<div class="empty">
+
+                    No active membership found.
+
+                </div>`;
+
+
+        }
+
+
+
+        /* =====================================
+           NO MEMBERSHIPS
+        ===================================== */
+
+
+        if (list.length === 0) {
+
+
+            table.innerHTML = `
+
+                <tr>
+
+                    <td
+                        colspan="5"
+                        class="empty"
+                    >
+
+                        This user does not have any membership records.
+
+                    </td>
+
+                </tr>
+
+            `;
+
+
+            return;
+
+
+        }
+
+
+
+        /* =====================================
+           DISPLAY MEMBERSHIPS
+        ===================================== */
+
+
+        table.innerHTML =
+            "";
+
+
+        list.forEach(
+
+
+            membership => {
+
+
+                const row =
+                    document.createElement(
+                        "tr"
+                    );
+
+
+
+                const statusCell =
+                    document.createElement(
+                        "td"
+                    );
+
+
+                statusCell.appendChild(
+
+                    createStatusTag(
+
+                        membership.status
+
+                    )
+
+                );
+
+
+
+                row.appendChild(
+                    statusCell
+                );
+
+
+                row.innerHTML += `
+
+
+                    <td>
+
+                        ${formatDate(
+
+                            membership.started_at
+
+                        )}
+
+                    </td>
+
+
+                    <td>
+
+                        ${formatDate(
+
+                            membership.current_period_start
+
+                        )}
+
+                    </td>
+
+
+                    <td>
+
+                        ${formatDate(
+
+                            membership.current_period_end
+
+                        )}
+
+                    </td>
+
+
+                    <td>
+
+                        ${escapeHtml(
+
+                            membership.payment_count || 0
+
+                        )}
+
+                    </td>
+
+
+                `;
+
+
+
+                table.appendChild(
+                    row
+                );
+
 
             }
+
 
         );
 
 
+    }
 
-    if (error) {
+
+    catch (error) {
 
 
         console.error(
+            "Membership loading error:",
+            error
+        );
 
-            "Subscription query failed:",
+
+        addUnavailableSection(
+            "Memberships"
+        );
+
+
+        table.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="5"
+                    class="unavailable"
+                >
+
+                    Membership information is unavailable.
+
+                </td>
+
+            </tr>
+
+        `;
+
+
+        currentSubscription.innerHTML =
+
+            `<div class="unavailable">
+
+                Membership information is unavailable.
+
+            </div>`;
+
+
+    }
+
+
+}
+
+
+
+/* =====================================
+   LOAD MEMBERSHIP PAYMENTS
+
+   TABLE STRUCTURE:
+
+   membership_payments
+   - id
+   - user_id
+   - payment_reference
+   - amount
+   - payment_type
+   - status
+   - paid_at
+   - created_at
+===================================== */
+
+
+async function loadMembershipPayments() {
+
+
+    const table =
+        document.getElementById(
+            "subscriptionTable"
+        );
+
+
+    try {
+
+
+        const {
+
+            data: payments,
 
             error
 
+        }
+
+        =
+
+        await supabaseClient
+
+            .from("membership_payments")
+
+            .select(
+
+                `
+                id,
+                user_id,
+                payment_reference,
+                amount,
+                payment_type,
+                status,
+                paid_at,
+                created_at
+                `
+
+            )
+
+            .eq(
+
+                "user_id",
+
+                userId
+
+            )
+
+            .order(
+
+                "created_at",
+
+                {
+
+                    ascending: false
+
+                }
+
+            )
+
+            .limit(100);
+
+
+
+        if (error) {
+
+
+            console.error(
+                "Membership payment error:",
+                error
+            );
+
+
+            addUnavailableSection(
+                "Membership Payments"
+            );
+
+
+            document
+                .getElementById(
+                    "subscriptionCount"
+                )
+                .textContent =
+                "Unavailable";
+
+
+            table.innerHTML = `
+
+                <tr>
+
+                    <td
+                        colspan="5"
+                        class="unavailable"
+                    >
+
+                        Membership payment information is unavailable.
+
+                    </td>
+
+                </tr>
+
+            `;
+
+
+            return;
+
+
+        }
+
+
+
+        const list =
+            payments || [];
+
+
+
+        document
+            .getElementById(
+                "subscriptionCount"
+            )
+            .textContent =
+            list.length;
+
+
+
+        /* =====================================
+           NO PAYMENTS
+        ===================================== */
+
+
+        if (list.length === 0) {
+
+
+            table.innerHTML = `
+
+                <tr>
+
+                    <td
+                        colspan="5"
+                        class="empty"
+                    >
+
+                        This user has not made any membership payments.
+
+                    </td>
+
+                </tr>
+
+            `;
+
+
+            return;
+
+
+        }
+
+
+
+        /* =====================================
+           DISPLAY PAYMENTS
+        ===================================== */
+
+
+        table.innerHTML =
+            "";
+
+
+        list.forEach(
+
+
+            payment => {
+
+
+                const row =
+                    document.createElement(
+                        "tr"
+                    );
+
+
+                row.innerHTML = `
+
+
+                    <td>
+
+                        ${escapeHtml(
+
+                            payment.payment_reference
+
+                        )}
+
+                    </td>
+
+
+                    <td>
+
+                        ${formatMoney(
+
+                            payment.amount
+
+                        )}
+
+                    </td>
+
+
+                    <td>
+
+                        ${escapeHtml(
+
+                            formatStatus(
+
+                                payment.payment_type
+
+                            )
+
+                        )}
+
+                    </td>
+
+
+                    <td
+                        class="payment-status"
+                    >
+
+                    </td>
+
+
+                    <td>
+
+                        ${formatDateTime(
+
+                            payment.paid_at ||
+
+                            payment.created_at
+
+                        )}
+
+                    </td>
+
+
+                `;
+
+
+
+                const statusCell =
+                    row.querySelector(
+
+                        ".payment-status"
+
+                    );
+
+
+                statusCell.appendChild(
+
+                    createStatusTag(
+
+                        payment.status
+
+                    )
+
+                );
+
+
+
+                table.appendChild(
+                    row
+                );
+
+
+            }
+
+
+        );
+
+
+    }
+
+
+    catch (error) {
+
+
+        console.error(
+            "Membership payment loading error:",
+            error
+        );
+
+
+        addUnavailableSection(
+            "Membership Payments"
         );
 
 
@@ -2743,10 +3704,10 @@ async function loadSubscriptions() {
 
                 <td
                     colspan="5"
-                    class="empty"
+                    class="unavailable"
                 >
 
-                    Unable to load subscription history.
+                    Membership payment information is unavailable.
 
                 </td>
 
@@ -2755,391 +3716,7 @@ async function loadSubscriptions() {
         `;
 
 
-        currentSubscription.textContent =
-
-            "Subscription information is unavailable.";
-
-
-        throw error;
-
-
     }
-
-
-
-    const list =
-        subscriptions || [];
-
-
-
-    /*
-    ======================================
-    SUBSCRIPTION COUNT
-    ======================================
-    */
-
-
-    document
-        .getElementById(
-            "subscriptionCount"
-        )
-        .textContent =
-        list.length;
-
-
-
-    /*
-    ======================================
-    FIND CURRENT SUBSCRIPTION
-    ======================================
-    */
-
-
-    const activeSubscription =
-        list.find(
-
-            subscription => {
-
-
-                const status =
-                    String(
-
-                        subscription.status ||
-
-                        ""
-
-                    )
-
-                    .toLowerCase();
-
-
-
-                return (
-
-                    status === "active" ||
-
-                    status === "current"
-
-                );
-
-
-            }
-
-        );
-
-
-
-    /*
-    ======================================
-    DISPLAY CURRENT SUBSCRIPTION
-    ======================================
-    */
-
-
-    if (activeSubscription) {
-
-
-        const planName =
-
-            activeSubscription.plan_name ??
-
-            activeSubscription.plan ??
-
-            activeSubscription.membership_plan ??
-
-            "Active Plan";
-
-
-
-        const amount =
-
-            activeSubscription.amount ??
-
-            activeSubscription.price ??
-
-            activeSubscription.payment_amount ??
-
-            0;
-
-
-
-        const startDate =
-
-            activeSubscription.start_date ??
-
-            activeSubscription.started_at ??
-
-            activeSubscription.created_at;
-
-
-
-        const expiryDate =
-
-            activeSubscription.end_date ??
-
-            activeSubscription.expires_at ??
-
-            activeSubscription.expiry_date;
-
-
-
-        currentSubscription.innerHTML = `
-
-            <div class="subscription-details">
-
-
-                <div>
-
-                    <div class="subscription-label">
-
-                        Plan
-
-                    </div>
-
-                    <strong>
-
-                        ${escapeHtml(planName)}
-
-                    </strong>
-
-                </div>
-
-
-
-                <div>
-
-                    <div class="subscription-label">
-
-                        Amount
-
-                    </div>
-
-                    <strong>
-
-                        ${formatMoney(amount)}
-
-                    </strong>
-
-                </div>
-
-
-
-                <div>
-
-                    <div class="subscription-label">
-
-                        Started
-
-                    </div>
-
-                    <strong>
-
-                        ${formatDate(startDate)}
-
-                    </strong>
-
-                </div>
-
-
-
-                <div>
-
-                    <div class="subscription-label">
-
-                        Expires
-
-                    </div>
-
-                    <strong>
-
-                        ${formatDate(expiryDate)}
-
-                    </strong>
-
-                </div>
-
-
-            </div>
-
-        `;
-
-
-    }
-
-
-    else {
-
-
-        currentSubscription.textContent =
-
-            "No active subscription found.";
-
-
-    }
-
-
-
-    /*
-    ======================================
-    NO SUBSCRIPTIONS
-    ======================================
-    */
-
-
-    if (list.length === 0) {
-
-
-        table.innerHTML = `
-
-            <tr>
-
-                <td
-                    colspan="5"
-                    class="empty"
-                >
-
-                    This user has not made any subscriptions.
-
-                </td>
-
-            </tr>
-
-        `;
-
-
-        return;
-
-
-    }
-
-
-
-    /*
-    ======================================
-    DISPLAY SUBSCRIPTION HISTORY
-    ======================================
-    */
-
-
-    table.innerHTML =
-        "";
-
-
-
-    list.forEach(
-
-
-        subscription => {
-
-
-            const plan =
-
-                subscription.plan_name ??
-
-                subscription.plan ??
-
-                subscription.membership_plan ??
-
-                "Subscription";
-
-
-
-            const amount =
-
-                subscription.amount ??
-
-                subscription.price ??
-
-                subscription.payment_amount ??
-
-                0;
-
-
-
-            const status =
-
-                subscription.status ??
-
-                "Unknown";
-
-
-
-            const started =
-
-                subscription.start_date ??
-
-                subscription.started_at ??
-
-                subscription.created_at;
-
-
-
-            const expires =
-
-                subscription.end_date ??
-
-                subscription.expires_at ??
-
-                subscription.expiry_date;
-
-
-
-            const row =
-                document.createElement(
-                    "tr"
-                );
-
-
-
-            row.innerHTML = `
-
-                <td>
-
-                    ${escapeHtml(plan)}
-
-                </td>
-
-
-                <td>
-
-                    ${formatMoney(amount)}
-
-                </td>
-
-
-                <td>
-
-                    ${escapeHtml(status)}
-
-                </td>
-
-
-                <td>
-
-                    ${formatDate(started)}
-
-                </td>
-
-
-                <td>
-
-                    ${formatDate(expires)}
-
-                </td>
-
-            `;
-
-
-
-            table.appendChild(
-                row
-            );
-
-
-        }
-
-
-    );
 
 
 }
@@ -3148,6 +3725,21 @@ async function loadSubscriptions() {
 
 /* =====================================
    LOAD TRANSACTIONS
+
+   TABLE STRUCTURE:
+
+   transactions
+   - id
+   - user_id
+   - type
+   - amount
+   - status
+   - description
+   - reference
+   - metadata
+   - balance_after
+   - processed_at
+   - created_at
 ===================================== */
 
 
@@ -3160,59 +3752,289 @@ async function loadTransactions() {
         );
 
 
-
-    /*
-    ======================================
-    GET EXACT TRANSACTION COUNT
-    ======================================
-    */
+    try {
 
 
-    const {
+        const {
 
-        count,
+            data: transactions,
 
-        error: countError
+            error
 
-    }
+        }
 
-    = await supabaseClient
+        =
 
-        .from("transactions")
+        await supabaseClient
 
-        .select(
+            .from("transactions")
 
-            "*",
+            .select(
 
-            {
+                `
+                id,
+                user_id,
+                type,
+                amount,
+                status,
+                description,
+                reference,
+                metadata,
+                balance_after,
+                processed_at,
+                created_at
+                `
 
-                count: "exact",
+            )
 
-                head: true
+            .eq(
+
+                "user_id",
+
+                userId
+
+            )
+
+            .order(
+
+                "created_at",
+
+                {
+
+                    ascending: false
+
+                }
+
+            )
+
+            .limit(50);
+
+
+
+        if (error) {
+
+
+            console.error(
+                "Transaction error:",
+                error
+            );
+
+
+            addUnavailableSection(
+                "Transactions"
+            );
+
+
+            document
+                .getElementById(
+                    "transactionCount"
+                )
+                .textContent =
+                "Unavailable";
+
+
+            table.innerHTML = `
+
+                <tr>
+
+                    <td
+                        colspan="5"
+                        class="unavailable"
+                    >
+
+                        Transaction information is unavailable.
+
+                    </td>
+
+                </tr>
+
+            `;
+
+
+            return;
+
+
+        }
+
+
+
+        const list =
+            transactions || [];
+
+
+
+        document
+            .getElementById(
+                "transactionCount"
+            )
+            .textContent =
+            list.length;
+
+
+
+        /* =====================================
+           NO TRANSACTIONS
+        ===================================== */
+
+
+        if (list.length === 0) {
+
+
+            table.innerHTML = `
+
+                <tr>
+
+                    <td
+                        colspan="5"
+                        class="empty"
+                    >
+
+                        No transactions found.
+
+                    </td>
+
+                </tr>
+
+            `;
+
+
+            return;
+
+
+        }
+
+
+
+        /* =====================================
+           DISPLAY TRANSACTIONS
+        ===================================== */
+
+
+        table.innerHTML =
+            "";
+
+
+        list.forEach(
+
+
+            transaction => {
+
+
+                const row =
+                    document.createElement(
+                        "tr"
+                    );
+
+
+                row.innerHTML = `
+
+
+                    <td>
+
+                        ${escapeHtml(
+
+                            formatStatus(
+
+                                transaction.type
+
+                            )
+
+                        )}
+
+                    </td>
+
+
+                    <td>
+
+                        ${formatMoney(
+
+                            transaction.amount
+
+                        )}
+
+                    </td>
+
+
+                    <td
+                        class="transaction-status"
+                    >
+
+                    </td>
+
+
+                    <td>
+
+                        ${escapeHtml(
+
+                            transaction.description
+
+                        )}
+
+                    </td>
+
+
+                    <td>
+
+                        ${formatDateTime(
+
+                            transaction.processed_at ||
+
+                            transaction.created_at
+
+                        )}
+
+                    </td>
+
+
+                `;
+
+
+
+                const statusCell =
+                    row.querySelector(
+
+                        ".transaction-status"
+
+                    );
+
+
+                statusCell.appendChild(
+
+                    createStatusTag(
+
+                        transaction.status
+
+                    )
+
+                );
+
+
+
+                table.appendChild(
+                    row
+                );
+
 
             }
 
-        )
-
-        .eq(
-
-            "user_id",
-
-            userId
 
         );
 
 
+    }
 
-    if (countError) {
+
+    catch (error) {
 
 
         console.error(
+            "Transaction loading error:",
+            error
+        );
 
-            "Transaction count failed:",
 
-            countError
-
+        addUnavailableSection(
+            "Transactions"
         );
 
 
@@ -3224,89 +4046,16 @@ async function loadTransactions() {
             "Unavailable";
 
 
-        throw countError;
-
-
-    }
-
-
-
-    document
-        .getElementById(
-            "transactionCount"
-        )
-        .textContent =
-        count ?? 0;
-
-
-
-    /*
-    ======================================
-    LOAD RECENT TRANSACTIONS
-    ======================================
-    */
-
-
-    const {
-
-        data: transactions,
-
-        error
-
-    }
-
-    = await supabaseClient
-
-        .from("transactions")
-
-        .select("*")
-
-        .eq(
-
-            "user_id",
-
-            userId
-
-        )
-
-        .order(
-
-            "created_at",
-
-            {
-
-                ascending: false
-
-            }
-
-        )
-
-        .limit(50);
-
-
-
-    if (error) {
-
-
-        console.error(
-
-            "Transaction query failed:",
-
-            error
-
-        );
-
-
         table.innerHTML = `
 
             <tr>
 
                 <td
                     colspan="5"
-                    class="empty"
+                    class="unavailable"
                 >
 
-                    Unable to load transactions.
+                    Transaction information is unavailable.
 
                 </td>
 
@@ -3315,177 +4064,7 @@ async function loadTransactions() {
         `;
 
 
-        throw error;
-
-
     }
-
-
-
-    const list =
-        transactions || [];
-
-
-
-    /*
-    ======================================
-    NO TRANSACTIONS
-    ======================================
-    */
-
-
-    if (list.length === 0) {
-
-
-        table.innerHTML = `
-
-            <tr>
-
-                <td
-                    colspan="5"
-                    class="empty"
-                >
-
-                    No transactions found.
-
-                </td>
-
-            </tr>
-
-        `;
-
-
-        return;
-
-
-    }
-
-
-
-    /*
-    ======================================
-    DISPLAY TRANSACTIONS
-    ======================================
-    */
-
-
-    table.innerHTML =
-        "";
-
-
-
-    list.forEach(
-
-
-        transaction => {
-
-
-            const type =
-
-                transaction.type ??
-
-                transaction.transaction_type ??
-
-                "Transaction";
-
-
-
-            const amount =
-
-                transaction.amount ??
-
-                transaction.value ??
-
-                0;
-
-
-
-            const status =
-
-                transaction.status ??
-
-                "Completed";
-
-
-
-            const description =
-
-                transaction.description ??
-
-                transaction.reference ??
-
-                transaction.title ??
-
-                "—";
-
-
-
-            const date =
-
-                transaction.created_at ??
-
-                transaction.processed_at ??
-
-                transaction.date;
-
-
-
-            const row =
-                document.createElement(
-                    "tr"
-                );
-
-
-
-            row.innerHTML = `
-
-                <td>
-
-                    ${escapeHtml(type)}
-
-                </td>
-
-
-                <td>
-
-                    ${formatMoney(amount)}
-
-                </td>
-
-
-                <td>
-
-                    ${escapeHtml(status)}
-
-                </td>
-
-
-                <td>
-
-                    ${escapeHtml(description)}
-
-                </td>
-
-
-                <td>
-
-                    ${formatDate(date)}
-
-                </td>
-
-            `;
-
-
-
-            table.appendChild(
-                row
-            );
-
-
-        }
-
-
-    );
 
 
 }
@@ -3493,85 +4072,11 @@ async function loadTransactions() {
 
 
 /* =====================================
-   START ADMIN USER DETAILS
+   START
 ===================================== */
 
 
-(async function() {
-
-
-    try {
-
-
-        /*
-        ==================================
-        CHECK ADMIN
-        ==================================
-        */
-
-
-        const isAdmin =
-            await checkAdmin();
-
-
-        if (!isAdmin) {
-
-            return;
-
-        }
-
-
-
-        /*
-        ==================================
-        LOAD USER
-        ==================================
-        */
-
-
-        await loadUser();
-
-
-    }
-
-
-    catch (error) {
-
-
-        console.error(
-
-            "Admin page startup error:",
-
-            error
-
-        );
-
-
-        document
-            .getElementById(
-                "loadingBox"
-            )
-            .style.display =
-            "none";
-
-
-        showError(
-
-            "Unable to start the admin page: " +
-
-            (
-                error.message ||
-
-                "Unknown error"
-            )
-
-        );
-
-
-    }
-
-
-})();
+loadUser();
 
 
 </script>

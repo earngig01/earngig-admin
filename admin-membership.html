@@ -10,10 +10,10 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title>Membership | EarnGig Admin</title>
+  <title>
+    Membership | EarnGig Admin
+  </title>
 
-
-  <!-- SUPABASE -->
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -29,16 +29,14 @@
 
     * {
 
-      box-sizing:
-        border-box;
+      box-sizing: border-box;
 
     }
 
 
     body {
 
-      margin:
-        0;
+      margin: 0;
 
       font-family:
         Arial,
@@ -53,8 +51,7 @@
     }
 
 
-    button,
-    input {
+    button {
 
       font-family:
         inherit;
@@ -86,7 +83,7 @@
         auto;
 
       padding:
-        16px 20px;
+        18px 20px;
 
       display:
         flex;
@@ -95,7 +92,7 @@
         center;
 
       gap:
-        18px;
+        20px;
 
     }
 
@@ -109,7 +106,7 @@
         none;
 
       font-size:
-        24px;
+        25px;
 
       font-weight:
         700;
@@ -130,17 +127,14 @@
       margin-left:
         auto;
 
-      font-size:
-        12px;
+      color:
+        #c9caff;
 
-      font-weight:
-        700;
+      font-size:
+        13px;
 
       letter-spacing:
         .5px;
-
-      color:
-        #c9caff;
 
     }
 
@@ -158,13 +152,13 @@
         rgba(255,255,255,.35);
 
       padding:
-        8px 14px;
+        9px 15px;
 
       border-radius:
         8px;
 
       font-size:
-        13px;
+        14px;
 
     }
 
@@ -190,19 +184,19 @@
         auto;
 
       padding:
-        30px 20px 60px;
+        35px 20px 60px;
 
     }
 
 
     /* =========================================
-       PAGE HEADING
+       PAGE HEADER
     ========================================= */
 
     .page-heading {
 
       margin-bottom:
-        25px;
+        30px;
 
     }
 
@@ -212,8 +206,11 @@
       display:
         inline-block;
 
+      color:
+        #6d4aff;
+
       font-size:
-        11px;
+        12px;
 
       font-weight:
         700;
@@ -221,11 +218,8 @@
       letter-spacing:
         1px;
 
-      color:
-        #6d4aff;
-
       margin-bottom:
-        7px;
+        8px;
 
     }
 
@@ -233,24 +227,20 @@
     .page-heading h1 {
 
       margin:
-        0 0 8px;
+        0 0 10px;
 
       font-size:
-        30px;
+        32px;
 
     }
 
 
     .page-heading p {
 
-      margin:
-        0;
+      margin: 0;
 
       color:
         #686a7d;
-
-      font-size:
-        14px;
 
       line-height:
         1.5;
@@ -265,10 +255,10 @@
     .section-title {
 
       margin:
-        28px 0 14px;
+        30px 0 15px;
 
       font-size:
-        19px;
+        21px;
 
     }
 
@@ -285,7 +275,7 @@
       grid-template-columns:
         repeat(
           auto-fit,
-          minmax(180px, 1fr)
+          minmax(190px, 1fr)
         );
 
       gap:
@@ -300,13 +290,18 @@
         white;
 
       border:
-        1px solid #e6e7ee;
+        1px solid
+        #e6e7ee;
 
       border-radius:
-        11px;
+        12px;
 
       padding:
-        16px 18px;
+        17px;
+
+      box-shadow:
+        0 4px 12px
+        rgba(0,0,0,.03);
 
     }
 
@@ -320,7 +315,7 @@
         #77798b;
 
       font-size:
-        12px;
+        13px;
 
       margin-bottom:
         7px;
@@ -330,9 +325,6 @@
 
     .stat-card strong {
 
-      display:
-        block;
-
       font-size:
         24px;
 
@@ -340,97 +332,101 @@
 
 
     /* =========================================
-       CATEGORY GRID
+       MEMBERSHIP TABLE
     ========================================= */
 
-    .category-grid {
-
-      display:
-        grid;
-
-      grid-template-columns:
-        repeat(
-          auto-fit,
-          minmax(220px, 1fr)
-        );
-
-      gap:
-        14px;
-
-    }
-
-
-    .category-card {
+    .membership-container {
 
       background:
         white;
 
       border:
-        1px solid #e6e7ee;
+        1px solid
+        #e6e7ee;
 
       border-radius:
-        11px;
+        13px;
+
+      overflow:
+        hidden;
+
+      box-shadow:
+        0 4px 15px
+        rgba(0,0,0,.03);
+
+    }
+
+
+    .membership-list {
+
+      display:
+        grid;
+
+    }
+
+
+    .member-card {
 
       padding:
         18px;
 
+      border-bottom:
+        1px solid
+        #eeeeee;
+
+      display:
+        grid;
+
+      grid-template-columns:
+        1.5fr
+        1fr
+        1fr
+        1fr;
+
+      gap:
+        18px;
+
+      align-items:
+        center;
+
     }
 
 
-    .category-icon {
+    .member-card:last-child {
+
+      border-bottom:
+        none;
+
+    }
+
+
+    .member-name {
+
+      margin: 0 0 5px;
 
       font-size:
-        24px;
-
-      margin-bottom:
-        10px;
+        16px;
 
     }
 
 
-    .category-card h2 {
+    .member-email {
 
-      margin:
-        0 0 7px;
-
-      font-size:
-        17px;
-
-    }
-
-
-    .category-card p {
-
-      margin:
-        0;
+      margin: 0;
 
       color:
-        #686a7d;
+        #77798b;
 
       font-size:
         13px;
 
-      line-height:
-        1.5;
+      word-break:
+        break-word;
 
     }
 
 
-    .category-info {
-
-      margin-top:
-        15px;
-
-      padding-top:
-        12px;
-
-      border-top:
-        1px solid #eeeeee;
-
-    }
-
-
-    .category-info small {
+    .member-detail small {
 
       display:
         block;
@@ -439,7 +435,7 @@
         #77798b;
 
       font-size:
-        11px;
+        12px;
 
       margin-bottom:
         5px;
@@ -447,281 +443,19 @@
     }
 
 
-    .category-info strong {
-
-      font-size:
-        19px;
-
-    }
-
-
-    .category-card button {
-
-      width:
-        100%;
-
-      margin-top:
-        15px;
-
-      padding:
-        10px;
-
-      border:
-        0;
-
-      border-radius:
-        8px;
-
-      background:
-        #6d4aff;
-
-      color:
-        white;
-
-      font-size:
-        13px;
-
-      font-weight:
-        700;
-
-      cursor:
-        pointer;
-
-    }
-
-
-    .category-card button:hover {
-
-      opacity:
-        .9;
-
-    }
-
-
-    /* =========================================
-       LIST HEADER
-    ========================================= */
-
-    .list-header {
-
-      display:
-        flex;
-
-      align-items:
-        center;
-
-      justify-content:
-        space-between;
-
-      gap:
-        12px;
-
-      margin-bottom:
-        18px;
-
-      flex-wrap:
-        wrap;
-
-    }
-
-
-    .back-btn {
-
-      border:
-        0;
-
-      background:
-        #17182f;
-
-      color:
-        white;
-
-      padding:
-        9px 14px;
-
-      border-radius:
-        8px;
-
-      font-size:
-        13px;
-
-      font-weight:
-        600;
-
-      cursor:
-        pointer;
-
-    }
-
-
-    .back-btn:hover {
-
-      opacity:
-        .9;
-
-    }
-
-
-    .refresh-btn {
-
-      border:
-        0;
-
-      background:
-        #6d4aff;
-
-      color:
-        white;
-
-      padding:
-        9px 14px;
-
-      border-radius:
-        8px;
-
-      font-size:
-        13px;
-
-      font-weight:
-        700;
-
-      cursor:
-        pointer;
-
-    }
-
-
-    /* =========================================
-       SEARCH
-    ========================================= */
-
-    .search-box {
-
-      width:
-        100%;
-
-      margin-bottom:
-        16px;
-
-    }
-
-
-    .search-box input {
-
-      width:
-        100%;
-
-      padding:
-        12px 14px;
-
-      border:
-        1px solid #dedfe8;
-
-      border-radius:
-        9px;
-
-      outline:
-        none;
+    .member-detail strong {
 
       font-size:
         14px;
 
-      background:
-        white;
-
-    }
-
-
-    .search-box input:focus {
-
-      border-color:
-        #6d4aff;
+      word-break:
+        break-word;
 
     }
 
 
     /* =========================================
-       MEMBER LIST
-    ========================================= */
-
-    .member-list {
-
-      display:
-        grid;
-
-      gap:
-        12px;
-
-    }
-
-
-    .member-card {
-
-      background:
-        white;
-
-      border:
-        1px solid #e6e7ee;
-
-      border-radius:
-        11px;
-
-      padding:
-        16px 18px;
-
-    }
-
-
-    .member-top {
-
-      display:
-        flex;
-
-      align-items:
-        flex-start;
-
-      justify-content:
-        space-between;
-
-      gap:
-        15px;
-
-      margin-bottom:
-        14px;
-
-      flex-wrap:
-        wrap;
-
-    }
-
-
-    .member-name {
-
-      margin:
-        0 0 5px;
-
-      font-size:
-        18px;
-
-    }
-
-
-    .member-email {
-
-      margin:
-        0;
-
-      color:
-        #686a7d;
-
-      font-size:
-        13px;
-
-    }
-
-
-    /* =========================================
-       STATUS BADGES
+       STATUS BADGE
     ========================================= */
 
     .status-badge {
@@ -772,79 +506,10 @@
     .status-unknown {
 
       background:
-        #f3f4f6;
+        #f1f1f1;
 
       color:
-        #555;
-
-    }
-
-
-    /* =========================================
-       DETAILS
-    ========================================= */
-
-    .details-grid {
-
-      display:
-        grid;
-
-      grid-template-columns:
-        repeat(
-          auto-fit,
-          minmax(180px, 1fr)
-        );
-
-      gap:
-        10px;
-
-    }
-
-
-    .detail {
-
-      background:
-        #fafafa;
-
-      border:
-        1px solid #eeeeee;
-
-      border-radius:
-        8px;
-
-      padding:
-        11px;
-
-    }
-
-
-    .detail small {
-
-      display:
-        block;
-
-      color:
-        #77798b;
-
-      font-size:
-        11px;
-
-      margin-bottom:
-        5px;
-
-    }
-
-
-    .detail strong {
-
-      display:
-        block;
-
-      font-size:
-        13px;
-
-      word-break:
-        break-word;
+        #666;
 
     }
 
@@ -859,16 +524,7 @@
         center;
 
       padding:
-        30px;
-
-      background:
-        white;
-
-      border:
-        1px solid #e6e7ee;
-
-      border-radius:
-        11px;
+        35px 20px;
 
       color:
         #686a7d;
@@ -877,7 +533,7 @@
 
 
     /* =========================================
-       EMPTY
+       EMPTY STATE
     ========================================= */
 
     .empty-state {
@@ -886,16 +542,7 @@
         center;
 
       padding:
-        40px 20px;
-
-      background:
-        white;
-
-      border:
-        1px solid #e6e7ee;
-
-      border-radius:
-        11px;
+        45px 20px;
 
       color:
         #686a7d;
@@ -903,38 +550,20 @@
     }
 
 
-    .empty-icon {
-
-      font-size:
-        32px;
-
-      margin-bottom:
-        10px;
-
-    }
-
-
     .empty-state h3 {
 
       margin:
-        0 0 7px;
+        0 0 8px;
 
       color:
         #17182f;
-
-      font-size:
-        18px;
 
     }
 
 
     .empty-state p {
 
-      margin:
-        0;
-
-      font-size:
-        13px;
+      margin: 0;
 
     }
 
@@ -945,42 +574,72 @@
 
     .error-box {
 
+      padding:
+        20px;
+
       background:
         #fff5f5;
 
       border:
-        1px solid #f0b5b5;
+        1px solid
+        #f0b5b5;
+
+      border-radius:
+        12px;
 
       color:
         #721c24;
 
-      padding:
-        16px;
-
-      border-radius:
-        10px;
-
     }
 
 
-    .error-box strong {
+    /* =========================================
+       REFRESH BUTTON
+    ========================================= */
+
+    .top-actions {
 
       display:
-        block;
+        flex;
+
+      justify-content:
+        flex-end;
 
       margin-bottom:
-        6px;
+        15px;
 
     }
 
 
-    .error-box p {
+    .refresh-btn {
 
-      margin:
-        0;
+      border: 0;
 
-      font-size:
-        13px;
+      background:
+        #6d4aff;
+
+      color:
+        white;
+
+      padding:
+        10px 16px;
+
+      border-radius:
+        8px;
+
+      font-weight:
+        700;
+
+      cursor:
+        pointer;
+
+    }
+
+
+    .refresh-btn:hover {
+
+      opacity:
+        .9;
 
     }
 
@@ -990,9 +649,22 @@
     ========================================= */
 
     @media (
-      max-width: 650px
+      max-width: 800px
     ) {
 
+      .member-card {
+
+        grid-template-columns:
+          1fr 1fr;
+
+      }
+
+    }
+
+
+    @media (
+      max-width: 600px
+    ) {
 
       .nav {
 
@@ -1004,8 +676,7 @@
 
       .admin-badge {
 
-        margin-left:
-          0;
+        margin-left: 0;
 
       }
 
@@ -1021,18 +692,20 @@
       .page-heading h1 {
 
         font-size:
-          26px;
+          27px;
 
       }
 
 
-      .member-top {
+      .member-card {
 
-        flex-direction:
-          column;
+        grid-template-columns:
+          1fr;
+
+        gap:
+          14px;
 
       }
-
 
     }
 
@@ -1050,7 +723,6 @@
 ========================================= -->
 
 <header>
-
 
   <div class="nav">
 
@@ -1084,7 +756,6 @@
 
   </div>
 
-
 </header>
 
 
@@ -1096,9 +767,7 @@
 <main>
 
 
-  <!-- =======================================
-       PAGE HEADING
-  ======================================== -->
+  <!-- PAGE HEADER -->
 
   <section
     class="page-heading"
@@ -1114,20 +783,16 @@
     </span>
 
 
-    <h1
-      id="pageTitle"
-    >
+    <h1>
 
       Membership
 
     </h1>
 
 
-    <p
-      id="pageDescription"
-    >
+    <p>
 
-      View and manage registered EarnGig members.
+      Monitor member accounts and membership activity.
 
     </p>
 
@@ -1136,27 +801,74 @@
 
 
 
-  <!-- =======================================
-       OVERVIEW
-  ======================================== -->
+  <!-- STATISTICS -->
 
-  <section
-    id="overviewSection"
+  <h2
+    class="section-title"
+  >
+
+    Membership Statistics
+
+  </h2>
+
+
+  <div
+    class="stats-grid"
+    id="statsGrid"
   >
 
 
-    <h2
-      class="section-title"
+    <div
+      class="loading"
     >
 
-      Member Statistics
+      Loading membership statistics...
 
-    </h2>
+    </div>
+
+
+  </div>
+
+
+
+  <!-- MEMBERS -->
+
+  <h2
+    class="section-title"
+  >
+
+    Member Overview
+
+  </h2>
+
+
+  <div
+    class="top-actions"
+  >
+
+
+    <button
+      type="button"
+      class="refresh-btn"
+      onclick="loadMembership()"
+    >
+
+      ↻ Refresh
+
+    </button>
+
+
+  </div>
+
+
+  <div
+    class="membership-container"
+  >
 
 
     <div
-      class="stats-grid"
-      id="statsGrid"
+      class="membership-list"
+      id="membershipList"
     >
 
 
@@ -1164,7 +876,7 @@
         class="loading"
       >
 
-        Loading member statistics...
+        Loading members...
 
       </div>
 
@@ -1172,436 +884,14 @@
     </div>
 
 
-
-    <h2
-      class="section-title"
-    >
-
-      Membership Management
-
-    </h2>
-
-
-    <div
-      class="category-grid"
-    >
-
-
-      <!-- ALL MEMBERS -->
-
-      <div
-        class="category-card"
-      >
-
-
-        <div
-          class="category-icon"
-        >
-
-          👥
-
-        </div>
-
-
-        <h2>
-
-          All Members
-
-        </h2>
-
-
-        <p>
-
-          View all registered members
-          on the EarnGig platform.
-
-        </p>
-
-
-        <div
-          class="category-info"
-        >
-
-
-          <small>
-
-            Total Members
-
-          </small>
-
-
-          <strong
-            id="totalCount"
-          >
-
-            0
-
-          </strong>
-
-
-        </div>
-
-
-        <button
-          type="button"
-          onclick="openStatus('all')"
-        >
-
-          View All Members →
-
-        </button>
-
-
-      </div>
-
-
-
-      <!-- ACTIVE -->
-
-      <div
-        class="category-card"
-      >
-
-
-        <div
-          class="category-icon"
-        >
-
-          🟢
-
-        </div>
-
-
-        <h2>
-
-          Active Members
-
-        </h2>
-
-
-        <p>
-
-          Members with active
-          EarnGig accounts.
-
-        </p>
-
-
-        <div
-          class="category-info"
-        >
-
-
-          <small>
-
-            Active Members
-
-          </small>
-
-
-          <strong
-            id="activeCount"
-          >
-
-            0
-
-          </strong>
-
-
-        </div>
-
-
-        <button
-          type="button"
-          onclick="openStatus('active')"
-        >
-
-          View Active Members →
-
-        </button>
-
-
-      </div>
-
-
-
-      <!-- INACTIVE -->
-
-      <div
-        class="category-card"
-      >
-
-
-        <div
-          class="category-icon"
-        >
-
-          🔴
-
-        </div>
-
-
-        <h2>
-
-          Inactive Members
-
-        </h2>
-
-
-        <p>
-
-          Members whose accounts
-          are currently inactive.
-
-        </p>
-
-
-        <div
-          class="category-info"
-        >
-
-
-          <small>
-
-            Inactive Members
-
-          </small>
-
-
-          <strong
-            id="inactiveCount"
-          >
-
-            0
-
-          </strong>
-
-
-        </div>
-
-
-        <button
-          type="button"
-          onclick="openStatus('inactive')"
-        >
-
-          View Inactive Members →
-
-        </button>
-
-
-      </div>
-
-
-    </div>
-
-
-  </section>
-
-
-
-  <!-- =======================================
-       MEMBER LIST
-  ======================================== -->
-
-  <section
-    id="listSection"
-    style="display:none;"
-  >
-
-
-    <div
-      class="list-header"
-    >
-
-
-      <button
-        type="button"
-        class="back-btn"
-        onclick="goToOverview()"
-      >
-
-        ← All Membership
-
-      </button>
-
-
-      <button
-        type="button"
-        class="refresh-btn"
-        onclick="loadMembers()"
-      >
-
-        ↻ Refresh
-
-      </button>
-
-
-    </div>
-
-
-
-    <!-- SEARCH -->
-
-    <div
-      class="search-box"
-    >
-
-
-      <input
-
-        type="text"
-
-        id="searchInput"
-
-        placeholder="
-          Search by name or email...
-        "
-
-        oninput="searchMembers()"
-
-      >
-
-
-    </div>
-
-
-
-    <!-- MEMBER LIST -->
-
-    <div
-      class="member-list"
-      id="memberList"
-    >
-
-    </div>
-
-
-  </section>
+  </div>
 
 
 </main>
 
 
 
-<!-- =========================================
-     JAVASCRIPT
-========================================= -->
-
 <script>
-
-
-/* =========================================
-   GLOBAL
-========================================= */
-
-
-let currentAdmin =
-  null;
-
-
-let allMembers =
-  [];
-
-
-/* =========================================
-   GET CURRENT VIEW
-========================================= */
-
-
-function getCurrentStatus() {
-
-
-  const params =
-    new URLSearchParams(
-      window.location.search
-    );
-
-
-  const status =
-    params.get(
-      "status"
-    );
-
-
-  const allowed = [
-
-    "all",
-
-    "active",
-
-    "inactive"
-
-  ];
-
-
-  if (
-
-    allowed.includes(
-      status
-    )
-
-  ) {
-
-    return status;
-
-  }
-
-
-  return null;
-
-}
-
-
-/* =========================================
-   ESCAPE HTML
-========================================= */
-
-
-function escapeHtml(value) {
-
-
-  if (
-
-    value === null ||
-
-    value === undefined
-
-  ) {
-
-    return "—";
-
-  }
-
-
-  return String(value)
-
-    .replace(
-      /&/g,
-      "&amp;"
-    )
-
-    .replace(
-      /</g,
-      "&lt;"
-    )
-
-    .replace(
-      />/g,
-      "&gt;"
-    )
-
-    .replace(
-      /"/g,
-      "&quot;"
-    )
-
-    .replace(
-      /'/g,
-      "&#039;"
-    );
-
-}
 
 
 /* =========================================
@@ -1620,7 +910,6 @@ function formatDate(date) {
 
 
   try {
-
 
     return new Date(date)
 
@@ -1643,12 +932,10 @@ function formatDate(date) {
 
       );
 
-
   }
 
 
   catch (error) {
-
 
     return "—";
 
@@ -1658,304 +945,150 @@ function formatDate(date) {
 
 
 /* =========================================
-   GET MEMBER NAME
+   ESCAPE HTML
 ========================================= */
 
 
-function getMemberName(member) {
+function escapeHtml(value) {
 
 
-  if (!member) {
+  if (
 
-    return "Unknown Member";
+    value === null ||
+
+    value === undefined ||
+
+    value === ""
+
+  ) {
+
+    return "—";
 
   }
 
 
-  return (
+  return String(value)
 
-    member.full_name ||
+    .replaceAll(
+      "&",
+      "&amp;"
+    )
 
-    member.name ||
+    .replaceAll(
+      "<",
+      "&lt;"
+    )
 
-    member.username ||
+    .replaceAll(
+      ">",
+      "&gt;"
+    )
 
-    member.display_name ||
+    .replaceAll(
+      '"',
+      "&quot;"
+    )
 
-    member.email ||
-
-    "Unknown Member"
-
-  );
+    .replaceAll(
+      "'",
+      "&#039;"
+    );
 
 }
 
 
 /* =========================================
-   GET MEMBER STATUS
+   GET STATUS CLASS
 ========================================= */
 
 
-function getMemberStatus(member) {
+function getStatusClass(status) {
 
 
-  const status =
+  const value =
 
     String(
-
-      member.account_status ||
-
-      member.status ||
-
-      "active"
-
+      status || ""
     )
 
     .toLowerCase();
 
 
-  if (
+  if (value === "active") {
 
-    status ===
-    "inactive"
-
-  ) {
-
-    return "inactive";
+    return "status-active";
 
   }
 
 
-  return "active";
+  if (value === "inactive") {
+
+    return "status-inactive";
+
+  }
+
+
+  return "status-unknown";
 
 }
 
 
 /* =========================================
-   ADMIN CHECK
+   LOAD MEMBERSHIP
 ========================================= */
 
 
-async function checkAdmin() {
+async function loadMembership() {
 
 
-  const {
-
-    data:
-    {
-      user
-    },
-
-    error
-
-  }
-
-  =
-
-  await supabaseClient
-
-    .auth
-
-    .getUser();
-
-
-  if (
-
-    error ||
-
-    !user
-
-  ) {
-
-
-    window.location.href =
-      "index.html";
-
-
-    return null;
-
-  }
-
-
-
-  /* LOAD PROFILE */
-
-
-  const {
-
-    data:
-    profile,
-
-    error:
-    profileError
-
-  }
-
-  =
-
-  await supabaseClient
-
-    .from(
-      "profiles"
-    )
-
-    .select(
-
-      `
-        is_admin,
-        account_status
-      `
-
-    )
-
-    .eq(
-      "id",
-      user.id
-    )
-
-    .single();
-
-
-  if (
-
-    profileError ||
-
-    !profile ||
-
-    profile.is_admin !== true
-
-  ) {
-
-
-    alert(
-
-      "Access denied. Administrator privileges are required."
-
-    );
-
-
-    window.location.href =
-      "index.html";
-
-
-    return null;
-
-  }
-
-
-  if (
-
-    profile.account_status &&
-
-    profile.account_status !==
-    "active"
-
-  ) {
-
-
-    alert(
-
-      "This administrator account is not active."
-
-    );
-
-
-    window.location.href =
-      "index.html";
-
-
-    return null;
-
-  }
-
-
-  currentAdmin =
-    user;
-
-
-  return user;
-
-}
-
-
-/* =========================================
-   OPEN MEMBER CATEGORY
-========================================= */
-
-
-function openStatus(status) {
-
-
-  window.location.href =
-
-    "admin-membership.html?status="
-
-    +
-
-    encodeURIComponent(
-      status
-    );
-
-}
-
-
-/* =========================================
-   GO BACK
-========================================= */
-
-
-function goToOverview() {
-
-
-  window.location.href =
-    "admin-membership.html";
-
-}
-
-
-/* =========================================
-   LOAD MEMBERS
-========================================= */
-
-
-async function loadMembers() {
-
-
-  const status =
-    getCurrentStatus();
-
-
-  /* SHOW LOADING */
-
-
-  if (status) {
-
+  const statsGrid =
 
     document.getElementById(
-      "memberList"
-    ).innerHTML = `
-
-      <div
-        class="loading"
-      >
-
-        Loading members...
-
-      </div>
-
-    `;
+      "statsGrid"
+    );
 
 
-  }
+  const membershipList =
+
+    document.getElementById(
+      "membershipList"
+    );
+
+
+  statsGrid.innerHTML = `
+
+    <div class="loading">
+
+      Loading membership statistics...
+
+    </div>
+
+  `;
+
+
+  membershipList.innerHTML = `
+
+    <div class="loading">
+
+      Loading members...
+
+    </div>
+
+  `;
 
 
   try {
 
 
+    /* =====================================
+       LOAD PROFILES
+    ===================================== */
+
+
     const {
 
       data:
-      members,
+      profiles,
 
       error
 
@@ -1974,9 +1107,7 @@ async function loadMembers() {
       )
 
       .order(
-
         "created_at",
-
         {
 
           ascending:
@@ -1994,17 +1125,169 @@ async function loadMembers() {
     }
 
 
-    allMembers =
-      members || [];
+    const members =
+
+      profiles || [];
 
 
-    /* OVERVIEW */
+
+    /* =====================================
+       FILTER ADMIN / MEMBERS
+    ===================================== */
 
 
-    if (!status) {
+    const regularMembers =
+
+      members.filter(
+
+        member =>
+
+          member.is_admin !== true
+
+      );
 
 
-      updateStatistics();
+    const activeMembers =
+
+      regularMembers.filter(
+
+        member =>
+
+          String(
+            member.account_status ||
+            "active"
+          )
+
+          .toLowerCase()
+
+          ===
+
+          "active"
+
+      );
+
+
+    const inactiveMembers =
+
+      regularMembers.filter(
+
+        member =>
+
+          String(
+            member.account_status ||
+            ""
+          )
+
+          .toLowerCase()
+
+          ===
+
+          "inactive"
+
+      );
+
+
+    /* =====================================
+       STATISTICS
+    ===================================== */
+
+
+    statsGrid.innerHTML = `
+
+
+      <div class="stat-card">
+
+        <small>
+
+          Total Members
+
+        </small>
+
+        <strong>
+
+          ${regularMembers.length}
+
+        </strong>
+
+      </div>
+
+
+
+      <div class="stat-card">
+
+        <small>
+
+          Active Members
+
+        </small>
+
+        <strong>
+
+          ${activeMembers.length}
+
+        </strong>
+
+      </div>
+
+
+
+      <div class="stat-card">
+
+        <small>
+
+          Inactive Members
+
+        </small>
+
+        <strong>
+
+          ${inactiveMembers.length}
+
+        </strong>
+
+      </div>
+
+
+    `;
+
+
+
+    /* =====================================
+       EMPTY STATE
+    ===================================== */
+
+
+    if (
+
+      regularMembers.length === 0
+
+    ) {
+
+
+      membershipList.innerHTML = `
+
+
+        <div class="empty-state">
+
+
+          <h3>
+
+            No members found
+
+          </h3>
+
+
+          <p>
+
+            Member accounts will appear here.
+
+          </p>
+
+
+        </div>
+
+
+      `;
 
 
       return;
@@ -2012,12 +1295,168 @@ async function loadMembers() {
     }
 
 
-    /* LIST */
+
+    /* =====================================
+       DISPLAY MEMBERS
+    ===================================== */
 
 
-    displayMembers(
-      status
-    );
+    membershipList.innerHTML =
+
+      regularMembers.map(
+
+        member => {
+
+
+          const status =
+
+            member.account_status ||
+
+            "active";
+
+
+          const fullName =
+
+            member.full_name ||
+
+            "Unnamed Member";
+
+
+          const email =
+
+            member.email ||
+
+            "Email unavailable";
+
+
+          return `
+
+
+            <article
+              class="member-card"
+            >
+
+
+              <div>
+
+
+                <h3
+                  class="member-name"
+                >
+
+                  ${escapeHtml(
+                    fullName
+                  )}
+
+                </h3>
+
+
+                <p
+                  class="member-email"
+                >
+
+                  ${escapeHtml(
+                    email
+                  )}
+
+                </p>
+
+
+              </div>
+
+
+
+              <div
+                class="member-detail"
+              >
+
+
+                <small>
+
+                  Account Status
+
+                </small>
+
+
+                <span
+                  class="
+                    status-badge
+                    ${getStatusClass(
+                      status
+                    )}
+                  "
+                >
+
+                  ${escapeHtml(
+                    status
+                  )}
+
+                </span>
+
+
+              </div>
+
+
+
+              <div
+                class="member-detail"
+              >
+
+
+                <small>
+
+                  Member ID
+
+                </small>
+
+
+                <strong>
+
+                  ${escapeHtml(
+                    member.id
+                  )}
+
+                </strong>
+
+
+              </div>
+
+
+
+              <div
+                class="member-detail"
+              >
+
+
+                <small>
+
+                  Joined
+
+                </small>
+
+
+                <strong>
+
+                  ${formatDate(
+                    member.created_at
+                  )}
+
+                </strong>
+
+
+              </div>
+
+
+            </article>
+
+
+          `;
+
+        }
+
+      )
+
+      .join("");
 
 
   }
@@ -2028,820 +1467,106 @@ async function loadMembers() {
 
     console.error(
 
-      "Member loading error:",
+      "Membership loading error:",
 
       error
 
     );
 
 
-    if (status) {
+    const message =
 
+      error.message ||
 
-      document.getElementById(
-        "memberList"
-      ).innerHTML = `
+      "Unknown error";
 
-        <div
-          class="error-box"
-        >
 
 
-          <strong>
+    statsGrid.innerHTML = `
 
-            Members could not be loaded.
-
-          </strong>
-
-
-          <p>
-
-            ${escapeHtml(
-              error.message ||
-              "Unknown error"
-            )}
-
-          </p>
-
-
-        </div>
-
-      `;
-
-
-    }
-
-
-    else {
-
-
-      document.getElementById(
-        "statsGrid"
-      ).innerHTML = `
-
-        <div
-          class="error-box"
-        >
-
-
-          <strong>
-
-            Member statistics could not be loaded.
-
-          </strong>
-
-
-          <p>
-
-            ${escapeHtml(
-              error.message ||
-              "Unknown error"
-            )}
-
-          </p>
-
-
-        </div>
-
-      `;
-
-
-    }
-
-
-  }
-
-}
-
-
-/* =========================================
-   UPDATE STATISTICS
-========================================= */
-
-
-function updateStatistics() {
-
-
-  const active =
-
-    allMembers.filter(
-
-      member =>
-
-        getMemberStatus(
-          member
-        )
-
-        ===
-
-        "active"
-
-    );
-
-
-  const inactive =
-
-    allMembers.filter(
-
-      member =>
-
-        getMemberStatus(
-          member
-        )
-
-        ===
-
-        "inactive"
-
-    );
-
-
-
-  /* STAT CARDS */
-
-
-  document.getElementById(
-    "statsGrid"
-  ).innerHTML = `
-
-
-    <div
-      class="stat-card"
-    >
-
-      <small>
-
-        Total Members
-
-      </small>
-
-
-      <strong>
-
-        ${allMembers.length}
-
-      </strong>
-
-    </div>
-
-
-
-    <div
-      class="stat-card"
-    >
-
-      <small>
-
-        Active Members
-
-      </small>
-
-
-      <strong>
-
-        ${active.length}
-
-      </strong>
-
-    </div>
-
-
-
-    <div
-      class="stat-card"
-    >
-
-      <small>
-
-        Inactive Members
-
-      </small>
-
-
-      <strong>
-
-        ${inactive.length}
-
-      </strong>
-
-    </div>
-
-
-  `;
-
-
-
-  /* CATEGORY COUNTS */
-
-
-  document.getElementById(
-    "totalCount"
-  ).textContent =
-
-    allMembers.length;
-
-
-  document.getElementById(
-    "activeCount"
-  ).textContent =
-
-    active.length;
-
-
-  document.getElementById(
-    "inactiveCount"
-  ).textContent =
-
-    inactive.length;
-
-}
-
-
-/* =========================================
-   DISPLAY MEMBERS
-========================================= */
-
-
-function displayMembers(
-  status
-) {
-
-
-  const pageTitle =
-    document.getElementById(
-      "pageTitle"
-    );
-
-
-  const pageDescription =
-    document.getElementById(
-      "pageDescription"
-    );
-
-
-  /* TITLES */
-
-
-  const titles = {
-
-
-    all:
-
-      "All Members",
-
-
-    active:
-
-      "Active Members",
-
-
-    inactive:
-
-      "Inactive Members"
-
-  };
-
-
-  const descriptions = {
-
-
-    all:
-
-      "View all registered EarnGig members.",
-
-
-    active:
-
-      "View members with active accounts.",
-
-
-    inactive:
-
-      "View members with inactive accounts."
-
-  };
-
-
-  pageTitle.textContent =
-    titles[status];
-
-
-  pageDescription.textContent =
-    descriptions[status];
-
-
-
-  /* FILTER MEMBERS */
-
-
-  let members =
-    [];
-
-
-  if (
-
-    status ===
-    "all"
-
-  ) {
-
-
-    members =
-      allMembers;
-
-
-  }
-
-
-  else {
-
-
-    members =
-      allMembers.filter(
-
-        member =>
-
-          getMemberStatus(
-            member
-          )
-
-          ===
-
-          status
-
-      );
-
-
-  }
-
-
-  renderMembers(
-    members,
-    status
-  );
-
-}
-
-
-/* =========================================
-   RENDER MEMBERS
-========================================= */
-
-
-function renderMembers(
-  members,
-  status
-) {
-
-
-  const memberList =
-    document.getElementById(
-      "memberList"
-    );
-
-
-  if (
-
-    !members ||
-
-    members.length === 0
-
-  ) {
-
-
-    memberList.innerHTML = `
 
       <div
-        class="empty-state"
+        class="error-box"
       >
 
 
-        <div
-          class="empty-icon"
-        >
+        <strong>
 
-          👤
+          Membership statistics could not be loaded.
 
-        </div>
-
-
-        <h3>
-
-          No members found
-
-        </h3>
+        </strong>
 
 
         <p>
 
-          There are currently no
-          ${escapeHtml(status)}
-          members to display.
+          ${escapeHtml(
+            message
+          )}
 
         </p>
 
 
       </div>
 
+
     `;
 
 
-    return;
 
-  }
-
-
-  memberList.innerHTML =
-
-    members.map(
-
-      member =>
-
-        createMemberCard(
-          member
-        )
-
-    )
-
-    .join("");
-
-}
-
-
-/* =========================================
-   CREATE MEMBER CARD
-========================================= */
-
-
-function createMemberCard(
-  member
-) {
-
-
-  const name =
-    getMemberName(
-      member
-    );
-
-
-  const email =
-
-    member.email ||
-
-    "No email";
-
-
-  const status =
-    getMemberStatus(
-      member
-    );
-
-
-  const statusClass =
-
-    status === "active"
-
-      ?
-
-      "status-active"
-
-      :
-
-      "status-inactive";
-
-
-  return `
-
-
-    <article
-      class="member-card"
-    >
+    membershipList.innerHTML = `
 
 
       <div
-        class="member-top"
+        class="error-box"
       >
 
 
-        <div>
+        <strong>
+
+          Members could not be loaded.
+
+        </strong>
 
 
-          <h2
-            class="member-name"
-          >
-
-            ${escapeHtml(
-              name
-            )}
-
-          </h2>
-
-
-          <p
-            class="member-email"
-          >
-
-            ${escapeHtml(
-              email
-            )}
-
-          </p>
-
-
-        </div>
-
-
-
-        <span
-
-          class="
-            status-badge
-            ${statusClass}
-          "
-
-        >
+        <p>
 
           ${escapeHtml(
-            status
+            message
           )}
 
-        </span>
+        </p>
 
 
       </div>
 
 
-
-      <div
-        class="details-grid"
-      >
+    `;
 
 
-        <div
-          class="detail"
-        >
+  }
 
-
-          <small>
-
-            Member ID
-
-          </small>
-
-
-          <strong>
-
-            ${escapeHtml(
-              member.id
-            )}
-
-          </strong>
-
-
-        </div>
-
-
-
-        <div
-          class="detail"
-        >
-
-
-          <small>
-
-            Joined
-
-          </small>
-
-
-          <strong>
-
-            ${formatDate(
-              member.created_at
-            )}
-
-          </strong>
-
-
-        </div>
-
-
-
-        <div
-          class="detail"
-        >
-
-
-          <small>
-
-            Account Status
-
-          </small>
-
-
-          <strong>
-
-            ${escapeHtml(
-              status
-            )}
-
-          </strong>
-
-
-        </div>
-
-
-      </div>
-
-
-    </article>
-
-
-  `;
 
 }
 
 
 /* =========================================
-   SEARCH MEMBERS
+   START
 ========================================= */
 
 
-function searchMembers() {
+document.addEventListener(
+
+  "DOMContentLoaded",
+
+  function() {
 
 
-  const input =
-    document.getElementById(
-      "searchInput"
-    );
-
-
-  const search =
-    input.value
-      .toLowerCase()
-      .trim();
-
-
-  const status =
-    getCurrentStatus();
-
-
-  let members =
-    [];
-
-
-  if (
-
-    status ===
-    "all"
-
-  ) {
-
-
-    members =
-      allMembers;
+    loadMembership();
 
 
   }
 
-
-  else {
-
-
-    members =
-      allMembers.filter(
-
-        member =>
-
-          getMemberStatus(
-            member
-          )
-
-          ===
-
-          status
-
-      );
-
-
-  }
-
-
-  const filtered =
-    members.filter(
-
-      member => {
-
-
-        const name =
-          getMemberName(
-            member
-          )
-          .toLowerCase();
-
-
-        const email =
-          String(
-
-            member.email ||
-
-            ""
-
-          )
-          .toLowerCase();
-
-
-        return (
-
-          name.includes(
-            search
-          )
-
-          ||
-
-          email.includes(
-            search
-          )
-
-        );
-
-
-      }
-
-    );
-
-
-  renderMembers(
-    filtered,
-    status
-  );
-
-}
-
-
-/* =========================================
-   START APPLICATION
-========================================= */
-
-
-(async function() {
-
-
-  const admin =
-    await checkAdmin();
-
-
-  if (!admin) {
-
-    return;
-
-  }
-
-
-  const status =
-    getCurrentStatus();
-
-
-  if (status) {
-
-
-    document.getElementById(
-      "overviewSection"
-    ).style.display =
-      "none";
-
-
-    document.getElementById(
-      "listSection"
-    ).style.display =
-      "block";
-
-
-  }
-
-
-  else {
-
-
-    document.getElementById(
-      "overviewSection"
-    ).style.display =
-      "block";
-
-
-    document.getElementById(
-      "listSection"
-    ).style.display =
-      "none";
-
-
-  }
-
-
-  await loadMembers();
-
-
-})();
+);
 
 
 </script>

@@ -10,16 +10,22 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>User Details - Admin</title>
+    <title>User Details | EarnGig Admin</title>
 
 
-    <!-- SUPABASE -->
+    <!-- =====================================
+         SUPABASE
+    ====================================== -->
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
     <style>
 
+
+        /* =====================================
+           GLOBAL
+        ====================================== */
 
         * {
 
@@ -43,8 +49,7 @@
 
         /* =====================================
            HEADER
-        ===================================== */
-
+        ====================================== */
 
         .header {
 
@@ -93,6 +98,8 @@
 
             font-size: 14px;
 
+            font-weight: 600;
+
         }
 
 
@@ -103,11 +110,9 @@
         }
 
 
-
         /* =====================================
            CONTAINER
-        ===================================== */
-
+        ====================================== */
 
         .container {
 
@@ -122,11 +127,9 @@
         }
 
 
-
         /* =====================================
            LOADING
-        ===================================== */
-
+        ====================================== */
 
         .loading-card {
 
@@ -146,11 +149,9 @@
         }
 
 
-
         /* =====================================
            ERROR
-        ===================================== */
-
+        ====================================== */
 
         .error {
 
@@ -166,14 +167,40 @@
 
             margin-bottom: 20px;
 
+            line-height: 1.5;
+
         }
 
 
+        /* =====================================
+           WARNING
+        ====================================== */
+
+        .warning {
+
+            display: none;
+
+            background: #fff7ed;
+
+            color: #9a3412;
+
+            padding: 15px;
+
+            border-radius: 10px;
+
+            margin-bottom: 20px;
+
+            border:
+                1px solid #fed7aa;
+
+            line-height: 1.5;
+
+        }
+
 
         /* =====================================
-           USER PROFILE CARD
-        ===================================== */
-
+           USER PROFILE
+        ====================================== */
 
         .profile-card {
 
@@ -226,12 +253,16 @@
 
             font-weight: bold;
 
+            flex-shrink: 0;
+
         }
 
 
         .profile-main {
 
             flex: 1;
+
+            min-width: 0;
 
         }
 
@@ -242,6 +273,8 @@
 
             margin-bottom: 8px;
 
+            word-break: break-word;
+
         }
 
 
@@ -251,8 +284,14 @@
 
             margin-bottom: 10px;
 
+            word-break: break-word;
+
         }
 
+
+        /* =====================================
+           STATUS BADGES
+        ====================================== */
 
         .badge {
 
@@ -264,6 +303,8 @@
             border-radius: 20px;
 
             font-size: 12px;
+
+            font-weight: 600;
 
         }
 
@@ -295,18 +336,19 @@
         }
 
 
-
         /* =====================================
            GRID
-        ===================================== */
-
+        ====================================== */
 
         .grid {
 
             display: grid;
 
             grid-template-columns:
-                repeat(auto-fit, minmax(230px, 1fr));
+                repeat(
+                    auto-fit,
+                    minmax(230px, 1fr)
+                );
 
             gap: 20px;
 
@@ -315,11 +357,9 @@
         }
 
 
-
         /* =====================================
            CARD
-        ===================================== */
-
+        ====================================== */
 
         .card {
 
@@ -344,11 +384,9 @@
         }
 
 
-
         /* =====================================
            INFORMATION ROWS
-        ===================================== */
-
+        ====================================== */
 
         .info-row {
 
@@ -394,11 +432,9 @@
         }
 
 
-
         /* =====================================
            STAT CARDS
-        ===================================== */
-
+        ====================================== */
 
         .stat-number {
 
@@ -407,6 +443,8 @@
             font-weight: bold;
 
             margin-bottom: 6px;
+
+            word-break: break-word;
 
         }
 
@@ -420,11 +458,9 @@
         }
 
 
-
         /* =====================================
            FULL WIDTH CARD
-        ===================================== */
-
+        ====================================== */
 
         .full-card {
 
@@ -459,11 +495,9 @@
         }
 
 
-
         /* =====================================
            TABLE
-        ===================================== */
-
+        ====================================== */
 
         .table-wrapper {
 
@@ -477,6 +511,8 @@
             width: 100%;
 
             border-collapse: collapse;
+
+            min-width: 700px;
 
         }
 
@@ -505,14 +541,14 @@
 
             font-size: 14px;
 
-        }
+            vertical-align: top;
 
+        }
 
 
         /* =====================================
            EMPTY
-        ===================================== */
-
+        ====================================== */
 
         .empty {
 
@@ -525,26 +561,41 @@
         }
 
 
-
         /* =====================================
-           SECTION TITLE
-        ===================================== */
+           CURRENT SUBSCRIPTION
+        ====================================== */
 
+        .subscription-details {
 
-        .section-title {
+            display: grid;
 
-            font-size: 20px;
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(180px, 1fr)
+                );
 
-            margin-bottom: 15px;
+            gap: 15px;
+
+            padding: 20px;
 
         }
 
 
+        .subscription-label {
+
+            color: #777;
+
+            font-size: 13px;
+
+            margin-bottom: 6px;
+
+        }
+
 
         /* =====================================
            MOBILE
-        ===================================== */
-
+        ====================================== */
 
         @media (max-width: 600px) {
 
@@ -595,11 +646,17 @@
             }
 
 
+            .stat-number {
+
+                font-size: 23px;
+
+            }
+
+
         }
 
 
     </style>
-
 
 </head>
 
@@ -611,7 +668,6 @@
 <!-- =====================================
      HEADER
 ===================================== -->
-
 
 <div class="header">
 
@@ -637,13 +693,13 @@
      MAIN
 ===================================== -->
 
-
 <div class="container">
 
 
 
-    <!-- ERROR -->
-
+    <!-- =====================================
+         ERROR
+    ====================================== -->
 
     <div
         id="errorBox"
@@ -654,8 +710,22 @@
 
 
 
-    <!-- LOADING -->
+    <!-- =====================================
+         WARNING
+    ====================================== -->
 
+    <div
+        id="warningBox"
+        class="warning"
+    >
+
+    </div>
+
+
+
+    <!-- =====================================
+         LOADING
+    ====================================== -->
 
     <div
         id="loadingBox"
@@ -668,8 +738,9 @@
 
 
 
-    <!-- USER CONTENT -->
-
+    <!-- =====================================
+         USER CONTENT
+    ====================================== -->
 
     <div
         id="userContent"
@@ -680,8 +751,7 @@
 
         <!-- =====================================
              USER PROFILE
-        ===================================== -->
-
+        ====================================== -->
 
         <div class="profile-card">
 
@@ -744,12 +814,12 @@
 
         <!-- =====================================
              QUICK STATS
-        ===================================== -->
-
+        ====================================== -->
 
         <div class="grid">
 
 
+            <!-- WALLET BALANCE -->
 
             <div class="card">
 
@@ -759,7 +829,7 @@
                     class="stat-number"
                 >
 
-                    ₦0
+                    Loading...
 
                 </div>
 
@@ -775,6 +845,8 @@
 
 
 
+            <!-- TOTAL EARNED -->
+
             <div class="card">
 
 
@@ -783,7 +855,7 @@
                     class="stat-number"
                 >
 
-                    ₦0
+                    Loading...
 
                 </div>
 
@@ -799,6 +871,8 @@
 
 
 
+            <!-- SUBSCRIPTIONS -->
+
             <div class="card">
 
 
@@ -807,7 +881,7 @@
                     class="stat-number"
                 >
 
-                    0
+                    Loading...
 
                 </div>
 
@@ -823,6 +897,8 @@
 
 
 
+            <!-- TRANSACTIONS -->
+
             <div class="card">
 
 
@@ -831,7 +907,7 @@
                     class="stat-number"
                 >
 
-                    0
+                    Loading...
 
                 </div>
 
@@ -846,19 +922,19 @@
             </div>
 
 
-
         </div>
 
 
 
         <!-- =====================================
-             USER INFORMATION
-        ===================================== -->
-
+             INFORMATION
+        ====================================== -->
 
         <div class="grid">
 
 
+
+            <!-- USER INFORMATION -->
 
             <div class="card">
 
@@ -966,15 +1042,13 @@
                 </div>
 
 
-
             </div>
 
 
 
             <!-- =====================================
                  ACCOUNT INFORMATION
-            ===================================== -->
-
+            ====================================== -->
 
             <div class="card">
 
@@ -1058,15 +1132,13 @@
                 </div>
 
 
-
             </div>
 
 
 
             <!-- =====================================
                  WALLET INFORMATION
-            ===================================== -->
-
+            ====================================== -->
 
             <div class="card">
 
@@ -1094,7 +1166,7 @@
                         class="info-value"
                     >
 
-                        ₦0
+                        Loading...
 
                     </div>
 
@@ -1118,7 +1190,7 @@
                         class="info-value"
                     >
 
-                        ₦0
+                        Loading...
 
                     </div>
 
@@ -1142,13 +1214,12 @@
                         class="info-value"
                     >
 
-                        ₦0
+                        Loading...
 
                     </div>
 
 
                 </div>
-
 
 
             </div>
@@ -1160,8 +1231,7 @@
 
         <!-- =====================================
              CURRENT SUBSCRIPTION
-        ===================================== -->
-
+        ====================================== -->
 
         <div class="full-card">
 
@@ -1196,8 +1266,7 @@
 
         <!-- =====================================
              SUBSCRIPTION HISTORY
-        ===================================== -->
-
+        ====================================== -->
 
         <div class="full-card">
 
@@ -1227,7 +1296,6 @@
 
                         <tr>
 
-
                             <th>Plan</th>
 
                             <th>Amount</th>
@@ -1237,7 +1305,6 @@
                             <th>Started</th>
 
                             <th>Expires</th>
-
 
                         </tr>
 
@@ -1282,8 +1349,7 @@
 
         <!-- =====================================
              RECENT TRANSACTIONS
-        ===================================== -->
-
+        ====================================== -->
 
         <div class="full-card">
 
@@ -1313,7 +1379,6 @@
 
                         <tr>
 
-
                             <th>Type</th>
 
                             <th>Amount</th>
@@ -1323,7 +1388,6 @@
                             <th>Description</th>
 
                             <th>Date</th>
-
 
                         </tr>
 
@@ -1365,7 +1429,6 @@
         </div>
 
 
-
     </div>
 
 
@@ -1377,13 +1440,12 @@
      JAVASCRIPT
 ===================================== -->
 
-
 <script>
 
 
 
 /* =====================================
-   SUPABASE
+   SUPABASE CONFIGURATION
 ===================================== */
 
 
@@ -1393,6 +1455,7 @@ const SUPABASE_URL =
 
 const SUPABASE_PUBLISHABLE_KEY =
     "sb_publishable_CLTeqgEB6JSQ7Kqq6rQARw_RV31Ccg3";
+
 
 
 const supabaseClient =
@@ -1413,9 +1476,7 @@ const supabaseClient =
 
 const urlParams =
     new URLSearchParams(
-
         window.location.search
-
     );
 
 
@@ -1471,7 +1532,18 @@ function formatMoney(amount) {
 
 
     const value =
-        Number(amount || 0);
+        Number(amount ?? 0);
+
+
+    if (
+
+        Number.isNaN(value)
+
+    ) {
+
+        return "₦0";
+
+    }
 
 
     return new Intl.NumberFormat(
@@ -1512,38 +1584,39 @@ function formatDate(date) {
     }
 
 
-    try {
+    const parsedDate =
+        new Date(date);
 
 
-        return new Date(date)
+    if (
 
-            .toLocaleDateString(
+        Number.isNaN(
+            parsedDate.getTime()
+        )
 
-                "en-NG",
-
-                {
-
-                    year: "numeric",
-
-                    month: "short",
-
-                    day: "numeric"
-
-                }
-
-            );
-
-
-    }
-
-
-    catch (error) {
-
+    ) {
 
         return "—";
 
-
     }
+
+
+    return parsedDate
+        .toLocaleDateString(
+
+            "en-NG",
+
+            {
+
+                year: "numeric",
+
+                month: "short",
+
+                day: "numeric"
+
+            }
+
+        );
 
 
 }
@@ -1565,42 +1638,43 @@ function formatDateTime(date) {
     }
 
 
-    try {
+    const parsedDate =
+        new Date(date);
 
 
-        return new Date(date)
+    if (
 
-            .toLocaleString(
+        Number.isNaN(
+            parsedDate.getTime()
+        )
 
-                "en-NG",
-
-                {
-
-                    year: "numeric",
-
-                    month: "short",
-
-                    day: "numeric",
-
-                    hour: "numeric",
-
-                    minute: "2-digit"
-
-                }
-
-            );
-
-
-    }
-
-
-    catch (error) {
-
+    ) {
 
         return "—";
 
-
     }
+
+
+    return parsedDate
+        .toLocaleString(
+
+            "en-NG",
+
+            {
+
+                year: "numeric",
+
+                month: "short",
+
+                day: "numeric",
+
+                hour: "numeric",
+
+                minute: "2-digit"
+
+            }
+
+        );
 
 
 }
@@ -1670,6 +1744,184 @@ function showError(message) {
 
 
 /* =====================================
+   SHOW WARNING
+===================================== */
+
+
+function showWarning(message) {
+
+
+    const warningBox =
+        document.getElementById(
+            "warningBox"
+        );
+
+
+    warningBox.textContent =
+        message;
+
+
+    warningBox.style.display =
+        "block";
+
+
+}
+
+
+
+/* =====================================
+   CHECK ADMIN ACCESS
+===================================== */
+
+
+async function checkAdmin() {
+
+
+    const {
+
+        data: {
+
+            user
+
+        },
+
+        error
+
+    }
+
+    = await supabaseClient
+
+        .auth
+
+        .getUser();
+
+
+
+    if (
+
+        error ||
+
+        !user
+
+    ) {
+
+
+        window.location.href =
+            "index.html";
+
+
+        return false;
+
+
+    }
+
+
+
+    const {
+
+        data: profile,
+
+        error: profileError
+
+    }
+
+    = await supabaseClient
+
+        .from("profiles")
+
+        .select(
+
+            "is_admin, account_status"
+
+        )
+
+        .eq(
+
+            "id",
+
+            user.id
+
+        )
+
+        .single();
+
+
+
+    if (
+
+        profileError ||
+
+        !profile ||
+
+        profile.is_admin !== true
+
+    ) {
+
+
+        await supabaseClient
+            .auth
+            .signOut();
+
+
+        alert(
+
+            "Access denied. Administrator privileges are required."
+
+        );
+
+
+        window.location.href =
+            "index.html";
+
+
+        return false;
+
+
+    }
+
+
+
+    if (
+
+        profile.account_status &&
+
+        String(
+            profile.account_status
+        ).toLowerCase() !== "active"
+
+    ) {
+
+
+        await supabaseClient
+            .auth
+            .signOut();
+
+
+        alert(
+
+            "This administrator account is not active."
+
+        );
+
+
+        window.location.href =
+            "index.html";
+
+
+        return false;
+
+
+    }
+
+
+    return true;
+
+
+}
+
+
+
+/* =====================================
    LOAD USER
 ===================================== */
 
@@ -1718,9 +1970,7 @@ async function loadUser() {
 
         }
 
-        =
-
-        await supabaseClient
+        = await supabaseClient
 
             .from("profiles")
 
@@ -1740,9 +1990,17 @@ async function loadUser() {
 
         if (userError) {
 
-
             throw userError;
 
+        }
+
+
+
+        if (!user) {
+
+            throw new Error(
+                "User not found."
+            );
 
         }
 
@@ -1759,22 +2017,75 @@ async function loadUser() {
 
 
 
-        /* =====================================
-           LOAD OTHER DATA
-        ===================================== */
+        /*
+        ======================================
+        LOAD ALL RELATED DATA
+        ======================================
+        */
 
 
-        await Promise.allSettled([
+        const results =
+            await Promise.allSettled([
 
 
-            loadWallet(),
-
-            loadSubscriptions(),
-
-            loadTransactions()
+                loadWallet(),
 
 
-        ]);
+                loadSubscriptions(),
+
+
+                loadTransactions()
+
+
+            ]);
+
+
+
+        /*
+        ======================================
+        CHECK FAILED REQUESTS
+        ======================================
+        */
+
+
+        const failedRequests =
+            results.filter(
+
+                result =>
+
+                    result.status ===
+                    "rejected"
+
+            );
+
+
+
+        if (
+
+            failedRequests.length > 0
+
+        ) {
+
+
+            console.warn(
+
+                "Some user information could not be loaded:",
+
+                failedRequests
+
+            );
+
+
+            showWarning(
+
+                "Some information could not be loaded. " +
+
+                "The database may be restricting administrator access to one or more tables."
+
+            );
+
+
+        }
 
 
 
@@ -1806,7 +2117,11 @@ async function loadUser() {
 
 
         console.error(
+
+            "User loading error:",
+
             error
+
         );
 
 
@@ -1822,7 +2137,11 @@ async function loadUser() {
 
             "Unable to load user: " +
 
-            error.message
+            (
+                error.message ||
+
+                "Unknown error"
+            )
 
         );
 
@@ -1857,11 +2176,12 @@ function displayUserProfile(user) {
 
 
     const firstLetter =
-        name
+        String(name)
 
             .charAt(0)
 
             .toUpperCase();
+
 
 
     document
@@ -1872,12 +2192,14 @@ function displayUserProfile(user) {
         firstLetter;
 
 
+
     document
         .getElementById(
             "userName"
         )
         .textContent =
         name;
+
 
 
     document
@@ -1888,12 +2210,14 @@ function displayUserProfile(user) {
         email;
 
 
+
     document
         .getElementById(
             "infoName"
         )
         .textContent =
         name;
+
 
 
     document
@@ -1904,12 +2228,14 @@ function displayUserProfile(user) {
         email;
 
 
+
     document
         .getElementById(
             "infoUsername"
         )
         .textContent =
         username;
+
 
 
     document
@@ -1920,14 +2246,18 @@ function displayUserProfile(user) {
         user.id || "—";
 
 
+
     document
         .getElementById(
             "infoJoined"
         )
         .textContent =
         formatDateTime(
+
             user.created_at
+
         );
+
 
 
     document
@@ -1936,8 +2266,32 @@ function displayUserProfile(user) {
         )
         .textContent =
         formatDateTime(
+
             user.updated_at
+
         );
+
+
+
+    /*
+    ======================================
+    ACCOUNT STATUS
+    ======================================
+    */
+
+
+    const accountStatus =
+        String(
+
+            user.account_status ||
+
+            user.status ||
+
+            "active"
+
+        )
+
+        .toLowerCase();
 
 
 
@@ -1949,9 +2303,10 @@ function displayUserProfile(user) {
         "active";
 
 
+
     if (
 
-        user.status === "inactive"
+        accountStatus === "inactive"
 
     ) {
 
@@ -1962,6 +2317,36 @@ function displayUserProfile(user) {
 
         statusClass =
             "inactive";
+
+
+    }
+
+
+    else if (
+
+        accountStatus !== "active"
+
+    ) {
+
+
+        statusText =
+
+            accountStatus
+
+                .charAt(0)
+
+                .toUpperCase()
+
+            +
+
+            accountStatus
+
+                .slice(1);
+
+
+
+        statusClass =
+            "unknown";
 
 
     }
@@ -1998,6 +2383,81 @@ function displayUserProfile(user) {
 
 
 /* =====================================
+   UPDATE WALLET DISPLAY
+===================================== */
+
+
+function updateWalletDisplay(
+
+    balance,
+
+    totalEarned,
+
+    referralEarned
+
+) {
+
+
+
+    document
+        .getElementById(
+            "walletBalance"
+        )
+        .textContent =
+        formatMoney(
+            balance
+        );
+
+
+
+    document
+        .getElementById(
+            "totalEarned"
+        )
+        .textContent =
+        formatMoney(
+            totalEarned
+        );
+
+
+
+    document
+        .getElementById(
+            "infoBalance"
+        )
+        .textContent =
+        formatMoney(
+            balance
+        );
+
+
+
+    document
+        .getElementById(
+            "infoTotalEarned"
+        )
+        .textContent =
+        formatMoney(
+            totalEarned
+        );
+
+
+
+    document
+        .getElementById(
+            "infoReferralEarned"
+        )
+        .textContent =
+        formatMoney(
+            referralEarned
+        );
+
+
+}
+
+
+
+/* =====================================
    LOAD WALLET
 ===================================== */
 
@@ -2005,91 +2465,42 @@ function displayUserProfile(user) {
 async function loadWallet() {
 
 
-    try {
+    const {
+
+        data: wallet,
+
+        error
+
+    }
+
+    = await supabaseClient
+
+        .from("wallets")
+
+        .select("*")
+
+        .eq(
+
+            "user_id",
+
+            userId
+
+        )
+
+        .maybeSingle();
 
 
-        const {
 
-            data: wallet,
+    if (error) {
+
+
+        console.error(
+
+            "Wallet query failed:",
 
             error
 
-        }
-
-        =
-
-        await supabaseClient
-
-            .from("wallets")
-
-            .select("*")
-
-            .eq(
-
-                "user_id",
-
-                userId
-
-            )
-
-            .maybeSingle();
-
-
-
-        if (error) {
-
-
-            console.log(
-
-                "Wallet error:",
-
-                error
-
-            );
-
-
-            return;
-
-
-        }
-
-
-
-        const balance =
-            wallet
-
-                ?
-
-                wallet.balance
-
-                :
-
-                0;
-
-
-        const totalEarned =
-            wallet
-
-                ?
-
-                wallet.total_earned
-
-                :
-
-                0;
-
-
-        const referralEarned =
-            wallet
-
-                ?
-
-                wallet.referral_earned
-
-                :
-
-                0;
-
+        );
 
 
         document
@@ -2097,10 +2508,7 @@ async function loadWallet() {
                 "walletBalance"
             )
             .textContent =
-            formatMoney(
-                balance
-            );
-
+            "Unavailable";
 
 
         document
@@ -2108,10 +2516,7 @@ async function loadWallet() {
                 "totalEarned"
             )
             .textContent =
-            formatMoney(
-                totalEarned
-            );
-
+            "Unavailable";
 
 
         document
@@ -2119,10 +2524,7 @@ async function loadWallet() {
                 "infoBalance"
             )
             .textContent =
-            formatMoney(
-                balance
-            );
-
+            "Unable to load";
 
 
         document
@@ -2130,10 +2532,7 @@ async function loadWallet() {
                 "infoTotalEarned"
             )
             .textContent =
-            formatMoney(
-                totalEarned
-            );
-
+            "Unable to load";
 
 
         document
@@ -2141,24 +2540,120 @@ async function loadWallet() {
                 "infoReferralEarned"
             )
             .textContent =
-            formatMoney(
-                referralEarned
-            );
+            "Unable to load";
+
+
+        throw error;
 
 
     }
 
 
-    catch (error) {
+
+    /*
+    ======================================
+    NO WALLET
+    ======================================
+    */
 
 
-        console.log(
-            "Wallet loading error:",
-            error
+    if (!wallet) {
+
+
+        console.warn(
+
+            "No wallet found for user:",
+
+            userId
+
         );
 
 
+        updateWalletDisplay(
+
+            0,
+
+            0,
+
+            0
+
+        );
+
+
+        return;
+
+
     }
+
+
+
+    console.log(
+
+        "Wallet loaded:",
+
+        wallet
+
+    );
+
+
+
+    /*
+    ======================================
+    GET WALLET VALUES
+    ======================================
+
+    The first value found will be used.
+
+    This supports common column names
+    while keeping your original fields.
+    */
+
+
+    const balance =
+
+        wallet.balance ??
+
+        wallet.available_balance ??
+
+        wallet.wallet_balance ??
+
+        0;
+
+
+
+    const totalEarned =
+
+        wallet.total_earned ??
+
+        wallet.earned ??
+
+        wallet.total_income ??
+
+        0;
+
+
+
+    const referralEarned =
+
+        wallet.referral_earned ??
+
+        wallet.referral_earnings ??
+
+        wallet.referral_income ??
+
+        0;
+
+
+
+    updateWalletDisplay(
+
+        balance,
+
+        totalEarned,
+
+        referralEarned
+
+    );
 
 
 }
@@ -2186,97 +2681,52 @@ async function loadSubscriptions() {
 
 
 
-    try {
+    const {
+
+        data: subscriptions,
+
+        error
+
+    }
+
+    = await supabaseClient
+
+        .from("subscriptions")
+
+        .select("*")
+
+        .eq(
+
+            "user_id",
+
+            userId
+
+        )
+
+        .order(
+
+            "created_at",
+
+            {
+
+                ascending: false
+
+            }
+
+        );
 
 
-        const {
 
-            data: subscriptions,
+    if (error) {
+
+
+        console.error(
+
+            "Subscription query failed:",
 
             error
 
-        }
-
-        =
-
-        await supabaseClient
-
-            .from("subscriptions")
-
-            .select("*")
-
-            .eq(
-
-                "user_id",
-
-                userId
-
-            )
-
-            .order(
-
-                "created_at",
-
-                {
-
-                    ascending: false
-
-                }
-
-            );
-
-
-
-        if (error) {
-
-
-            console.log(
-
-                "Subscription error:",
-
-                error
-
-            );
-
-
-            table.innerHTML = `
-
-                <tr>
-
-                    <td
-                        colspan="5"
-                        class="empty"
-                    >
-
-                        Unable to load subscription history.
-
-                    </td>
-
-                </tr>
-
-            `;
-
-
-            currentSubscription.innerHTML =
-
-                "Subscription information is unavailable.";
-
-
-            return;
-
-
-        }
-
-
-
-        const list =
-            subscriptions || [];
-
-
-
-        /* =====================================
-           UPDATE SUBSCRIPTION COUNT
-        ===================================== */
+        );
 
 
         document
@@ -2284,417 +2734,412 @@ async function loadSubscriptions() {
                 "subscriptionCount"
             )
             .textContent =
-            list.length;
+            "Unavailable";
 
 
+        table.innerHTML = `
 
-        /* =====================================
-           FIND ACTIVE SUBSCRIPTION
-        ===================================== */
+            <tr>
 
-
-        const activeSubscription =
-            list.find(
-
-                subscription => {
-
-
-                    const status =
-                        String(
-
-                            subscription.status ||
-
-                            ""
-
-                        )
-
-                        .toLowerCase();
-
-
-                    return (
-
-                        status === "active" ||
-
-                        status === "completed" ||
-
-                        status === "current"
-
-                    );
-
-
-                }
-
-            );
-
-
-
-        /* =====================================
-           CURRENT SUBSCRIPTION
-        ===================================== */
-
-
-        if (activeSubscription) {
-
-
-            const planName =
-
-                activeSubscription.plan_name ||
-
-                activeSubscription.plan ||
-
-                activeSubscription.membership_plan ||
-
-                "Active Plan";
-
-
-            const amount =
-
-                activeSubscription.amount ||
-
-                activeSubscription.price ||
-
-                activeSubscription.payment_amount ||
-
-                0;
-
-
-            const startDate =
-
-                activeSubscription.start_date ||
-
-                activeSubscription.started_at ||
-
-                activeSubscription.created_at;
-
-
-            const expiryDate =
-
-                activeSubscription.end_date ||
-
-                activeSubscription.expires_at ||
-
-                activeSubscription.expiry_date;
-
-
-
-            currentSubscription.innerHTML = `
-
-
-                <div
-                    style="
-                        display:grid;
-                        grid-template-columns:
-                        repeat(auto-fit,minmax(180px,1fr));
-                        gap:15px;
-                        padding:20px;
-                    "
+                <td
+                    colspan="5"
+                    class="empty"
                 >
 
+                    Unable to load subscription history.
 
-                    <div>
+                </td>
 
+            </tr>
 
-                        <div
-                            style="
-                                color:#777;
-                                font-size:13px;
-                                margin-bottom:5px;
-                            "
-                        >
+        `;
 
-                            Plan
 
-                        </div>
+        currentSubscription.textContent =
 
+            "Subscription information is unavailable.";
 
-                        <strong>
 
-                            ${escapeHtml(planName)}
+        throw error;
 
-                        </strong>
 
+    }
 
-                    </div>
 
 
+    const list =
+        subscriptions || [];
 
-                    <div>
 
 
-                        <div
-                            style="
-                                color:#777;
-                                font-size:13px;
-                                margin-bottom:5px;
-                            "
-                        >
+    /*
+    ======================================
+    SUBSCRIPTION COUNT
+    ======================================
+    */
 
-                            Amount
 
-                        </div>
+    document
+        .getElementById(
+            "subscriptionCount"
+        )
+        .textContent =
+        list.length;
 
 
-                        <strong>
 
-                            ${formatMoney(amount)}
+    /*
+    ======================================
+    FIND CURRENT SUBSCRIPTION
+    ======================================
+    */
 
-                        </strong>
 
-
-                    </div>
-
-
-
-                    <div>
-
-
-                        <div
-                            style="
-                                color:#777;
-                                font-size:13px;
-                                margin-bottom:5px;
-                            "
-                        >
-
-                            Started
-
-                        </div>
-
-
-                        <strong>
-
-                            ${formatDate(startDate)}
-
-                        </strong>
-
-
-                    </div>
-
-
-
-                    <div>
-
-
-                        <div
-                            style="
-                                color:#777;
-                                font-size:13px;
-                                margin-bottom:5px;
-                            "
-                        >
-
-                            Expires
-
-                        </div>
-
-
-                        <strong>
-
-                            ${formatDate(expiryDate)}
-
-                        </strong>
-
-
-                    </div>
-
-
-                </div>
-
-
-            `;
-
-
-        }
-
-
-        else {
-
-
-            currentSubscription.innerHTML =
-
-                "No active subscription found.";
-
-
-        }
-
-
-
-        /* =====================================
-           NO SUBSCRIPTIONS
-        ===================================== */
-
-
-        if (list.length === 0) {
-
-
-            table.innerHTML = `
-
-                <tr>
-
-                    <td
-                        colspan="5"
-                        class="empty"
-                    >
-
-                        This user has not made any subscriptions.
-
-                    </td>
-
-                </tr>
-
-            `;
-
-
-            return;
-
-
-        }
-
-
-
-        /* =====================================
-           DISPLAY SUBSCRIPTIONS
-        ===================================== */
-
-
-        table.innerHTML =
-            "";
-
-
-        list.forEach(
-
+    const activeSubscription =
+        list.find(
 
             subscription => {
 
 
-                const plan =
-
-                    subscription.plan_name ||
-
-                    subscription.plan ||
-
-                    subscription.membership_plan ||
-
-                    "Subscription";
-
-
-
-                const amount =
-
-                    subscription.amount ||
-
-                    subscription.price ||
-
-                    subscription.payment_amount ||
-
-                    0;
-
-
-
                 const status =
+                    String(
 
-                    subscription.status ||
+                        subscription.status ||
 
-                    "Unknown";
+                        ""
 
+                    )
 
-
-                const started =
-
-                    subscription.start_date ||
-
-                    subscription.started_at ||
-
-                    subscription.created_at;
+                    .toLowerCase();
 
 
 
-                const expires =
+                return (
 
-                    subscription.end_date ||
+                    status === "active" ||
 
-                    subscription.expires_at ||
+                    status === "current"
 
-                    subscription.expiry_date;
-
-
-
-                const row =
-                    document.createElement(
-                        "tr"
-                    );
-
-
-
-                row.innerHTML = `
-
-
-                    <td>
-
-                        ${escapeHtml(plan)}
-
-                    </td>
-
-
-                    <td>
-
-                        ${formatMoney(amount)}
-
-                    </td>
-
-
-                    <td>
-
-                        ${escapeHtml(status)}
-
-                    </td>
-
-
-                    <td>
-
-                        ${formatDate(started)}
-
-                    </td>
-
-
-                    <td>
-
-                        ${formatDate(expires)}
-
-                    </td>
-
-
-                `;
-
-
-
-                table.appendChild(
-                    row
                 );
 
 
             }
 
-
         );
+
+
+
+    /*
+    ======================================
+    DISPLAY CURRENT SUBSCRIPTION
+    ======================================
+    */
+
+
+    if (activeSubscription) {
+
+
+        const planName =
+
+            activeSubscription.plan_name ??
+
+            activeSubscription.plan ??
+
+            activeSubscription.membership_plan ??
+
+            "Active Plan";
+
+
+
+        const amount =
+
+            activeSubscription.amount ??
+
+            activeSubscription.price ??
+
+            activeSubscription.payment_amount ??
+
+            0;
+
+
+
+        const startDate =
+
+            activeSubscription.start_date ??
+
+            activeSubscription.started_at ??
+
+            activeSubscription.created_at;
+
+
+
+        const expiryDate =
+
+            activeSubscription.end_date ??
+
+            activeSubscription.expires_at ??
+
+            activeSubscription.expiry_date;
+
+
+
+        currentSubscription.innerHTML = `
+
+            <div class="subscription-details">
+
+
+                <div>
+
+                    <div class="subscription-label">
+
+                        Plan
+
+                    </div>
+
+                    <strong>
+
+                        ${escapeHtml(planName)}
+
+                    </strong>
+
+                </div>
+
+
+
+                <div>
+
+                    <div class="subscription-label">
+
+                        Amount
+
+                    </div>
+
+                    <strong>
+
+                        ${formatMoney(amount)}
+
+                    </strong>
+
+                </div>
+
+
+
+                <div>
+
+                    <div class="subscription-label">
+
+                        Started
+
+                    </div>
+
+                    <strong>
+
+                        ${formatDate(startDate)}
+
+                    </strong>
+
+                </div>
+
+
+
+                <div>
+
+                    <div class="subscription-label">
+
+                        Expires
+
+                    </div>
+
+                    <strong>
+
+                        ${formatDate(expiryDate)}
+
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+        `;
 
 
     }
 
 
-    catch (error) {
+    else {
 
 
-        console.log(
+        currentSubscription.textContent =
 
-            "Subscription loading error:",
-
-            error
-
-        );
+            "No active subscription found.";
 
 
     }
+
+
+
+    /*
+    ======================================
+    NO SUBSCRIPTIONS
+    ======================================
+    */
+
+
+    if (list.length === 0) {
+
+
+        table.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="5"
+                    class="empty"
+                >
+
+                    This user has not made any subscriptions.
+
+                </td>
+
+            </tr>
+
+        `;
+
+
+        return;
+
+
+    }
+
+
+
+    /*
+    ======================================
+    DISPLAY SUBSCRIPTION HISTORY
+    ======================================
+    */
+
+
+    table.innerHTML =
+        "";
+
+
+
+    list.forEach(
+
+
+        subscription => {
+
+
+            const plan =
+
+                subscription.plan_name ??
+
+                subscription.plan ??
+
+                subscription.membership_plan ??
+
+                "Subscription";
+
+
+
+            const amount =
+
+                subscription.amount ??
+
+                subscription.price ??
+
+                subscription.payment_amount ??
+
+                0;
+
+
+
+            const status =
+
+                subscription.status ??
+
+                "Unknown";
+
+
+
+            const started =
+
+                subscription.start_date ??
+
+                subscription.started_at ??
+
+                subscription.created_at;
+
+
+
+            const expires =
+
+                subscription.end_date ??
+
+                subscription.expires_at ??
+
+                subscription.expiry_date;
+
+
+
+            const row =
+                document.createElement(
+                    "tr"
+                );
+
+
+
+            row.innerHTML = `
+
+                <td>
+
+                    ${escapeHtml(plan)}
+
+                </td>
+
+
+                <td>
+
+                    ${formatMoney(amount)}
+
+                </td>
+
+
+                <td>
+
+                    ${escapeHtml(status)}
+
+                </td>
+
+
+                <td>
+
+                    ${formatDate(started)}
+
+                </td>
+
+
+                <td>
+
+                    ${formatDate(expires)}
+
+                </td>
+
+            `;
+
+
+
+            table.appendChild(
+                row
+            );
+
+
+        }
+
+
+    );
 
 
 }
@@ -2716,89 +3161,59 @@ async function loadTransactions() {
 
 
 
-    try {
+    /*
+    ======================================
+    GET EXACT TRANSACTION COUNT
+    ======================================
+    */
 
 
-        const {
+    const {
 
-            data: transactions,
+        count,
 
-            error
+        error: countError
 
-        }
+    }
 
-        =
+    = await supabaseClient
 
-        await supabaseClient
+        .from("transactions")
 
-            .from("transactions")
+        .select(
 
-            .select("*")
+            "*",
 
-            .eq(
+            {
 
-                "user_id",
+                count: "exact",
 
-                userId
+                head: true
 
-            )
+            }
 
-            .order(
+        )
 
-                "created_at",
+        .eq(
 
-                {
+            "user_id",
 
-                    ascending: false
+            userId
 
-                }
-
-            )
-
-            .limit(50);
-
-
-
-        if (error) {
-
-
-            console.log(
-
-                "Transaction error:",
-
-                error
-
-            );
-
-
-            table.innerHTML = `
-
-                <tr>
-
-                    <td
-                        colspan="5"
-                        class="empty"
-                    >
-
-                        Unable to load transactions.
-
-                    </td>
-
-                </tr>
-
-            `;
-
-
-            return;
-
-
-        }
+        );
 
 
 
-        const list =
-            transactions || [];
+    if (countError) {
 
+
+        console.error(
+
+            "Transaction count failed:",
+
+            countError
+
+        );
 
 
         document
@@ -2806,143 +3221,315 @@ async function loadTransactions() {
                 "transactionCount"
             )
             .textContent =
-            list.length;
+            "Unavailable";
+
+
+        throw countError;
+
+
+    }
 
 
 
-        if (list.length === 0) {
+    document
+        .getElementById(
+            "transactionCount"
+        )
+        .textContent =
+        count ?? 0;
 
 
-            table.innerHTML = `
 
-                <tr>
+    /*
+    ======================================
+    LOAD RECENT TRANSACTIONS
+    ======================================
+    */
 
-                    <td
-                        colspan="5"
-                        class="empty"
-                    >
 
-                        No transactions found.
+    const {
 
-                    </td>
+        data: transactions,
 
-                </tr>
+        error
+
+    }
+
+    = await supabaseClient
+
+        .from("transactions")
+
+        .select("*")
+
+        .eq(
+
+            "user_id",
+
+            userId
+
+        )
+
+        .order(
+
+            "created_at",
+
+            {
+
+                ascending: false
+
+            }
+
+        )
+
+        .limit(50);
+
+
+
+    if (error) {
+
+
+        console.error(
+
+            "Transaction query failed:",
+
+            error
+
+        );
+
+
+        table.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="5"
+                    class="empty"
+                >
+
+                    Unable to load transactions.
+
+                </td>
+
+            </tr>
+
+        `;
+
+
+        throw error;
+
+
+    }
+
+
+
+    const list =
+        transactions || [];
+
+
+
+    /*
+    ======================================
+    NO TRANSACTIONS
+    ======================================
+    */
+
+
+    if (list.length === 0) {
+
+
+        table.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="5"
+                    class="empty"
+                >
+
+                    No transactions found.
+
+                </td>
+
+            </tr>
+
+        `;
+
+
+        return;
+
+
+    }
+
+
+
+    /*
+    ======================================
+    DISPLAY TRANSACTIONS
+    ======================================
+    */
+
+
+    table.innerHTML =
+        "";
+
+
+
+    list.forEach(
+
+
+        transaction => {
+
+
+            const type =
+
+                transaction.type ??
+
+                transaction.transaction_type ??
+
+                "Transaction";
+
+
+
+            const amount =
+
+                transaction.amount ??
+
+                transaction.value ??
+
+                0;
+
+
+
+            const status =
+
+                transaction.status ??
+
+                "Completed";
+
+
+
+            const description =
+
+                transaction.description ??
+
+                transaction.reference ??
+
+                transaction.title ??
+
+                "—";
+
+
+
+            const date =
+
+                transaction.created_at ??
+
+                transaction.processed_at ??
+
+                transaction.date;
+
+
+
+            const row =
+                document.createElement(
+                    "tr"
+                );
+
+
+
+            row.innerHTML = `
+
+                <td>
+
+                    ${escapeHtml(type)}
+
+                </td>
+
+
+                <td>
+
+                    ${formatMoney(amount)}
+
+                </td>
+
+
+                <td>
+
+                    ${escapeHtml(status)}
+
+                </td>
+
+
+                <td>
+
+                    ${escapeHtml(description)}
+
+                </td>
+
+
+                <td>
+
+                    ${formatDate(date)}
+
+                </td>
 
             `;
 
 
-            return;
+
+            table.appendChild(
+                row
+            );
 
 
         }
 
 
-
-        table.innerHTML =
-            "";
+    );
 
 
-
-        list.forEach(
-
-
-            transaction => {
-
-
-                const type =
-
-                    transaction.type ||
-
-                    "Transaction";
-
-
-                const amount =
-
-                    transaction.amount ||
-
-                    0;
-
-
-                const status =
-
-                    transaction.status ||
-
-                    "Unknown";
-
-
-                const description =
-
-                    transaction.description ||
-
-                    "—";
-
-
-                const date =
-
-                    transaction.created_at ||
-
-                    transaction.processed_at;
+}
 
 
 
-                const row =
-                    document.createElement(
-                        "tr"
-                    );
+/* =====================================
+   START ADMIN USER DETAILS
+===================================== */
+
+
+(async function() {
+
+
+    try {
+
+
+        /*
+        ==================================
+        CHECK ADMIN
+        ==================================
+        */
+
+
+        const isAdmin =
+            await checkAdmin();
+
+
+        if (!isAdmin) {
+
+            return;
+
+        }
 
 
 
-                row.innerHTML = `
+        /*
+        ==================================
+        LOAD USER
+        ==================================
+        */
 
 
-                    <td>
-
-                        ${escapeHtml(type)}
-
-                    </td>
-
-
-                    <td>
-
-                        ${formatMoney(amount)}
-
-                    </td>
-
-
-                    <td>
-
-                        ${escapeHtml(status)}
-
-                    </td>
-
-
-                    <td>
-
-                        ${escapeHtml(description)}
-
-                    </td>
-
-
-                    <td>
-
-                        ${formatDate(date)}
-
-                    </td>
-
-
-                `;
-
-
-
-                table.appendChild(
-                    row
-                );
-
-
-            }
-
-
-        );
+        await loadUser();
 
 
     }
@@ -2951,11 +3538,32 @@ async function loadTransactions() {
     catch (error) {
 
 
-        console.log(
+        console.error(
 
-            "Transaction loading error:",
+            "Admin page startup error:",
 
             error
+
+        );
+
+
+        document
+            .getElementById(
+                "loadingBox"
+            )
+            .style.display =
+            "none";
+
+
+        showError(
+
+            "Unable to start the admin page: " +
+
+            (
+                error.message ||
+
+                "Unknown error"
+            )
 
         );
 
@@ -2963,21 +3571,10 @@ async function loadTransactions() {
     }
 
 
-}
-
-
-
-/* =====================================
-   START
-===================================== */
-
-
-loadUser();
-
+})();
 
 
 </script>
-
 
 
 </body>

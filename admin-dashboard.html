@@ -83,10 +83,6 @@
       color: #686a7d;
     }
 
-    /* =========================
-       ADMIN ACTION CARDS
-       ========================= */
-
     .section-title {
       margin: 35px 0 15px;
       font-size: 21px;
@@ -139,10 +135,6 @@
     .card button:hover {
       opacity: .9;
     }
-
-    /* =========================
-       STATISTICS
-       ========================= */
 
     .stats-grid {
       display: grid;
@@ -206,10 +198,6 @@
       cursor: pointer;
     }
 
-    /* =========================
-       RESPONSIVE
-       ========================= */
-
     @media (max-width: 650px) {
 
       .nav {
@@ -229,8 +217,10 @@
       main {
         padding: 25px 15px 45px;
       }
+
     }
   </style>
+
 </head>
 
 
@@ -266,9 +256,6 @@
 
 <main>
 
-  <!-- =========================
-       WELCOME
-       ========================= -->
 
   <section class="welcome">
 
@@ -282,10 +269,6 @@
 
   </section>
 
-
-  <!-- =========================
-       PLATFORM STATISTICS
-       ========================= -->
 
   <h2 class="section-title">
     Platform Overview
@@ -303,18 +286,15 @@
   </section>
 
 
-  <!-- =========================
-       ADMIN MANAGEMENT
-       ========================= -->
-
   <h2 class="section-title">
     Management
   </h2>
 
+
   <section class="cards">
 
 
-    <!-- NOVELS -->
+    <!-- NOVEL REVIEW -->
 
     <div class="card">
 
@@ -360,7 +340,7 @@
 
       <button
         type="button"
-        onclick="alert('User management will be connected next.')"
+        onclick="location.href='admin-users.html'"
       >
         Manage Users
       </button>
@@ -387,7 +367,7 @@
 
       <button
         type="button"
-        onclick="alert('Withdrawal management will be connected next.')"
+        onclick="location.href='admin-withdrawals.html'"
       >
         Manage Withdrawals
       </button>
@@ -414,7 +394,7 @@
 
       <button
         type="button"
-        onclick="alert('Membership management will be connected next.')"
+        onclick="location.href='admin-memberships.html'"
       >
         Manage Memberships
       </button>
@@ -441,7 +421,7 @@
 
       <button
         type="button"
-        onclick="alert('Marketplace management will be connected next.')"
+        onclick="location.href='admin-marketplace.html'"
       >
         Manage Marketplace
       </button>
@@ -468,12 +448,13 @@
 
       <button
         type="button"
-        onclick="alert('Transaction management will be connected next.')"
+        onclick="location.href='admin-transactions.html'"
       >
         View Transactions
       </button>
 
     </div>
+
 
   </section>
 
@@ -482,9 +463,10 @@
 
 <script>
 
+
 /* =====================================================
    ADMIN SECURITY CHECK
-   ===================================================== */
+===================================================== */
 
 async function checkAdmin() {
 
@@ -499,6 +481,7 @@ async function checkAdmin() {
     window.location.href = "index.html";
 
     return null;
+
   }
 
 
@@ -531,6 +514,7 @@ async function checkAdmin() {
     window.location.href = "index.html";
 
     return null;
+
   }
 
 
@@ -548,6 +532,7 @@ async function checkAdmin() {
     window.location.href = "index.html";
 
     return null;
+
   }
 
 
@@ -558,12 +543,13 @@ async function checkAdmin() {
 
 
   return user;
+
 }
 
 
 /* =====================================================
    LOAD REAL ADMIN STATISTICS
-   ===================================================== */
+===================================================== */
 
 async function loadStats() {
 
@@ -603,182 +589,107 @@ async function loadStats() {
     stats.innerHTML = `
 
       <div class="stat">
-
-        <small>
-          Total Members
-        </small>
-
+        <small>Total Members</small>
         <strong>
-          ${Number(
-            data.members || 0
-          ).toLocaleString()}
+          ${Number(data.members || 0).toLocaleString()}
         </strong>
-
       </div>
 
-
       <div class="stat">
-
-        <small>
-          Wallets
-        </small>
-
+        <small>Wallets</small>
         <strong>
-          ${Number(
-            data.wallets || 0
-          ).toLocaleString()}
+          ${Number(data.wallets || 0).toLocaleString()}
         </strong>
-
       </div>
 
-
       <div class="stat">
-
-        <small>
-          Total Wallet Balance
-        </small>
-
+        <small>Total Wallet Balance</small>
         <strong class="money">
           ₦${Number(
             data.total_wallet_balance || 0
           ).toLocaleString("en-NG")}
         </strong>
-
       </div>
 
-
       <div class="stat">
-
-        <small>
-          Total Earned
-        </small>
-
+        <small>Total Earned</small>
         <strong class="money">
           ₦${Number(
             data.total_earned || 0
           ).toLocaleString("en-NG")}
         </strong>
-
       </div>
 
-
       <div class="stat">
-
-        <small>
-          Transactions
-        </small>
-
+        <small>Transactions</small>
         <strong>
           ${Number(
             data.transactions || 0
           ).toLocaleString()}
         </strong>
-
       </div>
 
-
       <div class="stat">
-
-        <small>
-          Pending Withdrawals
-        </small>
-
+        <small>Pending Withdrawals</small>
         <strong>
           ${Number(
             data.pending_withdrawals || 0
           ).toLocaleString()}
         </strong>
-
       </div>
 
-
       <div class="stat">
-
-        <small>
-          Pending Withdrawal Amount
-        </small>
-
+        <small>Pending Withdrawal Amount</small>
         <strong class="money">
           ₦${Number(
             data.pending_withdrawal_amount || 0
           ).toLocaleString("en-NG")}
         </strong>
-
       </div>
 
-
       <div class="stat">
-
-        <small>
-          Total Novels
-        </small>
-
+        <small>Total Novels</small>
         <strong>
           ${Number(
             data.novels || 0
           ).toLocaleString()}
         </strong>
-
       </div>
 
-
       <div class="stat">
-
-        <small>
-          Published Novels
-        </small>
-
+        <small>Published Novels</small>
         <strong>
           ${Number(
             data.published_novels || 0
           ).toLocaleString()}
         </strong>
-
       </div>
 
-
       <div class="stat">
-
-        <small>
-          Pending Novel Submissions
-        </small>
-
+        <small>Pending Novel Submissions</small>
         <strong>
           ${Number(
             data.pending_novel_submissions || 0
           ).toLocaleString()}
         </strong>
-
       </div>
 
-
       <div class="stat">
-
-        <small>
-          Held Writer Earnings
-        </small>
-
+        <small>Held Writer Earnings</small>
         <strong class="money">
           ₦${Number(
             data.held_writer_earnings || 0
           ).toLocaleString("en-NG")}
         </strong>
-
       </div>
 
-
       <div class="stat">
-
-        <small>
-          Pending Reader Rewards
-        </small>
-
+        <small>Pending Reader Rewards</small>
         <strong class="money">
           ₦${Number(
             data.pending_reader_rewards || 0
           ).toLocaleString("en-NG")}
         </strong>
-
       </div>
 
       <div style="grid-column:1/-1;text-align:right;">
@@ -830,13 +741,15 @@ async function loadStats() {
       </div>
 
     `;
+
   }
+
 }
 
 
 /* =====================================================
    HTML ESCAPE
-   ===================================================== */
+===================================================== */
 
 function escapeHtml(value) {
 
@@ -846,12 +759,13 @@ function escapeHtml(value) {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
+
 }
 
 
 /* =====================================================
    LOGOUT
-   ===================================================== */
+===================================================== */
 
 document
   .getElementById("logoutButton")
@@ -869,7 +783,7 @@ document
 
 /* =====================================================
    START ADMIN APP
-   ===================================================== */
+===================================================== */
 
 (async function() {
 
@@ -885,6 +799,7 @@ document
   await loadStats();
 
 })();
+
 
 </script>
 

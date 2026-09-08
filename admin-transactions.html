@@ -1,0 +1,3769 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Transactions | EarnGig Admin
+  </title>
+
+
+  <!-- SUPABASE -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script src="supabase.js"></script>
+
+
+  <style>
+
+
+    /* =========================================
+       GLOBAL
+    ========================================= */
+
+    * {
+
+      box-sizing:
+        border-box;
+
+    }
+
+
+    body {
+
+      margin:
+        0;
+
+      font-family:
+        Arial,
+        sans-serif;
+
+      background:
+        #f5f6fa;
+
+      color:
+        #17182f;
+
+    }
+
+
+    button,
+    input,
+    select {
+
+      font-family:
+        inherit;
+
+    }
+
+
+    button {
+
+      cursor:
+        pointer;
+
+    }
+
+
+    /* =========================================
+       HEADER
+    ========================================= */
+
+    header {
+
+      background:
+        #0d1038;
+
+      color:
+        white;
+
+    }
+
+
+    .nav {
+
+      max-width:
+        1250px;
+
+      margin:
+        auto;
+
+      padding:
+        18px 20px;
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      gap:
+        20px;
+
+    }
+
+
+    .logo {
+
+      color:
+        white;
+
+      text-decoration:
+        none;
+
+      font-size:
+        25px;
+
+      font-weight:
+        700;
+
+    }
+
+
+    .logo span {
+
+      color:
+        #7c5cff;
+
+    }
+
+
+    .admin-badge {
+
+      margin-left:
+        auto;
+
+      font-size:
+        13px;
+
+      color:
+        #c9caff;
+
+    }
+
+
+    .dashboard-btn {
+
+      text-decoration:
+        none;
+
+      color:
+        white;
+
+      border:
+        1px solid
+        rgba(255,255,255,.35);
+
+      padding:
+        9px 15px;
+
+      border-radius:
+        8px;
+
+      font-size:
+        14px;
+
+    }
+
+
+    .dashboard-btn:hover {
+
+      background:
+        rgba(255,255,255,.08);
+
+    }
+
+
+    /* =========================================
+       MAIN
+    ========================================= */
+
+    main {
+
+      max-width:
+        1250px;
+
+      margin:
+        auto;
+
+      padding:
+        30px 20px 60px;
+
+    }
+
+
+    /* =========================================
+       PAGE HEADER
+    ========================================= */
+
+    .page-heading {
+
+      margin-bottom:
+        25px;
+
+    }
+
+
+    .eyebrow {
+
+      display:
+        inline-block;
+
+      font-size:
+        12px;
+
+      font-weight:
+        700;
+
+      letter-spacing:
+        1px;
+
+      color:
+        #6d4aff;
+
+      margin-bottom:
+        7px;
+
+    }
+
+
+    .page-heading h1 {
+
+      margin:
+        0 0 8px;
+
+      font-size:
+        30px;
+
+    }
+
+
+    .page-heading p {
+
+      margin:
+        0;
+
+      color:
+        #686a7d;
+
+      line-height:
+        1.5;
+
+    }
+
+
+    /* =========================================
+       SECTION TITLE
+    ========================================= */
+
+    .section-title {
+
+      margin:
+        28px 0 12px;
+
+      font-size:
+        20px;
+
+    }
+
+
+    /* =========================================
+       COMPACT STATISTICS
+    ========================================= */
+
+    .stats-grid {
+
+      display:
+        grid;
+
+      grid-template-columns:
+        repeat(
+          auto-fit,
+          minmax(180px, 1fr)
+        );
+
+      gap:
+        12px;
+
+    }
+
+
+    .stat-card {
+
+      background:
+        white;
+
+      border:
+        1px solid #e6e7ee;
+
+      border-radius:
+        10px;
+
+      padding:
+        14px 16px;
+
+      min-height:
+        82px;
+
+      box-shadow:
+        0 3px 10px
+        rgba(0,0,0,.025);
+
+    }
+
+
+    .stat-card small {
+
+      display:
+        block;
+
+      color:
+        #77798b;
+
+      font-size:
+        12px;
+
+      margin-bottom:
+        6px;
+
+    }
+
+
+    .stat-card strong {
+
+      display:
+        block;
+
+      font-size:
+        21px;
+
+      line-height:
+        1.2;
+
+    }
+
+
+    .money {
+
+      font-size:
+        18px !important;
+
+    }
+
+
+    /* =========================================
+       TOOLBAR
+    ========================================= */
+
+    .toolbar {
+
+      background:
+        white;
+
+      border:
+        1px solid #e6e7ee;
+
+      border-radius:
+        12px;
+
+      padding:
+        14px;
+
+      display:
+        flex;
+
+      gap:
+        10px;
+
+      align-items:
+        center;
+
+      flex-wrap:
+        wrap;
+
+      box-shadow:
+        0 3px 10px
+        rgba(0,0,0,.025);
+
+    }
+
+
+    .search-box {
+
+      flex:
+        1;
+
+      min-width:
+        220px;
+
+    }
+
+
+    .search-box input {
+
+      width:
+        100%;
+
+      padding:
+        10px 12px;
+
+      border:
+        1px solid #dfe1e8;
+
+      border-radius:
+        8px;
+
+      outline:
+        none;
+
+      font-size:
+        14px;
+
+    }
+
+
+    .search-box input:focus {
+
+      border-color:
+        #6d4aff;
+
+    }
+
+
+    .filter-select {
+
+      padding:
+        10px 12px;
+
+      border:
+        1px solid #dfe1e8;
+
+      border-radius:
+        8px;
+
+      background:
+        white;
+
+      color:
+        #17182f;
+
+      outline:
+        none;
+
+    }
+
+
+    .refresh-btn {
+
+      border:
+        0;
+
+      background:
+        #6d4aff;
+
+      color:
+        white;
+
+      padding:
+        10px 15px;
+
+      border-radius:
+        8px;
+
+      font-weight:
+        700;
+
+    }
+
+
+    .refresh-btn:hover {
+
+      opacity:
+        .9;
+
+    }
+
+
+    /* =========================================
+       TRANSACTION LIST
+    ========================================= */
+
+    .transaction-list {
+
+      display:
+        grid;
+
+      gap:
+        10px;
+
+      margin-top:
+        15px;
+
+    }
+
+
+    .transaction-card {
+
+      background:
+        white;
+
+      border:
+        1px solid #e6e7ee;
+
+      border-radius:
+        11px;
+
+      padding:
+        15px 17px;
+
+      box-shadow:
+        0 3px 10px
+        rgba(0,0,0,.025);
+
+    }
+
+
+    .transaction-top {
+
+      display:
+        flex;
+
+      justify-content:
+        space-between;
+
+      align-items:
+        center;
+
+      gap:
+        15px;
+
+      flex-wrap:
+        wrap;
+
+    }
+
+
+    .transaction-left {
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      gap:
+        12px;
+
+      min-width:
+        0;
+
+    }
+
+
+    .transaction-icon {
+
+      width:
+        42px;
+
+      height:
+        42px;
+
+      border-radius:
+        10px;
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        center;
+
+      font-size:
+        19px;
+
+      flex-shrink:
+        0;
+
+    }
+
+
+    .icon-credit {
+
+      background:
+        #dcfce7;
+
+    }
+
+
+    .icon-debit {
+
+      background:
+        #fee2e2;
+
+    }
+
+
+    .icon-other {
+
+      background:
+        #ede9fe;
+
+    }
+
+
+    .transaction-title {
+
+      min-width:
+        0;
+
+    }
+
+
+    .transaction-title h3 {
+
+      margin:
+        0 0 4px;
+
+      font-size:
+        15px;
+
+      word-break:
+        break-word;
+
+    }
+
+
+    .transaction-title p {
+
+      margin:
+        0;
+
+      color:
+        #77798b;
+
+      font-size:
+        12px;
+
+      word-break:
+        break-word;
+
+    }
+
+
+    .transaction-right {
+
+      text-align:
+        right;
+
+      margin-left:
+        auto;
+
+    }
+
+
+    .transaction-amount {
+
+      font-size:
+        18px;
+
+      font-weight:
+        700;
+
+      margin-bottom:
+        6px;
+
+    }
+
+
+    .amount-positive {
+
+      color:
+        #15803d;
+
+    }
+
+
+    .amount-negative {
+
+      color:
+        #b91c1c;
+
+    }
+
+
+    .amount-neutral {
+
+      color:
+        #17182f;
+
+    }
+
+
+    /* =========================================
+       BADGES
+    ========================================= */
+
+    .badges {
+
+      display:
+        flex;
+
+      justify-content:
+        flex-end;
+
+      gap:
+        6px;
+
+      flex-wrap:
+        wrap;
+
+    }
+
+
+    .badge {
+
+      display:
+        inline-block;
+
+      padding:
+        5px 9px;
+
+      border-radius:
+        20px;
+
+      font-size:
+        10px;
+
+      font-weight:
+        700;
+
+      text-transform:
+        uppercase;
+
+    }
+
+
+    .status-completed {
+
+      background:
+        #dcfce7;
+
+      color:
+        #15803d;
+
+    }
+
+
+    .status-pending {
+
+      background:
+        #fff4cc;
+
+      color:
+        #9a6700;
+
+    }
+
+
+    .status-failed {
+
+      background:
+        #fee2e2;
+
+      color:
+        #b91c1c;
+
+    }
+
+
+    .status-default {
+
+      background:
+        #e5e7eb;
+
+      color:
+        #374151;
+
+    }
+
+
+    .type-badge {
+
+      background:
+        #ede9fe;
+
+      color:
+        #6d28d9;
+
+    }
+
+
+    /* =========================================
+       DETAILS
+    ========================================= */
+
+    .transaction-details {
+
+      display:
+        grid;
+
+      grid-template-columns:
+        repeat(
+          auto-fit,
+          minmax(150px, 1fr)
+        );
+
+      gap:
+        8px;
+
+      margin-top:
+        13px;
+
+      padding-top:
+        13px;
+
+      border-top:
+        1px solid #eeeeee;
+
+    }
+
+
+    .detail {
+
+      background:
+        #fafafa;
+
+      border:
+        1px solid #eeeeee;
+
+      border-radius:
+        7px;
+
+      padding:
+        9px 10px;
+
+      min-width:
+        0;
+
+    }
+
+
+    .detail small {
+
+      display:
+        block;
+
+      color:
+        #888a99;
+
+      font-size:
+        10px;
+
+      margin-bottom:
+        4px;
+
+    }
+
+
+    .detail strong {
+
+      display:
+        block;
+
+      font-size:
+        12px;
+
+      word-break:
+        break-word;
+
+    }
+
+
+    .view-details-btn {
+
+      margin-top:
+        12px;
+
+      border:
+        1px solid #dfe1e8;
+
+      background:
+        white;
+
+      color:
+        #17182f;
+
+      padding:
+        8px 12px;
+
+      border-radius:
+        7px;
+
+      font-size:
+        12px;
+
+      font-weight:
+        600;
+
+    }
+
+
+    .view-details-btn:hover {
+
+      background:
+        #f7f7fb;
+
+    }
+
+
+    /* =========================================
+       LOADING
+    ========================================= */
+
+    .loading {
+
+      text-align:
+        center;
+
+      padding:
+        30px;
+
+      background:
+        white;
+
+      border:
+        1px solid #e6e7ee;
+
+      border-radius:
+        11px;
+
+      color:
+        #686a7d;
+
+    }
+
+
+    /* =========================================
+       EMPTY
+    ========================================= */
+
+    .empty-state {
+
+      text-align:
+        center;
+
+      padding:
+        40px 20px;
+
+      background:
+        white;
+
+      border:
+        1px solid #e6e7ee;
+
+      border-radius:
+        11px;
+
+      color:
+        #686a7d;
+
+    }
+
+
+    .empty-icon {
+
+      font-size:
+        32px;
+
+      margin-bottom:
+        8px;
+
+    }
+
+
+    .empty-state h3 {
+
+      margin:
+        0 0 7px;
+
+      color:
+        #17182f;
+
+    }
+
+
+    .empty-state p {
+
+      margin:
+        0;
+
+      font-size:
+        14px;
+
+    }
+
+
+    /* =========================================
+       ERROR
+    ========================================= */
+
+    .error-box {
+
+      padding:
+        18px;
+
+      border-radius:
+        10px;
+
+      background:
+        #fff5f5;
+
+      border:
+        1px solid #f0b5b5;
+
+      color:
+        #721c24;
+
+    }
+
+
+    .error-box p {
+
+      margin-bottom:
+        0;
+
+      word-break:
+        break-word;
+
+    }
+
+
+    /* =========================================
+       MODAL
+    ========================================= */
+
+    .modal-overlay {
+
+      position:
+        fixed;
+
+      inset:
+        0;
+
+      background:
+        rgba(0,0,0,.45);
+
+      display:
+        none;
+
+      align-items:
+        center;
+
+      justify-content:
+        center;
+
+      padding:
+        20px;
+
+      z-index:
+        1000;
+
+    }
+
+
+    .modal-overlay.active {
+
+      display:
+        flex;
+
+    }
+
+
+    .modal {
+
+      width:
+        min(650px, 100%);
+
+      max-height:
+        85vh;
+
+      overflow-y:
+        auto;
+
+      background:
+        white;
+
+      border-radius:
+        14px;
+
+      padding:
+        22px;
+
+      position:
+        relative;
+
+    }
+
+
+    .modal-header {
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        space-between;
+
+      gap:
+        15px;
+
+      margin-bottom:
+        18px;
+
+    }
+
+
+    .modal-header h2 {
+
+      margin:
+        0;
+
+      font-size:
+        20px;
+
+    }
+
+
+    .close-btn {
+
+      border:
+        0;
+
+      background:
+        #f1f1f4;
+
+      width:
+        34px;
+
+      height:
+        34px;
+
+      border-radius:
+        8px;
+
+      font-size:
+        18px;
+
+    }
+
+
+    .modal-details {
+
+      display:
+        grid;
+
+      gap:
+        10px;
+
+    }
+
+
+    .modal-detail {
+
+      padding:
+        12px;
+
+      border:
+        1px solid #e6e7ee;
+
+      border-radius:
+        8px;
+
+      background:
+        #fafafa;
+
+    }
+
+
+    .modal-detail small {
+
+      display:
+        block;
+
+      color:
+        #77798b;
+
+      margin-bottom:
+        5px;
+
+    }
+
+
+    .modal-detail strong {
+
+      word-break:
+        break-word;
+
+      font-size:
+        13px;
+
+    }
+
+
+    /* =========================================
+       MOBILE
+    ========================================= */
+
+    @media (max-width: 650px) {
+
+
+      .nav {
+
+        flex-wrap:
+          wrap;
+
+      }
+
+
+      .admin-badge {
+
+        margin-left:
+          0;
+
+        width:
+          100%;
+
+        order:
+          3;
+
+      }
+
+
+      main {
+
+        padding:
+          25px 15px 45px;
+
+      }
+
+
+      .page-heading h1 {
+
+        font-size:
+          26px;
+
+      }
+
+
+      .transaction-top {
+
+        align-items:
+          flex-start;
+
+      }
+
+
+      .transaction-right {
+
+        width:
+          100%;
+
+        text-align:
+          left;
+
+        margin-left:
+          0;
+
+      }
+
+
+      .badges {
+
+        justify-content:
+          flex-start;
+
+      }
+
+
+      .toolbar {
+
+        align-items:
+          stretch;
+
+      }
+
+
+      .search-box {
+
+        flex-basis:
+          100%;
+
+      }
+
+
+      .filter-select {
+
+        flex:
+          1;
+
+      }
+
+    }
+
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================
+     HEADER
+========================================= -->
+
+<header>
+
+  <div class="nav">
+
+
+    <a
+      href="admin-dashboard.html"
+      class="logo"
+    >
+
+      Earn<span>Gig</span>
+
+    </a>
+
+
+    <div class="admin-badge">
+
+      ADMIN PORTAL
+
+    </div>
+
+
+    <a
+      href="admin-dashboard.html"
+      class="dashboard-btn"
+    >
+
+      ← Admin Dashboard
+
+    </a>
+
+
+  </div>
+
+</header>
+
+
+
+<!-- =========================================
+     MAIN
+========================================= -->
+
+<main>
+
+
+  <!-- PAGE HEADER -->
+
+  <section class="page-heading">
+
+
+    <span class="eyebrow">
+
+      ADMINISTRATION
+
+    </span>
+
+
+    <h1>
+
+      Transactions
+
+    </h1>
+
+
+    <p>
+
+      Review all wallet activity and
+      platform financial transactions.
+
+    </p>
+
+
+  </section>
+
+
+
+  <!-- STATISTICS -->
+
+  <h2 class="section-title">
+
+    Transaction Overview
+
+  </h2>
+
+
+  <section
+    class="stats-grid"
+    id="statsGrid"
+  >
+
+
+    <div class="loading">
+
+      Loading transaction statistics...
+
+    </div>
+
+
+  </section>
+
+
+
+  <!-- TRANSACTION MANAGEMENT -->
+
+  <h2 class="section-title">
+
+    All Transactions
+
+  </h2>
+
+
+  <!-- FILTERS -->
+
+  <div class="toolbar">
+
+
+    <div class="search-box">
+
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="Search description, reference or user ID..."
+      >
+
+    </div>
+
+
+
+    <select
+      class="filter-select"
+      id="typeFilter"
+    >
+
+      <option value="">
+
+        All Types
+
+      </option>
+
+    </select>
+
+
+
+    <select
+      class="filter-select"
+      id="statusFilter"
+    >
+
+      <option value="">
+
+        All Statuses
+
+      </option>
+
+    </select>
+
+
+
+    <button
+      type="button"
+      class="refresh-btn"
+      onclick="loadTransactions()"
+    >
+
+      ↻ Refresh
+
+    </button>
+
+
+  </div>
+
+
+
+  <!-- TRANSACTION LIST -->
+
+  <section
+    class="transaction-list"
+    id="transactionList"
+  >
+
+
+    <div class="loading">
+
+      Loading transactions...
+
+    </div>
+
+
+  </section>
+
+
+</main>
+
+
+
+<!-- =========================================
+     TRANSACTION DETAILS MODAL
+========================================= -->
+
+<div
+  class="modal-overlay"
+  id="transactionModal"
+>
+
+
+  <div class="modal">
+
+
+    <div class="modal-header">
+
+
+      <h2>
+
+        Transaction Details
+
+      </h2>
+
+
+      <button
+        type="button"
+        class="close-btn"
+        onclick="closeTransactionModal()"
+      >
+
+        ×
+
+      </button>
+
+
+    </div>
+
+
+
+    <div
+      class="modal-details"
+      id="modalDetails"
+    >
+
+    </div>
+
+
+  </div>
+
+
+</div>
+
+
+
+<!-- =========================================
+     JAVASCRIPT
+========================================= -->
+
+<script>
+
+
+/* =========================================
+   GLOBAL VARIABLES
+========================================= */
+
+
+let currentAdmin = null;
+
+
+let allTransactions = [];
+
+
+/* =========================================
+   ESCAPE HTML
+========================================= */
+
+
+function escapeHtml(value) {
+
+
+  if (
+
+    value === null ||
+
+    value === undefined
+
+  ) {
+
+    return "—";
+
+  }
+
+
+  return String(value)
+
+    .replaceAll(
+      "&",
+      "&amp;"
+    )
+
+    .replaceAll(
+      "<",
+      "&lt;"
+    )
+
+    .replaceAll(
+      ">",
+      "&gt;"
+    )
+
+    .replaceAll(
+      '"',
+      "&quot;"
+    )
+
+    .replaceAll(
+      "'",
+      "&#039;"
+    );
+
+}
+
+
+/* =========================================
+   FORMAT MONEY
+========================================= */
+
+
+function formatMoney(amount) {
+
+
+  const value =
+    Number(amount || 0);
+
+
+  return new Intl.NumberFormat(
+
+    "en-NG",
+
+    {
+
+      style:
+        "currency",
+
+      currency:
+        "NGN",
+
+      minimumFractionDigits:
+        0,
+
+      maximumFractionDigits:
+        2
+
+    }
+
+  ).format(value);
+
+}
+
+
+/* =========================================
+   FORMAT DATE
+========================================= */
+
+
+function formatDate(date) {
+
+
+  if (!date) {
+
+    return "—";
+
+  }
+
+
+  try {
+
+
+    return new Date(date)
+
+      .toLocaleString(
+
+        "en-NG",
+
+        {
+
+          year:
+            "numeric",
+
+          month:
+            "short",
+
+          day:
+            "numeric",
+
+          hour:
+            "2-digit",
+
+          minute:
+            "2-digit"
+
+        }
+
+      );
+
+
+  }
+
+  catch (error) {
+
+
+    return "—";
+
+  }
+
+}
+
+
+/* =========================================
+   ADMIN SECURITY CHECK
+========================================= */
+
+
+async function checkAdmin() {
+
+
+  try {
+
+
+    const {
+
+      data:
+      {
+        user
+      },
+
+      error
+
+    }
+
+    =
+
+    await supabaseClient
+      .auth
+      .getUser();
+
+
+
+    if (
+
+      error ||
+
+      !user
+
+    ) {
+
+
+      window.location.href =
+        "index.html";
+
+
+      return null;
+
+    }
+
+
+
+    const {
+
+      data:
+      profile,
+
+      error:
+      profileError
+
+    }
+
+    =
+
+    await supabaseClient
+
+      .from(
+        "profiles"
+      )
+
+      .select(
+
+        `
+          full_name,
+          is_admin,
+          account_status
+        `
+
+      )
+
+      .eq(
+        "id",
+        user.id
+      )
+
+      .single();
+
+
+
+    if (
+
+      profileError ||
+
+      !profile ||
+
+      profile.is_admin !== true
+
+    ) {
+
+
+      await supabaseClient
+        .auth
+        .signOut();
+
+
+      alert(
+
+        "Access denied. Administrator privileges are required."
+
+      );
+
+
+      window.location.href =
+        "index.html";
+
+
+      return null;
+
+    }
+
+
+
+    if (
+
+      profile.account_status &&
+
+      profile.account_status !==
+      "active"
+
+    ) {
+
+
+      await supabaseClient
+        .auth
+        .signOut();
+
+
+      alert(
+
+        "This administrator account is not active."
+
+      );
+
+
+      window.location.href =
+        "index.html";
+
+
+      return null;
+
+    }
+
+
+    currentAdmin =
+      user;
+
+
+    return user;
+
+
+  }
+
+  catch (error) {
+
+
+    console.error(
+
+      "Admin check error:",
+
+      error
+
+    );
+
+
+    document.getElementById(
+      "transactionList"
+    ).innerHTML = `
+
+      <div class="error-box">
+
+        <strong>
+
+          Administrator verification failed.
+
+        </strong>
+
+        <p>
+
+          ${escapeHtml(
+            error.message ||
+            "Unknown error"
+          )}
+
+        </p>
+
+      </div>
+
+    `;
+
+
+    return null;
+
+  }
+
+}
+
+
+/* =========================================
+   LOAD TRANSACTIONS
+========================================= */
+
+
+async function loadTransactions() {
+
+
+  const list =
+    document.getElementById(
+      "transactionList"
+    );
+
+
+  list.innerHTML = `
+
+    <div class="loading">
+
+      Loading transactions...
+
+    </div>
+
+  `;
+
+
+  try {
+
+
+    const {
+
+      data:
+      transactions,
+
+      error
+
+    }
+
+    =
+
+    await supabaseClient
+
+      .from(
+        "transactions"
+      )
+
+      .select(
+
+        `
+          id,
+          user_id,
+          type,
+          amount,
+          status,
+          description,
+          reference,
+          metadata,
+          balance_after,
+          processed_at,
+          created_at
+        `
+
+      )
+
+      .order(
+
+        "created_at",
+
+        {
+
+          ascending:
+            false
+
+        }
+
+      )
+
+      .limit(
+        500
+      );
+
+
+
+    if (error) {
+
+      throw error;
+
+    }
+
+
+    allTransactions =
+      transactions || [];
+
+
+    populateFilters();
+
+
+    updateStatistics();
+
+
+    displayTransactions();
+
+
+  }
+
+  catch (error) {
+
+
+    console.error(
+
+      "Transaction loading error:",
+
+      error
+
+    );
+
+
+    list.innerHTML = `
+
+      <div class="error-box">
+
+        <strong>
+
+          Transactions could not be loaded.
+
+        </strong>
+
+        <p>
+
+          ${escapeHtml(
+            error.message ||
+            "Unknown error"
+          )}
+
+        </p>
+
+      </div>
+
+    `;
+
+
+    document.getElementById(
+      "statsGrid"
+    ).innerHTML = `
+
+      <div class="error-box">
+
+        <strong>
+
+          Transaction statistics could not be loaded.
+
+        </strong>
+
+        <p>
+
+          ${escapeHtml(
+            error.message ||
+            "Unknown error"
+          )}
+
+        </p>
+
+      </div>
+
+    `;
+
+  }
+
+}
+
+
+/* =========================================
+   POPULATE FILTERS
+========================================= */
+
+
+function populateFilters() {
+
+
+  const typeFilter =
+    document.getElementById(
+      "typeFilter"
+    );
+
+
+  const statusFilter =
+    document.getElementById(
+      "statusFilter"
+    );
+
+
+  const currentType =
+    typeFilter.value;
+
+
+  const currentStatus =
+    statusFilter.value;
+
+
+
+  const types = [
+
+    ...new Set(
+
+      allTransactions
+
+        .map(
+
+          transaction =>
+
+            String(
+              transaction.type ||
+              ""
+            ).trim()
+
+        )
+
+        .filter(
+          Boolean
+        )
+
+    )
+
+  ].sort();
+
+
+
+  const statuses = [
+
+    ...new Set(
+
+      allTransactions
+
+        .map(
+
+          transaction =>
+
+            String(
+              transaction.status ||
+              ""
+            ).trim()
+
+        )
+
+        .filter(
+          Boolean
+        )
+
+    )
+
+  ].sort();
+
+
+
+  typeFilter.innerHTML = `
+
+    <option value="">
+
+      All Types
+
+    </option>
+
+  `;
+
+
+  types.forEach(
+
+    type => {
+
+
+      const option =
+        document.createElement(
+          "option"
+        );
+
+
+      option.value =
+        type;
+
+
+      option.textContent =
+        type;
+
+
+      typeFilter.appendChild(
+        option
+      );
+
+
+    }
+
+  );
+
+
+
+  statusFilter.innerHTML = `
+
+    <option value="">
+
+      All Statuses
+
+    </option>
+
+  `;
+
+
+  statuses.forEach(
+
+    status => {
+
+
+      const option =
+        document.createElement(
+          "option"
+        );
+
+
+      option.value =
+        status;
+
+
+      option.textContent =
+        status;
+
+
+      statusFilter.appendChild(
+        option
+      );
+
+
+    }
+
+  );
+
+
+
+  typeFilter.value =
+    currentType;
+
+
+  statusFilter.value =
+    currentStatus;
+
+}
+
+
+/* =========================================
+   UPDATE STATISTICS
+========================================= */
+
+
+function updateStatistics() {
+
+
+  const totalCount =
+    allTransactions.length;
+
+
+  const completed =
+    allTransactions.filter(
+
+      transaction =>
+
+        String(
+          transaction.status ||
+          ""
+        )
+
+        .toLowerCase()
+
+        ===
+
+        "completed"
+
+    );
+
+
+  const pending =
+    allTransactions.filter(
+
+      transaction =>
+
+        String(
+          transaction.status ||
+          ""
+        )
+
+        .toLowerCase()
+
+        ===
+
+        "pending"
+
+    );
+
+
+  const failed =
+    allTransactions.filter(
+
+      transaction =>
+
+        [
+
+          "failed",
+
+          "rejected"
+
+        ]
+
+        .includes(
+
+          String(
+            transaction.status ||
+            ""
+          )
+          .toLowerCase()
+
+        )
+
+    );
+
+
+
+  const totalAmount =
+    allTransactions.reduce(
+
+      (
+        total,
+        transaction
+      )
+
+      =>
+
+        total +
+
+        Number(
+          transaction.amount || 0
+        ),
+
+      0
+
+    );
+
+
+
+  const completedAmount =
+    completed.reduce(
+
+      (
+        total,
+        transaction
+      )
+
+      =>
+
+        total +
+
+        Number(
+          transaction.amount || 0
+        ),
+
+      0
+
+    );
+
+
+
+  document.getElementById(
+    "statsGrid"
+  ).innerHTML = `
+
+
+    <div class="stat-card">
+
+      <small>
+
+        Total Transactions
+
+      </small>
+
+      <strong>
+
+        ${totalCount.toLocaleString()}
+
+      </strong>
+
+    </div>
+
+
+
+    <div class="stat-card">
+
+      <small>
+
+        Completed
+
+      </small>
+
+      <strong>
+
+        ${completed.length.toLocaleString()}
+
+      </strong>
+
+    </div>
+
+
+
+    <div class="stat-card">
+
+      <small>
+
+        Pending
+
+      </small>
+
+      <strong>
+
+        ${pending.length.toLocaleString()}
+
+      </strong>
+
+    </div>
+
+
+
+    <div class="stat-card">
+
+      <small>
+
+        Failed / Rejected
+
+      </small>
+
+      <strong>
+
+        ${failed.length.toLocaleString()}
+
+      </strong>
+
+    </div>
+
+
+
+    <div class="stat-card">
+
+      <small>
+
+        Total Transaction Value
+
+      </small>
+
+      <strong class="money">
+
+        ${formatMoney(
+          totalAmount
+        )}
+
+      </strong>
+
+    </div>
+
+
+
+    <div class="stat-card">
+
+      <small>
+
+        Completed Value
+
+      </small>
+
+      <strong class="money">
+
+        ${formatMoney(
+          completedAmount
+        )}
+
+      </strong>
+
+    </div>
+
+
+  `;
+
+}
+
+
+/* =========================================
+   GET FILTERED TRANSACTIONS
+========================================= */
+
+
+function getFilteredTransactions() {
+
+
+  const search =
+    document.getElementById(
+      "searchInput"
+    )
+
+    .value
+
+    .trim()
+
+    .toLowerCase();
+
+
+  const selectedType =
+    document.getElementById(
+      "typeFilter"
+    ).value;
+
+
+  const selectedStatus =
+    document.getElementById(
+      "statusFilter"
+    ).value;
+
+
+
+  return allTransactions.filter(
+
+    transaction => {
+
+
+      const type =
+        String(
+          transaction.type ||
+          ""
+        );
+
+
+      const status =
+        String(
+          transaction.status ||
+          ""
+        );
+
+
+      const searchableText =
+
+        [
+
+          transaction.description,
+
+          transaction.reference,
+
+          transaction.user_id,
+
+          transaction.id,
+
+          transaction.type,
+
+          transaction.status
+
+        ]
+
+        .join(
+          " "
+        )
+
+        .toLowerCase();
+
+
+
+      const matchesSearch =
+
+        !search ||
+
+        searchableText.includes(
+          search
+        );
+
+
+
+      const matchesType =
+
+        !selectedType ||
+
+        type ===
+        selectedType;
+
+
+
+      const matchesStatus =
+
+        !selectedStatus ||
+
+        status ===
+        selectedStatus;
+
+
+
+      return (
+
+        matchesSearch &&
+
+        matchesType &&
+
+        matchesStatus
+
+      );
+
+    }
+
+  );
+
+}
+
+
+/* =========================================
+   DISPLAY TRANSACTIONS
+========================================= */
+
+
+function displayTransactions() {
+
+
+  const list =
+    document.getElementById(
+      "transactionList"
+    );
+
+
+  const transactions =
+    getFilteredTransactions();
+
+
+
+  if (
+
+    transactions.length === 0
+
+  ) {
+
+
+    list.innerHTML = `
+
+
+      <div class="empty-state">
+
+
+        <div class="empty-icon">
+
+          📭
+
+        </div>
+
+
+        <h3>
+
+          No transactions found
+
+        </h3>
+
+
+        <p>
+
+          There are no transactions matching
+          your current filters.
+
+        </p>
+
+
+      </div>
+
+
+    `;
+
+
+    return;
+
+  }
+
+
+
+  list.innerHTML =
+
+    transactions
+
+      .map(
+
+        transaction =>
+
+          createTransactionCard(
+            transaction
+          )
+
+      )
+
+      .join("");
+
+}
+
+
+/* =========================================
+   GET TRANSACTION ICON
+========================================= */
+
+
+function getTransactionIcon(
+  type
+) {
+
+
+  const value =
+    String(
+      type ||
+      ""
+    )
+    .toLowerCase();
+
+
+
+  if (
+
+    value.includes(
+      "withdraw"
+    ) ||
+
+    value.includes(
+      "debit"
+    ) ||
+
+    value.includes(
+      "payment"
+    )
+
+  ) {
+
+    return {
+
+      icon:
+        "↓",
+
+      className:
+        "icon-debit"
+
+    };
+
+  }
+
+
+
+  if (
+
+    value.includes(
+      "reward"
+    ) ||
+
+    value.includes(
+      "earning"
+    ) ||
+
+    value.includes(
+      "credit"
+    ) ||
+
+    value.includes(
+      "bonus"
+    )
+
+  ) {
+
+    return {
+
+      icon:
+        "↑",
+
+      className:
+        "icon-credit"
+
+    };
+
+  }
+
+
+
+  return {
+
+    icon:
+      "↔",
+
+    className:
+      "icon-other"
+
+  };
+
+}
+
+
+/* =========================================
+   GET STATUS CLASS
+========================================= */
+
+
+function getStatusClass(
+  status
+) {
+
+
+  const value =
+    String(
+      status ||
+      ""
+    )
+    .toLowerCase();
+
+
+
+  if (
+
+    value ===
+    "completed"
+
+  ) {
+
+    return "status-completed";
+
+  }
+
+
+
+  if (
+
+    value ===
+    "pending"
+
+  ) {
+
+    return "status-pending";
+
+  }
+
+
+
+  if (
+
+    value ===
+    "failed" ||
+
+    value ===
+    "rejected"
+
+  ) {
+
+    return "status-failed";
+
+  }
+
+
+  return "status-default";
+
+}
+
+
+/* =========================================
+   GET AMOUNT CLASS
+========================================= */
+
+
+function getAmountClass(
+  transaction
+) {
+
+
+  const type =
+    String(
+      transaction.type ||
+      ""
+    )
+    .toLowerCase();
+
+
+
+  if (
+
+    type.includes(
+      "withdraw"
+    ) ||
+
+    type.includes(
+      "debit"
+    ) ||
+
+    type.includes(
+      "payment"
+    )
+
+  ) {
+
+    return "amount-negative";
+
+  }
+
+
+
+  if (
+
+    type.includes(
+      "reward"
+    ) ||
+
+    type.includes(
+      "earning"
+    ) ||
+
+    type.includes(
+      "credit"
+    ) ||
+
+    type.includes(
+      "bonus"
+    )
+
+  ) {
+
+    return "amount-positive";
+
+  }
+
+
+  return "amount-neutral";
+
+}
+
+
+/* =========================================
+   CREATE TRANSACTION CARD
+========================================= */
+
+
+function createTransactionCard(
+  transaction
+) {
+
+
+  const transactionIcon =
+    getTransactionIcon(
+      transaction.type
+    );
+
+
+  const statusClass =
+    getStatusClass(
+      transaction.status
+    );
+
+
+  const amountClass =
+    getAmountClass(
+      transaction
+    );
+
+
+  const description =
+
+    transaction.description ||
+
+    transaction.type ||
+
+    "Transaction";
+
+
+
+  return `
+
+
+    <article
+      class="transaction-card"
+    >
+
+
+      <div
+        class="transaction-top"
+      >
+
+
+        <div
+          class="transaction-left"
+        >
+
+
+          <div
+            class="
+              transaction-icon
+              ${transactionIcon.className}
+            "
+          >
+
+            ${transactionIcon.icon}
+
+          </div>
+
+
+
+          <div
+            class="transaction-title"
+          >
+
+
+            <h3>
+
+              ${escapeHtml(
+                description
+              )}
+
+            </h3>
+
+
+            <p>
+
+              ${formatDate(
+                transaction.created_at
+              )}
+
+            </p>
+
+
+          </div>
+
+
+        </div>
+
+
+
+        <div
+          class="transaction-right"
+        >
+
+
+          <div
+            class="
+              transaction-amount
+              ${amountClass}
+            "
+          >
+
+            ${formatMoney(
+              transaction.amount
+            )}
+
+          </div>
+
+
+
+          <div
+            class="badges"
+          >
+
+
+            <span
+              class="
+                badge
+                type-badge
+              "
+            >
+
+              ${escapeHtml(
+                transaction.type ||
+                "unknown"
+              )}
+
+            </span>
+
+
+
+            <span
+              class="
+                badge
+                ${statusClass}
+              "
+            >
+
+              ${escapeHtml(
+                transaction.status ||
+                "unknown"
+              )}
+
+            </span>
+
+
+          </div>
+
+
+        </div>
+
+
+      </div>
+
+
+
+      <div
+        class="transaction-details"
+      >
+
+
+        <div
+          class="detail"
+        >
+
+          <small>
+
+            Reference
+
+          </small>
+
+
+          <strong>
+
+            ${escapeHtml(
+              transaction.reference
+            )}
+
+          </strong>
+
+        </div>
+
+
+
+        <div
+          class="detail"
+        >
+
+          <small>
+
+            User ID
+
+          </small>
+
+
+          <strong>
+
+            ${escapeHtml(
+              transaction.user_id
+            )}
+
+          </strong>
+
+        </div>
+
+
+
+        <div
+          class="detail"
+        >
+
+          <small>
+
+            Balance After
+
+          </small>
+
+
+          <strong>
+
+            ${
+
+              transaction.balance_after === null ||
+
+              transaction.balance_after === undefined
+
+              ?
+
+              "—"
+
+              :
+
+              formatMoney(
+                transaction.balance_after
+              )
+
+            }
+
+          </strong>
+
+        </div>
+
+
+
+        <div
+          class="detail"
+        >
+
+          <small>
+
+            Processed
+
+          </small>
+
+
+          <strong>
+
+            ${formatDate(
+              transaction.processed_at
+            )}
+
+          </strong>
+
+        </div>
+
+
+      </div>
+
+
+
+      <button
+
+        type="button"
+
+        class="view-details-btn"
+
+        onclick="
+          openTransactionDetails(
+            '${transaction.id}'
+          )
+        "
+
+      >
+
+        View Full Details
+
+      </button>
+
+
+    </article>
+
+
+  `;
+
+}
+
+
+/* =========================================
+   OPEN TRANSACTION DETAILS
+========================================= */
+
+
+function openTransactionDetails(
+  transactionId
+) {
+
+
+  const transaction =
+    allTransactions.find(
+
+      item =>
+
+        String(item.id) ===
+        String(transactionId)
+
+    );
+
+
+  if (!transaction) {
+
+    return;
+
+  }
+
+
+  let metadata =
+    "—";
+
+
+  if (
+
+    transaction.metadata !== null &&
+
+    transaction.metadata !== undefined
+
+  ) {
+
+
+    try {
+
+
+      metadata =
+
+        typeof transaction.metadata ===
+        "string"
+
+        ?
+
+        transaction.metadata
+
+        :
+
+        JSON.stringify(
+
+          transaction.metadata,
+
+          null,
+
+          2
+
+        );
+
+
+    }
+
+    catch (error) {
+
+
+      metadata =
+        String(
+          transaction.metadata
+        );
+
+    }
+
+  }
+
+
+
+  document.getElementById(
+    "modalDetails"
+  ).innerHTML = `
+
+
+    <div class="modal-detail">
+
+      <small>
+
+        Transaction ID
+
+      </small>
+
+      <strong>
+
+        ${escapeHtml(
+          transaction.id
+        )}
+
+      </strong>
+
+    </div>
+
+
+
+    <div class="modal-detail">
+
+      <small>
+
+        User ID
+
+      </small>
+
+      <strong>
+
+        ${escapeHtml(
+          transaction.user_id
+        )}
+
+      </strong>
+
+    </div>
+
+
+
+    <div class="modal-detail">
+
+      <small>
+
+        Type
+
+      </small>
+
+      <strong>
+
+        ${escapeHtml(
+          transaction.type
+        )}
+
+      </strong>
+
+    </div>
+
+
+
+    <div class="modal-detail">
+
+      <small>
+
+        Status
+
+      </small>
+
+      <strong>
+
+        ${escapeHtml(
+          transaction.status
+        )}
+
+      </strong>
+
+    </div>
+
+
+
+    <div class="modal-detail">
+
+      <small>
+
+        Amount
+
+      </small>
+
+      <strong>
+
+        ${formatMoney(
+          transaction.amount
+        )}
+
+      </strong>
+
+    </div>
+
+
+
+    <div class="modal-detail">
+
+      <small>
+
+        Description
+
+      </small>
+
+      <strong>
+
+        ${escapeHtml(
+          transaction.description
+        )}
+
+      </strong>
+
+    </div>
+
+
+
+    <div class="modal-detail">
+
+      <small>
+
+        Reference
+
+      </small>
+
+      <strong>
+
+        ${escapeHtml(
+          transaction.reference
+        )}
+
+      </strong>
+
+    </div>
+
+
+
+    <div class="modal-detail">
+
+      <small>
+
+        Balance After
+
+      </small>
+
+      <strong>
+
+        ${
+
+          transaction.balance_after === null ||
+
+          transaction.balance_after === undefined
+
+          ?
+
+          "—"
+
+          :
+
+          formatMoney(
+            transaction.balance_after
+          )
+
+        }
+
+      </strong>
+
+    </div>
+
+
+
+    <div class="modal-detail">
+
+      <small>
+
+        Created At
+
+      </small>
+
+      <strong>
+
+        ${formatDate(
+          transaction.created_at
+        )}
+
+      </strong>
+
+    </div>
+
+
+
+    <div class="modal-detail">
+
+      <small>
+
+        Processed At
+
+      </small>
+
+      <strong>
+
+        ${formatDate(
+          transaction.processed_at
+        )}
+
+      </strong>
+
+    </div>
+
+
+
+    <div class="modal-detail">
+
+      <small>
+
+        Metadata
+
+      </small>
+
+      <strong
+        style="
+          white-space:pre-wrap;
+          font-family:monospace;
+        "
+      >
+
+        ${escapeHtml(
+          metadata
+        )}
+
+      </strong>
+
+    </div>
+
+
+  `;
+
+
+  document.getElementById(
+    "transactionModal"
+  ).classList.add(
+    "active"
+  );
+
+}
+
+
+/* =========================================
+   CLOSE TRANSACTION MODAL
+========================================= */
+
+
+function closeTransactionModal() {
+
+
+  document.getElementById(
+    "transactionModal"
+  ).classList.remove(
+    "active"
+  );
+
+}
+
+
+/* =========================================
+   SEARCH
+========================================= */
+
+
+document.getElementById(
+  "searchInput"
+)
+
+.addEventListener(
+
+  "input",
+
+  function() {
+
+    displayTransactions();
+
+  }
+
+);
+
+
+/* =========================================
+   TYPE FILTER
+========================================= */
+
+
+document.getElementById(
+  "typeFilter"
+)
+
+.addEventListener(
+
+  "change",
+
+  function() {
+
+    displayTransactions();
+
+  }
+
+);
+
+
+/* =========================================
+   STATUS FILTER
+========================================= */
+
+
+document.getElementById(
+  "statusFilter"
+)
+
+.addEventListener(
+
+  "change",
+
+  function() {
+
+    displayTransactions();
+
+  }
+
+);
+
+
+/* =========================================
+   CLOSE MODAL WHEN CLICKING OUTSIDE
+========================================= */
+
+
+document.getElementById(
+  "transactionModal"
+)
+
+.addEventListener(
+
+  "click",
+
+  function(event) {
+
+
+    if (
+
+      event.target ===
+      this
+
+    ) {
+
+      closeTransactionModal();
+
+    }
+
+  }
+
+);
+
+
+/* =========================================
+   START APPLICATION
+========================================= */
+
+
+(async function() {
+
+
+  const admin =
+    await checkAdmin();
+
+
+  if (!admin) {
+
+    return;
+
+  }
+
+
+  await loadTransactions();
+
+
+})();
+
+
+</script>
+
+
+</body>
+
+</html>

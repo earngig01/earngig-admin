@@ -15,7 +15,9 @@
   </title>
 
 
-  <!-- SUPABASE -->
+  <!-- =========================================
+       SUPABASE
+  ========================================= -->
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -67,8 +69,8 @@
 
     button {
 
-      cursor:
-        pointer;
+      -webkit-tap-highlight-color:
+        transparent;
 
     }
 
@@ -105,6 +107,9 @@
       align-items:
         center;
 
+      justify-content:
+        space-between;
+
       gap:
         20px;
 
@@ -138,14 +143,14 @@
 
     .admin-badge {
 
-      margin-left:
-        auto;
-
       font-size:
         13px;
 
       color:
         #c9caff;
+
+      margin-left:
+        auto;
 
     }
 
@@ -155,12 +160,12 @@
       text-decoration:
         none;
 
-      color:
-        white;
-
       border:
         1px solid
         rgba(255,255,255,.35);
+
+      color:
+        white;
 
       padding:
         9px 15px;
@@ -195,7 +200,7 @@
         auto;
 
       padding:
-        30px 20px 60px;
+        35px 20px 60px;
 
     }
 
@@ -207,7 +212,7 @@
     .page-heading {
 
       margin-bottom:
-        25px;
+        30px;
 
     }
 
@@ -230,7 +235,7 @@
         #6d4aff;
 
       margin-bottom:
-        7px;
+        8px;
 
     }
 
@@ -238,10 +243,10 @@
     .page-heading h1 {
 
       margin:
-        0 0 8px;
+        0 0 10px;
 
       font-size:
-        30px;
+        32px;
 
     }
 
@@ -267,16 +272,16 @@
     .section-title {
 
       margin:
-        28px 0 12px;
+        30px 0 15px;
 
       font-size:
-        20px;
+        21px;
 
     }
 
 
     /* =========================================
-       COMPACT STATISTICS
+       STATISTICS
     ========================================= */
 
     .stats-grid {
@@ -287,7 +292,7 @@
       grid-template-columns:
         repeat(
           auto-fit,
-          minmax(180px, 1fr)
+          minmax(170px, 1fr)
         );
 
       gap:
@@ -305,17 +310,14 @@
         1px solid #e6e7ee;
 
       border-radius:
-        10px;
+        11px;
 
       padding:
         14px 16px;
 
-      min-height:
-        82px;
-
       box-shadow:
-        0 3px 10px
-        rgba(0,0,0,.025);
+        0 4px 12px
+        rgba(0,0,0,.03);
 
     }
 
@@ -343,7 +345,7 @@
         block;
 
       font-size:
-        21px;
+        20px;
 
       line-height:
         1.2;
@@ -351,7 +353,7 @@
     }
 
 
-    .money {
+    .stat-money {
 
       font-size:
         18px !important;
@@ -360,10 +362,10 @@
 
 
     /* =========================================
-       TOOLBAR
+       FILTERS
     ========================================= */
 
-    .toolbar {
+    .filter-box {
 
       background:
         white;
@@ -372,82 +374,58 @@
         1px solid #e6e7ee;
 
       border-radius:
-        12px;
+        13px;
 
       padding:
-        14px;
+        18px;
+
+      box-shadow:
+        0 5px 15px
+        rgba(0,0,0,.03);
+
+      margin-bottom:
+        20px;
+
+    }
+
+
+    .filter-grid {
 
       display:
-        flex;
+        grid;
+
+      grid-template-columns:
+        minmax(220px, 2fr)
+        minmax(150px, 1fr)
+        minmax(150px, 1fr)
+        auto;
 
       gap:
-        10px;
+        12px;
 
       align-items:
         center;
 
-      flex-wrap:
-        wrap;
-
-      box-shadow:
-        0 3px 10px
-        rgba(0,0,0,.025);
-
     }
 
 
-    .search-box {
-
-      flex:
-        1;
-
-      min-width:
-        220px;
-
-    }
-
-
-    .search-box input {
+    .filter-input,
+    .filter-select {
 
       width:
         100%;
 
-      padding:
-        10px 12px;
-
-      border:
-        1px solid #dfe1e8;
-
-      border-radius:
-        8px;
-
-      outline:
-        none;
-
-      font-size:
-        14px;
-
-    }
-
-
-    .search-box input:focus {
-
-      border-color:
-        #6d4aff;
-
-    }
-
-
-    .filter-select {
+      height:
+        45px;
 
       padding:
-        10px 12px;
+        0 13px;
 
       border:
-        1px solid #dfe1e8;
+        1px solid #dedfe7;
 
       border-radius:
-        8px;
+        9px;
 
       background:
         white;
@@ -458,10 +436,25 @@
       outline:
         none;
 
+      font-size:
+        14px;
+
+    }
+
+
+    .filter-input:focus,
+    .filter-select:focus {
+
+      border-color:
+        #6d4aff;
+
     }
 
 
     .refresh-btn {
+
+      height:
+        45px;
 
       border:
         0;
@@ -473,13 +466,19 @@
         white;
 
       padding:
-        10px 15px;
+        0 18px;
 
       border-radius:
-        8px;
+        9px;
 
       font-weight:
         700;
+
+      cursor:
+        pointer;
+
+      white-space:
+        nowrap;
 
     }
 
@@ -488,6 +487,17 @@
 
       opacity:
         .9;
+
+    }
+
+
+    .refresh-btn:disabled {
+
+      opacity:
+        .6;
+
+      cursor:
+        not-allowed;
 
     }
 
@@ -502,10 +512,7 @@
         grid;
 
       gap:
-        10px;
-
-      margin-top:
-        15px;
+        13px;
 
     }
 
@@ -519,14 +526,14 @@
         1px solid #e6e7ee;
 
       border-radius:
-        11px;
+        12px;
 
       padding:
-        15px 17px;
+        17px;
 
       box-shadow:
-        0 3px 10px
-        rgba(0,0,0,.025);
+        0 4px 12px
+        rgba(0,0,0,.03);
 
     }
 
@@ -540,10 +547,13 @@
         space-between;
 
       align-items:
-        center;
+        flex-start;
 
       gap:
         15px;
+
+      margin-bottom:
+        14px;
 
       flex-wrap:
         wrap;
@@ -551,160 +561,41 @@
     }
 
 
-    .transaction-left {
-
-      display:
-        flex;
-
-      align-items:
-        center;
-
-      gap:
-        12px;
+    .transaction-main {
 
       min-width:
         0;
-
-    }
-
-
-    .transaction-icon {
-
-      width:
-        42px;
-
-      height:
-        42px;
-
-      border-radius:
-        10px;
-
-      display:
-        flex;
-
-      align-items:
-        center;
-
-      justify-content:
-        center;
-
-      font-size:
-        19px;
-
-      flex-shrink:
-        0;
-
-    }
-
-
-    .icon-credit {
-
-      background:
-        #dcfce7;
-
-    }
-
-
-    .icon-debit {
-
-      background:
-        #fee2e2;
-
-    }
-
-
-    .icon-other {
-
-      background:
-        #ede9fe;
-
-    }
-
-
-    .transaction-title {
-
-      min-width:
-        0;
-
-    }
-
-
-    .transaction-title h3 {
-
-      margin:
-        0 0 4px;
-
-      font-size:
-        15px;
-
-      word-break:
-        break-word;
-
-    }
-
-
-    .transaction-title p {
-
-      margin:
-        0;
-
-      color:
-        #77798b;
-
-      font-size:
-        12px;
-
-      word-break:
-        break-word;
-
-    }
-
-
-    .transaction-right {
-
-      text-align:
-        right;
-
-      margin-left:
-        auto;
 
     }
 
 
     .transaction-amount {
 
+      margin:
+        7px 0 0;
+
       font-size:
-        18px;
-
-      font-weight:
-        700;
-
-      margin-bottom:
-        6px;
+        23px;
 
     }
 
 
-    .amount-positive {
+    .transaction-description {
+
+      margin:
+        0;
 
       color:
-        #15803d;
+        #686a7d;
 
-    }
+      font-size:
+        14px;
 
+      line-height:
+        1.5;
 
-    .amount-negative {
-
-      color:
-        #b91c1c;
-
-    }
-
-
-    .amount-neutral {
-
-      color:
-        #17182f;
+      word-break:
+        break-word;
 
     }
 
@@ -713,42 +604,36 @@
        BADGES
     ========================================= */
 
-    .badges {
-
-      display:
-        flex;
-
-      justify-content:
-        flex-end;
-
-      gap:
-        6px;
-
-      flex-wrap:
-        wrap;
-
-    }
-
-
     .badge {
 
       display:
         inline-block;
 
       padding:
-        5px 9px;
+        6px 10px;
 
       border-radius:
         20px;
 
       font-size:
-        10px;
+        11px;
 
       font-weight:
         700;
 
       text-transform:
         uppercase;
+
+    }
+
+
+    .type-badge {
+
+      background:
+        #f0edff;
+
+      color:
+        #6044d7;
 
     }
 
@@ -786,24 +671,35 @@
     }
 
 
-    .status-default {
+    .status-rejected {
 
       background:
-        #e5e7eb;
+        #fee2e2;
 
       color:
-        #374151;
+        #b91c1c;
 
     }
 
 
-    .type-badge {
+    .status-cancelled {
 
       background:
-        #ede9fe;
+        #f1f1f1;
 
       color:
-        #6d28d9;
+        #555555;
+
+    }
+
+
+    .status-default {
+
+      background:
+        #e8e9ef;
+
+      color:
+        #55576a;
 
     }
 
@@ -812,7 +708,7 @@
        DETAILS
     ========================================= */
 
-    .transaction-details {
+    .details-grid {
 
       display:
         grid;
@@ -820,20 +716,14 @@
       grid-template-columns:
         repeat(
           auto-fit,
-          minmax(150px, 1fr)
+          minmax(160px, 1fr)
         );
 
       gap:
-        8px;
+        10px;
 
       margin-top:
-        13px;
-
-      padding-top:
-        13px;
-
-      border-top:
-        1px solid #eeeeee;
+        14px;
 
     }
 
@@ -847,10 +737,10 @@
         1px solid #eeeeee;
 
       border-radius:
-        7px;
+        8px;
 
       padding:
-        9px 10px;
+        10px 11px;
 
       min-width:
         0;
@@ -864,13 +754,13 @@
         block;
 
       color:
-        #888a99;
+        #77798b;
 
       font-size:
-        10px;
+        11px;
 
       margin-bottom:
-        4px;
+        5px;
 
     }
 
@@ -881,47 +771,10 @@
         block;
 
       font-size:
-        12px;
+        13px;
 
       word-break:
         break-word;
-
-    }
-
-
-    .view-details-btn {
-
-      margin-top:
-        12px;
-
-      border:
-        1px solid #dfe1e8;
-
-      background:
-        white;
-
-      color:
-        #17182f;
-
-      padding:
-        8px 12px;
-
-      border-radius:
-        7px;
-
-      font-size:
-        12px;
-
-      font-weight:
-        600;
-
-    }
-
-
-    .view-details-btn:hover {
-
-      background:
-        #f7f7fb;
 
     }
 
@@ -936,7 +789,7 @@
         center;
 
       padding:
-        30px;
+        35px 20px;
 
       background:
         white;
@@ -945,7 +798,7 @@
         1px solid #e6e7ee;
 
       border-radius:
-        11px;
+        12px;
 
       color:
         #686a7d;
@@ -963,7 +816,7 @@
         center;
 
       padding:
-        40px 20px;
+        45px 20px;
 
       background:
         white;
@@ -972,7 +825,7 @@
         1px solid #e6e7ee;
 
       border-radius:
-        11px;
+        12px;
 
       color:
         #686a7d;
@@ -983,10 +836,10 @@
     .empty-icon {
 
       font-size:
-        32px;
+        35px;
 
       margin-bottom:
-        8px;
+        10px;
 
     }
 
@@ -994,7 +847,7 @@
     .empty-state h3 {
 
       margin:
-        0 0 7px;
+        0 0 8px;
 
       color:
         #17182f;
@@ -1007,9 +860,6 @@
       margin:
         0;
 
-      font-size:
-        14px;
-
     }
 
 
@@ -1020,10 +870,10 @@
     .error-box {
 
       padding:
-        18px;
+        20px;
 
       border-radius:
-        10px;
+        12px;
 
       background:
         #fff5f5;
@@ -1039,8 +889,8 @@
 
     .error-box p {
 
-      margin-bottom:
-        0;
+      margin:
+        10px 0 0;
 
       word-break:
         break-word;
@@ -1049,172 +899,25 @@
 
 
     /* =========================================
-       MODAL
+       RESULT COUNT
     ========================================= */
 
-    .modal-overlay {
-
-      position:
-        fixed;
-
-      inset:
-        0;
-
-      background:
-        rgba(0,0,0,.45);
-
-      display:
-        none;
-
-      align-items:
-        center;
-
-      justify-content:
-        center;
-
-      padding:
-        20px;
-
-      z-index:
-        1000;
-
-    }
-
-
-    .modal-overlay.active {
+    .result-bar {
 
       display:
         flex;
-
-    }
-
-
-    .modal {
-
-      width:
-        min(650px, 100%);
-
-      max-height:
-        85vh;
-
-      overflow-y:
-        auto;
-
-      background:
-        white;
-
-      border-radius:
-        14px;
-
-      padding:
-        22px;
-
-      position:
-        relative;
-
-    }
-
-
-    .modal-header {
-
-      display:
-        flex;
-
-      align-items:
-        center;
 
       justify-content:
         space-between;
 
-      gap:
-        15px;
-
-      margin-bottom:
-        18px;
-
-    }
-
-
-    .modal-header h2 {
+      align-items:
+        center;
 
       margin:
-        0;
-
-      font-size:
-        20px;
-
-    }
-
-
-    .close-btn {
-
-      border:
-        0;
-
-      background:
-        #f1f1f4;
-
-      width:
-        34px;
-
-      height:
-        34px;
-
-      border-radius:
-        8px;
-
-      font-size:
-        18px;
-
-    }
-
-
-    .modal-details {
-
-      display:
-        grid;
-
-      gap:
-        10px;
-
-    }
-
-
-    .modal-detail {
-
-      padding:
-        12px;
-
-      border:
-        1px solid #e6e7ee;
-
-      border-radius:
-        8px;
-
-      background:
-        #fafafa;
-
-    }
-
-
-    .modal-detail small {
-
-      display:
-        block;
+        0 0 12px;
 
       color:
-        #77798b;
-
-      margin-bottom:
-        5px;
-
-    }
-
-
-    .modal-detail strong {
-
-      word-break:
-        break-word;
+        #686a7d;
 
       font-size:
         13px;
@@ -1226,7 +929,34 @@
        MOBILE
     ========================================= */
 
-    @media (max-width: 650px) {
+    @media (
+      max-width: 850px
+    ) {
+
+
+      .filter-grid {
+
+        grid-template-columns:
+          1fr
+          1fr;
+
+      }
+
+
+      .filter-input {
+
+        grid-column:
+          1 / -1;
+
+      }
+
+
+    }
+
+
+    @media (
+      max-width: 650px
+    ) {
 
 
       .nav {
@@ -1242,11 +972,11 @@
         margin-left:
           0;
 
-        width:
-          100%;
-
         order:
           3;
+
+        width:
+          100%;
 
       }
 
@@ -1262,63 +992,42 @@
       .page-heading h1 {
 
         font-size:
-          26px;
+          27px;
+
+      }
+
+
+      .filter-grid {
+
+        grid-template-columns:
+          1fr;
+
+      }
+
+
+      .filter-input {
+
+        grid-column:
+          auto;
 
       }
 
 
       .transaction-top {
 
-        align-items:
-          flex-start;
+        flex-direction:
+          column;
 
       }
 
 
-      .transaction-right {
+      .refresh-btn {
 
         width:
           100%;
 
-        text-align:
-          left;
-
-        margin-left:
-          0;
-
       }
 
-
-      .badges {
-
-        justify-content:
-          flex-start;
-
-      }
-
-
-      .toolbar {
-
-        align-items:
-          stretch;
-
-      }
-
-
-      .search-box {
-
-        flex-basis:
-          100%;
-
-      }
-
-
-      .filter-select {
-
-        flex:
-          1;
-
-      }
 
     }
 
@@ -1337,7 +1046,10 @@
 
 <header>
 
-  <div class="nav">
+
+  <div
+    class="nav"
+  >
 
 
     <a
@@ -1350,7 +1062,9 @@
     </a>
 
 
-    <div class="admin-badge">
+    <div
+      class="admin-badge"
+    >
 
       ADMIN PORTAL
 
@@ -1369,6 +1083,7 @@
 
   </div>
 
+
 </header>
 
 
@@ -1382,10 +1097,14 @@
 
   <!-- PAGE HEADER -->
 
-  <section class="page-heading">
+  <section
+    class="page-heading"
+  >
 
 
-    <span class="eyebrow">
+    <span
+      class="eyebrow"
+    >
 
       ADMINISTRATION
 
@@ -1401,8 +1120,8 @@
 
     <p>
 
-      Review all wallet activity and
-      platform financial transactions.
+      Review all wallet activity and platform
+      financial transactions.
 
     </p>
 
@@ -1411,97 +1130,151 @@
 
 
 
-  <!-- STATISTICS -->
+  <!-- =======================================
+       OVERVIEW
+  ======================================== -->
 
-  <h2 class="section-title">
+  <h2
+    class="section-title"
+  >
 
     Transaction Overview
 
   </h2>
 
 
-  <section
+  <div
     class="stats-grid"
     id="statsGrid"
   >
 
 
-    <div class="loading">
+    <div
+      class="loading"
+    >
 
       Loading transaction statistics...
 
     </div>
 
 
-  </section>
+  </div>
 
 
 
-  <!-- TRANSACTION MANAGEMENT -->
+  <!-- =======================================
+       ALL TRANSACTIONS
+  ======================================== -->
 
-  <h2 class="section-title">
+  <h2
+    class="section-title"
+  >
 
     All Transactions
 
   </h2>
 
 
+
   <!-- FILTERS -->
 
-  <div class="toolbar">
+  <div
+    class="filter-box"
+  >
 
 
-    <div class="search-box">
+    <div
+      class="filter-grid"
+    >
+
 
       <input
+
         type="text"
+
         id="searchInput"
-        placeholder="Search description, reference or user ID..."
+
+        class="filter-input"
+
+        placeholder="
+          Search description, reference or user ID...
+        "
+
       >
+
+
+      <select
+
+        id="typeFilter"
+
+        class="filter-select"
+
+      >
+
+        <option value="">
+
+          All Types
+
+        </option>
+
+      </select>
+
+
+
+      <select
+
+        id="statusFilter"
+
+        class="filter-select"
+
+      >
+
+        <option value="">
+
+          All Statuses
+
+        </option>
+
+      </select>
+
+
+
+      <button
+
+        type="button"
+
+        class="refresh-btn"
+
+        id="refreshButton"
+
+      >
+
+        ↻ Refresh
+
+      </button>
+
 
     </div>
 
 
+  </div>
 
-    <select
-      class="filter-select"
-      id="typeFilter"
+
+
+  <!-- RESULT COUNT -->
+
+  <div
+    class="result-bar"
+  >
+
+
+    <span
+      id="resultCount"
     >
 
-      <option value="">
+      Loading...
 
-        All Types
-
-      </option>
-
-    </select>
-
-
-
-    <select
-      class="filter-select"
-      id="statusFilter"
-    >
-
-      <option value="">
-
-        All Statuses
-
-      </option>
-
-    </select>
-
-
-
-    <button
-      type="button"
-      class="refresh-btn"
-      onclick="loadTransactions()"
-    >
-
-      ↻ Refresh
-
-    </button>
+    </span>
 
 
   </div>
@@ -1510,68 +1283,17 @@
 
   <!-- TRANSACTION LIST -->
 
-  <section
+  <div
     class="transaction-list"
     id="transactionList"
   >
 
 
-    <div class="loading">
+    <div
+      class="loading"
+    >
 
       Loading transactions...
-
-    </div>
-
-
-  </section>
-
-
-</main>
-
-
-
-<!-- =========================================
-     TRANSACTION DETAILS MODAL
-========================================= -->
-
-<div
-  class="modal-overlay"
-  id="transactionModal"
->
-
-
-  <div class="modal">
-
-
-    <div class="modal-header">
-
-
-      <h2>
-
-        Transaction Details
-
-      </h2>
-
-
-      <button
-        type="button"
-        class="close-btn"
-        onclick="closeTransactionModal()"
-      >
-
-        ×
-
-      </button>
-
-
-    </div>
-
-
-
-    <div
-      class="modal-details"
-      id="modalDetails"
-    >
 
     </div>
 
@@ -1579,7 +1301,7 @@
   </div>
 
 
-</div>
+</main>
 
 
 
@@ -1595,10 +1317,71 @@
 ========================================= */
 
 
-let currentAdmin = null;
+let currentAdmin =
+  null;
 
 
-let allTransactions = [];
+let allTransactions =
+  [];
+
+
+/* =========================================
+   REQUEST TIMEOUT
+========================================= */
+
+
+function withTimeout(
+  promise,
+  milliseconds = 15000
+) {
+
+
+  return Promise.race([
+
+
+    promise,
+
+
+    new Promise(
+
+      function(
+        resolve,
+        reject
+      ) {
+
+
+        setTimeout(
+
+          function() {
+
+
+            reject(
+
+              new Error(
+
+                "The request took too long. Please check your internet connection and Supabase configuration."
+
+              )
+
+            );
+
+
+          },
+
+          milliseconds
+
+        );
+
+
+      }
+
+    )
+
+
+  ]);
+
+
+}
 
 
 /* =========================================
@@ -1606,7 +1389,9 @@ let allTransactions = [];
 ========================================= */
 
 
-function escapeHtml(value) {
+function escapeHtml(
+  value
+) {
 
 
   if (
@@ -1649,6 +1434,7 @@ function escapeHtml(value) {
       "&#039;"
     );
 
+
 }
 
 
@@ -1657,7 +1443,9 @@ function escapeHtml(value) {
 ========================================= */
 
 
-function formatMoney(amount) {
+function formatMoney(
+  amount
+) {
 
 
   const value =
@@ -1684,7 +1472,10 @@ function formatMoney(amount) {
 
     }
 
-  ).format(value);
+  )
+
+  .format(value);
+
 
 }
 
@@ -1694,7 +1485,9 @@ function formatMoney(amount) {
 ========================================= */
 
 
-function formatDate(date) {
+function formatDate(
+  date
+) {
 
 
   if (!date) {
@@ -1704,45 +1497,282 @@ function formatDate(date) {
   }
 
 
-  try {
+  const convertedDate =
+    new Date(date);
 
 
-    return new Date(date)
+  if (
 
-      .toLocaleString(
+    Number.isNaN(
+      convertedDate.getTime()
+    )
 
-        "en-NG",
-
-        {
-
-          year:
-            "numeric",
-
-          month:
-            "short",
-
-          day:
-            "numeric",
-
-          hour:
-            "2-digit",
-
-          minute:
-            "2-digit"
-
-        }
-
-      );
-
-
-  }
-
-  catch (error) {
-
+  ) {
 
     return "—";
 
   }
+
+
+  return convertedDate
+    .toLocaleString(
+
+      "en-NG",
+
+      {
+
+        year:
+          "numeric",
+
+        month:
+          "short",
+
+        day:
+          "numeric",
+
+        hour:
+          "2-digit",
+
+        minute:
+          "2-digit"
+
+      }
+
+    );
+
+
+}
+
+
+/* =========================================
+   FORMAT TEXT
+========================================= */
+
+
+function formatText(
+  value
+) {
+
+
+  if (!value) {
+
+    return "—";
+
+  }
+
+
+  return String(value)
+
+    .replaceAll(
+      "_",
+      " "
+    )
+
+    .replace(
+
+      /\b\w/g,
+
+      function(
+        character
+      ) {
+
+        return character
+          .toUpperCase();
+
+      }
+
+    );
+
+
+}
+
+
+/* =========================================
+   GET STATUS CLASS
+========================================= */
+
+
+function getStatusClass(
+  status
+) {
+
+
+  const value =
+    String(
+      status || ""
+    )
+    .toLowerCase();
+
+
+  if (
+
+    value ===
+    "completed"
+
+  ) {
+
+    return
+      "status-completed";
+
+  }
+
+
+  if (
+
+    value ===
+    "pending"
+
+  ) {
+
+    return
+      "status-pending";
+
+  }
+
+
+  if (
+
+    value ===
+    "failed"
+
+  ) {
+
+    return
+      "status-failed";
+
+  }
+
+
+  if (
+
+    value ===
+    "rejected"
+
+  ) {
+
+    return
+      "status-rejected";
+
+  }
+
+
+  if (
+
+    value ===
+    "cancelled"
+
+  ) {
+
+    return
+      "status-cancelled";
+
+  }
+
+
+  return
+    "status-default";
+
+
+}
+
+
+/* =========================================
+   SHOW PAGE ERROR
+========================================= */
+
+
+function showPageError(
+  message
+) {
+
+
+  document.getElementById(
+    "statsGrid"
+  ).innerHTML = `
+
+    <div
+      class="error-box"
+      style="
+        grid-column:1/-1;
+      "
+    >
+
+      <strong>
+
+        Unable to load transactions.
+
+      </strong>
+
+      <p>
+
+        ${escapeHtml(message)}
+
+      </p>
+
+    </div>
+
+  `;
+
+
+  document.getElementById(
+    "transactionList"
+  ).innerHTML = `
+
+    <div
+      class="error-box"
+    >
+
+      <strong>
+
+        Transaction data could not be loaded.
+
+      </strong>
+
+      <p>
+
+        ${escapeHtml(message)}
+
+      </p>
+
+    </div>
+
+  `;
+
+
+  document.getElementById(
+    "resultCount"
+  ).textContent =
+    "Unable to load transactions";
+
+
+}
+
+
+/* =========================================
+   CHECK SUPABASE
+========================================= */
+
+
+function checkSupabaseClient() {
+
+
+  if (
+
+    typeof supabaseClient ===
+    "undefined"
+
+  ) {
+
+
+    throw new Error(
+
+      "supabaseClient was not found. Please check your supabase.js file."
+
+    );
+
+
+  }
+
 
 }
 
@@ -1758,23 +1788,33 @@ async function checkAdmin() {
   try {
 
 
-    const {
+    checkSupabaseClient();
 
-      data:
-      {
-        user
-      },
 
-      error
 
-    }
+    const result =
 
-    =
+      await withTimeout(
 
-    await supabaseClient
-      .auth
-      .getUser();
+        supabaseClient
 
+          .auth
+
+          .getUser()
+
+      );
+
+
+    const user =
+      result.data.user;
+
+
+    const error =
+      result.error;
+
+
+
+    /* NOT LOGGED IN */
 
 
     if (
@@ -1796,50 +1836,79 @@ async function checkAdmin() {
 
 
 
-    const {
+    /* LOAD PROFILE */
 
-      data:
-      profile,
 
-      error:
-      profileError
+    const profileResult =
 
-    }
+      await withTimeout(
 
-    =
+        supabaseClient
 
-    await supabaseClient
+          .from(
+            "profiles"
+          )
 
-      .from(
-        "profiles"
-      )
+          .select(
+            `
+              full_name,
+              is_admin,
+              account_status
+            `
+          )
 
-      .select(
+          .eq(
+            "id",
+            user.id
+          )
 
-        `
-          full_name,
-          is_admin,
-          account_status
-        `
+          .single()
 
-      )
+      );
 
-      .eq(
-        "id",
-        user.id
-      )
 
-      .single();
+    const profile =
+      profileResult.data;
 
+
+    const profileError =
+      profileResult.error;
+
+
+
+    /* PROFILE ERROR */
 
 
     if (
 
+
       profileError ||
 
-      !profile ||
+      !profile
 
-      profile.is_admin !== true
+    ) {
+
+
+      throw new Error(
+
+        profileError
+          ? profileError.message
+          : "Administrator profile could not be loaded."
+
+      );
+
+
+    }
+
+
+
+    /* NOT ADMIN */
+
+
+    if (
+
+      profile.is_admin !==
+      true
 
     ) {
 
@@ -1864,6 +1933,9 @@ async function checkAdmin() {
 
     }
 
+
+
+    /* INACTIVE ACCOUNT */
 
 
     if (
@@ -1906,6 +1978,7 @@ async function checkAdmin() {
 
   }
 
+
   catch (error) {
 
 
@@ -1918,35 +1991,25 @@ async function checkAdmin() {
     );
 
 
-    document.getElementById(
-      "transactionList"
-    ).innerHTML = `
+    showPageError(
 
-      <div class="error-box">
+      "Admin verification error: " +
 
-        <strong>
+      (
 
-          Administrator verification failed.
+        error.message ||
+        "Unknown error"
 
-        </strong>
+      )
 
-        <p>
-
-          ${escapeHtml(
-            error.message ||
-            "Unknown error"
-          )}
-
-        </p>
-
-      </div>
-
-    `;
+    );
 
 
     return null;
 
+
   }
+
 
 }
 
@@ -1959,15 +2022,33 @@ async function checkAdmin() {
 async function loadTransactions() {
 
 
-  const list =
+  const transactionList =
+
     document.getElementById(
       "transactionList"
     );
 
 
-  list.innerHTML = `
+  const statsGrid =
 
-    <div class="loading">
+    document.getElementById(
+      "statsGrid"
+    );
+
+
+  const refreshButton =
+
+    document.getElementById(
+      "refreshButton"
+    );
+
+
+
+  transactionList.innerHTML = `
+
+    <div
+      class="loading"
+    >
 
       Loading transactions...
 
@@ -1976,60 +2057,92 @@ async function loadTransactions() {
   `;
 
 
+  statsGrid.innerHTML = `
+
+    <div
+      class="loading"
+    >
+
+      Loading transaction statistics...
+
+    </div>
+
+  `;
+
+
+  document.getElementById(
+    "resultCount"
+  ).textContent =
+    "Loading...";
+
+
+  refreshButton.disabled =
+    true;
+
+
+  refreshButton.textContent =
+    "Loading...";
+
+
   try {
 
 
-    const {
+    checkSupabaseClient();
 
-      data:
-      transactions,
 
-      error
 
-    }
+    /* =====================================
+       LOAD DIRECTLY FROM TRANSACTIONS TABLE
 
-    =
+       NO RPC IS USED HERE
+    ===================================== */
 
-    await supabaseClient
 
-      .from(
-        "transactions"
-      )
+    const result =
 
-      .select(
+      await withTimeout(
 
-        `
-          id,
-          user_id,
-          type,
-          amount,
-          status,
-          description,
-          reference,
-          metadata,
-          balance_after,
-          processed_at,
-          created_at
-        `
+        supabaseClient
 
-      )
+          .from(
+            "transactions"
+          )
 
-      .order(
+          .select(
+            `
+              id,
+              user_id,
+              type,
+              amount,
+              status,
+              description,
+              reference,
+              metadata,
+              balance_after,
+              processed_at,
+              created_at
+            `
+          )
 
-        "created_at",
+          .order(
+            "created_at",
+            {
 
-        {
+              ascending:
+                false
 
-          ascending:
-            false
+            }
+          )
 
-        }
-
-      )
-
-      .limit(
-        500
       );
+
+
+    const transactions =
+      result.data;
+
+
+    const error =
+      result.error;
 
 
 
@@ -2044,7 +2157,7 @@ async function loadTransactions() {
       transactions || [];
 
 
-    populateFilters();
+    updateFilters();
 
 
     updateStatistics();
@@ -2054,6 +2167,7 @@ async function loadTransactions() {
 
 
   }
+
 
   catch (error) {
 
@@ -2067,75 +2181,52 @@ async function loadTransactions() {
     );
 
 
-    list.innerHTML = `
+    showPageError(
 
-      <div class="error-box">
+      error.message ||
 
-        <strong>
+      "Unknown error"
 
-          Transactions could not be loaded.
+    );
 
-        </strong>
-
-        <p>
-
-          ${escapeHtml(
-            error.message ||
-            "Unknown error"
-          )}
-
-        </p>
-
-      </div>
-
-    `;
-
-
-    document.getElementById(
-      "statsGrid"
-    ).innerHTML = `
-
-      <div class="error-box">
-
-        <strong>
-
-          Transaction statistics could not be loaded.
-
-        </strong>
-
-        <p>
-
-          ${escapeHtml(
-            error.message ||
-            "Unknown error"
-          )}
-
-        </p>
-
-      </div>
-
-    `;
 
   }
+
+
+  finally {
+
+
+    refreshButton.disabled =
+      false;
+
+
+    refreshButton.textContent =
+      "↻ Refresh";
+
+
+  }
+
 
 }
 
 
 /* =========================================
-   POPULATE FILTERS
+   UPDATE FILTER OPTIONS
 ========================================= */
 
 
-function populateFilters() {
+function updateFilters() {
 
 
   const typeFilter =
+
     document.getElementById(
       "typeFilter"
     );
 
 
   const statusFilter =
+
     document.getElementById(
       "statusFilter"
     );
@@ -2150,57 +2241,77 @@ function populateFilters() {
 
 
 
-  const types = [
-
-    ...new Set(
-
-      allTransactions
-
-        .map(
-
-          transaction =>
-
-            String(
-              transaction.type ||
-              ""
-            ).trim()
-
-        )
-
-        .filter(
-          Boolean
-        )
-
-    )
-
-  ].sort();
+  /* GET UNIQUE TYPES */
 
 
+  const types =
 
-  const statuses = [
+    [
 
-    ...new Set(
+      ...new Set(
 
-      allTransactions
+        allTransactions
 
-        .map(
+          .map(
 
-          transaction =>
+            transaction =>
 
-            String(
-              transaction.status ||
-              ""
-            ).trim()
+              String(
+                transaction.type ||
+                ""
+              )
 
-        )
+          )
 
-        .filter(
-          Boolean
-        )
+          .filter(
 
-    )
+            value =>
+              value
 
-  ].sort();
+          )
+
+      )
+
+    ]
+
+    .sort();
+
+
+
+  /* GET UNIQUE STATUSES */
+
+
+  const statuses =
+
+    [
+
+      ...new Set(
+
+        allTransactions
+
+          .map(
+
+            transaction =>
+
+              String(
+                transaction.status ||
+                ""
+              )
+
+          )
+
+          .filter(
+
+            value =>
+              value
+
+          )
+
+      )
+
+    ]
+
+    .sort();
 
 
 
@@ -2212,36 +2323,31 @@ function populateFilters() {
 
     </option>
 
-  `;
+  `
 
+  +
 
-  types.forEach(
+  types
 
-    type => {
+    .map(
 
+      type => `
 
-      const option =
-        document.createElement(
-          "option"
-        );
+        <option
+          value="${escapeHtml(type)}"
+        >
 
+          ${escapeHtml(
+            formatText(type)
+          )}
 
-      option.value =
-        type;
+        </option>
 
+      `
 
-      option.textContent =
-        type;
+    )
 
-
-      typeFilter.appendChild(
-        option
-      );
-
-
-    }
-
-  );
+    .join("");
 
 
 
@@ -2253,45 +2359,50 @@ function populateFilters() {
 
     </option>
 
-  `;
+  `
 
+  +
 
-  statuses.forEach(
+  statuses
 
-    status => {
+    .map(
 
+      status => `
 
-      const option =
-        document.createElement(
-          "option"
-        );
+        <option
+          value="${escapeHtml(status)}"
+        >
 
+          ${escapeHtml(
+            formatText(status)
+          )}
 
-      option.value =
-        status;
+        </option>
 
+      `
 
-      option.textContent =
-        status;
+    )
 
-
-      statusFilter.appendChild(
-        option
-      );
-
-
-    }
-
-  );
+    .join("");
 
 
 
   typeFilter.value =
-    currentType;
+    types.includes(currentType)
+
+      ? currentType
+
+      : "";
+
 
 
   statusFilter.value =
-    currentStatus;
+    statuses.includes(currentStatus)
+
+      ? currentStatus
+
+      : "";
+
 
 }
 
@@ -2304,116 +2415,148 @@ function populateFilters() {
 function updateStatistics() {
 
 
-  const totalCount =
+  const totalTransactions =
+
     allTransactions.length;
 
 
+
+  const totalAmount =
+
+    allTransactions
+
+      .reduce(
+
+        function(
+          total,
+          transaction
+        ) {
+
+
+          return (
+
+            total +
+
+            Number(
+              transaction.amount || 0
+            )
+
+          );
+
+
+        },
+
+        0
+
+      );
+
+
+
   const completed =
-    allTransactions.filter(
 
-      transaction =>
+    allTransactions
 
-        String(
-          transaction.status ||
-          ""
-        )
+      .filter(
 
-        .toLowerCase()
-
-        ===
-
-        "completed"
-
-    );
-
-
-  const pending =
-    allTransactions.filter(
-
-      transaction =>
-
-        String(
-          transaction.status ||
-          ""
-        )
-
-        .toLowerCase()
-
-        ===
-
-        "pending"
-
-    );
-
-
-  const failed =
-    allTransactions.filter(
-
-      transaction =>
-
-        [
-
-          "failed",
-
-          "rejected"
-
-        ]
-
-        .includes(
+        transaction =>
 
           String(
             transaction.status ||
             ""
           )
+
           .toLowerCase()
 
-        )
+          ===
 
-    );
+          "completed"
+
+      );
 
 
 
-  const totalAmount =
-    allTransactions.reduce(
+  const pending =
 
-      (
-        total,
-        transaction
-      )
+    allTransactions
 
-      =>
+      .filter(
 
-        total +
+        transaction =>
 
-        Number(
-          transaction.amount || 0
-        ),
+          String(
+            transaction.status ||
+            ""
+          )
 
-      0
+          .toLowerCase()
 
-    );
+          ===
+
+          "pending"
+
+      );
 
 
 
   const completedAmount =
-    completed.reduce(
 
-      (
-        total,
-        transaction
-      )
+    completed
 
-      =>
+      .reduce(
 
-        total +
+        function(
+          total,
+          transaction
+        ) {
 
-        Number(
-          transaction.amount || 0
-        ),
 
-      0
+          return (
 
-    );
+            total +
+
+            Number(
+              transaction.amount || 0
+            )
+
+          );
+
+
+        },
+
+        0
+
+      );
+
+
+
+  const pendingAmount =
+
+    pending
+
+      .reduce(
+
+        function(
+          total,
+          transaction
+        ) {
+
+
+          return (
+
+            total +
+
+            Number(
+              transaction.amount || 0
+            )
+
+          );
+
+
+        },
+
+        0
+
+      );
 
 
 
@@ -2422,7 +2565,9 @@ function updateStatistics() {
   ).innerHTML = `
 
 
-    <div class="stat-card">
+    <div
+      class="stat-card"
+    >
 
       <small>
 
@@ -2432,7 +2577,7 @@ function updateStatistics() {
 
       <strong>
 
-        ${totalCount.toLocaleString()}
+        ${totalTransactions.toLocaleString()}
 
       </strong>
 
@@ -2440,7 +2585,33 @@ function updateStatistics() {
 
 
 
-    <div class="stat-card">
+    <div
+      class="stat-card"
+    >
+
+      <small>
+
+        Total Amount
+
+      </small>
+
+      <strong
+        class="stat-money"
+      >
+
+        ${formatMoney(
+          totalAmount
+        )}
+
+      </strong>
+
+    </div>
+
+
+
+    <div
+      class="stat-card"
+    >
 
       <small>
 
@@ -2458,7 +2629,33 @@ function updateStatistics() {
 
 
 
-    <div class="stat-card">
+    <div
+      class="stat-card"
+    >
+
+      <small>
+
+        Completed Amount
+
+      </small>
+
+      <strong
+        class="stat-money"
+      >
+
+        ${formatMoney(
+          completedAmount
+        )}
+
+      </strong>
+
+    </div>
+
+
+
+    <div
+      class="stat-card"
+    >
 
       <small>
 
@@ -2476,56 +2673,22 @@ function updateStatistics() {
 
 
 
-    <div class="stat-card">
+    <div
+      class="stat-card"
+    >
 
       <small>
 
-        Failed / Rejected
+        Pending Amount
 
       </small>
 
-      <strong>
-
-        ${failed.length.toLocaleString()}
-
-      </strong>
-
-    </div>
-
-
-
-    <div class="stat-card">
-
-      <small>
-
-        Total Transaction Value
-
-      </small>
-
-      <strong class="money">
+      <strong
+        class="stat-money"
+      >
 
         ${formatMoney(
-          totalAmount
-        )}
-
-      </strong>
-
-    </div>
-
-
-
-    <div class="stat-card">
-
-      <small>
-
-        Completed Value
-
-      </small>
-
-      <strong class="money">
-
-        ${formatMoney(
-          completedAmount
+          pendingAmount
         )}
 
       </strong>
@@ -2534,6 +2697,7 @@ function updateStatistics() {
 
 
   `;
+
 
 }
 
@@ -2547,116 +2711,141 @@ function getFilteredTransactions() {
 
 
   const search =
-    document.getElementById(
-      "searchInput"
-    )
 
-    .value
+    document
 
-    .trim()
+      .getElementById(
+        "searchInput"
+      )
 
-    .toLowerCase();
+      .value
+
+      .trim()
+
+      .toLowerCase();
+
 
 
   const selectedType =
-    document.getElementById(
-      "typeFilter"
-    ).value;
+
+    document
+
+      .getElementById(
+        "typeFilter"
+      )
+
+      .value;
+
 
 
   const selectedStatus =
-    document.getElementById(
-      "statusFilter"
-    ).value;
+
+    document
+
+      .getElementById(
+        "statusFilter"
+      )
+
+      .value;
 
 
 
-  return allTransactions.filter(
+  return allTransactions
 
-    transaction => {
+    .filter(
+
+      function(
+        transaction
+      ) {
 
 
-      const type =
-        String(
-          transaction.type ||
-          ""
+        const transactionType =
+
+          String(
+            transaction.type ||
+            ""
+          );
+
+
+
+        const transactionStatus =
+
+          String(
+            transaction.status ||
+            ""
+          );
+
+
+
+        const searchableText =
+
+          [
+
+            transaction.description,
+
+            transaction.reference,
+
+            transaction.user_id,
+
+            transaction.type,
+
+            transaction.status,
+
+            transaction.amount
+
+          ]
+
+          .join(
+            " "
+          )
+
+          .toLowerCase();
+
+
+
+        const matchesSearch =
+
+          !search ||
+
+          searchableText.includes(
+            search
+          );
+
+
+
+        const matchesType =
+
+          !selectedType ||
+
+          transactionType ===
+          selectedType;
+
+
+
+        const matchesStatus =
+
+          !selectedStatus ||
+
+          transactionStatus ===
+          selectedStatus;
+
+
+
+        return (
+
+          matchesSearch &&
+
+          matchesType &&
+
+          matchesStatus
+
         );
 
 
-      const status =
-        String(
-          transaction.status ||
-          ""
-        );
+      }
 
+    );
 
-      const searchableText =
-
-        [
-
-          transaction.description,
-
-          transaction.reference,
-
-          transaction.user_id,
-
-          transaction.id,
-
-          transaction.type,
-
-          transaction.status
-
-        ]
-
-        .join(
-          " "
-        )
-
-        .toLowerCase();
-
-
-
-      const matchesSearch =
-
-        !search ||
-
-        searchableText.includes(
-          search
-        );
-
-
-
-      const matchesType =
-
-        !selectedType ||
-
-        type ===
-        selectedType;
-
-
-
-      const matchesStatus =
-
-        !selectedStatus ||
-
-        status ===
-        selectedStatus;
-
-
-
-      return (
-
-        matchesSearch &&
-
-        matchesType &&
-
-        matchesStatus
-
-      );
-
-    }
-
-  );
 
 }
 
@@ -2669,31 +2858,53 @@ function getFilteredTransactions() {
 function displayTransactions() {
 
 
-  const list =
+  const transactionList =
+
     document.getElementById(
       "transactionList"
     );
 
 
   const transactions =
+
     getFilteredTransactions();
 
 
 
+  document.getElementById(
+    "resultCount"
+  ).textContent =
+
+    `${transactions.length.toLocaleString()} transaction${
+      transactions.length === 1
+        ? ""
+        : "s"
+    } found`;
+
+
+
+  /* EMPTY */
+
+
   if (
 
-    transactions.length === 0
+    transactions.length ===
+    0
 
   ) {
 
 
-    list.innerHTML = `
+    transactionList.innerHTML = `
 
 
-      <div class="empty-state">
+      <div
+        class="empty-state"
+      >
 
 
-        <div class="empty-icon">
+        <div
+          class="empty-icon"
+        >
 
           📭
 
@@ -2709,8 +2920,8 @@ function displayTransactions() {
 
         <p>
 
-          There are no transactions matching
-          your current filters.
+          No transactions match your
+          current search or filters.
 
         </p>
 
@@ -2723,257 +2934,36 @@ function displayTransactions() {
 
     return;
 
+
   }
 
 
 
-  list.innerHTML =
+  /* CREATE CARDS */
+
+
+  transactionList.innerHTML =
 
     transactions
 
       .map(
 
-        transaction =>
+        function(
+          transaction
+        ) {
 
-          createTransactionCard(
+
+          return createTransactionCard(
             transaction
-          )
+          );
+
+
+        }
 
       )
 
       .join("");
 
-}
-
-
-/* =========================================
-   GET TRANSACTION ICON
-========================================= */
-
-
-function getTransactionIcon(
-  type
-) {
-
-
-  const value =
-    String(
-      type ||
-      ""
-    )
-    .toLowerCase();
-
-
-
-  if (
-
-    value.includes(
-      "withdraw"
-    ) ||
-
-    value.includes(
-      "debit"
-    ) ||
-
-    value.includes(
-      "payment"
-    )
-
-  ) {
-
-    return {
-
-      icon:
-        "↓",
-
-      className:
-        "icon-debit"
-
-    };
-
-  }
-
-
-
-  if (
-
-    value.includes(
-      "reward"
-    ) ||
-
-    value.includes(
-      "earning"
-    ) ||
-
-    value.includes(
-      "credit"
-    ) ||
-
-    value.includes(
-      "bonus"
-    )
-
-  ) {
-
-    return {
-
-      icon:
-        "↑",
-
-      className:
-        "icon-credit"
-
-    };
-
-  }
-
-
-
-  return {
-
-    icon:
-      "↔",
-
-    className:
-      "icon-other"
-
-  };
-
-}
-
-
-/* =========================================
-   GET STATUS CLASS
-========================================= */
-
-
-function getStatusClass(
-  status
-) {
-
-
-  const value =
-    String(
-      status ||
-      ""
-    )
-    .toLowerCase();
-
-
-
-  if (
-
-    value ===
-    "completed"
-
-  ) {
-
-    return "status-completed";
-
-  }
-
-
-
-  if (
-
-    value ===
-    "pending"
-
-  ) {
-
-    return "status-pending";
-
-  }
-
-
-
-  if (
-
-    value ===
-    "failed" ||
-
-    value ===
-    "rejected"
-
-  ) {
-
-    return "status-failed";
-
-  }
-
-
-  return "status-default";
-
-}
-
-
-/* =========================================
-   GET AMOUNT CLASS
-========================================= */
-
-
-function getAmountClass(
-  transaction
-) {
-
-
-  const type =
-    String(
-      transaction.type ||
-      ""
-    )
-    .toLowerCase();
-
-
-
-  if (
-
-    type.includes(
-      "withdraw"
-    ) ||
-
-    type.includes(
-      "debit"
-    ) ||
-
-    type.includes(
-      "payment"
-    )
-
-  ) {
-
-    return "amount-negative";
-
-  }
-
-
-
-  if (
-
-    type.includes(
-      "reward"
-    ) ||
-
-    type.includes(
-      "earning"
-    ) ||
-
-    type.includes(
-      "credit"
-    ) ||
-
-    type.includes(
-      "bonus"
-    )
-
-  ) {
-
-    return "amount-positive";
-
-  }
-
-
-  return "amount-neutral";
 
 }
 
@@ -2988,32 +2978,26 @@ function createTransactionCard(
 ) {
 
 
-  const transactionIcon =
-    getTransactionIcon(
-      transaction.type
+  const status =
+
+    String(
+
+      transaction.status ||
+
+      "unknown"
+
     );
 
 
-  const statusClass =
-    getStatusClass(
-      transaction.status
+  const type =
+
+    String(
+
+      transaction.type ||
+
+      "unknown"
+
     );
-
-
-  const amountClass =
-    getAmountClass(
-      transaction
-    );
-
-
-  const description =
-
-    transaction.description ||
-
-    transaction.type ||
-
-    "Transaction";
-
 
 
   return `
@@ -3030,121 +3014,72 @@ function createTransactionCard(
 
 
         <div
-          class="transaction-left"
+          class="transaction-main"
         >
 
 
-          <div
+          <span
             class="
-              transaction-icon
-              ${transactionIcon.className}
+              badge
+              type-badge
             "
           >
 
-            ${transactionIcon.icon}
+            ${escapeHtml(
+              formatText(type)
+            )}
 
-          </div>
-
-
-
-          <div
-            class="transaction-title"
-          >
+          </span>
 
 
-            <h3>
-
-              ${escapeHtml(
-                description
-              )}
-
-            </h3>
-
-
-            <p>
-
-              ${formatDate(
-                transaction.created_at
-              )}
-
-            </p>
-
-
-          </div>
-
-
-        </div>
-
-
-
-        <div
-          class="transaction-right"
-        >
-
-
-          <div
-            class="
-              transaction-amount
-              ${amountClass}
-            "
+          <h2
+            class="transaction-amount"
           >
 
             ${formatMoney(
               transaction.amount
             )}
 
-          </div>
-
-
-
-          <div
-            class="badges"
-          >
-
-
-            <span
-              class="
-                badge
-                type-badge
-              "
-            >
-
-              ${escapeHtml(
-                transaction.type ||
-                "unknown"
-              )}
-
-            </span>
-
-
-
-            <span
-              class="
-                badge
-                ${statusClass}
-              "
-            >
-
-              ${escapeHtml(
-                transaction.status ||
-                "unknown"
-              )}
-
-            </span>
-
-
-          </div>
+          </h2>
 
 
         </div>
+
+
+
+        <span
+          class="
+            badge
+            ${getStatusClass(status)}
+          "
+        >
+
+          ${escapeHtml(
+            formatText(status)
+          )}
+
+        </span>
 
 
       </div>
 
 
 
+      <p
+        class="transaction-description"
+      >
+
+        ${escapeHtml(
+          transaction.description ||
+          "No description provided."
+        )}
+
+      </p>
+
+
+
       <div
-        class="transaction-details"
+        class="details-grid"
       >
 
 
@@ -3157,7 +3092,6 @@ function createTransactionCard(
             Reference
 
           </small>
-
 
           <strong>
 
@@ -3181,7 +3115,6 @@ function createTransactionCard(
 
           </small>
 
-
           <strong>
 
             ${escapeHtml(
@@ -3204,26 +3137,49 @@ function createTransactionCard(
 
           </small>
 
-
           <strong>
 
             ${
+              transaction.balance_after ===
+              null
 
-              transaction.balance_after === null ||
+              ||
 
-              transaction.balance_after === undefined
+              transaction.balance_after ===
+              undefined
 
-              ?
+                ?
 
-              "—"
+                "—"
 
-              :
+                :
 
-              formatMoney(
-                transaction.balance_after
-              )
-
+                formatMoney(
+                  transaction.balance_after
+                )
             }
+
+          </strong>
+
+        </div>
+
+
+
+        <div
+          class="detail"
+        >
+
+          <small>
+
+            Created
+
+          </small>
+
+          <strong>
+
+            ${formatDate(
+              transaction.created_at
+            )}
 
           </strong>
 
@@ -3241,7 +3197,6 @@ function createTransactionCard(
 
           </small>
 
-
           <strong>
 
             ${formatDate(
@@ -3256,484 +3211,105 @@ function createTransactionCard(
       </div>
 
 
-
-      <button
-
-        type="button"
-
-        class="view-details-btn"
-
-        onclick="
-          openTransactionDetails(
-            '${transaction.id}'
-          )
-        "
-
-      >
-
-        View Full Details
-
-      </button>
-
-
     </article>
 
 
   `;
 
+
 }
 
 
 /* =========================================
-   OPEN TRANSACTION DETAILS
+   EVENT LISTENERS
 ========================================= */
 
 
-function openTransactionDetails(
-  transactionId
-) {
+document
+
+  .getElementById(
+    "searchInput"
+  )
+
+  .addEventListener(
+
+    "input",
+
+    function() {
 
 
-  const transaction =
-    allTransactions.find(
-
-      item =>
-
-        String(item.id) ===
-        String(transactionId)
-
-    );
-
-
-  if (!transaction) {
-
-    return;
-
-  }
-
-
-  let metadata =
-    "—";
-
-
-  if (
-
-    transaction.metadata !== null &&
-
-    transaction.metadata !== undefined
-
-  ) {
-
-
-    try {
-
-
-      metadata =
-
-        typeof transaction.metadata ===
-        "string"
-
-        ?
-
-        transaction.metadata
-
-        :
-
-        JSON.stringify(
-
-          transaction.metadata,
-
-          null,
-
-          2
-
-        );
+      displayTransactions();
 
 
     }
 
-    catch (error) {
-
-
-      metadata =
-        String(
-          transaction.metadata
-        );
-
-    }
-
-  }
-
-
-
-  document.getElementById(
-    "modalDetails"
-  ).innerHTML = `
-
-
-    <div class="modal-detail">
-
-      <small>
-
-        Transaction ID
-
-      </small>
-
-      <strong>
-
-        ${escapeHtml(
-          transaction.id
-        )}
-
-      </strong>
-
-    </div>
-
-
-
-    <div class="modal-detail">
-
-      <small>
-
-        User ID
-
-      </small>
-
-      <strong>
-
-        ${escapeHtml(
-          transaction.user_id
-        )}
-
-      </strong>
-
-    </div>
-
-
-
-    <div class="modal-detail">
-
-      <small>
-
-        Type
-
-      </small>
-
-      <strong>
-
-        ${escapeHtml(
-          transaction.type
-        )}
-
-      </strong>
-
-    </div>
-
-
-
-    <div class="modal-detail">
-
-      <small>
-
-        Status
-
-      </small>
-
-      <strong>
-
-        ${escapeHtml(
-          transaction.status
-        )}
-
-      </strong>
-
-    </div>
-
-
-
-    <div class="modal-detail">
-
-      <small>
-
-        Amount
-
-      </small>
-
-      <strong>
-
-        ${formatMoney(
-          transaction.amount
-        )}
-
-      </strong>
-
-    </div>
-
-
-
-    <div class="modal-detail">
-
-      <small>
-
-        Description
-
-      </small>
-
-      <strong>
-
-        ${escapeHtml(
-          transaction.description
-        )}
-
-      </strong>
-
-    </div>
-
-
-
-    <div class="modal-detail">
-
-      <small>
-
-        Reference
-
-      </small>
-
-      <strong>
-
-        ${escapeHtml(
-          transaction.reference
-        )}
-
-      </strong>
-
-    </div>
-
-
-
-    <div class="modal-detail">
-
-      <small>
-
-        Balance After
-
-      </small>
-
-      <strong>
-
-        ${
-
-          transaction.balance_after === null ||
-
-          transaction.balance_after === undefined
-
-          ?
-
-          "—"
-
-          :
-
-          formatMoney(
-            transaction.balance_after
-          )
-
-        }
-
-      </strong>
-
-    </div>
-
-
-
-    <div class="modal-detail">
-
-      <small>
-
-        Created At
-
-      </small>
-
-      <strong>
-
-        ${formatDate(
-          transaction.created_at
-        )}
-
-      </strong>
-
-    </div>
-
-
-
-    <div class="modal-detail">
-
-      <small>
-
-        Processed At
-
-      </small>
-
-      <strong>
-
-        ${formatDate(
-          transaction.processed_at
-        )}
-
-      </strong>
-
-    </div>
-
-
-
-    <div class="modal-detail">
-
-      <small>
-
-        Metadata
-
-      </small>
-
-      <strong
-        style="
-          white-space:pre-wrap;
-          font-family:monospace;
-        "
-      >
-
-        ${escapeHtml(
-          metadata
-        )}
-
-      </strong>
-
-    </div>
-
-
-  `;
-
-
-  document.getElementById(
-    "transactionModal"
-  ).classList.add(
-    "active"
   );
 
-}
 
 
-/* =========================================
-   CLOSE TRANSACTION MODAL
-========================================= */
+document
+
+  .getElementById(
+    "typeFilter"
+  )
+
+  .addEventListener(
+
+    "change",
+
+    function() {
 
 
-function closeTransactionModal() {
+      displayTransactions();
 
-
-  document.getElementById(
-    "transactionModal"
-  ).classList.remove(
-    "active"
-  );
-
-}
-
-
-/* =========================================
-   SEARCH
-========================================= */
-
-
-document.getElementById(
-  "searchInput"
-)
-
-.addEventListener(
-
-  "input",
-
-  function() {
-
-    displayTransactions();
-
-  }
-
-);
-
-
-/* =========================================
-   TYPE FILTER
-========================================= */
-
-
-document.getElementById(
-  "typeFilter"
-)
-
-.addEventListener(
-
-  "change",
-
-  function() {
-
-    displayTransactions();
-
-  }
-
-);
-
-
-/* =========================================
-   STATUS FILTER
-========================================= */
-
-
-document.getElementById(
-  "statusFilter"
-)
-
-.addEventListener(
-
-  "change",
-
-  function() {
-
-    displayTransactions();
-
-  }
-
-);
-
-
-/* =========================================
-   CLOSE MODAL WHEN CLICKING OUTSIDE
-========================================= */
-
-
-document.getElementById(
-  "transactionModal"
-)
-
-.addEventListener(
-
-  "click",
-
-  function(event) {
-
-
-    if (
-
-      event.target ===
-      this
-
-    ) {
-
-      closeTransactionModal();
 
     }
 
-  }
+  );
 
-);
+
+
+document
+
+  .getElementById(
+    "statusFilter"
+  )
+
+  .addEventListener(
+
+    "change",
+
+    function() {
+
+
+      displayTransactions();
+
+
+    }
+
+  );
+
+
+
+document
+
+  .getElementById(
+    "refreshButton"
+  )
+
+  .addEventListener(
+
+    "click",
+
+    async function() {
+
+
+      await loadTransactions();
+
+
+    }
+
+  );
 
 
 /* =========================================
@@ -3744,18 +3320,51 @@ document.getElementById(
 (async function() {
 
 
-  const admin =
-    await checkAdmin();
+  try {
 
 
-  if (!admin) {
+    const admin =
 
-    return;
+      await checkAdmin();
+
+
+
+    if (!admin) {
+
+      return;
+
+    }
+
+
+
+    await loadTransactions();
+
 
   }
 
 
-  await loadTransactions();
+  catch (error) {
+
+
+    console.error(
+
+      "Application startup error:",
+
+      error
+
+    );
+
+
+    showPageError(
+
+      error.message ||
+
+      "Unknown application error"
+
+    );
+
+
+  }
 
 
 })();

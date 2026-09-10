@@ -832,13 +832,25 @@
     }
 
 
+    /* ========================================
+       DELETE BUTTON
+    ======================================== */
+
     .delete-btn {
 
       background:
-        #f4f4f6;
+        #fff0f0;
 
       color:
-        #555;
+        #b42318;
+
+    }
+
+
+    .delete-btn:hover {
+
+      background:
+        #ffdada;
 
     }
 
@@ -1786,6 +1798,11 @@ async function loadTasks() {
 
 
 
+  /*
+    Load tasks together with the
+    task creator's username.
+  */
+
   const {
 
     data: tasks,
@@ -1799,7 +1816,12 @@ async function loadTasks() {
     .from("tasks")
 
 
-    .select("*")
+    .select(`
+      *,
+      profiles (
+        username
+      )
+    `)
 
 
     .order(
@@ -2213,16 +2235,21 @@ function renderTasks(tasks) {
 
 
         /* ================================
-           TASK CREATOR
+           TASK CREATOR USERNAME
         ================================= */
 
-        const creator =
+        const username =
 
-          task.user_id ||
+          task.profiles &&
+          task.profiles.username
 
-          task.created_by ||
+            ?
 
-          "Unknown";
+            task.profiles.username
+
+            :
+
+            "Unknown User";
 
 
 
@@ -2315,6 +2342,29 @@ function renderTasks(tasks) {
             ============================= -->
 
             <div class="task-meta">
+
+
+              <!-- ==========================
+                   USERNAME
+              =========================== -->
+
+              <div class="meta-item">
+
+
+                <span>
+                  Posted By
+                </span>
+
+
+                <strong>
+
+                  👤 ${escapeHtml(username)}
+
+                </strong>
+
+
+              </div>
+
 
 
               <div class="meta-item">
@@ -2443,6 +2493,10 @@ function renderTasks(tasks) {
             <div class="task-actions">
 
 
+              <!-- ==========================
+                   OPEN LINK
+              =========================== -->
+
               ${
                 task.task_link
 
@@ -2479,6 +2533,10 @@ function renderTasks(tasks) {
 
 
 
+              <!-- ==========================
+                   PENDING ACTIONS
+              =========================== -->
+
               ${
                 status === "pending"
 
@@ -2487,6 +2545,8 @@ function renderTasks(tasks) {
                   `
 
                     <button
+
+                      type="button"
 
                       class="
                         action-btn
@@ -2509,6 +2569,8 @@ function renderTasks(tasks) {
 
 
                     <button
+
+                      type="button"
 
                       class="
                         action-btn
@@ -2537,6 +2599,10 @@ function renderTasks(tasks) {
 
 
 
+              <!-- ==========================
+                   ACTIVE ACTIONS
+              =========================== -->
+
               ${
                 status === "active" ||
                 status === "approved"
@@ -2546,6 +2612,8 @@ function renderTasks(tasks) {
                   `
 
                     <button
+
+                      type="button"
 
                       class="
                         action-btn
@@ -2575,6 +2643,10 @@ function renderTasks(tasks) {
 
 
 
+              <!-- ==========================
+                   PAUSED ACTIONS
+              =========================== -->
+
               ${
                 status === "paused"
 
@@ -2583,6 +2655,8 @@ function renderTasks(tasks) {
                   `
 
                     <button
+
+                      type="button"
 
                       class="
                         action-btn
@@ -2609,6 +2683,33 @@ function renderTasks(tasks) {
                   ""
 
               }
+
+
+
+              <!-- ==========================
+                   DELETE BUTTON
+              =========================== -->
+
+              <button
+
+                type="button"
+
+                class="
+                  action-btn
+                  delete-btn
+                "
+
+                onclick="
+                  deleteTask(
+                    '${task.id}'
+                  )
+                "
+
+              >
+
+                🗑 Delete
+
+              </button>
 
 
             </div>
@@ -2837,6 +2938,137 @@ async function rejectTask(taskId) {
 
 
   await loadTasks();
+
+
+}
+
+
+
+/* ========================================
+   DELETE TASK
+======================================== */
+
+async function deleteTask(taskId) {
+
+
+  const confirmed =
+    confirm(
+
+      "WARNING!\n\n" +
+
+      "Are you sure you want to permanently delete this task?\n\n" +
+
+      "This action cannot be undone."
+
+    );
+
+
+
+  if (!confirmed) {
+
+    return;
+
+  }
+
+
+
+  const secondConfirmation =
+    confirm(
+
+      "Final confirmation:\n\n" +
+
+      "Delete this task permanently?"
+
+    );
+
+
+
+  if (!secondConfirmation) {
+
+    return;
+
+  }
+
+
+
+  try {
+
+
+    const {
+
+      error
+
+    } =
+    await supabaseClient
+
+
+      .from("tasks")
+
+
+      .delete()
+
+
+      .eq(
+        "id",
+        taskId
+      );
+
+
+
+    if (error) {
+
+
+      console.error(
+        "Task deletion error:",
+        error
+      );
+
+
+      alert(
+
+        "Unable to delete task: " +
+
+        error.message
+
+      );
+
+
+      return;
+
+    }
+
+
+
+    alert(
+
+      "Task deleted successfully."
+
+    );
+
+
+
+    await loadTasks();
+
+
+  }
+
+  catch (error) {
+
+
+    console.error(
+      "Unexpected deletion error:",
+      error
+    );
+
+
+    alert(
+
+      "An unexpected error occurred while deleting the task."
+
+    );
+
+
+  }
 
 
 }

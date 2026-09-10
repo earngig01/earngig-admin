@@ -13,7 +13,9 @@
   <title>Admin Tasks | EarnGig</title>
 
 
-  <!-- SUPABASE -->
+  <!-- ========================================
+       SUPABASE
+  ======================================== -->
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -832,17 +834,13 @@
     }
 
 
-    /* ========================================
-       DELETE BUTTON
-    ======================================== */
-
     .delete-btn {
 
       background:
-        #fff0f0;
+        #4b5563;
 
       color:
-        #b42318;
+        white;
 
     }
 
@@ -850,7 +848,7 @@
     .delete-btn:hover {
 
       background:
-        #ffdada;
+        #374151;
 
     }
 
@@ -1559,14 +1557,25 @@ function escapeHtml(value) {
 function formatMoney(amount) {
 
 
+  const value =
+    Number(amount || 0);
+
+
   return (
 
     "₦" +
 
-    Number(
-      amount || 0
-    ).toLocaleString(
-      "en-NG"
+    value.toLocaleString(
+      "en-NG",
+      {
+
+        minimumFractionDigits:
+          0,
+
+        maximumFractionDigits:
+          2
+
+      }
     )
 
   );
@@ -1590,23 +1599,37 @@ function formatDate(date) {
   }
 
 
-  return new Date(
-    date
-  ).toLocaleDateString(
-    "en-NG",
-    {
+  const parsedDate =
+    new Date(date);
 
-      year:
-        "numeric",
 
-      month:
-        "short",
+  if (
+    Number.isNaN(
+      parsedDate.getTime()
+    )
+  ) {
 
-      day:
-        "numeric"
+    return "Unknown";
 
-    }
-  );
+  }
+
+
+  return parsedDate
+    .toLocaleDateString(
+      "en-NG",
+      {
+
+        year:
+          "numeric",
+
+        month:
+          "short",
+
+        day:
+          "numeric"
+
+      }
+    );
 
 
 }
@@ -1798,10 +1821,14 @@ async function loadTasks() {
 
 
 
-  /*
-    Load tasks together with the
-    task creator's username.
-  */
+  /* =====================================
+     LOAD TASKS ONLY
+
+     We deliberately DO NOT embed profiles
+     here because there may be multiple
+     foreign-key relationships between
+     tasks and profiles.
+  ===================================== */
 
   const {
 
@@ -1816,12 +1843,7 @@ async function loadTasks() {
     .from("tasks")
 
 
-    .select(`
-      *,
-      profiles (
-        username
-      )
-    `)
+    .select("*")
 
 
     .order(
@@ -1882,16 +1904,219 @@ async function loadTasks() {
 
 
 
-  allTasks =
+  const loadedTasks =
     tasks || [];
 
 
+
+  /* =====================================
+     GET ALL UNIQUE USER IDS
+  ===================================== */
+
+  const userIds =
+    [
+
+      ...new Set(
+
+        loadedTasks
+
+          .map(
+            function(task) {
+
+
+              return (
+
+                task.user_id ||
+
+                task.created_by ||
+
+                null
+
+              );
+
+
+            }
+          )
+
+
+          .filter(
+            function(userId) {
+
+
+              return !!userId;
+
+
+            }
+          )
+
+      )
+
+    ];
+
+
+
+  let profiles = [];
+
+
+
+  /* =====================================
+     LOAD PROFILES SEPARATELY
+
+     This avoids:
+
+     "Could not embed because more than
+     one relationship was found"
+  ===================================== */
+
+  if (
+    userIds.length > 0
+  ) {
+
+
+    const {
+
+      data: profileData,
+
+      error: profileError
+
+    } =
+    await supabaseClient
+
+
+      .from("profiles")
+
+
+      .select(
+        "id, username"
+      )
+
+
+      .in(
+        "id",
+        userIds
+      );
+
+
+
+    if (profileError) {
+
+
+      console.error(
+        "Profile loading error:",
+        profileError
+      );
+
+
+    }
+
+
+
+    profiles =
+      profileData || [];
+
+
+  }
+
+
+
+  /* =====================================
+     CREATE PROFILE MAP
+
+     Example:
+
+     {
+       "user-uuid": {
+         id: "...",
+         username: "john"
+       }
+     }
+  ===================================== */
+
+  const profileMap = {};
+
+
+
+  profiles.forEach(
+    function(profile) {
+
+
+      profileMap[
+        profile.id
+      ] =
+        profile;
+
+
+    }
+  );
+
+
+
+  /* =====================================
+     ATTACH USERNAME TO EVERY TASK
+  ===================================== */
+
+  allTasks =
+    loadedTasks.map(
+      function(task) {
+
+
+        const userId =
+
+          task.user_id ||
+
+          task.created_by ||
+
+          null;
+
+
+
+        const profile =
+          userId
+
+            ?
+
+            profileMap[userId]
+
+            :
+
+            null;
+
+
+
+        return {
+
+
+          ...task,
+
+
+          username:
+
+            profile?.username ||
+
+            "Unknown User"
+
+
+        };
+
+
+      }
+    );
+
+
+
+  /* =====================================
+     UPDATE STATISTICS
+  ===================================== */
 
   updateStatistics(
     allTasks
   );
 
 
+
+  /* =====================================
+     DISPLAY TASKS
+  ===================================== */
 
   applyFilter();
 
@@ -2066,11 +2291,40 @@ function applyFilter() {
       function(task) {
 
 
-        return String(
-          task.status || ""
-        )
-        .toLowerCase() ===
-        filter;
+        const status =
+          String(
+            task.status || ""
+          )
+          .toLowerCase();
+
+
+
+        /* ==================================
+           ACTIVE FILTER ALSO SUPPORTS
+           APPROVED
+        =================================== */
+
+        if (
+          filter === "active"
+        ) {
+
+
+          return (
+
+            status === "active" ||
+
+            status === "approved"
+
+          );
+
+
+        }
+
+
+
+        return (
+          status === filter
+        );
 
 
       }
@@ -2235,21 +2489,14 @@ function renderTasks(tasks) {
 
 
         /* ================================
-           TASK CREATOR USERNAME
+           USERNAME
         ================================= */
 
         const username =
 
-          task.profiles &&
-          task.profiles.username
+          task.username ||
 
-            ?
-
-            task.profiles.username
-
-            :
-
-            "Unknown User";
+          "Unknown User";
 
 
 
@@ -2344,9 +2591,7 @@ function renderTasks(tasks) {
             <div class="task-meta">
 
 
-              <!-- ==========================
-                   USERNAME
-              =========================== -->
+              <!-- POSTED BY -->
 
               <div class="meta-item">
 
@@ -2358,7 +2603,7 @@ function renderTasks(tasks) {
 
                 <strong>
 
-                  👤 ${escapeHtml(username)}
+                  ${escapeHtml(username)}
 
                 </strong>
 
@@ -2366,6 +2611,8 @@ function renderTasks(tasks) {
               </div>
 
 
+
+              <!-- PARTICIPANTS -->
 
               <div class="meta-item">
 
@@ -2386,6 +2633,8 @@ function renderTasks(tasks) {
 
 
 
+              <!-- REWARD -->
+
               <div class="meta-item">
 
 
@@ -2404,6 +2653,8 @@ function renderTasks(tasks) {
               </div>
 
 
+
+              <!-- TASK BUDGET -->
 
               <div class="meta-item">
 
@@ -2424,6 +2675,8 @@ function renderTasks(tasks) {
 
 
 
+              <!-- PLATFORM FEE -->
+
               <div class="meta-item">
 
 
@@ -2443,6 +2696,8 @@ function renderTasks(tasks) {
 
 
 
+              <!-- TOTAL PAYMENT -->
+
               <div class="meta-item">
 
 
@@ -2461,6 +2716,8 @@ function renderTasks(tasks) {
               </div>
 
 
+
+              <!-- SUBMITTED -->
 
               <div class="meta-item">
 
@@ -2493,9 +2750,7 @@ function renderTasks(tasks) {
             <div class="task-actions">
 
 
-              <!-- ==========================
-                   OPEN LINK
-              =========================== -->
+              <!-- TASK LINK -->
 
               ${
                 task.task_link
@@ -2533,9 +2788,7 @@ function renderTasks(tasks) {
 
 
 
-              <!-- ==========================
-                   PENDING ACTIONS
-              =========================== -->
+              <!-- APPROVE + REJECT -->
 
               ${
                 status === "pending"
@@ -2599,9 +2852,7 @@ function renderTasks(tasks) {
 
 
 
-              <!-- ==========================
-                   ACTIVE ACTIONS
-              =========================== -->
+              <!-- PAUSE -->
 
               ${
                 status === "active" ||
@@ -2643,9 +2894,7 @@ function renderTasks(tasks) {
 
 
 
-              <!-- ==========================
-                   PAUSED ACTIONS
-              =========================== -->
+              <!-- ACTIVATE -->
 
               ${
                 status === "paused"
@@ -2686,9 +2935,7 @@ function renderTasks(tasks) {
 
 
 
-              <!-- ==========================
-                   DELETE BUTTON
-              =========================== -->
+              <!-- DELETE -->
 
               <button
 
@@ -2701,7 +2948,11 @@ function renderTasks(tasks) {
 
                 onclick="
                   deleteTask(
-                    '${task.id}'
+                    '${task.id}',
+                    '${escapeHtml(
+                      task.title ||
+                      "this task"
+                    )}'
                   )
                 "
 
@@ -2948,17 +3199,32 @@ async function rejectTask(taskId) {
    DELETE TASK
 ======================================== */
 
-async function deleteTask(taskId) {
+async function deleteTask(
+
+
+  taskId,
+
+
+  taskTitle
+
+
+) {
 
 
   const confirmed =
     confirm(
 
-      "WARNING!\n\n" +
 
-      "Are you sure you want to permanently delete this task?\n\n" +
+      "DELETE TASK\n\n" +
 
-      "This action cannot be undone."
+
+      "Are you sure you want to permanently delete:\n\n" +
+
+
+      taskTitle +
+
+
+      "\n\nThis action cannot be undone."
 
     );
 
@@ -2972,18 +3238,44 @@ async function deleteTask(taskId) {
 
 
 
-  const secondConfirmation =
-    confirm(
+  const {
 
-      "Final confirmation:\n\n" +
+    error
 
-      "Delete this task permanently?"
+  } =
+  await supabaseClient
 
+
+    .from("tasks")
+
+
+    .delete()
+
+
+    .eq(
+      "id",
+      taskId
     );
 
 
 
-  if (!secondConfirmation) {
+  if (error) {
+
+
+    console.error(
+      "Task deletion error:",
+      error
+    );
+
+
+    alert(
+
+      "Unable to delete task: " +
+
+      error.message
+
+    );
+
 
     return;
 
@@ -2991,84 +3283,15 @@ async function deleteTask(taskId) {
 
 
 
-  try {
+  alert(
 
+    "Task deleted successfully."
 
-    const {
-
-      error
-
-    } =
-    await supabaseClient
-
-
-      .from("tasks")
-
-
-      .delete()
-
-
-      .eq(
-        "id",
-        taskId
-      );
+  );
 
 
 
-    if (error) {
-
-
-      console.error(
-        "Task deletion error:",
-        error
-      );
-
-
-      alert(
-
-        "Unable to delete task: " +
-
-        error.message
-
-      );
-
-
-      return;
-
-    }
-
-
-
-    alert(
-
-      "Task deleted successfully."
-
-    );
-
-
-
-    await loadTasks();
-
-
-  }
-
-  catch (error) {
-
-
-    console.error(
-      "Unexpected deletion error:",
-      error
-    );
-
-
-    alert(
-
-      "An unexpected error occurred while deleting the task."
-
-    );
-
-
-  }
+  await loadTasks();
 
 
 }

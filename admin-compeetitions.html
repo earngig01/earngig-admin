@@ -1,0 +1,3800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EarnGig Admin - Competitions & Awards</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #070b22;
+      color: #fff;
+    }
+
+    header {
+      background: #0d1233;
+      border-bottom: 1px solid #242a58;
+      padding: 18px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
+    .header-inner {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: 800;
+      color: #9b7cff;
+    }
+
+    .back-btn {
+      color: #fff;
+      text-decoration: none;
+      background: #171d45;
+      border: 1px solid #30376c;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 14px;
+    }
+
+    main {
+      max-width: 1200px;
+      margin: auto;
+      padding: 25px 16px 60px;
+    }
+
+    h1 {
+      margin: 0 0 7px;
+      font-size: 28px;
+    }
+
+    .subtitle {
+      color: #aeb5d5;
+      margin-bottom: 24px;
+    }
+
+    .message {
+      display: none;
+      padding: 13px 15px;
+      border-radius: 10px;
+      margin-bottom: 18px;
+      font-size: 14px;
+    }
+
+    .message.success {
+      display: block;
+      background: #103b31;
+      border: 1px solid #1d705c;
+      color: #9ff3dc;
+    }
+
+    .message.error {
+      display: block;
+      background: #431d2a;
+      border: 1px solid #84394e;
+      color: #ffb7c9;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .stat {
+      background: #101638;
+      border: 1px solid #252d60;
+      border-radius: 14px;
+      padding: 17px;
+    }
+
+    .stat-label {
+      color: #9ca6cf;
+      font-size: 12px;
+      margin-bottom: 8px;
+    }
+
+    .stat-value {
+      font-size: 25px;
+      font-weight: 800;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    button,
+    select,
+    input,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      border: 0;
+      cursor: pointer;
+    }
+
+    .btn {
+      padding: 11px 15px;
+      border-radius: 10px;
+      font-weight: 700;
+    }
+
+    .btn-primary {
+      background: #7657ff;
+      color: #fff;
+    }
+
+    .btn-secondary {
+      background: #171d45;
+      color: #fff;
+      border: 1px solid #30376c;
+    }
+
+    .btn-success {
+      background: #087f63;
+      color: #fff;
+    }
+
+    .btn-danger {
+      background: #a83252;
+      color: #fff;
+    }
+
+    .btn-warning {
+      background: #8b6513;
+      color: #fff;
+    }
+
+    .panel {
+      background: #0d1233;
+      border: 1px solid #252d60;
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .panel h2 {
+      margin: 0 0 17px;
+      font-size: 20px;
+    }
+
+    .competition-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .competition-card {
+      background: #11183d;
+      border: 1px solid #2a3268;
+      border-radius: 14px;
+      padding: 17px;
+    }
+
+    .competition-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 15px;
+    }
+
+    .competition-title {
+      font-size: 18px;
+      font-weight: 800;
+      margin-bottom: 7px;
+    }
+
+    .competition-description {
+      color: #aeb5d5;
+      line-height: 1.5;
+      white-space: pre-wrap;
+    }
+
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 12px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 5px 9px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      background: #242b59;
+      color: #dfe3ff;
+    }
+
+    .badge.published {
+      background: #123f35;
+      color: #9ef2d9;
+    }
+
+    .badge.closed {
+      background: #45351a;
+      color: #ffd77c;
+    }
+
+    .badge.cancelled {
+      background: #451e2d;
+      color: #ffb6c8;
+    }
+
+    .badge.completed,
+    .badge.winners_announced {
+      background: #29316c;
+      color: #c9cfff;
+    }
+
+    .competition-meta {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin-top: 15px;
+      padding-top: 14px;
+      border-top: 1px solid #282f60;
+    }
+
+    .meta-item {
+      font-size: 12px;
+      color: #919ac1;
+    }
+
+    .meta-item strong {
+      display: block;
+      color: #fff;
+      margin-top: 4px;
+      font-size: 13px;
+    }
+
+    .card-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 15px;
+    }
+
+    .empty {
+      text-align: center;
+      color: #8f98bd;
+      padding: 35px 10px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+    }
+
+    .full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      display: block;
+      color: #c6cbea;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 7px;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      background: #080d29;
+      color: #fff;
+      border: 1px solid #30376c;
+      border-radius: 10px;
+      padding: 12px;
+      outline: none;
+    }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: #7657ff;
+    }
+
+    .quiz-time-box {
+      background: #171d45;
+      border: 1px solid #383f78;
+      border-radius: 12px;
+      padding: 14px;
+      margin-top: 15px;
+    }
+
+    .quiz-time-box strong {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .quiz-time-box p {
+      margin: 0 0 10px;
+      color: #aeb5d5;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .section-title {
+      margin: 24px 0 12px;
+      font-size: 16px;
+      color: #dce0ff;
+    }
+
+    .prize-row,
+    .question-row {
+      background: #101638;
+      border: 1px solid #293264;
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 10px;
+    }
+
+    .row-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr 1fr 1.1fr 1fr 50px;
+      gap: 9px;
+      align-items: end;
+    }
+
+    .question-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 9px;
+    }
+
+    .remove-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 9px;
+      background: #472034;
+      color: #ffb4c8;
+      font-weight: 800;
+    }
+
+    .add-row {
+      margin-top: 3px;
+    }
+
+    .detail-box {
+      background: #080d29;
+      border: 1px solid #292f5f;
+      border-radius: 12px;
+      padding: 14px;
+      margin-top: 15px;
+    }
+
+    .detail-box h3 {
+      margin: 0 0 12px;
+      font-size: 15px;
+    }
+
+    .prize-display,
+    .question-display,
+    .entry-card,
+    .winner-card {
+      background: #11183d;
+      border: 1px solid #293264;
+      border-radius: 10px;
+      padding: 12px;
+      margin-bottom: 8px;
+    }
+
+    .entry-card {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+    }
+
+    .entry-main {
+      min-width: 0;
+    }
+
+    .entry-title {
+      font-weight: 800;
+      margin-bottom: 5px;
+    }
+
+    .entry-text {
+      color: #aeb5d5;
+      font-size: 13px;
+      line-height: 1.45;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .entry-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 7px;
+    }
+
+    .entry-actions .btn {
+      padding: 8px 10px;
+      font-size: 12px;
+    }
+
+    .results-table-wrap {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    .results-table {
+      width: 100%;
+      min-width: 720px;
+      border-collapse: collapse;
+    }
+
+    .results-table th,
+    .results-table td {
+      padding: 12px 10px;
+      border-bottom: 1px solid #292f5f;
+      text-align: left;
+      font-size: 13px;
+    }
+
+    .results-table th {
+      color: #9ca6cf;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .4px;
+    }
+
+    .results-table td {
+      color: #e6e8ff;
+    }
+
+    .rank {
+      font-weight: 900;
+      color: #9b7cff;
+      font-size: 16px;
+    }
+
+    .top-rank {
+      color: #ffd76a;
+    }
+
+    .score {
+      font-weight: 900;
+      font-size: 15px;
+    }
+
+    .result-status {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: #242b59;
+      font-size: 11px;
+    }
+
+    .winner-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr auto;
+      gap: 9px;
+      align-items: end;
+    }
+
+    a {
+      color: #9b88ff;
+    }
+
+    @media (max-width: 1000px) {
+      .stats {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .competition-meta {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .row-grid {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 700px) {
+      header {
+        padding: 14px;
+      }
+
+      main {
+        padding: 20px 12px 45px;
+      }
+
+      h1 {
+        font-size: 23px;
+      }
+
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .full {
+        grid-column: auto;
+      }
+
+      .competition-top {
+        flex-direction: column;
+      }
+
+      .competition-meta {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .row-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .question-grid,
+      .winner-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .entry-card {
+        grid-template-columns: 1fr;
+      }
+
+      .entry-actions {
+        justify-content: flex-start;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">EarnGig Admin</div>
+    <a href="admin-dashboard.html" class="back-btn">← Dashboard</a>
+  </div>
+</header>
+
+<main>
+
+  <h1>🏆 Competitions & Awards</h1>
+
+  <div class="subtitle">
+    Create and manage admin-controlled competitions, prizes, timed quizzes, results and winners.
+  </div>
+
+  <div id="message" class="message"></div>
+
+  <section class="stats">
+    <div class="stat">
+      <div class="stat-label">TOTAL</div>
+      <div id="statTotal" class="stat-value">0</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-label">DRAFT</div>
+      <div id="statDraft" class="stat-value">0</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-label">PUBLISHED</div>
+      <div id="statPublished" class="stat-value">0</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-label">CLOSED</div>
+      <div id="statClosed" class="stat-value">0</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-label">WINNERS ANNOUNCED</div>
+      <div id="statWinners" class="stat-value">0</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-label">COMPLETED</div>
+      <div id="statCompleted" class="stat-value">0</div>
+    </div>
+  </section>
+
+  <div class="toolbar">
+    <button class="btn btn-primary" onclick="openCreateForm()">
+      ＋ Create Competition
+    </button>
+
+    <button class="btn btn-secondary" onclick="loadCompetitions()">
+      ↻ Refresh
+    </button>
+
+    <select id="statusFilter" onchange="renderCompetitions()" style="max-width:190px;">
+      <option value="all">All Competitions</option>
+      <option value="draft">Draft</option>
+      <option value="published">Published</option>
+      <option value="closed">Closed</option>
+      <option value="winners_announced">Winners Announced</option>
+      <option value="completed">Completed</option>
+      <option value="cancelled">Cancelled</option>
+    </select>
+  </div>
+
+  <!-- CREATE / EDIT -->
+  <section id="formPanel" class="panel hidden">
+
+    <h2 id="formTitle">Create Competition</h2>
+
+    <form id="competitionForm">
+
+      <input type="hidden" id="editingId">
+
+      <div class="form-grid">
+
+        <div class="full">
+          <label>Competition Title *</label>
+          <input
+            id="title"
+            required
+            placeholder="e.g. EarnGig ₦100,000 Quiz Challenge"
+          >
+        </div>
+
+        <div>
+          <label>Competition Type *</label>
+
+          <select
+            id="competitionType"
+            required
+            onchange="updateEntryFields()"
+          >
+            <option value="quiz">Quiz</option>
+            <option value="video">TikTok / Video Competition</option>
+            <option value="giveaway">Giveaway</option>
+            <option value="challenge">Challenge / Evidence</option>
+            <option value="application">Application-Based Award</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Entry Method *</label>
+
+          <select
+            id="entryMethod"
+            required
+            onchange="updateEntryFields()"
+          >
+            <option value="quiz">Quiz</option>
+            <option value="url">URL / TikTok Link</option>
+            <option value="simple">Simple Entry</option>
+            <option value="evidence">Evidence Submission</option>
+            <option value="application">Application</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Maximum Participants</label>
+
+          <input
+            id="maxParticipants"
+            type="number"
+            min="1"
+            placeholder="Leave blank for unlimited"
+          >
+        </div>
+
+        <div>
+          <label>Eligibility</label>
+
+          <input
+            id="eligibility"
+            placeholder="e.g. All active EarnGig members"
+          >
+        </div>
+
+        <div>
+          <label>Start Date & Time *</label>
+
+          <input
+            id="startAt"
+            type="datetime-local"
+            required
+          >
+        </div>
+
+        <div>
+          <label>End Date & Time *</label>
+
+          <input
+            id="endAt"
+            type="datetime-local"
+            required
+          >
+        </div>
+
+        <div class="full">
+          <label>Description *</label>
+
+          <textarea
+            id="description"
+            required
+            placeholder="Explain the competition and what members can win."
+          ></textarea>
+        </div>
+
+        <div class="full">
+          <label>Instructions</label>
+
+          <textarea
+            id="instructions"
+            placeholder="Tell members exactly how to enter, what to submit and any rules."
+          ></textarea>
+        </div>
+
+      </div>
+
+      <!-- QUIZ TIMER -->
+      <div id="quizTimeBox" class="quiz-time-box hidden">
+
+        <strong>⏱ Quiz Time Limit</strong>
+
+        <p>
+          The countdown starts when the member presses Start Quiz.
+          When the time reaches zero, the quiz will automatically end.
+        </p>
+
+        <label>Time Limit (minutes) *</label>
+
+        <input
+          id="quizTimeLimit"
+          type="number"
+          min="1"
+          max="1440"
+          placeholder="e.g. 10"
+        >
+
+      </div>
+
+      <!-- PRIZES -->
+      <div class="section-title">🎁 Prizes</div>
+
+      <div id="prizesContainer"></div>
+
+      <button
+        type="button"
+        class="btn btn-secondary add-row"
+        onclick="addPrizeRow()"
+      >
+        ＋ Add Prize Tier
+      </button>
+
+      <!-- QUIZ QUESTIONS -->
+      <div id="quizSection">
+
+        <div class="section-title">📝 Quiz Questions</div>
+
+        <div id="questionsContainer"></div>
+
+        <button
+          type="button"
+          class="btn btn-secondary add-row"
+          onclick="addQuestionRow()"
+        >
+          ＋ Add Question
+        </button>
+
+      </div>
+
+      <div style="margin-top:25px; display:flex; flex-wrap:wrap; gap:10px;">
+
+        <button type="submit" class="btn btn-primary">
+          Save Competition
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-secondary"
+          onclick="closeForm()"
+        >
+          Cancel
+        </button>
+
+      </div>
+
+    </form>
+  </section>
+
+  <!-- COMPETITION LIST -->
+  <section class="panel">
+
+    <h2>Competitions</h2>
+
+    <div id="competitionList" class="competition-list">
+      <div class="empty">Loading competitions...</div>
+    </div>
+
+  </section>
+
+  <!-- DETAILS -->
+  <section id="detailPanel" class="panel hidden">
+
+    <div style="display:flex; justify-content:space-between; gap:10px; align-items:center;">
+
+      <h2 id="detailTitle">Competition Details</h2>
+
+      <button
+        class="btn btn-secondary"
+        onclick="closeDetails()"
+      >
+        Close
+      </button>
+
+    </div>
+
+    <div id="detailContent"></div>
+
+  </section>
+
+</main>
+
+<script>
+  let competitions = [];
+  let currentDetailId = null;
+  let adminUser = null;
+
+  document.addEventListener("DOMContentLoaded", async () => {
+    await verifyAdmin();
+  });
+
+  async function verifyAdmin() {
+    try {
+      const {
+        data: { user },
+        error
+      } = await supabaseClient.auth.getUser();
+
+      if (error || !user) {
+        window.location.href = "index.html";
+        return;
+      }
+
+      const {
+        data: profile,
+        error: profileError
+      } = await supabaseClient
+        .from("profiles")
+        .select("id, is_admin, account_status, name")
+        .eq("id", user.id)
+        .single();
+
+      if (
+        profileError ||
+        !profile ||
+        profile.is_admin !== true ||
+        profile.account_status !== "active"
+      ) {
+        window.location.href = "admin-dashboard.html";
+        return;
+      }
+
+      adminUser = user;
+
+      await loadCompetitions();
+
+    } catch (err) {
+      showMessage(
+        err.message || "Unable to verify administrator.",
+        "error"
+      );
+    }
+  }
+
+  async function loadCompetitions() {
+    try {
+      const {
+        data,
+        error
+      } = await supabaseClient
+        .from("competitions")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+      if (error) throw error;
+
+      competitions = data || [];
+
+      updateStats();
+      renderCompetitions();
+
+    } catch (err) {
+      showMessage(
+        err.message || "Failed to load competitions.",
+        "error"
+      );
+    }
+  }
+
+  function updateStats() {
+    const count = status =>
+      competitions.filter(x => x.status === status).length;
+
+    document.getElementById("statTotal").textContent =
+      competitions.length;
+
+    document.getElementById("statDraft").textContent =
+      count("draft");
+
+    document.getElementById("statPublished").textContent =
+      count("published");
+
+    document.getElementById("statClosed").textContent =
+      count("closed");
+
+    document.getElementById("statWinners").textContent =
+      count("winners_announced");
+
+    document.getElementById("statCompleted").textContent =
+      count("completed");
+  }
+
+  function renderCompetitions() {
+    const list =
+      document.getElementById("competitionList");
+
+    const filter =
+      document.getElementById("statusFilter").value;
+
+    const rows =
+      filter === "all"
+        ? competitions
+        : competitions.filter(
+            x => x.status === filter
+          );
+
+    if (!rows.length) {
+      list.innerHTML =
+        `<div class="empty">No competitions found.</div>`;
+      return;
+    }
+
+    list.innerHTML = rows.map(c => {
+
+      const isQuiz =
+        c.competition_type === "quiz" ||
+        c.entry_method === "quiz";
+
+      return `
+        <div class="competition-card">
+
+          <div class="competition-top">
+
+            <div>
+
+              <div class="competition-title">
+                ${escapeHtml(c.title)}
+              </div>
+
+              <div class="competition-description">
+                ${escapeHtml(c.description || "No description.")}
+              </div>
+
+              <div class="badges">
+
+                <span class="badge ${escapeHtml(c.status)}">
+                  ${formatStatus(c.status)}
+                </span>
+
+                <span class="badge">
+                  ${formatType(c.competition_type)}
+                </span>
+
+                <span class="badge">
+                  Entry: ${formatEntryMethod(c.entry_method)}
+                </span>
+
+                ${
+                  isQuiz && c.quiz_time_limit_minutes
+                    ? `
+                      <span class="badge">
+                        ⏱ ${c.quiz_time_limit_minutes} min
+                      </span>
+                    `
+                    : ""
+                }
+
+              </div>
+
+            </div>
+
+            <button
+              class="btn btn-secondary"
+              onclick="viewCompetition('${c.id}')"
+            >
+              Manage
+            </button>
+
+          </div>
+
+          <div class="competition-meta">
+
+            <div class="meta-item">
+              Start
+              <strong>${formatDate(c.start_at)}</strong>
+            </div>
+
+            <div class="meta-item">
+              End
+              <strong>${formatDate(c.end_at)}</strong>
+            </div>
+
+            <div class="meta-item">
+              Max Participants
+              <strong>
+                ${c.max_participants || "Unlimited"}
+              </strong>
+            </div>
+
+            <div class="meta-item">
+              Created
+              <strong>${formatDate(c.created_at)}</strong>
+            </div>
+
+            ${
+              isQuiz
+                ? `
+                  <div class="meta-item">
+                    Quiz Time
+                    <strong>
+                      ${
+                        c.quiz_time_limit_minutes
+                          ? `${c.quiz_time_limit_minutes} minutes`
+                          : "Not set"
+                      }
+                    </strong>
+                  </div>
+                `
+                : `
+                  <div class="meta-item">
+                    Type
+                    <strong>${formatType(c.competition_type)}</strong>
+                  </div>
+                `
+            }
+
+          </div>
+
+          <div class="card-actions">
+
+            ${statusButtons(c)}
+
+          </div>
+
+        </div>
+      `;
+
+    }).join("");
+  }
+
+  function statusButtons(c) {
+
+    let html = `
+      <button
+        class="btn btn-secondary"
+        onclick="viewCompetition('${c.id}')"
+      >
+        View / Manage
+      </button>
+    `;
+
+    const isQuiz =
+      c.competition_type === "quiz" ||
+      c.entry_method === "quiz";
+
+    if (isQuiz) {
+      html += `
+        <button
+          class="btn btn-primary"
+          onclick="viewResults('${c.id}')"
+        >
+          📊 Results
+        </button>
+      `;
+    }
+
+    if (c.status === "draft") {
+      html += `
+        <button
+          class="btn btn-primary"
+          onclick="changeStatus('${c.id}', 'published')"
+        >
+          Publish
+        </button>
+      `;
+    }
+
+    if (c.status === "published") {
+      html += `
+        <button
+          class="btn btn-warning"
+          onclick="changeStatus('${c.id}', 'closed')"
+        >
+          Close Entries
+        </button>
+      `;
+    }
+
+    if (c.status === "closed") {
+      html += `
+        <button
+          class="btn btn-primary"
+          onclick="changeStatus('${c.id}', 'winners_announced')"
+        >
+          Announce Winners
+        </button>
+      `;
+    }
+
+    if (c.status === "winners_announced") {
+      html += `
+        <button
+          class="btn btn-success"
+          onclick="changeStatus('${c.id}', 'completed')"
+        >
+          Mark Completed
+        </button>
+      `;
+    }
+
+    if (
+      c.status !== "completed" &&
+      c.status !== "cancelled"
+    ) {
+      html += `
+        <button
+          class="btn btn-danger"
+          onclick="changeStatus('${c.id}', 'cancelled')"
+        >
+          Cancel
+        </button>
+      `;
+    }
+
+    return html;
+  }
+
+  function openCreateForm() {
+
+    document
+      .getElementById("formPanel")
+      .classList.remove("hidden");
+
+    document.getElementById("formTitle").textContent =
+      "Create Competition";
+
+    document.getElementById("competitionForm").reset();
+
+    document.getElementById("editingId").value = "";
+
+    document.getElementById("prizesContainer").innerHTML = "";
+
+    document.getElementById("questionsContainer").innerHTML = "";
+
+    addPrizeRow();
+
+    updateEntryFields();
+
+    window.scrollTo({
+      top:
+        document.getElementById("formPanel").offsetTop - 70,
+      behavior: "smooth"
+    });
+  }
+
+  function closeForm() {
+    document
+      .getElementById("formPanel")
+      .classList.add("hidden");
+  }
+
+  function updateEntryFields() {
+
+    const type =
+      document.getElementById("competitionType").value;
+
+    const method =
+      document.getElementById("entryMethod").value;
+
+    const quiz =
+      type === "quiz" ||
+      method === "quiz";
+
+    document
+      .getElementById("quizSection")
+      .classList.toggle("hidden", !quiz);
+
+    document
+      .getElementById("quizTimeBox")
+      .classList.toggle("hidden", !quiz);
+
+    if (!quiz) {
+      document.getElementById("quizTimeLimit").value = "";
+    }
+  }
+
+  function addPrizeRow(data = {}) {
+
+    const container =
+      document.getElementById("prizesContainer");
+
+    const div =
+      document.createElement("div");
+
+    div.className = "prize-row";
+
+    div.innerHTML = `
+      <div class="row-grid">
+
+        <div>
+          <label>Prize Name</label>
+
+          <input
+            class="prize-name"
+            value="${escapeAttr(data.prize_name || "")}"
+            placeholder="e.g. 1st Place"
+          >
+        </div>
+
+        <div>
+          <label>Prize Type</label>
+
+          <select class="prize-type">
+            ${prizeTypeOptions(data.prize_type || "cash")}
+          </select>
+        </div>
+
+        <div>
+          <label>Amount (₦)</label>
+
+          <input
+            class="prize-amount"
+            type="number"
+            min="0"
+            step="0.01"
+            value="${data.amount ?? ""}"
+            placeholder="100000"
+          >
+        </div>
+
+        <div>
+          <label>Item / Description</label>
+
+          <input
+            class="prize-description"
+            value="${escapeAttr(data.item_description || "")}"
+            placeholder="Optional physical prize details"
+          >
+        </div>
+
+        <div>
+          <label>Winners</label>
+
+          <input
+            class="prize-winners"
+            type="number"
+            min="1"
+            value="${data.winner_count || 1}"
+          >
+        </div>
+
+        <div>
+          <label>Order</label>
+
+          <input
+            class="prize-order"
+            type="number"
+            min="1"
+            value="${
+              data.prize_order ||
+              container.children.length + 1
+            }"
+          >
+        </div>
+
+      </div>
+
+      <button
+        type="button"
+        class="remove-btn"
+        onclick="this.closest('.prize-row').remove()"
+        style="margin-top:10px;"
+      >
+        ×
+      </button>
+    `;
+
+    container.appendChild(div);
+  }
+
+  function prizeTypeOptions(selected) {
+
+    const options = [
+      ["cash", "Cash"],
+      ["school_fees", "School Fees"],
+      ["physical_item", "Physical Item"],
+      ["gift", "Gift"],
+      ["other", "Other"]
+    ];
+
+    return options.map(
+      ([value, label]) =>
+        `
+          <option
+            value="${value}"
+            ${
+              value === selected
+                ? "selected"
+                : ""
+            }
+          >
+            ${label}
+          </option>
+        `
+    ).join("");
+  }
+
+  function addQuestionRow(data = {}) {
+
+    const container =
+      document.getElementById("questionsContainer");
+
+    const div =
+      document.createElement("div");
+
+    div.className = "question-row";
+
+    div.innerHTML = `
+      <div class="question-grid">
+
+        <div style="grid-column:1/-1;">
+
+          <label>Question</label>
+
+          <textarea
+            class="question-text"
+            placeholder="Enter the quiz question"
+          >${escapeHtml(data.question_text || "")}</textarea>
+
+        </div>
+
+        <div>
+
+          <label>Option A</label>
+
+          <input
+            class="option-a"
+            value="${escapeAttr(data.option_a || "")}"
+          >
+
+        </div>
+
+        <div>
+
+          <label>Option B</label>
+
+          <input
+            class="option-b"
+            value="${escapeAttr(data.option_b || "")}"
+          >
+
+        </div>
+
+        <div>
+
+          <label>Option C</label>
+
+          <input
+            class="option-c"
+            value="${escapeAttr(data.option_c || "")}"
+          >
+
+        </div>
+
+        <div>
+
+          <label>Option D</label>
+
+          <input
+            class="option-d"
+            value="${escapeAttr(data.option_d || "")}"
+          >
+
+        </div>
+
+        <div>
+
+          <label>Correct Option</label>
+
+          <select class="correct-option">
+
+            <option
+              value="A"
+              ${
+                data.correct_option === "A"
+                  ? "selected"
+                  : ""
+              }
+            >
+              A
+            </option>
+
+            <option
+              value="B"
+              ${
+                data.correct_option === "B"
+                  ? "selected"
+                  : ""
+              }
+            >
+              B
+            </option>
+
+            <option
+              value="C"
+              ${
+                data.correct_option === "C"
+                  ? "selected"
+                  : ""
+              }
+            >
+              C
+            </option>
+
+            <option
+              value="D"
+              ${
+                data.correct_option === "D"
+                  ? "selected"
+                  : ""
+              }
+            >
+              D
+            </option>
+
+          </select>
+
+        </div>
+
+        <div>
+
+          <label>Points</label>
+
+          <input
+            class="question-points"
+            type="number"
+            min="0"
+            step="1"
+            value="${data.points ?? 1}"
+          >
+
+        </div>
+
+      </div>
+
+      <button
+        type="button"
+        class="remove-btn"
+        onclick="this.closest('.question-row').remove()"
+        style="margin-top:10px;"
+      >
+        ×
+      </button>
+    `;
+
+    container.appendChild(div);
+  }
+
+  document
+    .getElementById("competitionForm")
+    .addEventListener("submit", async e => {
+
+      e.preventDefault();
+
+      try {
+
+        const title =
+          document.getElementById("title").value.trim();
+
+        const description =
+          document
+            .getElementById("description")
+            .value.trim();
+
+        const competitionType =
+          document.getElementById("competitionType").value;
+
+        const entryMethod =
+          document.getElementById("entryMethod").value;
+
+        const instructions =
+          document
+            .getElementById("instructions")
+            .value.trim();
+
+        const eligibility =
+          document
+            .getElementById("eligibility")
+            .value.trim();
+
+        const maxParticipantsValue =
+          document.getElementById("maxParticipants").value;
+
+        const startAt =
+          document.getElementById("startAt").value;
+
+        const endAt =
+          document.getElementById("endAt").value;
+
+        const editingId =
+          document.getElementById("editingId").value;
+
+        const isQuiz =
+          competitionType === "quiz" ||
+          entryMethod === "quiz";
+
+        const quizTimeValue =
+          document
+            .getElementById("quizTimeLimit")
+            .value;
+
+        if (
+          !title ||
+          !description ||
+          !startAt ||
+          !endAt
+        ) {
+          showMessage(
+            "Please complete all required fields.",
+            "error"
+          );
+          return;
+        }
+
+        if (
+          new Date(endAt) <=
+          new Date(startAt)
+        ) {
+          showMessage(
+            "The end date must be after the start date.",
+            "error"
+          );
+          return;
+        }
+
+        if (isQuiz) {
+
+          const minutes =
+            Number(quizTimeValue);
+
+          if (
+            !Number.isInteger(minutes) ||
+            minutes < 1 ||
+            minutes > 1440
+          ) {
+            showMessage(
+              "Quiz time limit must be between 1 and 1440 minutes.",
+              "error"
+            );
+            return;
+          }
+        }
+
+        const competitionData = {
+
+          title,
+
+          description,
+
+          competition_type:
+            competitionType,
+
+          entry_method:
+            entryMethod,
+
+          instructions:
+            instructions || null,
+
+          eligibility:
+            eligibility || null,
+
+          max_participants:
+            maxParticipantsValue
+              ? Number(maxParticipantsValue)
+              : null,
+
+          start_at:
+            new Date(startAt).toISOString(),
+
+          end_at:
+            new Date(endAt).toISOString(),
+
+          quiz_time_limit_minutes:
+            isQuiz
+              ? Number(quizTimeValue)
+              : null,
+
+          updated_at:
+            new Date().toISOString()
+        };
+
+        let competitionId =
+          editingId;
+
+        if (editingId) {
+
+          const {
+            error
+          } = await supabaseClient
+            .from("competitions")
+            .update(competitionData)
+            .eq("id", editingId);
+
+          if (error) throw error;
+
+        } else {
+
+          competitionData.status =
+            "draft";
+
+          competitionData.created_by =
+            adminUser.id;
+
+          const {
+            data,
+            error
+          } = await supabaseClient
+            .from("competitions")
+            .insert(competitionData)
+            .select()
+            .single();
+
+          if (error) throw error;
+
+          competitionId =
+            data.id;
+        }
+
+        await savePrizes(
+          competitionId
+        );
+
+        await saveQuestions(
+          competitionId,
+          competitionType,
+          entryMethod
+        );
+
+        showMessage(
+          editingId
+            ? "Competition updated successfully."
+            : "Competition created successfully as Draft.",
+          "success"
+        );
+
+        closeForm();
+
+        await loadCompetitions();
+
+      } catch (err) {
+
+        showMessage(
+          err.message ||
+          "Unable to save competition.",
+          "error"
+        );
+      }
+    });
+
+  async function savePrizes(competitionId) {
+
+    const rows =
+      [
+        ...document.querySelectorAll(
+          ".prize-row"
+        )
+      ];
+
+    const prizes =
+      rows.map((row, index) => ({
+
+        competition_id:
+          competitionId,
+
+        prize_name:
+          row
+            .querySelector(".prize-name")
+            .value
+            .trim() ||
+          `Prize ${index + 1}`,
+
+        prize_type:
+          row
+            .querySelector(".prize-type")
+            .value,
+
+        amount:
+          row
+            .querySelector(".prize-amount")
+            .value
+            ? Number(
+                row
+                  .querySelector(".prize-amount")
+                  .value
+              )
+            : null,
+
+        item_description:
+          row
+            .querySelector(".prize-description")
+            .value
+            .trim() ||
+          null,
+
+        winner_count:
+          Number(
+            row
+              .querySelector(".prize-winners")
+              .value
+          ) || 1,
+
+        prize_order:
+          Number(
+            row
+              .querySelector(".prize-order")
+              .value
+          ) || index + 1
+
+      }));
+
+    const {
+      error: deleteError
+    } = await supabaseClient
+      .from("competition_prizes")
+      .delete()
+      .eq(
+        "competition_id",
+        competitionId
+      );
+
+    if (deleteError) {
+      throw deleteError;
+    }
+
+    if (!prizes.length) {
+      return;
+    }
+
+    const {
+      error
+    } = await supabaseClient
+      .from("competition_prizes")
+      .insert(prizes);
+
+    if (error) throw error;
+  }
+
+  async function saveQuestions(
+    competitionId,
+    type,
+    method
+  ) {
+
+    const isQuiz =
+      type === "quiz" ||
+      method === "quiz";
+
+    if (!isQuiz) {
+
+      const {
+        error
+      } = await supabaseClient
+        .from("competition_questions")
+        .delete()
+        .eq(
+          "competition_id",
+          competitionId
+        );
+
+      if (error) throw error;
+
+      return;
+    }
+
+    const rows =
+      [
+        ...document.querySelectorAll(
+          ".question-row"
+        )
+      ];
+
+    const questions =
+      rows.map((row, index) => ({
+
+        competition_id:
+          competitionId,
+
+        question_text:
+          row
+            .querySelector(".question-text")
+            .value
+            .trim(),
+
+        option_a:
+          row
+            .querySelector(".option-a")
+            .value
+            .trim(),
+
+        option_b:
+          row
+            .querySelector(".option-b")
+            .value
+            .trim(),
+
+        option_c:
+          row
+            .querySelector(".option-c")
+            .value
+            .trim(),
+
+        option_d:
+          row
+            .querySelector(".option-d")
+            .value
+            .trim(),
+
+        correct_option:
+          row
+            .querySelector(".correct-option")
+            .value,
+
+        question_order:
+          index + 1,
+
+        points:
+          Number(
+            row
+              .querySelector(".question-points")
+              .value
+          ) || 0
+
+      }));
+
+    for (const q of questions) {
+
+      if (
+        !q.question_text ||
+        !q.option_a ||
+        !q.option_b ||
+        !q.option_c ||
+        !q.option_d
+      ) {
+        throw new Error(
+          "Please complete every quiz question and all four options."
+        );
+      }
+    }
+
+    const {
+      error: deleteError
+    } = await supabaseClient
+      .from("competition_questions")
+      .delete()
+      .eq(
+        "competition_id",
+        competitionId
+      );
+
+    if (deleteError) {
+      throw deleteError;
+    }
+
+    if (!questions.length) {
+      return;
+    }
+
+    const {
+      error
+    } = await supabaseClient
+      .from("competition_questions")
+      .insert(questions);
+
+    if (error) throw error;
+  }
+
+  async function viewCompetition(id) {
+
+    currentDetailId = id;
+
+    try {
+
+      const competition =
+        competitions.find(
+          x => x.id === id
+        );
+
+      if (!competition) return;
+
+      const [
+        {
+          data: prizes,
+          error: prizeError
+        },
+        {
+          data: questions,
+          error: questionError
+        },
+        {
+          data: entries,
+          error: entryError
+        },
+        {
+          data: winners,
+          error: winnerError
+        }
+      ] = await Promise.all([
+
+        supabaseClient
+          .from("competition_prizes")
+          .select("*")
+          .eq(
+            "competition_id",
+            id
+          )
+          .order("prize_order"),
+
+        supabaseClient
+          .from("competition_questions")
+          .select("*")
+          .eq(
+            "competition_id",
+            id
+          )
+          .order("question_order"),
+
+        supabaseClient
+          .from("competition_entries")
+          .select("*")
+          .eq(
+            "competition_id",
+            id
+          )
+          .order(
+            "submitted_at",
+            {
+              ascending: false
+            }
+          ),
+
+        supabaseClient
+          .from("competition_winners")
+          .select("*")
+          .eq(
+            "competition_id",
+            id
+          )
+          .order(
+            "winner_position"
+          )
+
+      ]);
+
+      if (prizeError) throw prizeError;
+      if (questionError) throw questionError;
+      if (entryError) throw entryError;
+      if (winnerError) throw winnerError;
+
+      renderDetail(
+        competition,
+        prizes || [],
+        questions || [],
+        entries || [],
+        winners || []
+      );
+
+    } catch (err) {
+
+      showMessage(
+        err.message ||
+        "Unable to load competition details.",
+        "error"
+      );
+    }
+  }
+
+  function renderDetail(
+    c,
+    prizes,
+    questions,
+    entries,
+    winners
+  ) {
+
+    document.getElementById(
+      "detailTitle"
+    ).textContent = c.title;
+
+    const isQuiz =
+      c.competition_type === "quiz" ||
+      c.entry_method === "quiz";
+
+    const prizeHtml =
+      prizes.length
+        ? prizes.map(p => `
+            <div class="prize-display">
+
+              <strong>
+                ${escapeHtml(
+                  p.prize_name ||
+                  "Prize"
+                )}
+              </strong>
+
+              <div class="entry-text">
+
+                Type:
+                ${formatPrizeType(
+                  p.prize_type
+                )}
+
+                ${
+                  p.amount !== null
+                    ? ` · ₦${formatMoney(p.amount)}`
+                    : ""
+                }
+
+                · ${p.winner_count}
+                winner${
+                  p.winner_count === 1
+                    ? ""
+                    : "s"
+                }
+
+                ${
+                  p.item_description
+                    ? `<br>${escapeHtml(
+                        p.item_description
+                      )}`
+                    : ""
+                }
+
+              </div>
+
+            </div>
+          `).join("")
+        : `<div class="empty">No prizes configured.</div>`;
+
+    const questionHtml =
+      questions.length
+        ? questions.map((q, i) => `
+            <div class="question-display">
+
+              <strong>
+                ${i + 1}.
+                ${escapeHtml(
+                  q.question_text
+                )}
+              </strong>
+
+              <div
+                class="entry-text"
+                style="margin-top:6px;"
+              >
+
+                A:
+                ${escapeHtml(q.option_a)}
+                <br>
+
+                B:
+                ${escapeHtml(q.option_b)}
+                <br>
+
+                C:
+                ${escapeHtml(q.option_c)}
+                <br>
+
+                D:
+                ${escapeHtml(q.option_d)}
+                <br>
+
+                Correct:
+                <strong>
+                  ${escapeHtml(
+                    q.correct_option
+                  )}
+                </strong>
+
+                · ${q.points}
+                point${
+                  q.points === 1
+                    ? ""
+                    : "s"
+                }
+
+              </div>
+
+            </div>
+          `).join("")
+        : `<div class="empty">No quiz questions.</div>`;
+
+    const entryHtml =
+      entries.length
+        ? entries
+            .map(e =>
+              renderEntry(
+                e,
+                prizes
+              )
+            )
+            .join("")
+        : `<div class="empty">No entries yet.</div>`;
+
+    const winnerHtml =
+      winners.length
+        ? winners.map(w => `
+            <div class="winner-card">
+
+              <strong>
+                Position ${w.winner_position}
+              </strong>
+
+              <div class="entry-text">
+
+                User:
+                ${escapeHtml(w.user_id)}
+
+                <br>
+
+                Status:
+                ${formatStatus(
+                  w.winner_status
+                )}
+
+                ${
+                  w.prize_id
+                    ? `<br>Prize ID:
+                       ${escapeHtml(
+                         w.prize_id
+                       )}`
+                    : ""
+                }
+
+                ${
+                  w.fulfillment_note
+                    ? `<br>Note:
+                       ${escapeHtml(
+                         w.fulfillment_note
+                       )}`
+                    : ""
+                }
+
+              </div>
+
+            </div>
+          `).join("")
+        : `<div class="empty">No winners selected yet.</div>`;
+
+    document.getElementById(
+      "detailContent"
+    ).innerHTML = `
+
+      <div class="badges">
+
+        <span class="badge ${escapeHtml(c.status)}">
+          ${formatStatus(c.status)}
+        </span>
+
+        <span class="badge">
+          ${formatType(c.competition_type)}
+        </span>
+
+        <span class="badge">
+          ${formatEntryMethod(c.entry_method)}
+        </span>
+
+        ${
+          isQuiz &&
+          c.quiz_time_limit_minutes
+            ? `
+              <span class="badge">
+                ⏱
+                ${c.quiz_time_limit_minutes}
+                minute quiz
+              </span>
+            `
+            : ""
+        }
+
+      </div>
+
+      ${
+        isQuiz
+          ? `
+            <div class="detail-box">
+
+              <h3>⏱ Quiz Settings</h3>
+
+              <div class="entry-text">
+
+                Time Limit:
+                <strong>
+                  ${
+                    c.quiz_time_limit_minutes
+                      ? `${c.quiz_time_limit_minutes} minutes`
+                      : "Not configured"
+                  }
+                </strong>
+
+                <br><br>
+
+                The countdown begins when the member presses
+                <strong>Start Quiz</strong>.
+
+                When the time expires, the attempt should
+                automatically submit.
+
+              </div>
+
+            </div>
+          `
+          : ""
+      }
+
+      <div class="detail-box">
+
+        <h3>Competition Information</h3>
+
+        <div class="entry-text">
+
+          <strong>Description</strong><br>
+
+          ${escapeHtml(
+            c.description ||
+            "None"
+          )}
+
+          <br><br>
+
+          <strong>Instructions</strong><br>
+
+          ${escapeHtml(
+            c.instructions ||
+            "None"
+          )}
+
+          <br><br>
+
+          <strong>Eligibility</strong><br>
+
+          ${escapeHtml(
+            c.eligibility ||
+            "None"
+          )}
+
+          <br><br>
+
+          <strong>Period</strong><br>
+
+          ${formatDate(c.start_at)}
+          →
+          ${formatDate(c.end_at)}
+
+          <br><br>
+
+          <strong>Maximum Participants</strong><br>
+
+          ${
+            c.max_participants ||
+            "Unlimited"
+          }
+
+        </div>
+
+      </div>
+
+      <div class="detail-box">
+
+        <h3>🎁 Prizes</h3>
+
+        ${prizeHtml}
+
+      </div>
+
+      ${
+        questions.length
+          ? `
+            <div class="detail-box">
+
+              <h3>📝 Quiz Questions</h3>
+
+              ${questionHtml}
+
+            </div>
+          `
+          : ""
+      }
+
+      ${
+        isQuiz
+          ? `
+            <div class="detail-box">
+
+              <div style="
+                display:flex;
+                justify-content:space-between;
+                align-items:center;
+                gap:10px;
+                flex-wrap:wrap;
+              ">
+
+                <h3 style="margin:0;">
+                  📊 Quiz Results / Leaderboard
+                </h3>
+
+                <button
+                  class="btn btn-primary"
+                  onclick="viewResults('${c.id}')"
+                >
+                  Refresh Results
+                </button>
+
+              </div>
+
+              <div
+                id="results-${c.id}"
+                style="margin-top:15px;"
+              >
+                <div class="empty">
+                  Click "Refresh Results" to load the leaderboard.
+                </div>
+              </div>
+
+            </div>
+          `
+          : ""
+      }
+
+      <div class="detail-box">
+
+        <h3>
+          👥 Entries (${entries.length})
+        </h3>
+
+        ${entryHtml}
+
+      </div>
+
+      <div class="detail-box">
+
+        <h3>
+          🏆 Selected Winners (${winners.length})
+        </h3>
+
+        ${winnerHtml}
+
+      </div>
+
+      <div class="detail-box">
+
+        <h3>🏆 Select Winner</h3>
+
+        ${
+          entries.length
+            ? `
+              <div class="winner-grid">
+
+                <div>
+
+                  <label>Entry</label>
+
+                  <select id="winnerEntry">
+
+                    ${entries
+                      .filter(
+                        e =>
+                          !winners.some(
+                            w =>
+                              w.entry_id ===
+                              e.id
+                          )
+                      )
+                      .map(e => `
+                        <option value="${e.id}">
+
+                          ${escapeHtml(
+                            e.user_id
+                          )}
+
+                          —
+                          ${
+                            e.score !== null
+                              ? `Score ${e.score}`
+                              : "Entry"
+                          }
+
+                        </option>
+                      `)
+                      .join("")}
+
+                  </select>
+
+                </div>
+
+                <div>
+
+                  <label>Prize</label>
+
+                  <select id="winnerPrize">
+
+                    <option value="">
+                      No prize assigned
+                    </option>
+
+                    ${prizes.map(p => `
+                      <option value="${p.id}">
+
+                        ${escapeHtml(
+                          p.prize_name
+                        )}
+
+                        ${
+                          p.amount !== null
+                            ? ` — ₦${formatMoney(
+                                p.amount
+                              )}`
+                            : ""
+                        }
+
+                      </option>
+                    `).join("")}
+
+                  </select>
+
+                </div>
+
+                <div>
+
+                  <label>Winner Position</label>
+
+                  <input
+                    id="winnerPosition"
+                    type="number"
+                    min="1"
+                    value="${
+                      winners.length + 1
+                    }"
+                  >
+
+                </div>
+
+                <button
+                  class="btn btn-success"
+                  onclick="selectWinner()"
+                >
+                  Select
+                </button>
+
+              </div>
+            `
+            : `
+              <div class="empty">
+                There are no entries available for winner selection.
+              </div>
+            `
+        }
+
+      </div>
+
+      <div class="card-actions">
+
+        <button
+          class="btn btn-secondary"
+          onclick="editCompetition('${c.id}')"
+        >
+          Edit Competition
+        </button>
+
+        ${statusButtons(c)}
+
+      </div>
+    `;
+
+    document
+      .getElementById("detailPanel")
+      .classList.remove("hidden");
+
+    window.scrollTo({
+      top:
+        document.getElementById(
+          "detailPanel"
+        ).offsetTop - 70,
+      behavior: "smooth"
+    });
+  }
+
+  async function viewResults(id) {
+
+    currentDetailId = id;
+
+    const competition =
+      competitions.find(
+        x => x.id === id
+      );
+
+    if (!competition) {
+      return;
+    }
+
+    try {
+
+      const {
+        data: entries,
+        error
+      } = await supabaseClient
+        .from("competition_entries")
+        .select("*")
+        .eq(
+          "competition_id",
+          id
+        );
+
+      if (error) throw error;
+
+      const sorted =
+        [...(entries || [])]
+          .filter(
+            entry =>
+              entry.entry_status !==
+              "disqualified"
+          )
+          .sort((a, b) => {
+
+            const scoreA =
+              Number(a.score ?? -1);
+
+            const scoreB =
+              Number(b.score ?? -1);
+
+            if (scoreA !== scoreB) {
+              return scoreB - scoreA;
+            }
+
+            const timeA =
+              a.time_taken_seconds === null ||
+              a.time_taken_seconds === undefined
+                ? Number.MAX_SAFE_INTEGER
+                : Number(
+                    a.time_taken_seconds
+                  );
+
+            const timeB =
+              b.time_taken_seconds === null ||
+              b.time_taken_seconds === undefined
+                ? Number.MAX_SAFE_INTEGER
+                : Number(
+                    b.time_taken_seconds
+                  );
+
+            return timeA - timeB;
+          });
+
+      renderResults(
+        competition,
+        sorted
+      );
+
+    } catch (err) {
+
+      showMessage(
+        err.message ||
+        "Unable to load quiz results.",
+        "error"
+      );
+    }
+  }
+
+  function renderResults(
+    competition,
+    entries
+  ) {
+
+    const target =
+      document.getElementById(
+        `results-${competition.id}`
+      );
+
+    if (!target) {
+
+      viewCompetition(
+        competition.id
+      );
+
+      return;
+    }
+
+    if (!entries.length) {
+
+      target.innerHTML =
+        `<div class="empty">
+          No quiz submissions yet.
+        </div>`;
+
+      return;
+    }
+
+    target.innerHTML = `
+
+      <div class="entry-text" style="margin-bottom:12px;">
+        Ranked by <strong>highest score first</strong>.
+        Equal scores are ranked by
+        <strong>fastest completion time</strong>.
+      </div>
+
+      <div class="results-table-wrap">
+
+        <table class="results-table">
+
+          <thead>
+
+            <tr>
+
+              <th>Position</th>
+
+              <th>Member</th>
+
+              <th>Score</th>
+
+              <th>Correct</th>
+
+              <th>Percentage</th>
+
+              <th>Time Taken</th>
+
+              <th>Status</th>
+
+              <th>Submitted</th>
+
+            </tr>
+
+          </thead>
+
+          <tbody>
+
+            ${entries.map((entry, index) => {
+
+              const position =
+                index + 1;
+
+              const score =
+                entry.score !== null
+                  ? Number(
+                      entry.score
+                    )
+                  : 0;
+
+              const totalQuestions =
+                Number(
+                  entry.total_questions ||
+                  0
+                );
+
+              const correct =
+                entry.correct_answers !== null
+                  ? Number(
+                      entry.correct_answers
+                    )
+                  : null;
+
+              let percentage = "—";
+
+              if (
+                correct !== null &&
+                totalQuestions > 0
+              ) {
+                percentage =
+                  (
+                    correct /
+                    totalQuestions *
+                    100
+                  ).toFixed(2) +
+                  "%";
+              }
+
+              return `
+
+                <tr>
+
+                  <td>
+
+                    <span
+                      class="rank ${
+                        position === 1
+                          ? "top-rank"
+                          : ""
+                      }"
+                    >
+                      ${position}
+                    </span>
+
+                  </td>
+
+                  <td>
+
+                    <strong>
+                      ${escapeHtml(
+                        entry.user_id
+                      )}
+                    </strong>
+
+                  </td>
+
+                  <td>
+
+                    <span class="score">
+                      ${score}
+                    </span>
+
+                  </td>
+
+                  <td>
+                    ${
+                      correct !== null
+                        ? `${correct}/${totalQuestions}`
+                        : "—"
+                    }
+                  </td>
+
+                  <td>
+                    ${percentage}
+                  </td>
+
+                  <td>
+                    ${
+                      entry.time_taken_seconds !==
+                        null &&
+                      entry.time_taken_seconds !==
+                        undefined
+                        ? formatDuration(
+                            entry.time_taken_seconds
+                          )
+                        : "—"
+                    }
+                  </td>
+
+                  <td>
+
+                    <span class="result-status">
+                      ${formatStatus(
+                        entry.entry_status
+                      )}
+                    </span>
+
+                  </td>
+
+                  <td>
+                    ${formatDate(
+                      entry.submitted_at
+                    )}
+                  </td>
+
+                </tr>
+
+              `;
+
+            }).join("")}
+
+          </tbody>
+
+        </table>
+
+      </div>
+    `;
+  }
+
+  function renderEntry(
+    entry,
+    prizes
+  ) {
+
+    const submission = [];
+
+    if (entry.submission_url) {
+
+      submission.push(
+        `URL:
+        <a
+          href="${escapeAttr(
+            entry.submission_url
+          )}"
+          target="_blank"
+          rel="noopener"
+        >
+          Open submission
+        </a>`
+      );
+    }
+
+    if (entry.evidence_url) {
+
+      submission.push(
+        `Evidence:
+        <a
+          href="${escapeAttr(
+            entry.evidence_url
+          )}"
+          target="_blank"
+          rel="noopener"
+        >
+          Open evidence
+        </a>`
+      );
+    }
+
+    if (entry.submission_text) {
+
+      submission.push(
+        `Submission:
+        ${escapeHtml(
+          entry.submission_text
+        )}`
+      );
+    }
+
+    if (entry.application_data) {
+
+      submission.push(
+        `Application:
+        ${escapeHtml(
+          JSON.stringify(
+            entry.application_data,
+            null,
+            2
+          )
+        )}`
+      );
+    }
+
+    return `
+      <div class="entry-card">
+
+        <div class="entry-main">
+
+          <div class="entry-title">
+            ${escapeHtml(
+              entry.user_id
+            )}
+          </div>
+
+          <div class="entry-text">
+
+            Status:
+            ${formatStatus(
+              entry.entry_status
+            )}
+
+            ${
+              entry.score !== null
+                ? ` · Score: ${entry.score}`
+                : ""
+            }
+
+            ${
+              entry.correct_answers !== null
+                ? ` · Correct:
+                   ${entry.correct_answers}/
+                   ${
+                     entry.total_questions ||
+                     "?"
+                   }`
+                : ""
+            }
+
+            ${
+              entry.time_taken_seconds !== null &&
+              entry.time_taken_seconds !== undefined
+                ? ` · Time:
+                   ${formatDuration(
+                     entry.time_taken_seconds
+                   )}`
+                : ""
+            }
+
+            <br>
+
+            Submitted:
+            ${formatDate(
+              entry.submitted_at
+            )}
+
+            ${
+              submission.length
+                ? `<br>${submission.join(
+                    "<br>"
+                  )}`
+                : ""
+            }
+
+            ${
+              entry.admin_note
+                ? `<br>Admin note:
+                   ${escapeHtml(
+                     entry.admin_note
+                   )}`
+                : ""
+            }
+
+          </div>
+
+        </div>
+
+        <div class="entry-actions">
+
+          <button
+            class="btn btn-success"
+            onclick="reviewEntry(
+              '${entry.id}',
+              'qualified'
+            )"
+          >
+            Qualify
+          </button>
+
+          <button
+            class="btn btn-warning"
+            onclick="reviewEntry(
+              '${entry.id}',
+              'under_review'
+            )"
+          >
+            Review
+          </button>
+
+          <button
+            class="btn btn-danger"
+            onclick="reviewEntry(
+              '${entry.id}',
+              'disqualified'
+            )"
+          >
+            Disqualify
+          </button>
+
+        </div>
+
+      </div>
+    `;
+  }
+
+  async function reviewEntry(
+    entryId,
+    status
+  ) {
+
+    let note = "";
+
+    if (
+      status ===
+      "disqualified"
+    ) {
+      note =
+        prompt(
+          "Reason for disqualification:"
+        ) || "";
+    }
+
+    try {
+
+      const {
+        error
+      } = await supabaseClient
+        .from("competition_entries")
+        .update({
+
+          entry_status:
+            status,
+
+          reviewed_at:
+            new Date().toISOString(),
+
+          reviewed_by:
+            adminUser.id,
+
+          admin_note:
+            note || null,
+
+          updated_at:
+            new Date().toISOString()
+
+        })
+        .eq(
+          "id",
+          entryId
+        );
+
+      if (error) throw error;
+
+      showMessage(
+        "Entry updated successfully.",
+        "success"
+      );
+
+      if (currentDetailId) {
+        await viewCompetition(
+          currentDetailId
+        );
+      }
+
+    } catch (err) {
+
+      showMessage(
+        err.message ||
+        "Unable to update entry.",
+        "error"
+      );
+    }
+  }
+
+  async function selectWinner() {
+
+    const entryId =
+      document.getElementById(
+        "winnerEntry"
+      )?.value;
+
+    const prizeId =
+      document.getElementById(
+        "winnerPrize"
+      )?.value ||
+      null;
+
+    const position =
+      Number(
+        document.getElementById(
+          "winnerPosition"
+        )?.value
+      );
+
+    if (
+      !entryId ||
+      !position
+    ) {
+
+      showMessage(
+        "Please select an entry and winner position.",
+        "error"
+      );
+
+      return;
+    }
+
+    try {
+
+      const competition =
+        competitions.find(
+          x =>
+            x.id ===
+            currentDetailId
+        );
+
+      if (!competition) {
+        throw new Error(
+          "Competition not found."
+        );
+      }
+
+      const userId =
+        await getEntryUserId(
+          entryId
+        );
+
+      const {
+        error
+      } = await supabaseClient
+        .from("competition_winners")
+        .insert({
+
+          competition_id:
+            competition.id,
+
+          entry_id:
+            entryId,
+
+          user_id:
+            userId,
+
+          prize_id:
+            prizeId,
+
+          winner_position:
+            position,
+
+          winner_status:
+            "selected",
+
+          selected_by:
+            adminUser.id,
+
+          selected_at:
+            new Date().toISOString()
+
+        });
+
+      if (error) throw error;
+
+      showMessage(
+        "Winner selected successfully.",
+        "success"
+      );
+
+      await viewCompetition(
+        currentDetailId
+      );
+
+    } catch (err) {
+
+      showMessage(
+        err.message ||
+        "Unable to select winner.",
+        "error"
+      );
+    }
+  }
+
+  async function getEntryUserId(
+    entryId
+  ) {
+
+    const {
+      data,
+      error
+    } = await supabaseClient
+      .from("competition_entries")
+      .select("user_id")
+      .eq(
+        "id",
+        entryId
+      )
+      .single();
+
+    if (error) throw error;
+
+    return data.user_id;
+  }
+
+  async function changeStatus(
+    id,
+    status
+  ) {
+
+    const competition =
+      competitions.find(
+        x => x.id === id
+      );
+
+    if (!competition) return;
+
+    const actionText = {
+
+      published:
+        "publish this competition",
+
+      closed:
+        "close entries for this competition",
+
+      winners_announced:
+        "mark winners as announced",
+
+      completed:
+        "mark this competition as completed",
+
+      cancelled:
+        "cancel this competition"
+
+    }[status] ||
+    "change the competition status";
+
+    if (
+      !confirm(
+        `Are you sure you want to ${actionText}?`
+      )
+    ) {
+      return;
+    }
+
+    try {
+
+      if (
+        status ===
+        "winners_announced"
+      ) {
+
+        const {
+          data: winners,
+          error: winnerError
+        } = await supabaseClient
+          .from("competition_winners")
+          .select("id")
+          .eq(
+            "competition_id",
+            id
+          );
+
+        if (winnerError) {
+          throw winnerError;
+        }
+
+        if (
+          !winners ||
+          !winners.length
+        ) {
+
+          if (
+            !confirm(
+              "No winners have been selected. Continue anyway?"
+            )
+          ) {
+            return;
+          }
+        }
+      }
+
+      const {
+        error
+      } = await supabaseClient
+        .from("competitions")
+        .update({
+
+          status,
+
+          updated_at:
+            new Date().toISOString()
+
+        })
+        .eq(
+          "id",
+          id
+        );
+
+      if (error) throw error;
+
+      showMessage(
+        "Competition status updated.",
+        "success"
+      );
+
+      await loadCompetitions();
+
+      if (
+        currentDetailId === id
+      ) {
+        await viewCompetition(id);
+      }
+
+    } catch (err) {
+
+      showMessage(
+        err.message ||
+        "Unable to update competition.",
+        "error"
+      );
+    }
+  }
+
+  async function editCompetition(id) {
+
+    try {
+
+      const competition =
+        competitions.find(
+          x => x.id === id
+        );
+
+      if (!competition) return;
+
+      const [
+        {
+          data: prizes,
+          error: prizeError
+        },
+        {
+          data: questions,
+          error: questionError
+        }
+      ] = await Promise.all([
+
+        supabaseClient
+          .from("competition_prizes")
+          .select("*")
+          .eq(
+            "competition_id",
+            id
+          )
+          .order("prize_order"),
+
+        supabaseClient
+          .from("competition_questions")
+          .select("*")
+          .eq(
+            "competition_id",
+            id
+          )
+          .order("question_order")
+
+      ]);
+
+      if (prizeError) throw prizeError;
+      if (questionError) throw questionError;
+
+      document
+        .getElementById("formPanel")
+        .classList.remove("hidden");
+
+      document.getElementById(
+        "formTitle"
+      ).textContent =
+        "Edit Competition";
+
+      document.getElementById(
+        "editingId"
+      ).value =
+        competition.id;
+
+      document.getElementById(
+        "title"
+      ).value =
+        competition.title || "";
+
+      document.getElementById(
+        "description"
+      ).value =
+        competition.description || "";
+
+      document.getElementById(
+        "competitionType"
+      ).value =
+        competition.competition_type;
+
+      document.getElementById(
+        "entryMethod"
+      ).value =
+        competition.entry_method;
+
+      document.getElementById(
+        "instructions"
+      ).value =
+        competition.instructions || "";
+
+      document.getElementById(
+        "eligibility"
+      ).value =
+        competition.eligibility || "";
+
+      document.getElementById(
+        "maxParticipants"
+      ).value =
+        competition.max_participants ||
+        "";
+
+      document.getElementById(
+        "startAt"
+      ).value =
+        toDateTimeLocal(
+          competition.start_at
+        );
+
+      document.getElementById(
+        "endAt"
+      ).value =
+        toDateTimeLocal(
+          competition.end_at
+        );
+
+      document.getElementById(
+        "quizTimeLimit"
+      ).value =
+        competition.quiz_time_limit_minutes ||
+        "";
+
+      document.getElementById(
+        "prizesContainer"
+      ).innerHTML = "";
+
+      (prizes || [])
+        .forEach(
+          addPrizeRow
+        );
+
+      if (
+        !prizes ||
+        !prizes.length
+      ) {
+        addPrizeRow();
+      }
+
+      document.getElementById(
+        "questionsContainer"
+      ).innerHTML = "";
+
+      (questions || [])
+        .forEach(
+          addQuestionRow
+        );
+
+      updateEntryFields();
+
+      document
+        .getElementById("detailPanel")
+        .classList.add("hidden");
+
+      window.scrollTo({
+        top:
+          document.getElementById(
+            "formPanel"
+          ).offsetTop - 70,
+        behavior: "smooth"
+      });
+
+    } catch (err) {
+
+      showMessage(
+        err.message ||
+        "Unable to load competition for editing.",
+        "error"
+      );
+    }
+  }
+
+  function closeDetails() {
+
+    document
+      .getElementById("detailPanel")
+      .classList.add("hidden");
+
+    currentDetailId =
+      null;
+  }
+
+  function showMessage(
+    text,
+    type
+  ) {
+
+    const box =
+      document.getElementById(
+        "message"
+      );
+
+    box.className =
+      "message " +
+      type;
+
+    box.textContent =
+      text;
+
+    clearTimeout(
+      window.messageTimer
+    );
+
+    window.messageTimer =
+      setTimeout(() => {
+
+        box.className =
+          "message";
+
+        box.textContent =
+          "";
+
+      }, 5000);
+  }
+
+  function formatDate(
+    value
+  ) {
+
+    if (!value) {
+      return "—";
+    }
+
+    const d =
+      new Date(value);
+
+    if (
+      Number.isNaN(
+        d.getTime()
+      )
+    ) {
+      return "—";
+    }
+
+    return d.toLocaleString(
+      "en-NG",
+      {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        hour: "numeric",
+        minute: "2-digit"
+      }
+    );
+  }
+
+  function toDateTimeLocal(
+    value
+  ) {
+
+    if (!value) {
+      return "";
+    }
+
+    const d =
+      new Date(value);
+
+    if (
+      Number.isNaN(
+        d.getTime()
+      )
+    ) {
+      return "";
+    }
+
+    const pad =
+      n =>
+        String(n)
+          .padStart(2, "0");
+
+    return `${
+      d.getFullYear()
+    }-${
+      pad(d.getMonth() + 1)
+    }-${
+      pad(d.getDate())
+    }T${
+      pad(d.getHours())
+    }:${
+      pad(d.getMinutes())
+    }`;
+  }
+
+  function formatStatus(
+    status
+  ) {
+
+    return String(
+      status || ""
+    )
+      .replaceAll(
+        "_",
+        " "
+      )
+      .replace(
+        /\b\w/g,
+        x =>
+          x.toUpperCase()
+      );
+  }
+
+  function formatType(
+    type
+  ) {
+
+    const map = {
+
+      quiz:
+        "Quiz",
+
+      video:
+        "Video",
+
+      giveaway:
+        "Giveaway",
+
+      challenge:
+        "Challenge",
+
+      application:
+        "Application"
+
+    };
+
+    return (
+      map[type] ||
+      formatStatus(type)
+    );
+  }
+
+  function formatEntryMethod(
+    method
+  ) {
+
+    const map = {
+
+      quiz:
+        "Quiz",
+
+      url:
+        "URL",
+
+      simple:
+        "Simple Entry",
+
+      evidence:
+        "Evidence",
+
+      application:
+        "Application"
+
+    };
+
+    return (
+      map[method] ||
+      formatStatus(method)
+    );
+  }
+
+  function formatPrizeType(
+    type
+  ) {
+
+    const map = {
+
+      cash:
+        "Cash",
+
+      school_fees:
+        "School Fees",
+
+      physical_item:
+        "Physical Item",
+
+      gift:
+        "Gift",
+
+      other:
+        "Other"
+
+    };
+
+    return (
+      map[type] ||
+      formatStatus(type)
+    );
+  }
+
+  function formatMoney(
+    value
+  ) {
+
+    return Number(
+      value || 0
+    ).toLocaleString(
+      "en-NG",
+      {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2
+      }
+    );
+  }
+
+  function formatDuration(
+    seconds
+  ) {
+
+    const total =
+      Math.max(
+        0,
+        Number(seconds) || 0
+      );
+
+    const hours =
+      Math.floor(
+        total / 3600
+      );
+
+    const minutes =
+      Math.floor(
+        (total % 3600) /
+        60
+      );
+
+    const secs =
+      total % 60;
+
+    if (hours > 0) {
+
+      return `${hours}h ${
+        String(minutes).padStart(2, "0")
+      }m ${
+        String(secs).padStart(2, "0")
+      }s`;
+
+    }
+
+    return `${
+      String(minutes).padStart(2, "0")
+    }:${
+      String(secs).padStart(2, "0")
+    }`;
+  }
+
+  function escapeHtml(
+    value
+  ) {
+
+    return String(
+      value ?? ""
+    )
+      .replaceAll(
+        "&",
+        "&amp;"
+      )
+      .replaceAll(
+        "<",
+        "&lt;"
+      )
+      .replaceAll(
+        ">",
+        "&gt;"
+      )
+      .replaceAll(
+        '"',
+        "&quot;"
+      )
+      .replaceAll(
+        "'",
+        "&#039;"
+      );
+  }
+
+  function escapeAttr(
+    value
+  ) {
+
+    return escapeHtml(
+      value
+    );
+  }
+</script>
+
+</body>
+</html>

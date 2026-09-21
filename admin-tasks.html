@@ -2,10 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
 
   <title>Task Management - EarnGig Admin</title>
 
+  <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase.js"></script>
 
@@ -18,29 +22,19 @@
 
     :root {
       --bg: #070b1a;
-      --bg-soft: #0d1226;
       --card: #11172d;
       --card-hover: #151d38;
       --border: rgba(255, 255, 255, 0.08);
 
       --purple: #7c3aed;
       --purple-light: #a78bfa;
-      --purple-dark: #5b21b6;
 
       --text: #f8fafc;
       --muted: #94a3b8;
 
       --green: #22c55e;
-      --green-soft: rgba(34, 197, 94, 0.12);
-
       --red: #ef4444;
-      --red-soft: rgba(239, 68, 68, 0.12);
-
       --orange: #f59e0b;
-      --orange-soft: rgba(245, 158, 11, 0.12);
-
-      --blue: #3b82f6;
-      --blue-soft: rgba(59, 130, 246, 0.12);
     }
 
     body {
@@ -51,9 +45,12 @@
         BlinkMacSystemFont,
         "Segoe UI",
         Roboto,
-        Helvetica,
         Arial,
         sans-serif;
+
+      color: var(--text);
+      line-height: 1.5;
+
       background:
         radial-gradient(
           circle at top right,
@@ -66,8 +63,6 @@
           transparent 28%
         ),
         var(--bg);
-      color: var(--text);
-      line-height: 1.5;
     }
 
     a {
@@ -79,29 +74,35 @@
       font: inherit;
     }
 
-    /* =========================
+    /* =================================
        HEADER
-    ========================= */
+    ================================= */
 
     .eg-header {
       width: 100%;
-      border-bottom: 1px solid var(--border);
-      background: rgba(7, 11, 26, 0.88);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
+
       position: sticky;
       top: 0;
       z-index: 100;
+
+      background: rgba(7, 11, 26, 0.9);
+
+      border-bottom: 1px solid var(--border);
+
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
     }
 
     .eg-nav {
       width: min(1180px, calc(100% - 32px));
       min-height: 76px;
+
       margin: 0 auto;
 
       display: flex;
       align-items: center;
       justify-content: space-between;
+
       gap: 20px;
     }
 
@@ -109,22 +110,19 @@
       display: inline-flex;
       align-items: center;
       gap: 11px;
+
       font-weight: 800;
-      letter-spacing: -0.5px;
     }
 
     .eg-logo-mark {
       width: 40px;
       height: 40px;
-      border-radius: 12px;
 
       display: flex;
       align-items: center;
       justify-content: center;
 
-      color: #ffffff;
-      font-size: 20px;
-      font-weight: 900;
+      border-radius: 12px;
 
       background:
         linear-gradient(
@@ -133,55 +131,68 @@
           var(--purple)
         );
 
+      color: white;
+
+      font-size: 20px;
+      font-weight: 900;
+
       box-shadow:
         0 8px 24px rgba(124, 58, 237, 0.35);
     }
 
     .eg-logo-word {
       font-size: 22px;
-      color: #ffffff;
+      color: white;
     }
 
     .eg-logo-word span {
       color: var(--purple-light);
     }
 
+    /*
+      IMPORTANT:
+      This points to the ADMIN dashboard.
+      It does NOT point to the member dashboard.
+    */
+
     .eg-dashboard-button {
+      min-height: 42px;
+
+      padding: 0 18px;
+
       display: inline-flex;
       align-items: center;
       justify-content: center;
-
-      min-height: 42px;
-      padding: 0 18px;
 
       border: 1px solid rgba(167, 139, 250, 0.25);
       border-radius: 11px;
 
       background: rgba(124, 58, 237, 0.12);
+
       color: #ddd6fe;
 
       font-size: 14px;
       font-weight: 700;
 
-      transition:
-        background 0.2s ease,
-        border-color 0.2s ease,
-        transform 0.2s ease;
+      transition: 0.2s ease;
     }
 
     .eg-dashboard-button:hover {
-      background: rgba(124, 58, 237, 0.22);
+      background: rgba(124, 58, 237, 0.24);
       border-color: rgba(167, 139, 250, 0.5);
+
       transform: translateY(-1px);
     }
 
-    /* =========================
-       MAIN
-    ========================= */
+    /* =================================
+       PAGE
+    ================================= */
 
     .page {
       width: min(1180px, calc(100% - 32px));
+
       margin: 0 auto;
+
       padding: 42px 0 60px;
     }
 
@@ -191,26 +202,33 @@
 
     .page-heading h1 {
       font-size: clamp(28px, 4vw, 40px);
+
       line-height: 1.15;
+
       letter-spacing: -1px;
+
       margin-bottom: 9px;
     }
 
     .page-heading p {
       color: var(--muted);
+
       font-size: 15px;
     }
 
-    /* =========================
+    /* =================================
        MESSAGE
-    ========================= */
+    ================================= */
 
     .message {
       display: none;
+
       margin-bottom: 24px;
+
       padding: 14px 16px;
+
       border-radius: 12px;
-      border: 1px solid var(--border);
+
       font-size: 14px;
     }
 
@@ -219,39 +237,52 @@
     }
 
     .message.success {
-      background: var(--green-soft);
-      border-color: rgba(34, 197, 94, 0.25);
+      background: rgba(34, 197, 94, 0.12);
+
+      border: 1px solid rgba(34, 197, 94, 0.25);
+
       color: #86efac;
     }
 
     .message.error {
-      background: var(--red-soft);
-      border-color: rgba(239, 68, 68, 0.25);
+      background: rgba(239, 68, 68, 0.12);
+
+      border: 1px solid rgba(239, 68, 68, 0.25);
+
       color: #fca5a5;
     }
 
     .message.info {
-      background: var(--blue-soft);
-      border-color: rgba(59, 130, 246, 0.25);
+      background: rgba(59, 130, 246, 0.12);
+
+      border: 1px solid rgba(59, 130, 246, 0.25);
+
       color: #93c5fd;
     }
 
-    /* =========================
+    /* =================================
        SUMMARY CARDS
-    ========================= */
+    ================================= */
 
     .summary-grid {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+
+      grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
       gap: 16px;
+
       margin-bottom: 34px;
     }
 
     .summary-card {
       position: relative;
+
       overflow: hidden;
 
       padding: 21px;
+
+      border-radius: 17px;
 
       background:
         linear-gradient(
@@ -262,7 +293,6 @@
         var(--card);
 
       border: 1px solid var(--border);
-      border-radius: 17px;
 
       box-shadow:
         0 14px 35px rgba(0, 0, 0, 0.18);
@@ -270,26 +300,36 @@
 
     .summary-card::after {
       content: "";
+
       position: absolute;
+
       width: 90px;
       height: 90px;
+
       right: -30px;
       top: -35px;
+
       border-radius: 50%;
+
       background: rgba(124, 58, 237, 0.08);
-      pointer-events: none;
     }
 
     .summary-label {
       color: var(--muted);
+
       font-size: 13px;
+
       margin-bottom: 8px;
     }
 
     .summary-value {
       font-size: 28px;
+
       font-weight: 800;
-      letter-spacing: -0.5px;
+    }
+
+    .summary-card.total .summary-value {
+      color: #c4b5fd;
     }
 
     .summary-card.pending .summary-value {
@@ -304,69 +344,84 @@
       color: #f87171;
     }
 
-    .summary-card.total .summary-value {
-      color: #c4b5fd;
-    }
-
-    /* =========================
+    /* =================================
        SECTION
-    ========================= */
-
-    .section {
-      margin-top: 10px;
-    }
+    ================================= */
 
     .section-header {
       display: flex;
+
       align-items: center;
+
       justify-content: space-between;
+
       gap: 16px;
+
       margin-bottom: 18px;
     }
 
     .section-title {
       font-size: 21px;
+
       font-weight: 800;
     }
 
     .section-subtitle {
       color: var(--muted);
+
       font-size: 13px;
+
       margin-top: 3px;
     }
 
     .refresh-button {
-      border: 1px solid var(--border);
-      background: rgba(255, 255, 255, 0.04);
-      color: #e2e8f0;
-
       padding: 10px 14px;
+
       border-radius: 10px;
 
+      border: 1px solid var(--border);
+
+      background: rgba(255, 255, 255, 0.04);
+
+      color: #e2e8f0;
+
       cursor: pointer;
+
       font-size: 13px;
+
       font-weight: 700;
 
-      transition:
-        background 0.2s ease,
-        border-color 0.2s ease;
+      transition: 0.2s ease;
     }
 
     .refresh-button:hover {
-      background: rgba(124, 58, 237, 0.12);
-      border-color: rgba(167, 139, 250, 0.25);
+      background: rgba(124, 58, 237, 0.14);
+
+      border-color:
+        rgba(167, 139, 250, 0.3);
     }
 
-    /* =========================
-       TASKS
-    ========================= */
+    .refresh-button:disabled {
+      opacity: 0.5;
+
+      cursor: not-allowed;
+    }
+
+    /* =================================
+       TASK LIST
+    ================================= */
 
     .tasks-list {
       display: grid;
+
       gap: 16px;
     }
 
     .task-card {
+      padding: 22px;
+
+      border-radius: 17px;
+
       background:
         linear-gradient(
           145deg,
@@ -376,50 +431,57 @@
         var(--card);
 
       border: 1px solid var(--border);
-      border-radius: 17px;
 
-      padding: 22px;
-
-      transition:
-        transform 0.2s ease,
-        border-color 0.2s ease,
-        background 0.2s ease;
+      transition: 0.2s ease;
     }
 
     .task-card:hover {
       transform: translateY(-2px);
-      border-color: rgba(167, 139, 250, 0.18);
+
       background: var(--card-hover);
+
+      border-color:
+        rgba(167, 139, 250, 0.2);
     }
 
     .task-top {
       display: flex;
+
       align-items: flex-start;
+
       justify-content: space-between;
+
       gap: 18px;
+
       margin-bottom: 14px;
     }
 
     .task-title {
       font-size: 19px;
+
       font-weight: 800;
-      line-height: 1.3;
+
       margin-bottom: 7px;
     }
 
     .task-category {
       display: inline-flex;
-      align-items: center;
 
       padding: 5px 9px;
+
       border-radius: 7px;
 
-      background: var(--purple-soft, rgba(124, 58, 237, 0.12));
+      background:
+        rgba(124, 58, 237, 0.12);
+
       color: #c4b5fd;
 
       font-size: 11px;
+
       font-weight: 700;
+
       text-transform: uppercase;
+
       letter-spacing: 0.4px;
     }
 
@@ -427,50 +489,75 @@
       flex-shrink: 0;
 
       padding: 6px 10px;
+
       border-radius: 8px;
 
-      background: var(--orange-soft);
+      background:
+        rgba(245, 158, 11, 0.12);
+
       color: #fbbf24;
 
       font-size: 11px;
+
       font-weight: 800;
+
       text-transform: uppercase;
+
       letter-spacing: 0.4px;
     }
 
     .task-description {
       color: #cbd5e1;
+
       font-size: 14px;
+
       line-height: 1.65;
+
       margin-bottom: 17px;
+
       white-space: pre-wrap;
+
       word-break: break-word;
     }
 
     .task-meta {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+
+      grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
       gap: 10px;
+
       margin-bottom: 18px;
     }
 
     .meta-item {
       padding: 12px;
+
       border-radius: 10px;
-      background: rgba(255, 255, 255, 0.025);
-      border: 1px solid rgba(255, 255, 255, 0.05);
+
+      background:
+        rgba(255, 255, 255, 0.025);
+
+      border:
+        1px solid rgba(255, 255, 255, 0.05);
     }
 
     .meta-label {
       color: var(--muted);
+
       font-size: 11px;
+
       margin-bottom: 4px;
     }
 
     .meta-value {
-      color: #f8fafc;
+      color: white;
+
       font-size: 14px;
+
       font-weight: 700;
+
       word-break: break-word;
     }
 
@@ -479,11 +566,10 @@
     }
 
     .task-link a {
-      display: inline-block;
-      max-width: 100%;
-
       color: #a78bfa;
+
       font-size: 13px;
+
       font-weight: 600;
 
       overflow-wrap: anywhere;
@@ -495,27 +581,32 @@
 
     .task-actions {
       display: flex;
+
       gap: 10px;
+
       padding-top: 17px;
-      border-top: 1px solid var(--border);
+
+      border-top:
+        1px solid var(--border);
     }
 
     .action-button {
       min-height: 42px;
+
       padding: 0 16px;
 
       border-radius: 10px;
-      border: 1px solid transparent;
 
       cursor: pointer;
 
       font-size: 13px;
+
       font-weight: 800;
 
-      transition:
-        transform 0.2s ease,
-        opacity 0.2s ease,
-        background 0.2s ease;
+      border:
+        1px solid transparent;
+
+      transition: 0.2s ease;
     }
 
     .action-button:hover {
@@ -524,74 +615,53 @@
 
     .action-button:disabled {
       opacity: 0.5;
+
       cursor: not-allowed;
+
       transform: none;
     }
 
     .approve-button {
-      background: rgba(34, 197, 94, 0.14);
-      border-color: rgba(34, 197, 94, 0.25);
+      background:
+        rgba(34, 197, 94, 0.14);
+
+      border-color:
+        rgba(34, 197, 94, 0.25);
+
       color: #86efac;
     }
 
     .approve-button:hover {
-      background: rgba(34, 197, 94, 0.22);
+      background:
+        rgba(34, 197, 94, 0.23);
     }
 
     .reject-button {
-      background: rgba(239, 68, 68, 0.12);
-      border-color: rgba(239, 68, 68, 0.24);
+      background:
+        rgba(239, 68, 68, 0.12);
+
+      border-color:
+        rgba(239, 68, 68, 0.24);
+
       color: #fca5a5;
     }
 
     .reject-button:hover {
-      background: rgba(239, 68, 68, 0.2);
+      background:
+        rgba(239, 68, 68, 0.2);
     }
 
-    /* =========================
-       EMPTY / LOADING
-    ========================= */
-
-    .empty-state {
-      padding: 50px 20px;
-      text-align: center;
-
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px dashed rgba(255, 255, 255, 0.09);
-      border-radius: 17px;
-    }
-
-    .empty-icon {
-      width: 54px;
-      height: 54px;
-      margin: 0 auto 15px;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      border-radius: 50%;
-
-      background: rgba(124, 58, 237, 0.12);
-      color: #c4b5fd;
-
-      font-size: 23px;
-    }
-
-    .empty-state h3 {
-      font-size: 17px;
-      margin-bottom: 6px;
-    }
-
-    .empty-state p {
-      color: var(--muted);
-      font-size: 13px;
-    }
+    /* =================================
+       LOADING
+    ================================= */
 
     .loading {
       padding: 45px 20px;
+
       text-align: center;
+
       color: var(--muted);
+
       font-size: 14px;
     }
 
@@ -602,10 +672,15 @@
       margin: 0 auto 12px;
 
       border-radius: 50%;
-      border: 3px solid rgba(255, 255, 255, 0.1);
-      border-top-color: var(--purple-light);
 
-      animation: spin 0.8s linear infinite;
+      border:
+        3px solid rgba(255, 255, 255, 0.1);
+
+      border-top-color:
+        var(--purple-light);
+
+      animation:
+        spin 0.8s linear infinite;
     }
 
     @keyframes spin {
@@ -614,47 +689,109 @@
       }
     }
 
-    /* =========================
+    /* =================================
+       EMPTY STATE
+    ================================= */
+
+    .empty-state {
+      padding: 50px 20px;
+
+      text-align: center;
+
+      border-radius: 17px;
+
+      border:
+        1px dashed rgba(255, 255, 255, 0.09);
+
+      background:
+        rgba(255, 255, 255, 0.02);
+    }
+
+    .empty-icon {
+      width: 54px;
+      height: 54px;
+
+      margin: 0 auto 15px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      border-radius: 50%;
+
+      background:
+        rgba(124, 58, 237, 0.12);
+
+      color: #c4b5fd;
+
+      font-size: 23px;
+    }
+
+    .empty-state h3 {
+      font-size: 17px;
+
+      margin-bottom: 6px;
+    }
+
+    .empty-state p {
+      color: var(--muted);
+
+      font-size: 13px;
+    }
+
+    /* =================================
        FOOTER
-    ========================= */
+    ================================= */
 
     .footer {
       width: min(1180px, calc(100% - 32px));
+
       margin: 0 auto;
+
       padding: 22px 0 35px;
 
-      border-top: 1px solid var(--border);
+      border-top:
+        1px solid var(--border);
+
+      text-align: center;
 
       color: #64748b;
-      text-align: center;
+
       font-size: 12px;
     }
 
-    /* =========================
+    /* =================================
        MOBILE
-    ========================= */
+    ================================= */
 
     @media (max-width: 850px) {
+
       .summary-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns:
+          repeat(2, minmax(0, 1fr));
       }
 
       .task-meta {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns:
+          repeat(2, minmax(0, 1fr));
       }
     }
 
     @media (max-width: 600px) {
+
       .eg-nav {
+        width: calc(100% - 22px);
+
         min-height: 68px;
-        width: min(100% - 22px, 1180px);
       }
 
       .eg-logo-mark {
         width: 36px;
         height: 36px;
+
         border-radius: 10px;
-        font-size: 18px;
       }
 
       .eg-logo-word {
@@ -663,26 +800,27 @@
 
       .eg-dashboard-button {
         min-height: 38px;
+
         padding: 0 12px;
+
         font-size: 12px;
       }
 
       .page {
-        width: min(100% - 22px, 1180px);
-        padding-top: 30px;
-      }
+        width: calc(100% - 22px);
 
-      .page-heading {
-        margin-bottom: 22px;
+        padding-top: 30px;
       }
 
       .summary-grid {
         gap: 10px;
+
         margin-bottom: 27px;
       }
 
       .summary-card {
         padding: 16px;
+
         border-radius: 14px;
       }
 
@@ -698,18 +836,15 @@
         font-size: 19px;
       }
 
-      .refresh-button {
-        padding: 9px 11px;
-        font-size: 12px;
-      }
-
       .task-card {
         padding: 17px;
+
         border-radius: 14px;
       }
 
       .task-top {
         flex-direction: column;
+
         gap: 10px;
       }
 
@@ -722,7 +857,8 @@
       }
 
       .task-meta {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns:
+          1fr 1fr;
       }
 
       .task-actions {
@@ -735,16 +871,13 @@
     }
 
     @media (max-width: 380px) {
+
       .eg-logo-word {
         font-size: 18px;
       }
 
       .eg-dashboard-button {
         padding: 0 10px;
-      }
-
-      .summary-grid {
-        grid-template-columns: 1fr 1fr;
       }
 
       .task-meta {
@@ -756,131 +889,166 @@
 
 <body>
 
-  <!-- =========================
+  <!-- =================================
        HEADER
-  ========================== -->
+       BOTH LINKS GO TO ADMIN DASHBOARD
+  ================================= -->
 
   <header class="eg-header">
+
     <div class="eg-nav">
 
-      <!-- MAIN EARNGIG WEBSITE -->
+      <!-- EarnGig Admin Logo -->
       <a
-        href="https://earngig01.github.io/earngig-website/index.html"
+        href="admin-dashboard.html"
         class="eg-logo"
-        aria-label="EarnGig Home"
+        aria-label="EarnGig Admin Dashboard"
       >
-        <span class="eg-logo-mark">E</span>
+
+        <span class="eg-logo-mark">
+          E
+        </span>
 
         <span class="eg-logo-word">
           Earn<span>Gig</span>
         </span>
+
       </a>
 
-      <!-- MAIN DASHBOARD - FIXED ABSOLUTE URL -->
+
+      <!--
+        IMPORTANT:
+        This is the ADMIN dashboard.
+
+        It is NOT:
+        earngig-website/dashboard.html
+
+        It IS:
+        earngig-admin/admin-dashboard.html
+      -->
+
       <a
-        href="https://earngig01.github.io/earngig-website/dashboard.html"
+        href="admin-dashboard.html"
         class="eg-dashboard-button"
       >
         Dashboard
       </a>
 
     </div>
+
   </header>
 
 
-  <!-- =========================
-       MAIN CONTENT
-  ========================== -->
+  <!-- =================================
+       MAIN
+  ================================= -->
 
   <main class="page">
 
     <div class="page-heading">
-      <h1>Task Management</h1>
+
+      <h1>
+        Task Management
+      </h1>
+
       <p>
-        Review submitted tasks, approve valid submissions, or reject tasks
-        with an automatic wallet refund.
+        Review submitted tasks, approve valid submissions,
+        or reject tasks with an automatic wallet refund.
       </p>
+
     </div>
 
 
-    <!-- MESSAGE -->
+    <!-- Message -->
 
-    <div id="message" class="message"></div>
+    <div
+      id="message"
+      class="message"
+    ></div>
 
 
-    <!-- =========================
+    <!-- =================================
          SUMMARY
-    ========================== -->
+    ================================= -->
 
     <section class="summary-grid">
 
       <div class="summary-card total">
+
         <div class="summary-label">
           Total Tasks
         </div>
 
         <div
-          class="summary-value"
           id="totalTasks"
+          class="summary-value"
         >
           0
         </div>
+
       </div>
 
 
       <div class="summary-card pending">
+
         <div class="summary-label">
           Pending
         </div>
 
         <div
-          class="summary-value"
           id="pendingTasks"
+          class="summary-value"
         >
           0
         </div>
+
       </div>
 
 
       <div class="summary-card approved">
+
         <div class="summary-label">
           Approved
         </div>
 
         <div
-          class="summary-value"
           id="approvedTasks"
+          class="summary-value"
         >
           0
         </div>
+
       </div>
 
 
       <div class="summary-card rejected">
+
         <div class="summary-label">
           Rejected
         </div>
 
         <div
-          class="summary-value"
           id="rejectedTasks"
+          class="summary-value"
         >
           0
         </div>
+
       </div>
 
     </section>
 
 
-    <!-- =========================
+    <!-- =================================
          PENDING TASKS
-    ========================== -->
+    ================================= -->
 
-    <section class="section">
+    <section>
 
       <div class="section-header">
 
         <div>
+
           <div class="section-title">
             Pending Tasks
           </div>
@@ -888,12 +1056,14 @@
           <div class="section-subtitle">
             Tasks waiting for administrator review
           </div>
+
         </div>
 
+
         <button
+          id="refreshButton"
           type="button"
           class="refresh-button"
-          id="refreshButton"
         >
           Refresh
         </button>
@@ -901,11 +1071,17 @@
       </div>
 
 
-      <div id="tasksContainer" class="tasks-list">
+      <div
+        id="tasksContainer"
+        class="tasks-list"
+      >
 
         <div class="loading">
+
           <div class="spinner"></div>
+
           Loading tasks...
+
         </div>
 
       </div>
@@ -915,38 +1091,47 @@
   </main>
 
 
-  <!-- =========================
+  <!-- =================================
        FOOTER
-  ========================== -->
+  ================================= -->
 
   <footer class="footer">
     © 2026 EarnGig. Admin Task Management.
   </footer>
 
 
-  <!-- =========================
+  <!-- =================================
        JAVASCRIPT
-  ========================== -->
+  ================================= -->
 
   <script>
 
-    /* --------------------------------
+    /* =================================
        HELPERS
-    -------------------------------- */
+    ================================= */
 
     function formatNaira(amount) {
-      const value = Number(amount || 0);
 
-      return new Intl.NumberFormat("en-NG", {
-        style: "currency",
-        currency: "NGN",
-        maximumFractionDigits: 2
-      }).format(value);
+      const value =
+        Number(amount || 0);
+
+      return new Intl.NumberFormat(
+        "en-NG",
+        {
+          style: "currency",
+          currency: "NGN",
+          maximumFractionDigits: 2
+        }
+      ).format(value);
     }
 
 
     function escapeHtml(value) {
-      if (value === null || value === undefined) {
+
+      if (
+        value === null ||
+        value === undefined
+      ) {
         return "";
       }
 
@@ -959,157 +1144,275 @@
     }
 
 
-    function showMessage(text, type = "info") {
-      const message = document.getElementById("message");
+    function formatDate(value) {
 
-      message.textContent = text;
-      message.className = `message show ${type}`;
+      if (!value) {
+        return "Unknown";
+      }
+
+      const date =
+        new Date(value);
+
+      if (
+        Number.isNaN(
+          date.getTime()
+        )
+      ) {
+        return "Unknown";
+      }
+
+      return date.toLocaleString(
+        "en-NG",
+        {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+          hour: "numeric",
+          minute: "2-digit"
+        }
+      );
+    }
+
+
+    function showMessage(
+      text,
+      type = "info"
+    ) {
+
+      const element =
+        document.getElementById(
+          "message"
+        );
+
+      element.textContent = text;
+
+      element.className =
+        `message show ${type}`;
     }
 
 
     function clearMessage() {
-      const message = document.getElementById("message");
 
-      message.textContent = "";
-      message.className = "message";
+      const element =
+        document.getElementById(
+          "message"
+        );
+
+      element.textContent = "";
+
+      element.className =
+        "message";
     }
 
 
-    function formatDate(dateString) {
-      if (!dateString) {
-        return "Unknown date";
+    /* =================================
+       CHECK SUPABASE
+    ================================= */
+
+    async function checkSupabase() {
+
+      if (
+        typeof supabaseClient ===
+        "undefined" ||
+        !supabaseClient
+      ) {
+
+        throw new Error(
+          "Supabase client could not be loaded. Please check supabase.js."
+        );
       }
-
-      const date = new Date(dateString);
-
-      if (Number.isNaN(date.getTime())) {
-        return "Unknown date";
-      }
-
-      return date.toLocaleString("en-NG", {
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-        hour: "numeric",
-        minute: "2-digit"
-      });
     }
 
 
-    /* --------------------------------
-       GET CURRENT USER
-    -------------------------------- */
+    /* =================================
+       CHECK LOGIN
+    ================================= */
 
-    async function getCurrentUser() {
+    async function checkLogin() {
+
+      await checkSupabase();
+
 
       const {
         data,
         error
-      } = await supabaseClient.auth.getUser();
+      } =
+        await supabaseClient.auth.getUser();
+
 
       if (error) {
-        throw error;
+
+        console.error(
+          "Auth error:",
+          error
+        );
+
+        throw new Error(
+          `Authentication failed: ${error.message}`
+        );
       }
 
-      if (!data || !data.user) {
-        throw new Error("You must be logged in.");
+
+      if (
+        !data ||
+        !data.user
+      ) {
+
+        throw new Error(
+          "No active admin login session. Please log in again."
+        );
       }
+
 
       return data.user;
     }
 
 
-    /* --------------------------------
+    /* =================================
        LOAD STATISTICS
-    -------------------------------- */
+    ================================= */
 
     async function loadTaskStatistics() {
 
+      const results =
+        await Promise.all([
+
+          supabaseClient
+            .from("tasks")
+            .select(
+              "id",
+              {
+                count: "exact",
+                head: true
+              }
+            ),
+
+          supabaseClient
+            .from("tasks")
+            .select(
+              "id",
+              {
+                count: "exact",
+                head: true
+              }
+            )
+            .eq(
+              "status",
+              "pending"
+            ),
+
+          supabaseClient
+            .from("tasks")
+            .select(
+              "id",
+              {
+                count: "exact",
+                head: true
+              }
+            )
+            .eq(
+              "status",
+              "approved"
+            ),
+
+          supabaseClient
+            .from("tasks")
+            .select(
+              "id",
+              {
+                count: "exact",
+                head: true
+              }
+            )
+            .eq(
+              "status",
+              "rejected"
+            )
+
+        ]);
+
+
       const [
-        totalResult,
-        pendingResult,
-        approvedResult,
-        rejectedResult
-      ] = await Promise.all([
-
-        supabaseClient
-          .from("tasks")
-          .select("id", {
-            count: "exact",
-            head: true
-          }),
-
-        supabaseClient
-          .from("tasks")
-          .select("id", {
-            count: "exact",
-            head: true
-          })
-          .eq("status", "pending"),
-
-        supabaseClient
-          .from("tasks")
-          .select("id", {
-            count: "exact",
-            head: true
-          })
-          .eq("status", "approved"),
-
-        supabaseClient
-          .from("tasks")
-          .select("id", {
-            count: "exact",
-            head: true
-          })
-          .eq("status", "rejected")
-
-      ]);
+        total,
+        pending,
+        approved,
+        rejected
+      ] = results;
 
 
-      if (totalResult.error) {
-        throw totalResult.error;
-      }
+      if (total.error) {
 
-      if (pendingResult.error) {
-        throw pendingResult.error;
-      }
-
-      if (approvedResult.error) {
-        throw approvedResult.error;
-      }
-
-      if (rejectedResult.error) {
-        throw rejectedResult.error;
+        throw new Error(
+          `Unable to load total tasks: ${total.error.message}`
+        );
       }
 
 
-      document.getElementById("totalTasks").textContent =
-        totalResult.count || 0;
+      if (pending.error) {
 
-      document.getElementById("pendingTasks").textContent =
-        pendingResult.count || 0;
+        throw new Error(
+          `Unable to load pending task count: ${pending.error.message}`
+        );
+      }
 
-      document.getElementById("approvedTasks").textContent =
-        approvedResult.count || 0;
 
-      document.getElementById("rejectedTasks").textContent =
-        rejectedResult.count || 0;
+      if (approved.error) {
+
+        throw new Error(
+          `Unable to load approved task count: ${approved.error.message}`
+        );
+      }
+
+
+      if (rejected.error) {
+
+        throw new Error(
+          `Unable to load rejected task count: ${rejected.error.message}`
+        );
+      }
+
+
+      document.getElementById(
+        "totalTasks"
+      ).textContent =
+        total.count || 0;
+
+
+      document.getElementById(
+        "pendingTasks"
+      ).textContent =
+        pending.count || 0;
+
+
+      document.getElementById(
+        "approvedTasks"
+      ).textContent =
+        approved.count || 0;
+
+
+      document.getElementById(
+        "rejectedTasks"
+      ).textContent =
+        rejected.count || 0;
     }
 
 
-    /* --------------------------------
+    /* =================================
        LOAD PENDING TASKS
-    -------------------------------- */
+    ================================= */
 
     async function loadTasks() {
 
       const container =
-        document.getElementById("tasksContainer");
+        document.getElementById(
+          "tasksContainer"
+        );
+
 
       container.innerHTML = `
         <div class="loading">
           <div class="spinner"></div>
-          Loading tasks...
+          Loading pending tasks...
         </div>
       `;
 
@@ -1117,49 +1420,53 @@
       const {
         data,
         error
-      } = await supabaseClient
-        .from("tasks")
-        .select(`
-          id,
-          title,
-          description,
-          category,
-          task_link,
-          reward_amount,
-          max_participants,
-          participant_count,
-          platform_fee,
-          total_amount,
-          status,
-          user_id,
-          created_at
-        `)
-        .eq("status", "pending")
-        .order("created_at", {
-          ascending: false
-        });
+      } =
+        await supabaseClient
+          .from("tasks")
+          .select(`
+            id,
+            title,
+            description,
+            category,
+            task_link,
+            reward_amount,
+            max_participants,
+            participant_count,
+            platform_fee,
+            total_amount,
+            status,
+            user_id,
+            created_at
+          `)
+          .eq(
+            "status",
+            "pending"
+          )
+          .order(
+            "created_at",
+            {
+              ascending: false
+            }
+          );
 
 
       if (error) {
-        console.error("Task loading error:", error);
 
-        container.innerHTML = `
-          <div class="empty-state">
-            <div class="empty-icon">!</div>
+        console.error(
+          "Task query error:",
+          error
+        );
 
-            <h3>Unable to load tasks</h3>
-
-            <p>
-              ${escapeHtml(error.message)}
-            </p>
-          </div>
-        `;
-
-        throw error;
+        throw new Error(
+          `Unable to load pending tasks: ${error.message}`
+        );
       }
 
 
-      if (!data || data.length === 0) {
+      if (
+        !data ||
+        data.length === 0
+      ) {
 
         container.innerHTML = `
           <div class="empty-state">
@@ -1168,7 +1475,9 @@
               ✓
             </div>
 
-            <h3>No pending tasks</h3>
+            <h3>
+              No pending tasks
+            </h3>
 
             <p>
               There are currently no tasks waiting for review.
@@ -1181,23 +1490,29 @@
       }
 
 
-      container.innerHTML = data
-        .map(task => createTaskCard(task))
-        .join("");
+      container.innerHTML =
+        data
+          .map(
+            createTaskCard
+          )
+          .join("");
     }
 
 
-    /* --------------------------------
+    /* =================================
        CREATE TASK CARD
-    -------------------------------- */
+    ================================= */
 
     function createTaskCard(task) {
 
-      const taskId =
+      const id =
         escapeHtml(task.id);
 
       const title =
-        escapeHtml(task.title || "Untitled Task");
+        escapeHtml(
+          task.title ||
+          "Untitled Task"
+        );
 
       const description =
         escapeHtml(
@@ -1211,24 +1526,34 @@
           "General"
         );
 
-      const taskLink =
-        task.task_link
-          ? `
-            <div class="task-link">
-              <a
-                href="${escapeHtml(task.task_link)}"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Open Task Link →
-              </a>
-            </div>
-          `
-          : "";
+
+      let taskLink = "";
+
+
+      if (task.task_link) {
+
+        taskLink = `
+          <div class="task-link">
+
+            <a
+              href="${escapeHtml(task.task_link)}"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Open Task Link →
+            </a>
+
+          </div>
+        `;
+      }
 
 
       return `
-        <article class="task-card" id="task-${taskId}">
+
+        <article
+          class="task-card"
+          id="task-${id}"
+        >
 
           <div class="task-top">
 
@@ -1259,48 +1584,66 @@
           <div class="task-meta">
 
             <div class="meta-item">
+
               <div class="meta-label">
                 Reward
               </div>
 
               <div class="meta-value">
-                ${formatNaira(task.reward_amount)}
+                ${formatNaira(
+                  task.reward_amount
+                )}
               </div>
+
             </div>
 
 
             <div class="meta-item">
+
               <div class="meta-label">
                 Participants
               </div>
 
               <div class="meta-value">
-                ${escapeHtml(task.participant_count || 0)}
+                ${escapeHtml(
+                  task.participant_count || 0
+                )}
                 /
-                ${escapeHtml(task.max_participants || 0)}
+                ${escapeHtml(
+                  task.max_participants || 0
+                )}
               </div>
+
             </div>
 
 
             <div class="meta-item">
+
               <div class="meta-label">
                 Total Amount
               </div>
 
               <div class="meta-value">
-                ${formatNaira(task.total_amount)}
+                ${formatNaira(
+                  task.total_amount
+                )}
               </div>
+
             </div>
 
 
             <div class="meta-item">
+
               <div class="meta-label">
                 Submitted
               </div>
 
               <div class="meta-value">
-                ${formatDate(task.created_at)}
+                ${formatDate(
+                  task.created_at
+                )}
               </div>
+
             </div>
 
           </div>
@@ -1314,7 +1657,7 @@
             <button
               type="button"
               class="action-button approve-button"
-              onclick="approveTask('${taskId}')"
+              onclick="approveTask('${id}')"
             >
               ✓ Approve Task
             </button>
@@ -1323,7 +1666,7 @@
             <button
               type="button"
               class="action-button reject-button"
-              onclick="rejectTask('${taskId}')"
+              onclick="rejectTask('${id}')"
             >
               ✕ Reject & Refund
             </button>
@@ -1335,9 +1678,9 @@
     }
 
 
-    /* --------------------------------
+    /* =================================
        APPROVE TASK
-    -------------------------------- */
+    ================================= */
 
     async function approveTask(taskId) {
 
@@ -1361,29 +1704,49 @@
       clearMessage();
 
 
-      const buttons =
-        document.querySelectorAll(
-          `#task-${CSS.escape(taskId)} .action-button`
+      const card =
+        document.getElementById(
+          `task-${taskId}`
         );
 
 
-      buttons.forEach(button => {
-        button.disabled = true;
-      });
+      const buttons =
+        card
+          ? card.querySelectorAll(
+              ".action-button"
+            )
+          : [];
+
+
+      buttons.forEach(
+        button => {
+          button.disabled = true;
+        }
+      );
 
 
       try {
 
         const {
           error
-        } = await supabaseClient
-          .from("tasks")
-          .update({
-            status: "approved",
-            updated_at: new Date().toISOString()
-          })
-          .eq("id", taskId)
-          .eq("status", "pending");
+        } =
+          await supabaseClient
+            .from("tasks")
+            .update({
+              status: "approved",
+
+              updated_at:
+                new Date()
+                  .toISOString()
+            })
+            .eq(
+              "id",
+              taskId
+            )
+            .eq(
+              "status",
+              "pending"
+            );
 
 
         if (error) {
@@ -1410,9 +1773,11 @@
         );
 
 
-        buttons.forEach(button => {
-          button.disabled = false;
-        });
+        buttons.forEach(
+          button => {
+            button.disabled = false;
+          }
+        );
 
 
         showMessage(
@@ -1424,9 +1789,9 @@
     }
 
 
-    /* --------------------------------
+    /* =================================
        REJECT TASK + REFUND
-    -------------------------------- */
+    ================================= */
 
     async function rejectTask(taskId) {
 
@@ -1439,7 +1804,7 @@
         confirm(
           "Reject this task?\n\n" +
           "The full task payment will be refunded to the task owner's wallet.\n\n" +
-          "The refund will NOT be counted as earnings."
+          "The refund will NOT count as earnings."
         );
 
 
@@ -1451,28 +1816,45 @@
       clearMessage();
 
 
-      const buttons =
-        document.querySelectorAll(
-          `#task-${CSS.escape(taskId)} .action-button`
+      const card =
+        document.getElementById(
+          `task-${taskId}`
         );
 
 
-      buttons.forEach(button => {
-        button.disabled = true;
-      });
+      const buttons =
+        card
+          ? card.querySelectorAll(
+              ".action-button"
+            )
+          : [];
+
+
+      buttons.forEach(
+        button => {
+          button.disabled = true;
+        }
+      );
 
 
       try {
 
+        /*
+          IMPORTANT:
+          This uses the existing secure
+          Supabase RPC for rejection + refund.
+        */
+
         const {
           data,
           error
-        } = await supabaseClient.rpc(
-          "reject_task_with_refund",
-          {
-            p_task_id: taskId
-          }
-        );
+        } =
+          await supabaseClient.rpc(
+            "reject_task_with_refund",
+            {
+              p_task_id: taskId
+            }
+          );
 
 
         if (error) {
@@ -1486,10 +1868,14 @@
         );
 
 
-        if (!data || data.success !== true) {
+        if (
+          !data ||
+          data.success !== true
+        ) {
 
           throw new Error(
-            data && data.message
+            data &&
+            data.message
               ? data.message
               : "Task rejection and refund failed."
           );
@@ -1509,7 +1895,11 @@
 
 
         showMessage(
-          `Task rejected successfully. ${formatNaira(refundedAmount)} refunded to the task owner's wallet. New wallet balance: ${formatNaira(newBalance)}. The refund was not counted as earnings.`,
+          `Task rejected successfully. ${formatNaira(
+            refundedAmount
+          )} refunded to the task owner's wallet. New wallet balance: ${formatNaira(
+            newBalance
+          )}. The refund was not counted as earnings.`,
           "success"
         );
 
@@ -1527,9 +1917,11 @@
         );
 
 
-        buttons.forEach(button => {
-          button.disabled = false;
-        });
+        buttons.forEach(
+          button => {
+            button.disabled = false;
+          }
+        );
 
 
         showMessage(
@@ -1541,20 +1933,21 @@
     }
 
 
-    /* --------------------------------
+    /* =================================
        REFRESH
-    -------------------------------- */
+    ================================= */
 
     async function refreshTasks() {
 
-      const refreshButton =
+      const button =
         document.getElementById(
           "refreshButton"
         );
 
 
-      refreshButton.disabled = true;
-      refreshButton.textContent =
+      button.disabled = true;
+
+      button.textContent =
         "Refreshing...";
 
 
@@ -1575,6 +1968,7 @@
           error
         );
 
+
         showMessage(
           error.message ||
           "Unable to refresh task data.",
@@ -1583,22 +1977,23 @@
 
       } finally {
 
-        refreshButton.disabled = false;
-        refreshButton.textContent =
+        button.disabled = false;
+
+        button.textContent =
           "Refresh";
       }
     }
 
 
-    /* --------------------------------
+    /* =================================
        INITIALIZE
-    -------------------------------- */
+    ================================= */
 
     async function initializePage() {
 
       try {
 
-        await getCurrentUser();
+        await checkLogin();
 
 
         await Promise.all([
@@ -1609,7 +2004,7 @@
       } catch (error) {
 
         console.error(
-          "Initialization error:",
+          "Admin task page initialization error:",
           error
         );
 
@@ -1617,6 +2012,7 @@
         document.getElementById(
           "tasksContainer"
         ).innerHTML = `
+
           <div class="empty-state">
 
             <div class="empty-icon">
@@ -1630,11 +2026,12 @@
             <p>
               ${escapeHtml(
                 error.message ||
-                "Please log in and try again."
+                "An unexpected error occurred."
               )}
             </p>
 
           </div>
+
         `;
 
 
@@ -1647,21 +2044,23 @@
     }
 
 
-    /* --------------------------------
+    /* =================================
        EVENTS
-    -------------------------------- */
+    ================================= */
 
     document
-      .getElementById("refreshButton")
+      .getElementById(
+        "refreshButton"
+      )
       .addEventListener(
         "click",
         refreshTasks
       );
 
 
-    /* --------------------------------
+    /* =================================
        START
-    -------------------------------- */
+    ================================= */
 
     initializePage();
 

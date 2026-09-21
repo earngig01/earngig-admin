@@ -1,0 +1,4077 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Advert Management | EarnGig</title>
+
+
+  <!-- SUPABASE -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script src="supabase.js"></script>
+
+
+  <style>
+
+
+    /* ========================================
+       GLOBAL
+    ======================================== */
+
+    * {
+      box-sizing: border-box;
+    }
+
+
+    body {
+
+      margin: 0;
+
+      font-family:
+        Arial,
+        sans-serif;
+
+      background:
+        #f5f6fa;
+
+      color:
+        #17182f;
+
+    }
+
+
+    button,
+    input,
+    textarea,
+    select {
+
+      font: inherit;
+
+    }
+
+
+
+    /* ========================================
+       HEADER
+    ======================================== */
+
+    header {
+
+      background:
+        #0d1038;
+
+      color:
+        white;
+
+    }
+
+
+    .nav {
+
+      max-width:
+        1250px;
+
+      margin:
+        auto;
+
+      padding:
+        18px 20px;
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      gap:
+        18px;
+
+    }
+
+
+    .logo {
+
+      color:
+        white;
+
+      text-decoration:
+        none;
+
+      font-size:
+        25px;
+
+      font-weight:
+        700;
+
+    }
+
+
+    .logo span {
+
+      color:
+        #7c5cff;
+
+    }
+
+
+    .admin-badge {
+
+      margin-left:
+        auto;
+
+      color:
+        #c9caff;
+
+      font-size:
+        13px;
+
+    }
+
+
+    .dashboard-btn,
+    .logout-btn {
+
+      border:
+        1px solid
+        rgba(255,255,255,.25);
+
+      background:
+        transparent;
+
+      color:
+        white;
+
+      padding:
+        9px 14px;
+
+      border-radius:
+        8px;
+
+      cursor:
+        pointer;
+
+      text-decoration:
+        none;
+
+      font-size:
+        14px;
+
+    }
+
+
+    .dashboard-btn:hover,
+    .logout-btn:hover {
+
+      background:
+        rgba(255,255,255,.08);
+
+    }
+
+
+
+    /* ========================================
+       MAIN
+    ======================================== */
+
+    main {
+
+      max-width:
+        1250px;
+
+      margin:
+        auto;
+
+      padding:
+        30px 20px 60px;
+
+    }
+
+
+    .page-heading {
+
+      margin-bottom:
+        25px;
+
+    }
+
+
+    .page-heading h1 {
+
+      margin:
+        0 0 8px;
+
+      font-size:
+        30px;
+
+    }
+
+
+    .page-heading p {
+
+      margin:
+        0;
+
+      color:
+        #686a7d;
+
+      line-height:
+        1.5;
+
+    }
+
+
+
+    /* ========================================
+       SUMMARY
+    ======================================== */
+
+    .summary-grid {
+
+      display:
+        grid;
+
+      grid-template-columns:
+        repeat(
+          auto-fit,
+          minmax(180px, 1fr)
+        );
+
+      gap:
+        14px;
+
+      margin-bottom:
+        25px;
+
+    }
+
+
+    .summary-card {
+
+      background:
+        white;
+
+      border:
+        1px solid
+        #e6e7ee;
+
+      border-radius:
+        13px;
+
+      padding:
+        18px;
+
+      box-shadow:
+        0 5px 15px
+        rgba(0,0,0,.03);
+
+    }
+
+
+    .summary-card small {
+
+      display:
+        block;
+
+      color:
+        #77798b;
+
+      margin-bottom:
+        8px;
+
+    }
+
+
+    .summary-card strong {
+
+      font-size:
+        25px;
+
+    }
+
+
+
+    /* ========================================
+       TOOLBAR
+    ======================================== */
+
+    .toolbar {
+
+      background:
+        white;
+
+      border:
+        1px solid
+        #e6e7ee;
+
+      border-radius:
+        13px;
+
+      padding:
+        15px;
+
+      margin-bottom:
+        20px;
+
+      display:
+        flex;
+
+      flex-wrap:
+        wrap;
+
+      gap:
+        10px;
+
+      align-items:
+        center;
+
+    }
+
+
+    .filter-btn {
+
+      border:
+        1px solid
+        #dddfea;
+
+      background:
+        #f8f8fc;
+
+      color:
+        #3d3f55;
+
+      padding:
+        9px 14px;
+
+      border-radius:
+        8px;
+
+      cursor:
+        pointer;
+
+      font-weight:
+        600;
+
+    }
+
+
+    .filter-btn:hover {
+
+      background:
+        #eeeeF7;
+
+    }
+
+
+    .filter-btn.active {
+
+      background:
+        #6d4aff;
+
+      border-color:
+        #6d4aff;
+
+      color:
+        white;
+
+    }
+
+
+    .refresh-btn {
+
+      margin-left:
+        auto;
+
+      border:
+        0;
+
+      background:
+        #17182f;
+
+      color:
+        white;
+
+      padding:
+        10px 15px;
+
+      border-radius:
+        8px;
+
+      cursor:
+        pointer;
+
+      font-weight:
+        700;
+
+    }
+
+
+    .refresh-btn:hover {
+
+      opacity:
+        .9;
+
+    }
+
+
+
+    /* ========================================
+       CAMPAIGN LIST
+    ======================================== */
+
+    .campaign-list {
+
+      display:
+        grid;
+
+      gap:
+        20px;
+
+    }
+
+
+
+    /* ========================================
+       CAMPAIGN CARD
+    ======================================== */
+
+    .campaign-card {
+
+      background:
+        white;
+
+      border:
+        1px solid
+        #e2e3eb;
+
+      border-radius:
+        16px;
+
+      overflow:
+        hidden;
+
+      box-shadow:
+        0 7px 22px
+        rgba(0,0,0,.05);
+
+    }
+
+
+    .campaign-header {
+
+      padding:
+        20px;
+
+      border-bottom:
+        1px solid
+        #ececf2;
+
+      display:
+        flex;
+
+      justify-content:
+        space-between;
+
+      align-items:
+        flex-start;
+
+      gap:
+        15px;
+
+    }
+
+
+    .campaign-title {
+
+      margin:
+        0 0 6px;
+
+      font-size:
+        20px;
+
+    }
+
+
+    .campaign-id {
+
+      color:
+        #8a8c9d;
+
+      font-size:
+        12px;
+
+      word-break:
+        break-all;
+
+    }
+
+
+    /* ========================================
+       STATUS
+    ======================================== */
+
+    .status {
+
+      display:
+        inline-flex;
+
+      align-items:
+        center;
+
+      padding:
+        7px 10px;
+
+      border-radius:
+        999px;
+
+      font-size:
+        12px;
+
+      font-weight:
+        700;
+
+      white-space:
+        nowrap;
+
+    }
+
+
+    .status.pending_review {
+
+      background:
+        #fff4d8;
+
+      color:
+        #795500;
+
+    }
+
+
+    .status.revision_required {
+
+      background:
+        #fff0dc;
+
+      color:
+        #8a4b00;
+
+    }
+
+
+    .status.approved_payment_required {
+
+      background:
+        #e9e3ff;
+
+      color:
+        #5135ad;
+
+    }
+
+
+    .status.paid {
+
+      background:
+        #e1f7ea;
+
+      color:
+        #16733c;
+
+    }
+
+
+    .status.active {
+
+      background:
+        #ddf5ff;
+
+      color:
+        #09627c;
+
+    }
+
+
+    .status.completed {
+
+      background:
+        #e7e7eb;
+
+      color:
+        #4e4f5a;
+
+    }
+
+
+    .status.rejected {
+
+      background:
+        #ffe4e4;
+
+      color:
+        #9c2020;
+
+    }
+
+
+    .status.approved {
+
+      background:
+        #e1f7ea;
+
+      color:
+        #16733c;
+
+    }
+
+
+
+    /* ========================================
+       CAMPAIGN BODY
+    ======================================== */
+
+    .campaign-body {
+
+      padding:
+        20px;
+
+    }
+
+
+    .campaign-grid {
+
+      display:
+        grid;
+
+      grid-template-columns:
+        minmax(0, 1.35fr)
+        minmax(280px, .9fr);
+
+      gap:
+        22px;
+
+    }
+
+
+    .video-section h3,
+    .details-section h3,
+    .history-section h3,
+    .actions h3 {
+
+      margin:
+        0 0 12px;
+
+      font-size:
+        16px;
+
+    }
+
+
+
+    /* ========================================
+       VIDEO
+    ======================================== */
+
+    .video-box {
+
+      background:
+        #0b0d20;
+
+      border-radius:
+        12px;
+
+      overflow:
+        hidden;
+
+      margin-bottom:
+        16px;
+
+    }
+
+
+    .video-box video {
+
+      display:
+        block;
+
+      width:
+        100%;
+
+      max-height:
+        420px;
+
+      background:
+        #000;
+
+    }
+
+
+    .video-label {
+
+      padding:
+        10px 12px;
+
+      color:
+        #d8d8e7;
+
+      font-size:
+        13px;
+
+    }
+
+
+    .video-missing {
+
+      background:
+        #f3f3f7;
+
+      border:
+        1px dashed
+        #cfd0da;
+
+      color:
+        #77798b;
+
+      padding:
+        20px;
+
+      border-radius:
+        10px;
+
+      margin-bottom:
+        15px;
+
+    }
+
+
+
+    /* ========================================
+       DETAILS
+    ======================================== */
+
+    .detail-box {
+
+      background:
+        #f8f8fc;
+
+      border:
+        1px solid
+        #e5e5ed;
+
+      border-radius:
+        11px;
+
+      padding:
+        14px;
+
+      margin-bottom:
+        12px;
+
+    }
+
+
+    .detail-row {
+
+      display:
+        flex;
+
+      justify-content:
+        space-between;
+
+      gap:
+        15px;
+
+      padding:
+        8px 0;
+
+      border-bottom:
+        1px solid
+        #e9e9ef;
+
+    }
+
+
+    .detail-row:last-child {
+
+      border-bottom:
+        0;
+
+    }
+
+
+    .detail-label {
+
+      color:
+        #77798b;
+
+      font-size:
+        13px;
+
+    }
+
+
+    .detail-value {
+
+      text-align:
+        right;
+
+      font-weight:
+        600;
+
+      font-size:
+        13px;
+
+      word-break:
+        break-word;
+
+    }
+
+
+    .description {
+
+      white-space:
+        pre-wrap;
+
+      line-height:
+        1.55;
+
+      color:
+        #505264;
+
+      font-size:
+        14px;
+
+    }
+
+
+    .destination-link {
+
+      color:
+        #5b3ee4;
+
+      text-decoration:
+        none;
+
+      word-break:
+        break-all;
+
+    }
+
+
+    .destination-link:hover {
+
+      text-decoration:
+        underline;
+
+    }
+
+
+    .existing-note {
+
+      background:
+        #fff8e7;
+
+      border:
+        1px solid
+        #f0d58a;
+
+      border-radius:
+        10px;
+
+      padding:
+        13px;
+
+      margin-top:
+        15px;
+
+      color:
+        #664c00;
+
+      font-size:
+        14px;
+
+      line-height:
+        1.5;
+
+    }
+
+
+
+    /* ========================================
+       REVIEW ACTIONS
+    ======================================== */
+
+    .actions {
+
+      margin-top:
+        20px;
+
+      padding-top:
+        20px;
+
+      border-top:
+        1px solid
+        #ececf2;
+
+    }
+
+
+    .actions textarea {
+
+      width:
+        100%;
+
+      min-height:
+        105px;
+
+      resize:
+        vertical;
+
+      border:
+        1px solid
+        #d9dae4;
+
+      border-radius:
+        9px;
+
+      padding:
+        12px;
+
+      outline:
+        none;
+
+      color:
+        #17182f;
+
+      background:
+        white;
+
+    }
+
+
+    .actions textarea:focus {
+
+      border-color:
+        #6d4aff;
+
+      box-shadow:
+        0 0 0 3px
+        rgba(109,74,255,.1);
+
+    }
+
+
+    .action-help {
+
+      margin:
+        0 0 10px;
+
+      color:
+        #77798b;
+
+      font-size:
+        13px;
+
+      line-height:
+        1.4;
+
+    }
+
+
+    .action-buttons {
+
+      display:
+        flex;
+
+      flex-wrap:
+        wrap;
+
+      gap:
+        10px;
+
+      margin-top:
+        12px;
+
+    }
+
+
+    .action-btn {
+
+      border:
+        0;
+
+      border-radius:
+        9px;
+
+      padding:
+        11px 16px;
+
+      color:
+        white;
+
+      cursor:
+        pointer;
+
+      font-weight:
+        700;
+
+    }
+
+
+    .approve-btn {
+
+      background:
+        #16834a;
+
+    }
+
+
+    .changes-btn {
+
+      background:
+        #d28a00;
+
+    }
+
+
+    .reject-btn {
+
+      background:
+        #c52d3a;
+
+    }
+
+
+    .action-btn:hover {
+
+      opacity:
+        .9;
+
+    }
+
+
+    .action-btn:disabled {
+
+      opacity:
+        .55;
+
+      cursor:
+        not-allowed;
+
+    }
+
+
+
+    /* ========================================
+       HISTORY
+    ======================================== */
+
+    .history-section {
+
+      margin-top:
+        25px;
+
+      padding-top:
+        20px;
+
+      border-top:
+        1px solid
+        #ececf2;
+
+    }
+
+
+    .history-item {
+
+      border-left:
+        3px solid
+        #6d4aff;
+
+      background:
+        #f8f8fc;
+
+      padding:
+        12px 14px;
+
+      margin-bottom:
+        10px;
+
+      border-radius:
+        0 9px 9px 0;
+
+    }
+
+
+    .history-top {
+
+      display:
+        flex;
+
+      justify-content:
+        space-between;
+
+      gap:
+        10px;
+
+      margin-bottom:
+        5px;
+
+    }
+
+
+    .history-action {
+
+      font-weight:
+        700;
+
+      text-transform:
+        capitalize;
+
+    }
+
+
+    .history-date {
+
+      color:
+        #858697;
+
+      font-size:
+        12px;
+
+    }
+
+
+    .history-note {
+
+      color:
+        #56586a;
+
+      font-size:
+        13px;
+
+      line-height:
+        1.45;
+
+      white-space:
+        pre-wrap;
+
+    }
+
+
+    .no-history {
+
+      color:
+        #858697;
+
+      font-size:
+        13px;
+
+    }
+
+
+
+    /* ========================================
+       PAGE STATES
+    ======================================== */
+
+    .state-box {
+
+      background:
+        white;
+
+      border:
+        1px solid
+        #e3e4ec;
+
+      border-radius:
+        13px;
+
+      padding:
+        35px 20px;
+
+      text-align:
+        center;
+
+      color:
+        #686a7d;
+
+    }
+
+
+    .error-box {
+
+      background:
+        #fff5f5;
+
+      border:
+        1px solid
+        #efb4b4;
+
+      color:
+        #7b2020;
+
+      border-radius:
+        12px;
+
+      padding:
+        18px;
+
+    }
+
+
+    .loading {
+
+      opacity:
+        .8;
+
+    }
+
+
+
+    /* ========================================
+       MOBILE
+    ======================================== */
+
+    @media (
+      max-width: 800px
+    ) {
+
+      .campaign-grid {
+
+        grid-template-columns:
+          1fr;
+
+      }
+
+    }
+
+
+    @media (
+      max-width: 650px
+    ) {
+
+      .nav {
+
+        flex-wrap:
+          wrap;
+
+      }
+
+
+      .admin-badge {
+
+        order:
+          3;
+
+        width:
+          100%;
+
+        margin-left:
+          0;
+
+      }
+
+
+      main {
+
+        padding:
+          25px 15px 45px;
+
+      }
+
+
+      .campaign-header {
+
+        flex-direction:
+          column;
+
+      }
+
+
+      .status {
+
+        align-self:
+          flex-start;
+
+      }
+
+
+      .refresh-btn {
+
+        margin-left:
+          0;
+
+      }
+
+
+      .detail-row {
+
+        flex-direction:
+          column;
+
+        gap:
+          4px;
+
+      }
+
+
+      .detail-value {
+
+        text-align:
+          left;
+
+      }
+
+
+      .action-buttons {
+
+        flex-direction:
+          column;
+
+      }
+
+
+      .action-btn {
+
+        width:
+          100%;
+
+      }
+
+    }
+
+
+  </style>
+
+</head>
+
+
+
+<body>
+
+
+<!-- ========================================
+     HEADER
+======================================== -->
+
+<header>
+
+  <div class="nav">
+
+    <a
+      class="logo"
+      href="admin-dashboard.html"
+    >
+
+      Earn<span>Gig</span>
+
+    </a>
+
+
+    <div class="admin-badge">
+
+      ADMIN PORTAL
+
+    </div>
+
+
+    <a
+      href="admin-dashboard.html"
+      class="dashboard-btn"
+    >
+
+      Dashboard
+
+    </a>
+
+
+    <button
+      type="button"
+      class="logout-btn"
+      id="logoutButton"
+    >
+
+      Logout
+
+    </button>
+
+  </div>
+
+</header>
+
+
+
+<!-- ========================================
+     MAIN
+======================================== -->
+
+<main>
+
+
+  <!-- ======================================
+       PAGE HEADING
+  ======================================= -->
+
+  <section class="page-heading">
+
+    <h1>
+      Advert Management
+    </h1>
+
+    <p>
+      Review advertiser submissions, approve campaigns,
+      request changes or reject campaigns before payment
+      and publication.
+    </p>
+
+  </section>
+
+
+
+  <!-- ======================================
+       SUMMARY
+  ======================================= -->
+
+  <section
+    class="summary-grid"
+    id="summaryGrid"
+  >
+
+    <div class="summary-card">
+
+      <small>
+        Total Campaigns
+      </small>
+
+      <strong id="totalCount">
+        0
+      </strong>
+
+    </div>
+
+
+    <div class="summary-card">
+
+      <small>
+        Pending Review
+      </small>
+
+      <strong id="pendingCount">
+        0
+      </strong>
+
+    </div>
+
+
+    <div class="summary-card">
+
+      <small>
+        Changes Requested
+      </small>
+
+      <strong id="revisionCount">
+        0
+      </strong>
+
+    </div>
+
+
+    <div class="summary-card">
+
+      <small>
+        Awaiting Payment
+      </small>
+
+      <strong id="paymentCount">
+        0
+      </strong>
+
+    </div>
+
+
+    <div class="summary-card">
+
+      <small>
+        Active
+      </small>
+
+      <strong id="activeCount">
+        0
+      </strong>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- ======================================
+       FILTERS
+  ======================================= -->
+
+  <div class="toolbar">
+
+    <button
+      type="button"
+      class="filter-btn active"
+      data-filter="all"
+    >
+      All
+    </button>
+
+
+    <button
+      type="button"
+      class="filter-btn"
+      data-filter="pending_review"
+    >
+      Pending Review
+    </button>
+
+
+    <button
+      type="button"
+      class="filter-btn"
+      data-filter="revision_required"
+    >
+      Changes Requested
+    </button>
+
+
+    <button
+      type="button"
+      class="filter-btn"
+      data-filter="approved_payment_required"
+    >
+      Awaiting Payment
+    </button>
+
+
+    <button
+      type="button"
+      class="filter-btn"
+      data-filter="paid"
+    >
+      Paid
+    </button>
+
+
+    <button
+      type="button"
+      class="filter-btn"
+      data-filter="active"
+    >
+      Active
+    </button>
+
+
+    <button
+      type="button"
+      class="filter-btn"
+      data-filter="rejected"
+    >
+      Rejected
+    </button>
+
+
+    <button
+      type="button"
+      class="refresh-btn"
+      id="refreshButton"
+    >
+      ↻ Refresh
+    </button>
+
+  </div>
+
+
+
+  <!-- ======================================
+       CAMPAIGN LIST
+  ======================================= -->
+
+  <section
+    id="campaignList"
+    class="campaign-list"
+  >
+
+    <div class="state-box loading">
+
+      Loading advertising campaigns...
+
+    </div>
+
+  </section>
+
+
+</main>
+
+
+
+<script>
+
+
+/* ========================================
+   GLOBAL STATE
+======================================== */
+
+let currentAdminUser = null;
+
+let allCampaigns = [];
+
+let currentFilter = "all";
+
+
+
+/* ========================================
+   ADMIN SECURITY
+======================================== */
+
+async function checkAdmin() {
+
+  const {
+
+    data: {
+      user
+    },
+
+    error
+
+  } =
+  await supabaseClient
+    .auth
+    .getUser();
+
+
+
+  if (
+    error ||
+    !user
+  ) {
+
+    window.location.href =
+      "index.html";
+
+    return null;
+
+  }
+
+
+
+  const {
+
+    data: profile,
+
+    error: profileError
+
+  } =
+  await supabaseClient
+
+    .from("profiles")
+
+    .select(`
+      full_name,
+      is_admin,
+      account_status
+    `)
+
+    .eq(
+      "id",
+      user.id
+    )
+
+    .single();
+
+
+
+  if (
+
+    profileError ||
+
+    !profile ||
+
+    profile.is_admin !== true
+
+  ) {
+
+    await supabaseClient
+      .auth
+      .signOut();
+
+
+    alert(
+      "Access denied. Administrator privileges are required."
+    );
+
+
+    window.location.href =
+      "index.html";
+
+
+    return null;
+
+  }
+
+
+
+  if (
+
+    profile.account_status &&
+
+    profile.account_status !==
+    "active"
+
+  ) {
+
+    await supabaseClient
+      .auth
+      .signOut();
+
+
+    alert(
+      "This administrator account is not active."
+    );
+
+
+    window.location.href =
+      "index.html";
+
+
+    return null;
+
+  }
+
+
+
+  currentAdminUser =
+    user;
+
+
+  return user;
+
+}
+
+
+
+/* ========================================
+   LOAD CAMPAIGNS
+======================================== */
+
+async function loadCampaigns() {
+
+  const list =
+    document.getElementById(
+      "campaignList"
+    );
+
+
+  list.innerHTML = `
+
+    <div class="state-box loading">
+
+      Loading advertising campaigns...
+
+    </div>
+
+  `;
+
+
+  try {
+
+    const {
+
+      data,
+
+      error
+
+    } =
+    await supabaseClient
+
+      .from("brand_ad_campaigns")
+
+      .select("*")
+
+      .order(
+        "created_at",
+        {
+          ascending:
+            false
+        }
+      );
+
+
+    if (error) {
+
+      throw error;
+
+    }
+
+
+    allCampaigns =
+      Array.isArray(data)
+        ? data
+        : [];
+
+
+    updateSummary();
+
+    renderCampaigns();
+
+
+  }
+
+  catch (error) {
+
+    console.error(
+      "Advert loading error:",
+      error
+    );
+
+
+    list.innerHTML = `
+
+      <div class="error-box">
+
+        <strong>
+          Advertising campaigns could not be loaded.
+        </strong>
+
+        <p>
+          ${escapeHtml(
+            error.message ||
+            "Unknown error"
+          )}
+        </p>
+
+      </div>
+
+    `;
+
+  }
+
+}
+
+
+
+/* ========================================
+   UPDATE SUMMARY
+======================================== */
+
+function updateSummary() {
+
+  const total =
+    allCampaigns.length;
+
+
+  const pending =
+    allCampaigns.filter(
+      campaign =>
+        normalizeStatus(
+          campaign
+        ) ===
+        "pending_review"
+    ).length;
+
+
+  const revision =
+    allCampaigns.filter(
+      campaign =>
+        normalizeStatus(
+          campaign
+        ) ===
+        "revision_required"
+    ).length;
+
+
+  const payment =
+    allCampaigns.filter(
+      campaign =>
+        normalizeStatus(
+          campaign
+        ) ===
+        "approved_payment_required"
+    ).length;
+
+
+  const active =
+    allCampaigns.filter(
+      campaign =>
+        normalizeStatus(
+          campaign
+        ) ===
+        "active"
+    ).length;
+
+
+  document.getElementById(
+    "totalCount"
+  ).textContent =
+    total.toLocaleString();
+
+
+  document.getElementById(
+    "pendingCount"
+  ).textContent =
+    pending.toLocaleString();
+
+
+  document.getElementById(
+    "revisionCount"
+  ).textContent =
+    revision.toLocaleString();
+
+
+  document.getElementById(
+    "paymentCount"
+  ).textContent =
+    payment.toLocaleString();
+
+
+  document.getElementById(
+    "activeCount"
+  ).textContent =
+    active.toLocaleString();
+
+}
+
+
+
+/* ========================================
+   NORMALIZE STATUS
+======================================== */
+
+function normalizeStatus(
+  campaign
+) {
+
+  const status =
+    String(
+
+      campaign.status ||
+
+      ""
+
+    )
+      .trim()
+      .toLowerCase();
+
+
+  if (status) {
+
+    return status;
+
+  }
+
+
+  const approval =
+    String(
+
+      campaign.approval_status ||
+
+      ""
+
+    )
+      .trim()
+      .toLowerCase();
+
+
+  if (
+    approval ===
+    "pending"
+  ) {
+
+    return "pending_review";
+
+  }
+
+
+  if (
+    approval ===
+    "approved"
+  ) {
+
+    return "approved_payment_required";
+
+  }
+
+
+  if (
+    approval ===
+    "rejected"
+  ) {
+
+    return "rejected";
+
+  }
+
+
+  return "pending_review";
+
+}
+
+
+
+/* ========================================
+   RENDER CAMPAIGNS
+======================================== */
+
+function renderCampaigns() {
+
+  const list =
+    document.getElementById(
+      "campaignList"
+    );
+
+
+  let campaigns =
+    allCampaigns;
+
+
+  if (
+    currentFilter !==
+    "all"
+  ) {
+
+    campaigns =
+      campaigns.filter(
+        campaign =>
+          normalizeStatus(
+            campaign
+          ) ===
+          currentFilter
+      );
+
+  }
+
+
+
+  if (
+    campaigns.length ===
+    0
+  ) {
+
+    list.innerHTML = `
+
+      <div class="state-box">
+
+        No advertising campaigns found
+        for this filter.
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+
+  list.innerHTML =
+    campaigns
+      .map(
+        campaign =>
+          renderCampaign(
+            campaign
+          )
+      )
+      .join("");
+
+
+  loadReviewHistories(
+    campaigns
+  );
+
+}
+
+
+
+/* ========================================
+   RENDER CAMPAIGN
+======================================== */
+
+function renderCampaign(
+  campaign
+) {
+
+  const status =
+    normalizeStatus(
+      campaign
+    );
+
+
+  const title =
+    campaign.campaign_name ||
+    campaign.ad_title ||
+    "Untitled Advertising Campaign";
+
+
+  const description =
+    campaign.description ||
+    "No description provided.";
+
+
+  const amount =
+    getCampaignAmount(
+      campaign
+    );
+
+
+  const placement =
+    campaign.placement ||
+    "Not specified";
+
+
+  const paymentStatus =
+    campaign.payment_status ||
+    "Not specified";
+
+
+  const destination =
+    getDestination(
+      campaign
+    );
+
+
+  const created =
+    formatDate(
+      campaign.created_at
+    );
+
+
+  const submitted =
+    formatDate(
+      campaign.last_submitted_at ||
+      campaign.submitted_at
+    );
+
+
+  const reviewed =
+    formatDate(
+      campaign.reviewed_at
+    );
+
+
+  const reviewNote =
+    campaign.admin_review_note ||
+    "";
+
+
+  const canReview =
+    status ===
+      "pending_review" ||
+    status ===
+      "revision_required";
+
+
+  const campaignId =
+    campaign.id || "";
+
+
+  return `
+
+    <article
+      class="campaign-card"
+      data-campaign-id="${escapeAttribute(
+        campaignId
+      )}"
+    >
+
+
+      <!-- HEADER -->
+
+      <div class="campaign-header">
+
+        <div>
+
+          <h2 class="campaign-title">
+
+            ${escapeHtml(
+              title
+            )}
+
+          </h2>
+
+
+          <div class="campaign-id">
+
+            Campaign ID:
+            ${escapeHtml(
+              campaignId
+            )}
+
+          </div>
+
+        </div>
+
+
+        <span
+          class="status ${escapeAttribute(
+            status
+          )}"
+        >
+
+          ${escapeHtml(
+            formatStatus(
+              status
+            )
+          )}
+
+        </span>
+
+      </div>
+
+
+
+      <!-- BODY -->
+
+      <div class="campaign-body">
+
+        <div class="campaign-grid">
+
+
+
+          <!-- VIDEOS -->
+
+          <section class="video-section">
+
+            <h3>
+              EarnGig Advert Video
+            </h3>
+
+
+            ${
+              campaign.video_url
+
+                ? renderVideo(
+                    campaign.video_url,
+                    "EarnGig Advert"
+                  )
+
+                : `
+
+                  <div class="video-missing">
+
+                    No EarnGig advert video
+                    was supplied.
+
+                  </div>
+
+                `
+            }
+
+
+
+            ${
+              campaign.tiktok_video_1_url
+
+                ? `
+
+                  <h3>
+                    TikTok Video 1
+                  </h3>
+
+                  ${renderVideo(
+                    campaign.tiktok_video_1_url,
+                    "TikTok Video 1"
+                  )}
+
+                `
+
+                : ""
+
+            }
+
+
+
+            ${
+              campaign.tiktok_video_2_url
+
+                ? `
+
+                  <h3>
+                    TikTok Video 2
+                  </h3>
+
+                  ${renderVideo(
+                    campaign.tiktok_video_2_url,
+                    "TikTok Video 2"
+                  )}
+
+                `
+
+                : ""
+
+            }
+
+
+
+            ${
+              campaign.tiktok_video_3_url
+
+                ? `
+
+                  <h3>
+                    TikTok Video 3
+                  </h3>
+
+                  ${renderVideo(
+                    campaign.tiktok_video_3_url,
+                    "TikTok Video 3"
+                  )}
+
+                `
+
+                : ""
+
+            }
+
+          </section>
+
+
+
+          <!-- DETAILS -->
+
+          <section class="details-section">
+
+            <h3>
+              Campaign Details
+            </h3>
+
+
+            <div class="detail-box">
+
+
+              ${detailRow(
+                "Brand / Advertiser",
+                campaign.brand_name ||
+                campaign.business_name ||
+                campaign.brand_id ||
+                "Not provided"
+              )}
+
+
+              ${detailRow(
+                "Campaign",
+                title
+              )}
+
+
+              ${detailRow(
+                "Placement",
+                placement
+              )}
+
+
+              ${detailRow(
+                "Campaign Amount",
+                formatMoney(
+                  amount
+                )
+              )}
+
+
+              ${detailRow(
+                "Campaign Budget",
+                formatMoney(
+                  campaign.campaign_budget
+                )
+              )}
+
+
+              ${detailRow(
+                "Posting Fee",
+                formatMoney(
+                  campaign.posting_fee
+                )
+              )}
+
+
+              ${detailRow(
+                "Viewer Reward",
+                formatMoney(
+                  campaign.viewer_reward
+                )
+              )}
+
+
+              ${detailRow(
+                "Target Views",
+                formatNumber(
+                  campaign.target_views
+                )
+              )}
+
+
+              ${detailRow(
+                "Verified Views",
+                formatNumber(
+                  campaign.verified_views
+                )
+              )}
+
+
+              ${detailRow(
+                "Payment Status",
+                paymentStatus
+              )}
+
+
+              ${detailRow(
+                "Submitted",
+                submitted
+              )}
+
+
+              ${detailRow(
+                "Last Reviewed",
+                reviewed
+              )}
+
+
+              ${detailRow(
+                "Created",
+                created
+              )}
+
+            </div>
+
+
+
+            ${
+              destination
+
+                ? `
+
+                  <div class="detail-box">
+
+                    <div class="detail-label">
+
+                      Destination Link
+
+                    </div>
+
+                    <p>
+
+                      <a
+                        class="destination-link"
+                        href="${escapeAttribute(
+                          destination
+                        )}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+
+                        ${escapeHtml(
+                          destination
+                        )}
+
+                      </a>
+
+                    </p>
+
+                  </div>
+
+                `
+
+                : ""
+
+            }
+
+
+
+            <div class="detail-box">
+
+              <div class="detail-label">
+
+                Advert Description
+
+              </div>
+
+              <div class="description">
+
+                ${escapeHtml(
+                  description
+                )}
+
+              </div>
+
+            </div>
+
+
+
+            ${
+              reviewNote
+
+                ? `
+
+                  <div class="existing-note">
+
+                    <strong>
+                      Current Admin Note
+                    </strong>
+
+                    <div style="margin-top:6px;">
+
+                      ${escapeHtml(
+                        reviewNote
+                      )}
+
+                    </div>
+
+                  </div>
+
+                `
+
+                : ""
+
+            }
+
+          </section>
+
+        </div>
+
+
+
+        <!-- REVIEW ACTIONS -->
+
+        ${
+          canReview
+
+            ? `
+
+              <div class="actions">
+
+                <h3>
+                  Admin Review
+                </h3>
+
+
+                <p class="action-help">
+
+                  A note is required for
+                  Request Changes and Reject.
+                  Approval does not require a note.
+
+                </p>
+
+
+                <textarea
+                  id="review-note-${escapeAttribute(
+                    campaignId
+                  )}"
+                  placeholder="Write your review note here..."
+                ></textarea>
+
+
+                <div class="action-buttons">
+
+
+                  <button
+                    type="button"
+                    class="action-btn approve-btn"
+                    onclick="approveCampaign('${escapeAttribute(
+                      campaignId
+                    )}')"
+                  >
+
+                    ✓ Approve & Request Payment
+
+                  </button>
+
+
+                  <button
+                    type="button"
+                    class="action-btn changes-btn"
+                    onclick="requestChanges('${escapeAttribute(
+                      campaignId
+                    )}')"
+                  >
+
+                    ✎ Request Changes
+
+                  </button>
+
+
+                  <button
+                    type="button"
+                    class="action-btn reject-btn"
+                    onclick="rejectCampaign('${escapeAttribute(
+                      campaignId
+                    )}')"
+                  >
+
+                    ✕ Reject
+
+                  </button>
+
+
+                </div>
+
+              </div>
+
+            `
+
+            : ""
+
+        }
+
+
+
+        <!-- REVIEW HISTORY -->
+
+        <section class="history-section">
+
+          <h3>
+            Review History
+          </h3>
+
+
+          <div
+            id="history-${escapeAttribute(
+              campaignId
+            )}"
+          >
+
+            <div class="no-history">
+
+              Loading review history...
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+      </div>
+
+    </article>
+
+  `;
+
+}
+
+
+
+/* ========================================
+   VIDEO RENDERING
+======================================== */
+
+function renderVideo(
+  source,
+  label
+) {
+
+  const url =
+    resolveVideoUrl(
+      source
+    );
+
+
+  if (!url) {
+
+    return `
+
+      <div class="video-missing">
+
+        ${escapeHtml(
+          label
+        )}
+        video could not be loaded.
+
+      </div>
+
+    `;
+
+  }
+
+
+  return `
+
+    <div class="video-box">
+
+      <video
+        controls
+        preload="metadata"
+        playsinline
+      >
+
+        <source
+          src="${escapeAttribute(
+            url
+          )}"
+        >
+
+        Your browser does not support
+        video playback.
+
+      </video>
+
+
+      <div class="video-label">
+
+        ${escapeHtml(
+          label
+        )}
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+
+/* ========================================
+   RESOLVE VIDEO URL
+======================================== */
+
+function resolveVideoUrl(
+  source
+) {
+
+  if (!source) {
+
+    return "";
+
+  }
+
+
+  const value =
+    String(
+      source
+    ).trim();
+
+
+  if (
+    value.startsWith(
+      "http://"
+    ) ||
+    value.startsWith(
+      "https://"
+    ) ||
+    value.startsWith(
+      "blob:"
+    ) ||
+    value.startsWith(
+      "data:"
+    )
+  ) {
+
+    return value;
+
+  }
+
+
+  const {
+    data
+  } =
+  supabaseClient
+    .storage
+    .from(
+      "advert-videos"
+    )
+    .getPublicUrl(
+      value
+    );
+
+
+  return data?.publicUrl || "";
+
+}
+
+
+
+/* ========================================
+   LOAD REVIEW HISTORY
+======================================== */
+
+async function loadReviewHistories(
+  campaigns
+) {
+
+  for (
+    const campaign of campaigns
+  ) {
+
+    if (!campaign.id) {
+
+      continue;
+
+    }
+
+
+    const {
+
+      data,
+
+      error
+
+    } =
+    await supabaseClient
+
+      .from(
+        "brand_ad_campaign_reviews"
+      )
+
+      .select(`
+        id,
+        campaign_id,
+        admin_id,
+        action,
+        review_note,
+        created_at
+      `)
+
+      .eq(
+        "campaign_id",
+        campaign.id
+      )
+
+      .order(
+        "created_at",
+        {
+          ascending:
+            false
+        }
+      );
+
+
+    const historyElement =
+      document.getElementById(
+        `history-${campaign.id}`
+      );
+
+
+    if (!historyElement) {
+
+      continue;
+
+    }
+
+
+    if (error) {
+
+      console.error(
+        "Review history error:",
+        error
+      );
+
+
+      historyElement.innerHTML = `
+
+        <div class="no-history">
+
+          Review history could not be loaded.
+
+        </div>
+
+      `;
+
+
+      continue;
+
+    }
+
+
+    if (
+      !data ||
+      data.length === 0
+    ) {
+
+      historyElement.innerHTML = `
+
+        <div class="no-history">
+
+          No previous reviews.
+
+        </div>
+
+      `;
+
+      continue;
+
+    }
+
+
+    historyElement.innerHTML =
+      data
+        .map(
+          item => `
+
+            <div class="history-item">
+
+              <div class="history-top">
+
+                <span class="history-action">
+
+                  ${escapeHtml(
+                    formatReviewAction(
+                      item.action
+                    )
+                  )}
+
+                </span>
+
+
+                <span class="history-date">
+
+                  ${escapeHtml(
+                    formatDate(
+                      item.created_at
+                    )
+                  )}
+
+                </span>
+
+              </div>
+
+
+              <div class="history-note">
+
+                ${
+                  item.review_note
+
+                    ? escapeHtml(
+                        item.review_note
+                      )
+
+                    : "No written note."
+                }
+
+              </div>
+
+            </div>
+
+          `
+        )
+        .join("");
+
+  }
+
+}
+
+
+
+/* ========================================
+   APPROVE
+======================================== */
+
+async function approveCampaign(
+  campaignId
+) {
+
+  const campaign =
+    findCampaign(
+      campaignId
+    );
+
+
+  if (!campaign) {
+
+    alert(
+      "Campaign could not be found."
+    );
+
+    return;
+
+  }
+
+
+  const confirmed =
+    confirm(
+
+      "Approve this advertising campaign?\n\n" +
+
+      "The advertiser will then be able to complete payment.\n\n" +
+
+      "No money will be deducted by this approval action."
+
+    );
+
+
+  if (!confirmed) {
+
+    return;
+
+  }
+
+
+  await performReview(
+    campaignId,
+    "approved",
+    ""
+  );
+
+}
+
+
+
+/* ========================================
+   REQUEST CHANGES
+======================================== */
+
+async function requestChanges(
+  campaignId
+) {
+
+  const note =
+    getReviewNote(
+      campaignId
+    );
+
+
+  if (!note) {
+
+    alert(
+      "Please write the changes the advertiser needs to make."
+    );
+
+    return;
+
+  }
+
+
+  const confirmed =
+    confirm(
+
+      "Send this campaign back to the advertiser for changes?"
+
+    );
+
+
+  if (!confirmed) {
+
+    return;
+
+  }
+
+
+  await performReview(
+    campaignId,
+    "changes_requested",
+    note
+  );
+
+}
+
+
+
+/* ========================================
+   REJECT
+======================================== */
+
+async function rejectCampaign(
+  campaignId
+) {
+
+  const note =
+    getReviewNote(
+      campaignId
+    );
+
+
+  if (!note) {
+
+    alert(
+      "Please write the reason for rejecting this campaign."
+    );
+
+    return;
+
+  }
+
+
+  const confirmed =
+    confirm(
+
+      "Reject this advertising campaign?\n\n" +
+
+      "The rejection reason will be saved for the advertiser."
+
+    );
+
+
+  if (!confirmed) {
+
+    return;
+
+  }
+
+
+  await performReview(
+    campaignId,
+    "rejected",
+    note
+  );
+
+}
+
+
+
+/* ========================================
+   PERFORM REVIEW
+======================================== */
+
+async function performReview(
+  campaignId,
+  action,
+  note
+) {
+
+  if (!currentAdminUser) {
+
+    alert(
+      "Your administrator session has expired."
+    );
+
+    return;
+
+  }
+
+
+  const campaign =
+    findCampaign(
+      campaignId
+    );
+
+
+  if (!campaign) {
+
+    alert(
+      "Campaign could not be found."
+    );
+
+    return;
+
+  }
+
+
+  const card =
+    document.querySelector(
+      `[data-campaign-id="${cssEscape(
+        campaignId
+      )}"]`
+    );
+
+
+  const buttons =
+    card
+      ? card.querySelectorAll(
+          ".action-btn"
+        )
+      : [];
+
+
+  buttons.forEach(
+    button => {
+      button.disabled =
+        true;
+    }
+  );
+
+
+  try {
+
+
+    const now =
+      new Date().toISOString();
+
+
+    let newStatus =
+      "";
+
+
+    let approvalStatus =
+      "";
+
+
+    if (
+      action ===
+      "approved"
+    ) {
+
+      newStatus =
+        "approved_payment_required";
+
+      approvalStatus =
+        "approved";
+
+    }
+
+
+    if (
+      action ===
+      "changes_requested"
+    ) {
+
+      newStatus =
+        "revision_required";
+
+      approvalStatus =
+        "revision_required";
+
+    }
+
+
+    if (
+      action ===
+      "rejected"
+    ) {
+
+      newStatus =
+        "rejected";
+
+      approvalStatus =
+        "rejected";
+
+    }
+
+
+
+    /* --------------------------------------
+       UPDATE CAMPAIGN
+    --------------------------------------- */
+
+    const updateData = {
+
+      status:
+        newStatus,
+
+      approval_status:
+        approvalStatus,
+
+      admin_review_note:
+        note || null,
+
+      reviewed_by:
+        currentAdminUser.id,
+
+      reviewed_at:
+        now
+
+    };
+
+
+    if (
+      action ===
+      "approved"
+    ) {
+
+      updateData.approved_at =
+        now;
+
+      updateData.approved_by =
+        currentAdminUser.id;
+
+    }
+
+
+    if (
+      action ===
+      "changes_requested"
+    ) {
+
+      updateData.revision_count =
+        Number(
+          campaign.revision_count || 0
+        ) + 1;
+
+      updateData.last_submitted_at =
+        campaign.last_submitted_at ||
+        campaign.submitted_at ||
+        campaign.created_at ||
+        now;
+
+    }
+
+
+    const {
+      error: updateError
+    } =
+    await supabaseClient
+
+      .from(
+        "brand_ad_campaigns"
+      )
+
+      .update(
+        updateData
+      )
+
+      .eq(
+        "id",
+        campaignId
+      );
+
+
+    if (updateError) {
+
+      throw updateError;
+
+    }
+
+
+
+    /* --------------------------------------
+       SAVE REVIEW HISTORY
+    --------------------------------------- */
+
+    const {
+      error: historyError
+    } =
+    await supabaseClient
+
+      .from(
+        "brand_ad_campaign_reviews"
+      )
+
+      .insert({
+
+        campaign_id:
+          campaignId,
+
+        admin_id:
+          currentAdminUser.id,
+
+        action:
+          action,
+
+        review_note:
+          note || null
+
+      });
+
+
+    if (historyError) {
+
+      throw historyError;
+
+    }
+
+
+
+    /* --------------------------------------
+       SUCCESS
+    --------------------------------------- */
+
+    if (
+      action ===
+      "approved"
+    ) {
+
+      alert(
+
+        "Advert approved successfully.\n\n" +
+
+        "The campaign is now awaiting payment."
+
+      );
+
+    }
+
+
+    if (
+      action ===
+      "changes_requested"
+    ) {
+
+      alert(
+
+        "Changes requested successfully.\n\n" +
+
+        "The advertiser can now review your note, update the campaign and resubmit it."
+
+      );
+
+    }
+
+
+    if (
+      action ===
+      "rejected"
+    ) {
+
+      alert(
+        "Advert rejected successfully."
+      );
+
+    }
+
+
+    await loadCampaigns();
+
+  }
+
+  catch (error) {
+
+    console.error(
+      "Advert review error:",
+      error
+    );
+
+
+    alert(
+
+      "The advert review could not be completed.\n\n" +
+
+      (
+        error.message ||
+        "Unknown error"
+      )
+
+    );
+
+
+    buttons.forEach(
+      button => {
+        button.disabled =
+          false;
+      }
+    );
+
+  }
+
+}
+
+
+
+/* ========================================
+   FIND CAMPAIGN
+======================================== */
+
+function findCampaign(
+  campaignId
+) {
+
+  return allCampaigns.find(
+    campaign =>
+      String(
+        campaign.id
+      ) ===
+      String(
+        campaignId
+      )
+  );
+
+}
+
+
+
+/* ========================================
+   GET REVIEW NOTE
+======================================== */
+
+function getReviewNote(
+  campaignId
+) {
+
+  const textarea =
+    document.getElementById(
+      `review-note-${campaignId}`
+    );
+
+
+  return textarea
+    ? textarea.value.trim()
+    : "";
+
+}
+
+
+
+/* ========================================
+   GET DESTINATION
+======================================== */
+
+function getDestination(
+  campaign
+) {
+
+  return (
+
+    campaign.destination_url ||
+
+    campaign.website_url ||
+
+    campaign.target_url ||
+
+    campaign.destination_link ||
+
+    ""
+
+  );
+
+}
+
+
+
+/* ========================================
+   GET CAMPAIGN AMOUNT
+======================================== */
+
+function getCampaignAmount(
+  campaign
+) {
+
+  const directAmount =
+    Number(
+      campaign.total_amount
+    );
+
+
+  if (
+    Number.isFinite(
+      directAmount
+    ) &&
+    directAmount > 0
+  ) {
+
+    return directAmount;
+
+  }
+
+
+  const budget =
+    Number(
+      campaign.campaign_budget
+    );
+
+
+  const postingFee =
+    Number(
+      campaign.posting_fee
+    );
+
+
+  const calculated =
+    budget +
+    postingFee;
+
+
+  if (
+    calculated > 0
+  ) {
+
+    return calculated;
+
+  }
+
+
+  return 0;
+
+}
+
+
+
+/* ========================================
+   DETAIL ROW
+======================================== */
+
+function detailRow(
+  label,
+  value
+) {
+
+  return `
+
+    <div class="detail-row">
+
+      <span class="detail-label">
+
+        ${escapeHtml(
+          label
+        )}
+
+      </span>
+
+
+      <span class="detail-value">
+
+        ${escapeHtml(
+          String(
+            value ??
+            "Not provided"
+          )
+        )}
+
+      </span>
+
+    </div>
+
+  `;
+
+}
+
+
+
+/* ========================================
+   FORMAT MONEY
+======================================== */
+
+function formatMoney(
+  value
+) {
+
+  const amount =
+    Number(
+      value || 0
+    );
+
+
+  if (
+    !Number.isFinite(
+      amount
+    ) ||
+    amount === 0
+  ) {
+
+    return "₦0";
+
+  }
+
+
+  return (
+
+    "₦" +
+
+    amount.toLocaleString(
+      "en-NG",
+      {
+        maximumFractionDigits:
+          2
+      }
+    )
+
+  );
+
+}
+
+
+
+/* ========================================
+   FORMAT NUMBER
+======================================== */
+
+function formatNumber(
+  value
+) {
+
+  const number =
+    Number(
+      value || 0
+    );
+
+
+  if (
+    !Number.isFinite(
+      number
+    )
+  ) {
+
+    return "0";
+
+  }
+
+
+  return number.toLocaleString(
+    "en-NG"
+  );
+
+}
+
+
+
+/* ========================================
+   FORMAT DATE
+======================================== */
+
+function formatDate(
+  value
+) {
+
+  if (!value) {
+
+    return "Not available";
+
+  }
+
+
+  const date =
+    new Date(
+      value
+    );
+
+
+  if (
+    Number.isNaN(
+      date.getTime()
+    )
+  ) {
+
+    return "Not available";
+
+  }
+
+
+  return date.toLocaleString(
+    "en-NG",
+    {
+      dateStyle:
+        "medium",
+      timeStyle:
+        "short"
+    }
+  );
+
+}
+
+
+
+/* ========================================
+   FORMAT STATUS
+======================================== */
+
+function formatStatus(
+  status
+) {
+
+  const labels = {
+
+    pending_review:
+      "Pending Review",
+
+    revision_required:
+      "Changes Requested",
+
+    approved_payment_required:
+      "Awaiting Payment",
+
+    paid:
+      "Paid",
+
+    active:
+      "Active",
+
+    completed:
+      "Completed",
+
+    rejected:
+      "Rejected",
+
+    approved:
+      "Approved"
+
+  };
+
+
+  return (
+
+    labels[
+      status
+    ] ||
+
+    String(
+      status ||
+      "Unknown"
+    )
+
+      .replaceAll(
+        "_",
+        " "
+      )
+
+      .replace(
+        /\b\w/g,
+        character =>
+          character.toUpperCase()
+      )
+
+  );
+
+}
+
+
+
+/* ========================================
+   FORMAT REVIEW ACTION
+======================================== */
+
+function formatReviewAction(
+  action
+) {
+
+  const labels = {
+
+    approved:
+      "Approved",
+
+    changes_requested:
+      "Changes Requested",
+
+    rejected:
+      "Rejected"
+
+  };
+
+
+  return (
+
+    labels[
+      action
+    ] ||
+
+    String(
+      action ||
+      "Review"
+    )
+
+      .replaceAll(
+        "_",
+        " "
+      )
+
+  );
+
+}
+
+
+
+/* ========================================
+   HTML ESCAPE
+======================================== */
+
+function escapeHtml(
+  value
+) {
+
+  return String(
+    value ?? ""
+  )
+
+    .replaceAll(
+      "&",
+      "&amp;"
+    )
+
+    .replaceAll(
+      "<",
+      "&lt;"
+    )
+
+    .replaceAll(
+      ">",
+      "&gt;"
+    )
+
+    .replaceAll(
+      '"',
+      "&quot;"
+    )
+
+    .replaceAll(
+      "'",
+      "&#039;"
+    );
+
+}
+
+
+
+/* ========================================
+   ATTRIBUTE ESCAPE
+======================================== */
+
+function escapeAttribute(
+  value
+) {
+
+  return escapeHtml(
+    value
+  );
+
+}
+
+
+
+/* ========================================
+   CSS ESCAPE
+======================================== */
+
+function cssEscape(
+  value
+) {
+
+  if (
+    window.CSS &&
+    typeof window.CSS.escape ===
+      "function"
+  ) {
+
+    return window.CSS.escape(
+      String(
+        value
+      )
+    );
+
+  }
+
+
+  return String(
+    value
+  )
+    .replace(
+      /["\\]/g,
+      "\\$&"
+    );
+
+}
+
+
+
+/* ========================================
+   FILTER BUTTONS
+======================================== */
+
+document
+  .querySelectorAll(
+    ".filter-btn"
+  )
+  .forEach(
+    button => {
+
+      button.addEventListener(
+        "click",
+        function() {
+
+          document
+            .querySelectorAll(
+              ".filter-btn"
+            )
+            .forEach(
+              item => {
+
+                item.classList.remove(
+                  "active"
+                );
+
+              }
+            );
+
+
+          this.classList.add(
+            "active"
+          );
+
+
+          currentFilter =
+            this.dataset.filter ||
+            "all";
+
+
+          renderCampaigns();
+
+        }
+      );
+
+    }
+  );
+
+
+
+/* ========================================
+   REFRESH
+======================================== */
+
+document
+  .getElementById(
+    "refreshButton"
+  )
+  .addEventListener(
+    "click",
+    async function() {
+
+      this.disabled =
+        true;
+
+      this.textContent =
+        "Refreshing...";
+
+
+      await loadCampaigns();
+
+
+      this.disabled =
+        false;
+
+      this.textContent =
+        "↻ Refresh";
+
+    }
+  );
+
+
+
+/* ========================================
+   LOGOUT
+======================================== */
+
+document
+  .getElementById(
+    "logoutButton"
+  )
+  .addEventListener(
+    "click",
+    async function() {
+
+      await supabaseClient
+        .auth
+        .signOut();
+
+
+      window.location.href =
+        "index.html";
+
+    }
+  );
+
+
+
+/* ========================================
+   START APPLICATION
+======================================== */
+
+(async function() {
+
+  const user =
+    await checkAdmin();
+
+
+  if (!user) {
+
+    return;
+
+  }
+
+
+  await loadCampaigns();
+
+})();
+
+
+</script>
+
+
+</body>
+
+</html>

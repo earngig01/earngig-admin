@@ -519,6 +519,11 @@
       color: #f87171;
     }
 
+    .status-badge.unknown {
+      background: rgba(148, 163, 184, 0.12);
+      color: #cbd5e1;
+    }
+
     .task-description {
       color: #cbd5e1;
 
@@ -591,6 +596,7 @@
 
     .task-actions {
       display: flex;
+      flex-wrap: wrap;
 
       gap: 10px;
 
@@ -651,6 +657,20 @@
 
     .reject-button:hover {
       background: rgba(239, 68, 68, 0.2);
+    }
+
+    .delete-button {
+      background: rgba(127, 29, 29, 0.16);
+
+      border-color: rgba(248, 113, 113, 0.28);
+
+      color: #fda4af;
+    }
+
+    .delete-button:hover {
+      background: rgba(239, 68, 68, 0.25);
+
+      border-color: rgba(248, 113, 113, 0.45);
     }
 
     /* =========================
@@ -1135,10 +1155,6 @@
 
   <script>
 
-    /* =====================================================
-       GLOBAL TASK DATA
-    ===================================================== */
-
     let allTasks = [];
 
     let currentFilter = "all";
@@ -1157,7 +1173,6 @@
         currency: "NGN",
         maximumFractionDigits: 2
       }).format(value);
-
     }
 
 
@@ -1520,7 +1535,7 @@
 
 
     /* =====================================================
-       GET FILTERED TASKS
+       FILTER TASKS
     ===================================================== */
 
     function getFilteredTasks() {
@@ -1538,7 +1553,7 @@
 
 
     /* =====================================================
-       RENDER CURRENT FILTER
+       RENDER TASKS
     ===================================================== */
 
     function renderCurrentFilter() {
@@ -1718,26 +1733,71 @@
               ✕ Reject & Refund
             </button>
 
+
+            <button
+              type="button"
+              class="action-button delete-button"
+              onclick="deleteTask('${taskId}')"
+            >
+              🗑 Delete Task
+            </button>
+
           </div>
         `;
-      }
 
-
-      if (status === "approved") {
+      } else if (status === "approved") {
 
         actions = `
-          <div class="status-note approved-note">
-            ✓ This task has been approved.
+          <div class="task-actions">
+
+            <div class="status-note approved-note">
+              ✓ This task has been approved.
+            </div>
+
+            <button
+              type="button"
+              class="action-button delete-button"
+              onclick="deleteTask('${taskId}')"
+            >
+              🗑 Delete Task
+            </button>
+
           </div>
         `;
-      }
 
-
-      if (status === "rejected") {
+      } else if (status === "rejected") {
 
         actions = `
-          <div class="status-note rejected-note">
-            ✕ This task has been rejected and processed.
+          <div class="task-actions">
+
+            <div class="status-note rejected-note">
+              ✕ This task has been rejected and processed.
+            </div>
+
+            <button
+              type="button"
+              class="action-button delete-button"
+              onclick="deleteTask('${taskId}')"
+            >
+              🗑 Delete Task
+            </button>
+
+          </div>
+        `;
+
+      } else {
+
+        actions = `
+          <div class="task-actions">
+
+            <button
+              type="button"
+              class="action-button delete-button"
+              onclick="deleteTask('${taskId}')"
+            >
+              🗑 Delete Task
+            </button>
+
           </div>
         `;
       }
@@ -2077,6 +2137,137 @@
 
 
     /* =====================================================
+       DELETE TASK
+    ===================================================== */
+
+    async function deleteTask(taskId) {
+
+      if (!taskId) {
+        return;
+      }
+
+
+      const task =
+        allTasks.find(
+          item =>
+            String(item.id) ===
+            String(taskId)
+        );
+
+
+      const taskTitle =
+        task && task.title
+          ? task.title
+          : "this task";
+
+
+      const confirmed =
+        confirm(
+          `Delete "${taskTitle}"?\n\n` +
+          "This will permanently remove the task.\n\n" +
+          "This action cannot be undone."
+        );
+
+
+      if (!confirmed) {
+        return;
+      }
+
+
+      clearMessage();
+
+
+      const card =
+        document.getElementById(
+          `task-${CSS.escape(taskId)}`
+        );
+
+
+      const buttons =
+        card
+          ? card.querySelectorAll(
+              ".action-button"
+            )
+          : [];
+
+
+      buttons.forEach(
+        button => {
+          button.disabled = true;
+        }
+      );
+
+
+      try {
+
+        const {
+          error
+        } =
+          await supabaseClient
+            .from("tasks")
+            .delete()
+            .eq("id", taskId);
+
+
+        if (error) {
+
+          console.error(
+            "Delete task error:",
+            error
+          );
+
+          throw error;
+        }
+
+
+        allTasks =
+          allTasks.filter(
+            item =>
+              String(item.id) !==
+              String(taskId)
+          );
+
+
+        updateStatistics();
+
+        updateActiveSummaryCard();
+
+        updateSectionHeading();
+
+        renderCurrentFilter();
+
+
+        showMessage(
+          "Task deleted successfully.",
+          "success"
+        );
+
+
+      } catch (error) {
+
+        console.error(
+          "Delete task error:",
+          error
+        );
+
+
+        buttons.forEach(
+          button => {
+            button.disabled = false;
+          }
+        );
+
+
+        showMessage(
+          error.message ||
+          "Unable to delete this task. It may have related records that must be handled first.",
+          "error"
+        );
+      }
+    }
+
+
+    /* =====================================================
        REFRESH
     ===================================================== */
 
@@ -2192,9 +2383,7 @@
     ===================================================== */
 
     document
-      .getElementById(
-        "refreshButton"
-      )
+      .getElementById("refreshButton")
       .addEventListener(
         "click",
         refreshTasks

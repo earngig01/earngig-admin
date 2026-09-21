@@ -1,968 +1,1194 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 
 <head>
 
+  <meta charset="UTF-8">
 
-    <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
+  <title>Admin Tasks | EarnGig</title>
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
 
+  <!-- MAIN STYLES -->
 
-    <title>
-        Admin Tasks | EarnGig
-    </title>
+  <link
+    rel="stylesheet"
+    href="styles.css?v=3"
+  >
 
 
+  <!-- SUPABASE -->
 
-    <!-- =====================================
-         MAIN STYLES
-    ====================================== -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <link
-        rel="stylesheet"
-        href="styles.css?v=2"
-    >
+  <script src="supabase.js"></script>
 
 
+  <style>
 
-    <!-- =====================================
-         SUPABASE
-    ====================================== -->
+    /* =========================================
+       ADMIN PAGE
+    ========================================= */
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    .admin-page {
 
+      min-height: 100vh;
 
-    <script src="supabase.js"></script>
+      padding-top: 50px;
 
+      padding-bottom: 70px;
 
+      background:
+        radial-gradient(
+          circle at top left,
+          rgba(109, 74, 255, 0.12),
+          transparent 35%
+        ),
+        #080d26;
 
-    <style>
+    }
 
 
-        /* =====================================
-           PAGE
-        ====================================== */
+    .admin-container {
 
-        .admin-page {
+      max-width: 1200px;
 
-            padding-top: 40px;
+      margin: 0 auto;
 
-            padding-bottom: 60px;
+    }
 
-            min-height: 70vh;
 
-        }
 
+    /* =========================================
+       ADMIN HEADER
+    ========================================= */
 
-        .admin-container {
+    .admin-header {
 
-            max-width: 1200px;
+      display: flex;
 
-            margin: 0 auto;
+      align-items: flex-start;
 
-        }
+      justify-content: space-between;
 
+      gap: 20px;
 
+      margin-bottom: 35px;
 
-        /* =====================================
-           HEADER
-        ====================================== */
+    }
 
-        .admin-header {
 
-            display: flex;
+    .admin-header h1 {
 
-            align-items: flex-start;
+      margin: 10px 0 12px;
 
-            justify-content: space-between;
+      color: #ffffff;
 
-            gap: 20px;
+      font-size: 42px;
 
-            margin-bottom: 30px;
+    }
 
-        }
 
+    .admin-header p {
 
-        .admin-header h1 {
+      margin: 0;
 
-            margin: 8px 0 10px;
+      max-width: 700px;
 
-        }
+      color: #a9b0c7;
 
+      line-height: 1.7;
 
-        .admin-header p {
+      font-size: 16px;
 
-            margin: 0;
+    }
 
-            color: #6b7280;
 
-            line-height: 1.6;
 
-        }
+    /* =========================================
+       EYEBROW
+    ========================================= */
 
+    .admin-page .eyebrow {
 
+      color: #8f7cff;
 
-        /* =====================================
-           SUMMARY
-        ====================================== */
+      font-size: 12px;
 
-        .task-summary {
+      font-weight: 800;
 
-            display: grid;
+      letter-spacing: 1.5px;
 
-            grid-template-columns:
-                repeat(3, 1fr);
+    }
 
-            gap: 18px;
 
-            margin-bottom: 30px;
 
-        }
+    /* =========================================
+       SUMMARY GRID
+    ========================================= */
 
+    .task-summary {
 
-        .summary-card {
+      display: grid;
 
-            background: white;
+      grid-template-columns:
+        repeat(3, minmax(0, 1fr));
 
-            border: 1px solid #e5e7eb;
+      gap: 20px;
 
-            border-radius: 15px;
+      margin-bottom: 35px;
 
-            padding: 20px;
+    }
 
-        }
 
+    .summary-card {
 
-        .summary-card span {
+      position: relative;
 
-            display: block;
+      overflow: hidden;
 
-            font-size: 14px;
+      padding: 25px;
 
-            color: #6b7280;
+      border-radius: 20px;
 
-            margin-bottom: 8px;
+      background:
+        linear-gradient(
+          145deg,
+          rgba(35, 45, 91, 0.95),
+          rgba(17, 24, 59, 0.98)
+        );
 
-        }
+      border:
+        1px solid rgba(123, 139, 255, 0.22);
 
+      box-shadow:
+        0 15px 35px
+        rgba(0, 0, 0, 0.2);
 
-        .summary-card strong {
+    }
 
-            font-size: 28px;
 
-            color: #1f2937;
+    .summary-card::before {
 
-        }
+      content: "";
 
+      position: absolute;
 
+      width: 120px;
 
-        /* =====================================
-           TASK LIST
-        ====================================== */
+      height: 120px;
 
-        .tasks-card {
+      border-radius: 50%;
 
-            background: white;
+      top: -60px;
 
-            border: 1px solid #e5e7eb;
+      right: -40px;
 
-            border-radius: 18px;
+      background:
 
-            padding: 25px;
+        radial-gradient(
+          circle,
+          rgba(109, 74, 255, 0.18),
+          transparent 70%
+        );
 
-            box-shadow:
-                0 10px 30px
-                rgba(0,0,0,.04);
+    }
 
-        }
 
+    .summary-card span {
 
-        .tasks-card-header {
+      position: relative;
 
-            display: flex;
+      display: block;
 
-            align-items: center;
+      margin-bottom: 12px;
 
-            justify-content: space-between;
+      color: #aeb5cb;
 
-            gap: 15px;
+      font-size: 15px;
 
-            margin-bottom: 25px;
+    }
 
-        }
 
+    .summary-card strong {
 
-        .tasks-card-header h2 {
+      position: relative;
 
-            margin: 0;
+      display: block;
 
-        }
+      color: #ffffff;
 
+      font-size: 38px;
 
+      font-weight: 800;
 
-        /* =====================================
-           LOADING
-        ====================================== */
+    }
 
-        .loading-message {
 
-            padding: 40px 20px;
 
-            text-align: center;
+    /* =========================================
+       ADMIN MESSAGE
+    ========================================= */
 
-            color: #6b7280;
+    .admin-message {
 
-        }
+      display: none;
 
+      margin-bottom: 25px;
 
+      padding: 16px 20px;
 
-        /* =====================================
-           EMPTY STATE
-        ====================================== */
+      border-radius: 14px;
 
-        .empty-state {
+      line-height: 1.6;
 
-            padding: 50px 20px;
+    }
 
-            text-align: center;
 
-            color: #6b7280;
+    .admin-message.success {
 
-        }
+      display: block;
 
+      color: #9cf7bd;
 
-        .empty-state h3 {
+      background:
+        rgba(22, 163, 74, 0.12);
 
-            margin: 0 0 10px;
+      border:
+        1px solid rgba(74, 222, 128, 0.3);
 
-            color: #1f2937;
+    }
 
-        }
 
+    .admin-message.error {
 
+      display: block;
 
-        /* =====================================
-           TASK ITEM
-        ====================================== */
+      color: #ffaaaa;
 
-        .task-item {
+      background:
+        rgba(220, 38, 38, 0.12);
 
-            border: 1px solid #e5e7eb;
+      border:
+        1px solid rgba(248, 113, 113, 0.3);
 
-            border-radius: 15px;
+    }
 
-            padding: 22px;
 
-            margin-bottom: 18px;
 
-            background: #ffffff;
+    /* =========================================
+       TASKS CARD
+    ========================================= */
 
-        }
+    .tasks-card {
 
+      padding: 30px;
 
-        .task-item:last-child {
+      border-radius: 24px;
 
-            margin-bottom: 0;
+      background:
 
-        }
+        linear-gradient(
+          145deg,
+          rgba(29, 38, 80, 0.98),
+          rgba(13, 19, 48, 0.98)
+        );
 
+      border:
+        1px solid rgba(123, 139, 255, 0.2);
 
+      box-shadow:
+        0 20px 50px
+        rgba(0, 0, 0, 0.28);
 
-        /* =====================================
-           TASK TOP
-        ====================================== */
+    }
 
-        .task-top {
 
-            display: flex;
 
-            align-items: flex-start;
+    /* =========================================
+       TASK CARD HEADER
+    ========================================= */
 
-            justify-content: space-between;
+    .tasks-card-header {
 
-            gap: 20px;
+      display: flex;
 
-            margin-bottom: 15px;
+      align-items: center;
 
-        }
+      justify-content: space-between;
 
+      gap: 20px;
 
-        .task-title {
+      margin-bottom: 28px;
 
-            margin: 0 0 8px;
+      padding-bottom: 20px;
 
-            color: #1f2937;
+      border-bottom:
+        1px solid rgba(255, 255, 255, 0.08);
 
-            font-size: 20px;
+    }
 
-        }
 
+    .tasks-card-header h2 {
 
-        .task-category {
+      margin: 0;
 
-            display: inline-block;
+      color: #ffffff;
 
-            padding: 5px 10px;
+      font-size: 25px;
 
-            border-radius: 20px;
+    }
 
-            background: #f3f0ff;
 
-            color: #6d4aff;
 
-            font-size: 12px;
+    /* =========================================
+       REFRESH BUTTON
+    ========================================= */
 
-            font-weight: 700;
+    .admin-refresh-button {
 
-        }
+      border:
+        1px solid rgba(132, 145, 255, 0.45);
 
+      background:
+        rgba(255, 255, 255, 0.04);
 
+      color: #ffffff;
 
-        /* =====================================
-           STATUS
-        ====================================== */
+      padding: 11px 18px;
 
-        .task-status {
+      border-radius: 10px;
 
-            padding: 7px 12px;
+      font-weight: 700;
 
-            border-radius: 20px;
+      cursor: pointer;
 
-            font-size: 12px;
+      transition:
+        transform 0.2s,
+        background 0.2s;
 
-            font-weight: 700;
+    }
 
-            text-transform: capitalize;
 
-            white-space: nowrap;
+    .admin-refresh-button:hover {
 
-        }
+      transform:
+        translateY(-2px);
 
+      background:
+        rgba(109, 74, 255, 0.18);
 
-        .task-status.pending {
+    }
 
-            background: #fff7ed;
 
-            color: #c2410c;
 
-        }
+    /* =========================================
+       LOADING
+    ========================================= */
 
+    .loading-message {
 
-        .task-status.approved {
+      padding: 60px 20px;
 
-            background: #ecfdf3;
+      text-align: center;
 
-            color: #15803d;
+      color: #aeb5cb;
 
-        }
+      font-size: 16px;
 
+    }
 
-        .task-status.rejected {
 
-            background: #fff1f2;
 
-            color: #be123c;
+    /* =========================================
+       EMPTY STATE
+    ========================================= */
 
-        }
+    .empty-state {
 
+      padding: 60px 20px;
 
+      text-align: center;
 
-        /* =====================================
-           DESCRIPTION
-        ====================================== */
+      color: #9da6c1;
 
-        .task-description {
+    }
 
-            color: #4b5563;
 
-            line-height: 1.6;
+    .empty-state h3 {
 
-            margin: 15px 0;
+      margin: 0 0 12px;
 
-            white-space: pre-wrap;
+      color: #ffffff;
 
-        }
+      font-size: 22px;
 
+    }
 
 
-        /* =====================================
-           TASK LINK
-        ====================================== */
+    .empty-state p {
 
-        .task-link {
+      margin: 0;
 
-            display: inline-block;
+      line-height: 1.6;
 
-            margin-bottom: 18px;
+    }
 
-            color: #6d4aff;
 
-            text-decoration: none;
 
-            font-weight: 600;
+    /* =========================================
+       TASK ITEM
+    ========================================= */
 
-            word-break: break-all;
+    .task-item {
 
-        }
+      margin-bottom: 20px;
 
+      padding: 25px;
 
-        .task-link:hover {
+      border-radius: 18px;
 
-            text-decoration: underline;
+      background:
 
-        }
+        linear-gradient(
+          145deg,
+          rgba(35, 45, 91, 0.75),
+          rgba(21, 28, 64, 0.9)
+        );
 
+      border:
+        1px solid rgba(124, 139, 255, 0.2);
 
+      transition:
+        transform 0.2s,
+        border 0.2s;
 
-        /* =====================================
-           TASK DETAILS
-        ====================================== */
+    }
 
-        .task-details {
 
-            display: grid;
+    .task-item:hover {
 
-            grid-template-columns:
-                repeat(4, 1fr);
+      transform:
+        translateY(-2px);
 
-            gap: 15px;
+      border-color:
+        rgba(132, 111, 255, 0.45);
 
-            margin-top: 20px;
+    }
 
-            padding-top: 20px;
 
-            border-top:
-                1px solid #e5e7eb;
+    .task-item:last-child {
 
-        }
+      margin-bottom: 0;
 
+    }
 
-        .task-detail {
 
-            background: #f9fafb;
 
-            padding: 13px;
+    /* =========================================
+       TASK TOP
+    ========================================= */
 
-            border-radius: 10px;
+    .task-top {
 
-        }
+      display: flex;
 
+      align-items: flex-start;
 
-        .task-detail span {
+      justify-content: space-between;
 
-            display: block;
+      gap: 20px;
 
-            font-size: 12px;
+      margin-bottom: 18px;
 
-            color: #6b7280;
+    }
 
-            margin-bottom: 5px;
 
-        }
+    .task-title {
 
+      margin: 0 0 12px;
 
-        .task-detail strong {
+      color: #ffffff;
 
-            color: #1f2937;
+      font-size: 22px;
 
-            font-size: 15px;
+      line-height: 1.4;
 
-        }
+    }
 
 
 
-        /* =====================================
-           ACTIONS
-        ====================================== */
+    /* =========================================
+       CATEGORY
+    ========================================= */
 
-        .task-actions {
+    .task-category {
 
-            display: flex;
+      display: inline-block;
 
-            justify-content: flex-end;
+      padding: 6px 12px;
 
-            gap: 12px;
+      border-radius: 20px;
 
-            margin-top: 22px;
+      background:
+        rgba(109, 74, 255, 0.18);
 
-        }
+      border:
+        1px solid rgba(132, 111, 255, 0.28);
 
+      color: #a99cff;
 
-        .approve-button,
+      font-size: 12px;
 
-        .reject-button {
+      font-weight: 700;
 
-            border: none;
+      text-transform: capitalize;
 
-            padding: 12px 18px;
+    }
 
-            border-radius: 9px;
 
-            font-size: 14px;
 
-            font-weight: 700;
+    /* =========================================
+       STATUS
+    ========================================= */
 
-            cursor: pointer;
+    .task-status {
 
-            transition:
-                transform .2s,
-                opacity .2s;
+      padding: 7px 13px;
 
-        }
+      border-radius: 20px;
 
+      font-size: 12px;
 
-        .approve-button {
+      font-weight: 800;
 
-            background: #16a34a;
+      text-transform: uppercase;
 
-            color: white;
+      white-space: nowrap;
 
-        }
+    }
 
 
-        .reject-button {
+    .task-status.pending {
 
-            background: #dc2626;
+      color: #ffd37a;
 
-            color: white;
+      background:
+        rgba(245, 158, 11, 0.13);
 
-        }
+      border:
+        1px solid rgba(245, 158, 11, 0.25);
 
+    }
 
-        .approve-button:hover,
 
-        .reject-button:hover {
 
-            transform:
-                translateY(-1px);
+    /* =========================================
+       DESCRIPTION
+    ========================================= */
 
-        }
+    .task-description {
 
+      margin: 18px 0;
 
-        .approve-button:disabled,
+      color: #b7bfd5;
 
-        .reject-button:disabled {
+      line-height: 1.7;
 
-            opacity: .6;
+      white-space: pre-wrap;
 
-            cursor: not-allowed;
+    }
 
-            transform: none;
 
-        }
 
+    /* =========================================
+       TASK LINK
+    ========================================= */
 
+    .task-link {
 
-        /* =====================================
-           MESSAGE
-        ====================================== */
+      display: inline-block;
 
-        .admin-message {
+      margin-top: 5px;
 
-            display: none;
+      margin-bottom: 20px;
 
-            margin-bottom: 20px;
+      color: #9d8cff;
 
-            padding: 15px;
+      text-decoration: none;
 
-            border-radius: 10px;
+      font-weight: 700;
 
-            line-height: 1.5;
+      word-break: break-word;
 
-        }
+    }
 
 
-        .admin-message.success {
+    .task-link:hover {
 
-            display: block;
+      color: #c0b5ff;
 
-            background: #ecfdf3;
+      text-decoration: underline;
 
-            border: 1px solid #a7f3c5;
+    }
 
-            color: #166534;
 
-        }
 
+    /* =========================================
+       TASK DETAILS
+    ========================================= */
 
-        .admin-message.error {
+    .task-details {
 
-            display: block;
+      display: grid;
 
-            background: #fff5f5;
+      grid-template-columns:
+        repeat(4, minmax(0, 1fr));
 
-            border: 1px solid #fecaca;
+      gap: 15px;
 
-            color: #991b1b;
+      margin-top: 20px;
 
-        }
+      padding-top: 22px;
 
+      border-top:
+        1px solid rgba(255, 255, 255, 0.08);
 
+    }
 
-        /* =====================================
-           MOBILE
-        ====================================== */
 
-        @media (max-width: 800px) {
+    .task-detail {
 
+      padding: 15px;
 
-            .task-summary {
+      border-radius: 13px;
 
-                grid-template-columns:
-                    1fr;
+      background:
+        rgba(255, 255, 255, 0.035);
 
-            }
+      border:
+        1px solid rgba(255, 255, 255, 0.05);
 
+    }
 
-            .task-details {
 
-                grid-template-columns:
-                    repeat(2, 1fr);
+    .task-detail span {
 
-            }
+      display: block;
 
+      margin-bottom: 7px;
 
-        }
+      color: #8f98b2;
 
+      font-size: 12px;
 
-        @media (max-width: 600px) {
+    }
 
 
-            .admin-header {
+    .task-detail strong {
 
-                flex-direction: column;
+      color: #ffffff;
 
-            }
+      font-size: 16px;
 
+      word-break: break-word;
 
-            .tasks-card {
+    }
 
-                padding: 17px;
 
-            }
 
+    /* =========================================
+       ACTIONS
+    ========================================= */
 
-            .task-top {
+    .task-actions {
 
-                flex-direction: column;
+      display: flex;
 
-            }
+      justify-content: flex-end;
 
+      gap: 12px;
 
-            .task-details {
+      margin-top: 25px;
 
-                grid-template-columns:
-                    1fr;
+    }
 
-            }
 
+    .approve-button,
 
-            .task-actions {
+    .reject-button {
 
-                flex-direction: column;
+      border: none;
 
-            }
+      padding: 12px 20px;
 
+      border-radius: 10px;
 
-            .approve-button,
+      font-size: 14px;
 
-            .reject-button {
+      font-weight: 800;
 
-                width: 100%;
+      cursor: pointer;
 
-            }
+      transition:
+        transform 0.2s,
+        opacity 0.2s,
+        box-shadow 0.2s;
 
+    }
 
-        }
 
+    .approve-button {
 
-    </style>
+      color: white;
+
+      background:
+
+        linear-gradient(
+          135deg,
+          #5b4bff,
+          #7b4dff
+        );
+
+      box-shadow:
+        0 8px 20px
+        rgba(91, 75, 255, 0.25);
+
+    }
+
+
+    .approve-button:hover {
+
+      transform:
+        translateY(-2px);
+
+      box-shadow:
+        0 12px 25px
+        rgba(91, 75, 255, 0.4);
+
+    }
+
+
+    .reject-button {
+
+      color: #ffb1b1;
+
+      background:
+        rgba(220, 38, 38, 0.13);
+
+      border:
+        1px solid rgba(248, 113, 113, 0.3);
+
+    }
+
+
+    .reject-button:hover {
+
+      transform:
+        translateY(-2px);
+
+      background:
+        rgba(220, 38, 38, 0.22);
+
+    }
+
+
+    .approve-button:disabled,
+
+    .reject-button:disabled {
+
+      opacity: 0.5;
+
+      cursor: not-allowed;
+
+      transform: none;
+
+    }
+
+
+
+    /* =========================================
+       MOBILE
+    ========================================= */
+
+    @media (max-width: 850px) {
+
+
+      .task-summary {
+
+        grid-template-columns:
+          1fr;
+
+      }
+
+
+      .task-details {
+
+        grid-template-columns:
+          repeat(2, 1fr);
+
+      }
+
+
+    }
+
+
+    @media (max-width: 600px) {
+
+
+      .admin-page {
+
+        padding-top: 30px;
+
+      }
+
+
+      .admin-header {
+
+        flex-direction: column;
+
+      }
+
+
+      .admin-header h1 {
+
+        font-size: 32px;
+
+      }
+
+
+      .tasks-card {
+
+        padding: 18px;
+
+        border-radius: 18px;
+
+      }
+
+
+      .task-item {
+
+        padding: 18px;
+
+      }
+
+
+      .task-top {
+
+        flex-direction: column;
+
+      }
+
+
+      .task-details {
+
+        grid-template-columns:
+          1fr;
+
+      }
+
+
+      .task-actions {
+
+        flex-direction: column-reverse;
+
+      }
+
+
+      .approve-button,
+
+      .reject-button {
+
+        width: 100%;
+
+      }
+
+
+      .tasks-card-header {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+
+      }
+
+
+    }
+
+
+  </style>
 
 
 </head>
 
 
-
 <body>
 
 
-<!-- =====================================
+<!-- =========================================
      HEADER
-===================================== -->
+========================================= -->
 
 <header>
 
 
-    <div class="container nav">
+  <div class="container nav">
 
 
-        <a
-            href="index.html"
-            class="logo"
-        >
+    <a
+      href="index.html"
+      class="logo"
+    >
 
 
-            <span class="logo-mark">
-                E
-            </span>
+      <span class="logo-mark">
+        E
+      </span>
 
 
-            Earn<span>Gig</span>
+      Earn<span>Gig</span>
 
 
-        </a>
+    </a>
 
 
 
-        <div>
+    <a
+      href="dashboard.html"
+      class="btn outline"
+    >
+
+      Dashboard
+
+    </a>
 
 
-            <a
-                href="dashboard.html"
-                class="btn outline"
-            >
-
-                Dashboard
-
-            </a>
-
-
-        </div>
-
-
-    </div>
+  </div>
 
 
 </header>
 
 
 
-<!-- =====================================
+<!-- =========================================
      MAIN
-===================================== -->
+========================================= -->
 
 <main class="dashboard-page admin-page">
 
 
-    <div class="container admin-container">
+  <div class="container admin-container">
 
 
 
-        <!-- =====================================
-             PAGE HEADER
-        ====================================== -->
+    <!-- =====================================
+         PAGE HEADER
+    ====================================== -->
 
-        <div class="admin-header">
+    <div class="admin-header">
 
 
-            <div>
+      <div>
 
 
-                <span class="eyebrow">
+        <span class="eyebrow">
 
-                    ADMINISTRATION
+          ADMINISTRATION
 
-                </span>
+        </span>
 
 
-                <h1>
+        <h1>
 
-                    Task Approval
+          Task Approval
 
-                </h1>
+        </h1>
 
 
-                <p>
+        <p>
 
-                    Review submitted tasks and approve
-                    or reject them.
+          Review submitted tasks and approve or reject them.
+          Rejected tasks are automatically refunded to the
+          task owner's wallet.
 
-                    Rejected tasks are automatically
-                    refunded to the task owner's wallet.
+        </p>
 
-                </p>
 
-
-            </div>
-
-
-        </div>
-
-
-
-        <!-- =====================================
-             SUMMARY
-        ====================================== -->
-
-        <div class="task-summary">
-
-
-            <div class="summary-card">
-
-
-                <span>
-
-                    Pending Tasks
-
-                </span>
-
-
-                <strong id="pendingCount">
-
-                    0
-
-                </strong>
-
-
-            </div>
-
-
-
-            <div class="summary-card">
-
-
-                <span>
-
-                    Approved Tasks
-
-                </span>
-
-
-                <strong id="approvedCount">
-
-                    0
-
-                </strong>
-
-
-            </div>
-
-
-
-            <div class="summary-card">
-
-
-                <span>
-
-                    Rejected Tasks
-
-                </span>
-
-
-                <strong id="rejectedCount">
-
-                    0
-
-                </strong>
-
-
-            </div>
-
-
-        </div>
-
-
-
-        <!-- =====================================
-             MESSAGE
-        ====================================== -->
-
-        <div
-            id="adminMessage"
-            class="admin-message"
-        ></div>
-
-
-
-        <!-- =====================================
-             TASK LIST
-        ====================================== -->
-
-        <section class="tasks-card">
-
-
-            <div class="tasks-card-header">
-
-
-                <h2>
-
-                    Pending Tasks
-
-                </h2>
-
-
-
-                <button
-                    type="button"
-                    class="btn outline"
-                    onclick="loadTasks()"
-                >
-
-                    Refresh
-
-                </button>
-
-
-            </div>
-
-
-
-            <div
-                id="tasksContainer"
-            >
-
-
-                <div class="loading-message">
-
-                    Loading tasks...
-
-                </div>
-
-
-            </div>
-
-
-        </section>
+      </div>
 
 
     </div>
+
+
+
+    <!-- =====================================
+         SUMMARY
+    ====================================== -->
+
+    <div class="task-summary">
+
+
+      <div class="summary-card">
+
+
+        <span>
+
+          Pending Tasks
+
+        </span>
+
+
+        <strong id="pendingCount">
+
+          0
+
+        </strong>
+
+
+      </div>
+
+
+
+      <div class="summary-card">
+
+
+        <span>
+
+          Approved Tasks
+
+        </span>
+
+
+        <strong id="approvedCount">
+
+          0
+
+        </strong>
+
+
+      </div>
+
+
+
+      <div class="summary-card">
+
+
+        <span>
+
+          Rejected Tasks
+
+        </span>
+
+
+        <strong id="rejectedCount">
+
+          0
+
+        </strong>
+
+
+      </div>
+
+
+    </div>
+
+
+
+    <!-- =====================================
+         MESSAGE
+    ====================================== -->
+
+    <div
+      id="adminMessage"
+      class="admin-message"
+    ></div>
+
+
+
+    <!-- =====================================
+         TASK LIST
+    ====================================== -->
+
+    <section class="tasks-card">
+
+
+      <div class="tasks-card-header">
+
+
+        <h2>
+
+          Pending Tasks
+
+        </h2>
+
+
+
+        <button
+          type="button"
+          class="admin-refresh-button"
+          onclick="loadTasks()"
+        >
+
+          Refresh
+
+        </button>
+
+
+      </div>
+
+
+
+      <div id="tasksContainer">
+
+
+        <div class="loading-message">
+
+          Loading tasks...
+
+        </div>
+
+
+      </div>
+
+
+    </section>
+
+
+  </div>
 
 
 </main>
 
 
 
-<!-- =====================================
+<!-- =========================================
      FOOTER
-===================================== -->
+========================================= -->
 
 <footer>
 
 
-    <div class="container copy">
+  <div class="container copy">
 
 
-        © 2026 EarnGig.
-        All rights reserved.
+    © 2026 EarnGig.
+    All rights reserved.
 
 
-    </div>
+  </div>
 
 
 </footer>
 
 
 
-<!-- =====================================
+<!-- =========================================
      JAVASCRIPT
-===================================== -->
+========================================= -->
 
 <script>
 
@@ -972,38 +1198,33 @@
 ========================================= */
 
 const tasksContainer =
-
-    document.getElementById(
-        "tasksContainer"
-    );
+  document.getElementById(
+    "tasksContainer"
+  );
 
 
 const pendingCount =
-
-    document.getElementById(
-        "pendingCount"
-    );
+  document.getElementById(
+    "pendingCount"
+  );
 
 
 const approvedCount =
-
-    document.getElementById(
-        "approvedCount"
-    );
+  document.getElementById(
+    "approvedCount"
+  );
 
 
 const rejectedCount =
-
-    document.getElementById(
-        "rejectedCount"
-    );
+  document.getElementById(
+    "rejectedCount"
+  );
 
 
 const adminMessage =
-
-    document.getElementById(
-        "adminMessage"
-    );
+  document.getElementById(
+    "adminMessage"
+  );
 
 
 
@@ -1014,30 +1235,20 @@ const adminMessage =
 function formatNaira(amount) {
 
 
-    const value =
+  const value =
+    Number(amount || 0);
 
-        Number(amount || 0);
 
-
-    return (
-
-        "₦" +
-
-        value.toLocaleString(
-
-            "en-NG",
-
-            {
-
-                minimumFractionDigits: 2,
-
-                maximumFractionDigits: 2
-
-            }
-
-        )
-
-    );
+  return (
+    "₦" +
+    value.toLocaleString(
+      "en-NG",
+      {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      }
+    )
+  );
 
 
 }
@@ -1046,38 +1257,30 @@ function formatNaira(amount) {
 
 /* =========================================
    ESCAPE HTML
-
-   Prevents task text from injecting HTML.
 ========================================= */
 
 function escapeHtml(value) {
 
 
-    if (
+  if (
+    value === null ||
+    value === undefined
+  ) {
 
-        value === null ||
+    return "";
 
-        value === undefined
-
-    ) {
-
-
-        return "";
-
-    }
+  }
 
 
-    const div =
-
-        document.createElement(
-            "div"
-        );
+  const div =
+    document.createElement("div");
 
 
-    div.textContent = value;
+  div.textContent =
+    String(value);
 
 
-    return div.innerHTML;
+  return div.innerHTML;
 
 
 }
@@ -1089,24 +1292,17 @@ function escapeHtml(value) {
 ========================================= */
 
 function showMessage(
-
-    message,
-
-    type
-
+  message,
+  type
 ) {
 
 
-    adminMessage.textContent =
+  adminMessage.textContent =
+    message;
 
-        message;
 
-
-    adminMessage.className =
-
-        "admin-message " +
-
-        type;
+  adminMessage.className =
+    "admin-message " + type;
 
 
 }
@@ -1120,14 +1316,12 @@ function showMessage(
 function clearMessage() {
 
 
-    adminMessage.textContent =
+  adminMessage.textContent =
+    "";
 
-        "";
 
-
-    adminMessage.className =
-
-        "admin-message";
+  adminMessage.className =
+    "admin-message";
 
 
 }
@@ -1141,71 +1335,57 @@ function clearMessage() {
 async function getCurrentUser() {
 
 
-    try {
+  try {
 
 
-        const {
-
-            data,
-
-            error
-
-        } =
-
-            await supabaseClient
-                .auth
-                .getUser();
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
+        .auth
+        .getUser();
 
 
-
-        if (
-
-            error ||
-
-            !data ||
-
-            !data.user
-
-        ) {
+    if (
+      error ||
+      !data ||
+      !data.user
+    ) {
 
 
-            window.location.href =
-
-                "login.html";
-
-
-            return null;
-
-        }
+      window.location.href =
+        "login.html";
 
 
-        return data.user;
-
+      return null;
 
     }
 
 
-    catch (error) {
+    return data.user;
 
 
-        console.error(
-
-            "Authentication error:",
-
-            error
-
-        );
+  }
 
 
-        window.location.href =
-
-            "login.html";
+  catch (error) {
 
 
-        return null;
+    console.error(
+      "Authentication error:",
+      error
+    );
 
 
-    }
+    window.location.href =
+      "login.html";
+
+
+    return null;
+
+
+  }
 
 
 }
@@ -1219,188 +1399,111 @@ async function getCurrentUser() {
 async function loadTaskStatistics() {
 
 
-    try {
-
-
-        /* =====================================
-           PENDING
-        ====================================== */
-
-        const {
-
-            count: pending,
-
-            error: pendingError
-
-        } =
-
-            await supabaseClient
-
-                .from("tasks")
-
-                .select(
-
-                    "*",
-
-                    {
-
-                        count: "exact",
-
-                        head: true
-
-                    }
-
-                )
-
-                .eq(
-
-                    "status",
-
-                    "pending"
-
-                );
-
-
-        if (pendingError) {
-
-
-            throw pendingError;
-
-        }
-
-
-
-        /* =====================================
-           APPROVED
-        ====================================== */
-
-        const {
-
-            count: approved,
-
-            error: approvedError
-
-        } =
-
-            await supabaseClient
-
-                .from("tasks")
-
-                .select(
-
-                    "*",
-
-                    {
-
-                        count: "exact",
-
-                        head: true
-
-                    }
-
-                )
-
-                .eq(
-
-                    "status",
-
-                    "approved"
-
-                );
-
-
-        if (approvedError) {
-
-
-            throw approvedError;
-
-        }
-
-
-
-        /* =====================================
-           REJECTED
-        ====================================== */
-
-        const {
-
-            count: rejected,
-
-            error: rejectedError
-
-        } =
-
-            await supabaseClient
-
-                .from("tasks")
-
-                .select(
-
-                    "*",
-
-                    {
-
-                        count: "exact",
-
-                        head: true
-
-                    }
-
-                )
-
-                .eq(
-
-                    "status",
-
-                    "rejected"
-
-                );
-
-
-        if (rejectedError) {
-
-
-            throw rejectedError;
-
-        }
-
-
-
-        /* =====================================
-           UPDATE DISPLAY
-        ====================================== */
-
-        pendingCount.textContent =
-
-            pending || 0;
-
-
-        approvedCount.textContent =
-
-            approved || 0;
-
-
-        rejectedCount.textContent =
-
-            rejected || 0;
-
+  try {
+
+
+    const [
+      pendingResult,
+      approvedResult,
+      rejectedResult
+    ] =
+      await Promise.all([
+
+
+        supabaseClient
+          .from("tasks")
+          .select(
+            "*",
+            {
+              count: "exact",
+              head: true
+            }
+          )
+          .eq(
+            "status",
+            "pending"
+          ),
+
+
+        supabaseClient
+          .from("tasks")
+          .select(
+            "*",
+            {
+              count: "exact",
+              head: true
+            }
+          )
+          .eq(
+            "status",
+            "approved"
+          ),
+
+
+        supabaseClient
+          .from("tasks")
+          .select(
+            "*",
+            {
+              count: "exact",
+              head: true
+            }
+          )
+          .eq(
+            "status",
+            "rejected"
+          )
+
+
+      ]);
+
+
+    if (pendingResult.error) {
+
+      throw pendingResult.error;
 
     }
 
 
-    catch (error) {
+    if (approvedResult.error) {
 
-
-        console.error(
-
-            "Statistics error:",
-
-            error
-
-        );
-
+      throw approvedResult.error;
 
     }
+
+
+    if (rejectedResult.error) {
+
+      throw rejectedResult.error;
+
+    }
+
+
+    pendingCount.textContent =
+      pendingResult.count || 0;
+
+
+    approvedCount.textContent =
+      approvedResult.count || 0;
+
+
+    rejectedCount.textContent =
+      rejectedResult.count || 0;
+
+
+  }
+
+
+  catch (error) {
+
+
+    console.error(
+      "Statistics error:",
+      error
+    );
+
+
+  }
 
 
 }
@@ -1414,532 +1517,410 @@ async function loadTaskStatistics() {
 async function loadTasks() {
 
 
-    clearMessage();
+  clearMessage();
 
 
-    tasksContainer.innerHTML =
+  tasksContainer.innerHTML =
+    `
+      <div class="loading-message">
+        Loading tasks...
+      </div>
+    `;
 
+
+  try {
+
+
+    const user =
+      await getCurrentUser();
+
+
+    if (!user) {
+
+      return;
+
+    }
+
+
+
+    /* =====================================
+       LOAD PENDING TASKS
+    ====================================== */
+
+    const {
+      data: tasks,
+      error
+    } =
+      await supabaseClient
+
+        .from("tasks")
+
+        .select(
+          `
+            id,
+            title,
+            description,
+            category,
+            task_link,
+            reward_amount,
+            max_participants,
+            participant_count,
+            platform_fee,
+            total_amount,
+            status,
+            user_id,
+            created_at
+          `
+        )
+
+        .eq(
+          "status",
+          "pending"
+        )
+
+        .order(
+          "created_at",
+          {
+            ascending: true
+          }
+        );
+
+
+    if (error) {
+
+      throw error;
+
+    }
+
+
+
+    /* =====================================
+       EMPTY STATE
+    ====================================== */
+
+    if (
+      !tasks ||
+      tasks.length === 0
+    ) {
+
+
+      tasksContainer.innerHTML =
         `
+          <div class="empty-state">
 
-        <div class="loading-message">
+            <h3>
+              No Pending Tasks
+            </h3>
 
-            Loading tasks...
+            <p>
+              There are currently no tasks
+              waiting for approval.
+            </p>
 
-        </div>
-
+          </div>
         `;
 
 
-    try {
+      await loadTaskStatistics();
 
 
-        /* =====================================
-           GET CURRENT USER
-        ====================================== */
+      return;
 
-        const user =
+    }
 
-            await getCurrentUser();
 
 
-        if (!user) {
+    /* =====================================
+       BUILD TASKS
+    ====================================== */
 
+    tasksContainer.innerHTML =
+      tasks.map(
+        function(task) {
 
-            return;
 
-        }
+          const taskDate =
+            task.created_at
+              ?
+            new Date(
+              task.created_at
+            ).toLocaleString(
+              "en-NG",
+              {
+                dateStyle: "medium",
+                timeStyle: "short"
+              }
+            )
+              :
+            "Unknown";
 
 
+          const taskLink =
+            task.task_link
+              ?
+            `
+              <a
+                href="${escapeHtml(task.task_link)}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="task-link"
+              >
+                Open Task Link →
+              </a>
+            `
+              :
+            "";
 
-        /* =====================================
-           LOAD TASKS
-        ====================================== */
 
-        const {
 
-            data: tasks,
+          return `
 
-            error
 
-        } =
+            <article class="task-item">
 
-            await supabaseClient
 
-                .from("tasks")
+              <!-- TASK HEADER -->
 
-                .select(`
+              <div class="task-top">
 
-                    id,
 
-                    title,
+                <div>
 
-                    description,
 
-                    category,
+                  <h3 class="task-title">
 
-                    task_link,
+                    ${escapeHtml(
+                      task.title ||
+                      "Untitled Task"
+                    )}
 
-                    reward_amount,
+                  </h3>
 
-                    max_participants,
 
-                    participant_count,
+                  <span class="task-category">
 
-                    platform_fee,
+                    ${escapeHtml(
+                      task.category ||
+                      "General"
+                    )}
 
-                    total_amount,
-
-                    status,
-
-                    user_id,
-
-                    created_at
-
-                `)
-
-                .eq(
-
-                    "status",
-
-                    "pending"
-
-                )
-
-                .order(
-
-                    "created_at",
-
-                    {
-
-                        ascending: true
-
-                    }
-
-                );
-
-
-        if (error) {
-
-
-            throw error;
-
-        }
-
-
-
-        /* =====================================
-           EMPTY TASKS
-        ====================================== */
-
-        if (
-
-            !tasks ||
-
-            tasks.length === 0
-
-        ) {
-
-
-            tasksContainer.innerHTML =
-
-                `
-
-                <div class="empty-state">
-
-
-                    <h3>
-
-                        No Pending Tasks
-
-                    </h3>
-
-
-                    <p>
-
-                        There are currently no tasks
-                        waiting for approval.
-
-                    </p>
+                  </span>
 
 
                 </div>
 
-                `;
 
 
-            await loadTaskStatistics();
+                <span class="task-status pending">
 
+                  Pending
 
-            return;
+                </span>
 
-        }
 
+              </div>
 
 
-        /* =====================================
-           BUILD TASK HTML
-        ====================================== */
 
-        tasksContainer.innerHTML =
+              <!-- DESCRIPTION -->
 
-            tasks.map(
+              <div class="task-description">
 
-                function(task) {
+                ${escapeHtml(
+                  task.description ||
+                  "No description provided."
+                )}
 
+              </div>
 
-                    const taskDate =
 
-                        task.created_at
 
-                            ?
+              <!-- TASK LINK -->
 
-                        new Date(
+              ${taskLink}
 
-                            task.created_at
 
-                        ).toLocaleString(
 
-                            "en-NG",
+              <!-- TASK DETAILS -->
 
-                            {
+              <div class="task-details">
 
-                                dateStyle: "medium",
 
-                                timeStyle: "short"
+                <div class="task-detail">
 
-                            }
 
-                        )
+                  <span>
+                    Participants
+                  </span>
 
-                            :
 
-                        "Unknown";
+                  <strong>
 
-
-                    const taskLink =
-
-                        task.task_link
-
-                            ?
-
-                        `
-
-                        <a
-
-                            href="${escapeHtml(task.task_link)}"
-
-                            target="_blank"
-
-                            rel="noopener noreferrer"
-
-                            class="task-link"
-
-                        >
-
-                            Open Task Link →
-
-                        </a>
-
-                        `
-
-                            :
-
-                        "";
-
-
-
-                    return `
-
-
-                    <article class="task-item">
-
-
-                        <!-- =========================
-                             TASK HEADER
-                        ========================== -->
-
-                        <div class="task-top">
-
-
-                            <div>
-
-
-                                <h3 class="task-title">
-
-                                    ${escapeHtml(task.title)}
-
-                                </h3>
-
-
-                                <span class="task-category">
-
-                                    ${escapeHtml(task.category)}
-
-                                </span>
-
-
-                            </div>
-
-
-
-                            <span
-                                class="task-status pending"
-                            >
-
-                                Pending
-
-                            </span>
-
-
-                        </div>
-
-
-
-                        <!-- =========================
-                             DESCRIPTION
-                        ========================== -->
-
-                        <div class="task-description">
-
-                            ${escapeHtml(task.description)}
-
-                        </div>
-
-
-
-                        <!-- =========================
-                             TASK LINK
-                        ========================== -->
-
-                        ${taskLink}
-
-
-
-                        <!-- =========================
-                             TASK DETAILS
-                        ========================== -->
-
-                        <div class="task-details">
-
-
-                            <div class="task-detail">
-
-
-                                <span>
-
-                                    Participants
-
-                                </span>
-
-
-                                <strong>
-
-                                    ${Number(
-                                        task.max_participants || 0
-                                    ).toLocaleString("en-NG")}
-
-                                </strong>
-
-
-                            </div>
-
-
-
-                            <div class="task-detail">
-
-
-                                <span>
-
-                                    Reward Each
-
-                                </span>
-
-
-                                <strong>
-
-                                    ${formatNaira(
-                                        task.reward_amount
-                                    )}
-
-                                </strong>
-
-
-                            </div>
-
-
-
-                            <div class="task-detail">
-
-
-                                <span>
-
-                                    Total Paid
-
-                                </span>
-
-
-                                <strong>
-
-                                    ${formatNaira(
-                                        task.total_amount
-                                    )}
-
-                                </strong>
-
-
-                            </div>
-
-
-
-                            <div class="task-detail">
-
-
-                                <span>
-
-                                    Submitted
-
-                                </span>
-
-
-                                <strong>
-
-                                    ${escapeHtml(
-                                        taskDate
-                                    )}
-
-                                </strong>
-
-
-                            </div>
-
-
-                        </div>
-
-
-
-                        <!-- =========================
-                             ACTIONS
-                        ========================== -->
-
-                        <div class="task-actions">
-
-
-                            <button
-
-                                type="button"
-
-                                class="reject-button"
-
-                                id="reject-${task.id}"
-
-                                onclick="rejectTask('${task.id}')"
-
-                            >
-
-                                Reject & Refund
-
-                            </button>
-
-
-
-                            <button
-
-                                type="button"
-
-                                class="approve-button"
-
-                                id="approve-${task.id}"
-
-                                onclick="approveTask('${task.id}')"
-
-                            >
-
-                                Approve
-
-                            </button>
-
-
-                        </div>
-
-
-                    </article>
-
-
-                    `;
-
-
-                }
-
-            ).join("");
-
-
-
-        /* =====================================
-           UPDATE STATISTICS
-        ====================================== */
-
-        await loadTaskStatistics();
-
-
-    }
-
-
-    catch (error) {
-
-
-        console.error(
-
-            "Unable to load tasks:",
-
-            error
-
-        );
-
-
-        tasksContainer.innerHTML =
-
-            `
-
-            <div class="empty-state">
-
-
-                <h3>
-
-                    Unable to Load Tasks
-
-                </h3>
-
-
-                <p>
-
-                    ${escapeHtml(
-
-                        error.message ||
-
-                        "Please try again."
-
+                    ${Number(
+                      task.max_participants || 0
+                    ).toLocaleString(
+                      "en-NG"
                     )}
 
-                </p>
+                  </strong>
 
 
-            </div>
-
-            `;
+                </div>
 
 
-        showMessage(
 
-            error.message ||
-
-            "Unable to load tasks.",
-
-            "error"
-
-        );
+                <div class="task-detail">
 
 
-    }
+                  <span>
+                    Reward Each
+                  </span>
+
+
+                  <strong>
+
+                    ${formatNaira(
+                      task.reward_amount
+                    )}
+
+                  </strong>
+
+
+                </div>
+
+
+
+                <div class="task-detail">
+
+
+                  <span>
+                    Total Paid
+                  </span>
+
+
+                  <strong>
+
+                    ${formatNaira(
+                      task.total_amount
+                    )}
+
+                  </strong>
+
+
+                </div>
+
+
+
+                <div class="task-detail">
+
+
+                  <span>
+                    Submitted
+                  </span>
+
+
+                  <strong>
+
+                    ${escapeHtml(
+                      taskDate
+                    )}
+
+                  </strong>
+
+
+                </div>
+
+
+              </div>
+
+
+
+              <!-- ACTIONS -->
+
+              <div class="task-actions">
+
+
+                <button
+                  type="button"
+                  class="reject-button"
+                  id="reject-${task.id}"
+                  onclick="rejectTask('${task.id}')"
+                >
+
+                  Reject & Refund
+
+                </button>
+
+
+
+                <button
+                  type="button"
+                  class="approve-button"
+                  id="approve-${task.id}"
+                  onclick="approveTask('${task.id}')"
+                >
+
+                  Approve
+
+                </button>
+
+
+              </div>
+
+
+            </article>
+
+
+          `;
+
+
+        }
+      ).join("");
+
+
+
+    await loadTaskStatistics();
+
+
+  }
+
+
+  catch (error) {
+
+
+    console.error(
+      "Unable to load tasks:",
+      error
+    );
+
+
+    tasksContainer.innerHTML =
+      `
+        <div class="empty-state">
+
+          <h3>
+            Unable to Load Tasks
+          </h3>
+
+          <p>
+            ${escapeHtml(
+              error.message ||
+              "Please try again."
+            )}
+          </p>
+
+        </div>
+      `;
+
+
+    showMessage(
+      error.message ||
+      "Unable to load tasks.",
+      "error"
+    );
+
+
+  }
 
 
 }
@@ -1953,236 +1934,147 @@ async function loadTasks() {
 async function approveTask(taskId) {
 
 
-    if (!taskId) {
+  if (!taskId) {
 
 
-        alert(
+    alert(
+      "Invalid task ID."
+    );
 
-            "Invalid task ID."
 
-        );
+    return;
 
+  }
 
-        return;
 
-    }
 
+  const confirmed =
+    confirm(
+      "APPROVE TASK?\n\n" +
+      "This task will become available " +
+      "to EarnGig users."
+    );
 
 
-    /* =====================================
-       CONFIRM
-    ====================================== */
+  if (!confirmed) {
 
-    const confirmed =
+    return;
 
-        confirm(
+  }
 
 
-            "APPROVE TASK?\n\n" +
 
+  const approveButton =
+    document.getElementById(
+      `approve-${taskId}`
+    );
 
-            "This task will become available " +
 
-            "to EarnGig users."
+  const rejectButton =
+    document.getElementById(
+      `reject-${taskId}`
+    );
 
 
-        );
 
+  try {
 
-    if (!confirmed) {
 
+    if (approveButton) {
 
-        return;
 
-    }
+      approveButton.disabled =
+        true;
 
 
-
-    const approveButton =
-
-        document.getElementById(
-
-            `approve-${taskId}`
-
-        );
-
-
-    const rejectButton =
-
-        document.getElementById(
-
-            `reject-${taskId}`
-
-        );
-
-
-
-    try {
-
-
-        /* =====================================
-           DISABLE BUTTONS
-        ====================================== */
-
-        if (approveButton) {
-
-
-            approveButton.disabled = true;
-
-
-            approveButton.textContent =
-
-                "Approving...";
-
-
-        }
-
-
-        if (rejectButton) {
-
-
-            rejectButton.disabled = true;
-
-
-        }
-
-
-
-        /* =====================================
-           APPROVE TASK
-
-           NOTE:
-
-           For maximum security, approval should
-           also eventually use a PostgreSQL RPC
-           with an admin authorization check.
-        ====================================== */
-
-        const {
-
-            error
-
-        } =
-
-            await supabaseClient
-
-                .from("tasks")
-
-                .update({
-
-                    status: "approved",
-
-                    updated_at:
-
-                        new Date()
-                            .toISOString()
-
-                })
-
-                .eq(
-
-                    "id",
-
-                    taskId
-
-                )
-
-                .eq(
-
-                    "status",
-
-                    "pending"
-
-                );
-
-
-
-        if (error) {
-
-
-            throw error;
-
-        }
-
-
-
-        /* =====================================
-           SUCCESS
-        ====================================== */
-
-        showMessage(
-
-            "Task approved successfully.",
-
-            "success"
-
-        );
-
-
-
-        /* =====================================
-           RELOAD
-        ====================================== */
-
-        await loadTasks();
+      approveButton.textContent =
+        "Approving...";
 
 
     }
 
 
-    catch (error) {
+    if (rejectButton) {
 
-
-        console.error(
-
-            "Task approval failed:",
-
-            error
-
-        );
-
-
-        showMessage(
-
-            error.message ||
-
-            "Unable to approve task.",
-
-            "error"
-
-        );
-
+      rejectButton.disabled =
+        true;
 
     }
 
 
-    finally {
+
+    clearMessage();
 
 
-        if (approveButton) {
+
+    const {
+      error
+    } =
+      await supabaseClient
+
+        .from("tasks")
+
+        .update({
+
+          status: "approved",
+
+          updated_at:
+            new Date().toISOString()
+
+        })
+
+        .eq(
+          "id",
+          taskId
+        )
+
+        .eq(
+          "status",
+          "pending"
+        );
 
 
-            approveButton.disabled = false;
+    if (error) {
 
-
-            approveButton.textContent =
-
-                "Approve";
-
-
-        }
-
-
-        if (rejectButton) {
-
-
-            rejectButton.disabled = false;
-
-
-        }
-
+      throw error;
 
     }
+
+
+
+    showMessage(
+      "Task approved successfully.",
+      "success"
+    );
+
+
+
+    await loadTasks();
+
+
+    await loadTaskStatistics();
+
+
+  }
+
+
+  catch (error) {
+
+
+    console.error(
+      "Task approval failed:",
+      error
+    );
+
+
+    showMessage(
+      error.message ||
+      "Unable to approve task.",
+      "error"
+    );
+
+
+  }
 
 
 }
@@ -2191,528 +2083,346 @@ async function approveTask(taskId) {
 
 /* =========================================
    REJECT TASK WITH REFUND
-
-   IMPORTANT:
-
-   This function does NOT directly update
-   the tasks table.
-
-   Instead, it calls:
-
-       reject_task_with_refund
-
-   The PostgreSQL function handles:
-
-   1. Locking the task
-   2. Checking task status
-   3. Preventing double refunds
-   4. Locking the user's wallet
-   5. Adding total_amount back
-   6. Changing status to rejected
-   7. Creating refund transaction
-
-   total_earned is NOT updated.
-
-   A refund is NOT an earning.
 ========================================= */
 
 async function rejectTask(taskId) {
 
 
+  if (!taskId) {
+
+
+    alert(
+      "Invalid task ID."
+    );
+
+
+    return;
+
+  }
+
+
+
+  const confirmed =
+    confirm(
+
+      "REJECT TASK?\n\n" +
+
+      "The task will be rejected.\n\n" +
+
+      "The FULL amount paid by the task owner " +
+      "will be refunded to their wallet.\n\n" +
+
+      "The refund will NOT be counted " +
+      "as an earning.\n\n" +
+
+      "Do you want to continue?"
+
+    );
+
+
+  if (!confirmed) {
+
+    return;
+
+  }
+
+
+
+  const rejectButton =
+    document.getElementById(
+      `reject-${taskId}`
+    );
+
+
+  const approveButton =
+    document.getElementById(
+      `approve-${taskId}`
+    );
+
+
+
+  try {
+
+
+    if (rejectButton) {
+
+
+      rejectButton.disabled =
+        true;
+
+
+      rejectButton.textContent =
+        "Refunding...";
+
+
+    }
+
+
+    if (approveButton) {
+
+      approveButton.disabled =
+        true;
+
+    }
+
+
+
+    clearMessage();
+
+
+
     /* =====================================
-       VALIDATE TASK ID
+       CALL REFUND RPC
+
+       The database function handles:
+
+       - Task locking
+       - Double refund prevention
+       - Wallet update
+       - Task rejection
+       - Transaction creation
+
+       Refunds must NOT update total_earned.
     ====================================== */
 
-    if (!taskId) {
+    const {
+      data,
+      error
+    } =
+      await supabaseClient.rpc(
+
+        "reject_task_with_refund",
+
+        {
+          p_task_id: taskId
+        }
+
+      );
 
 
-        alert(
-
-            "Invalid task ID."
-
-        );
+    if (error) {
 
 
-        return;
+      console.error(
+        "Reject task RPC error:",
+        error
+      );
+
+
+      throw error;
 
     }
 
 
 
-    /* =====================================
-       CONFIRM REJECTION
-    ====================================== */
-
-    const confirmed =
-
-        confirm(
+    if (
+      !data ||
+      data.success !== true
+    ) {
 
 
-            "REJECT TASK?\n\n" +
+      throw new Error(
 
+        data?.message ||
+        "Task rejection failed."
 
-            "The task will be rejected.\n\n" +
+      );
 
-
-            "The FULL amount paid by the task owner " +
-
-            "will be refunded to their wallet.\n\n" +
-
-
-            "The refund will NOT be counted " +
-
-            "as an earning.\n\n" +
-
-
-            "Do you want to continue?"
-
-
-        );
-
-
-    if (!confirmed) {
-
-
-        return;
 
     }
 
 
 
-    /* =====================================
-       BUTTONS
-    ====================================== */
+    const refundAmount =
+      formatNaira(
+        data.amount_refunded
+      );
 
-    const rejectButton =
 
-        document.getElementById(
+    const newBalance =
+      formatNaira(
+        data.new_wallet_balance
+      );
 
-            `reject-${taskId}`
 
-        );
 
+    showMessage(
 
-    const approveButton =
+      "Task rejected successfully. " +
 
-        document.getElementById(
+      refundAmount +
 
-            `approve-${taskId}`
+      " has been refunded to the task owner's wallet. " +
 
-        );
+      "New wallet balance: " +
 
+      newBalance +
 
+      ". The refund was not counted as earnings.",
 
-    try {
+      "success"
 
+    );
 
-        /* =====================================
-           DISABLE BUTTONS
-        ====================================== */
 
-        if (rejectButton) {
 
+    console.log(
+      "Task rejected successfully:",
+      data
+    );
 
-            rejectButton.disabled = true;
 
 
-            rejectButton.textContent =
+    setTimeout(
 
-                "Refunding...";
+      async function() {
 
 
-        }
+        await loadTasks();
 
 
-        if (approveButton) {
+        await loadTaskStatistics();
 
 
-            approveButton.disabled = true;
+      },
 
+      1000
 
-        }
+    );
 
 
+  }
 
-        clearMessage();
 
+  catch (error) {
 
 
-        /* =====================================
-           CALL SUPABASE RPC
+    console.error(
+      "Task rejection failed:",
+      error
+    );
 
-           The database function performs ALL
-           financial operations safely.
 
-           Do NOT replace this with:
+    let message =
+      error?.message ||
+      "Unable to reject task. Please try again.";
 
-           supabaseClient
-               .from("tasks")
-               .update(...)
 
-           because that would reject the task
-           without refunding the wallet.
-        ====================================== */
+    const lowerMessage =
+      String(
+        message
+      ).toLowerCase();
 
-        const {
 
-            data,
 
-            error
+    if (
+      lowerMessage.includes(
+        "already been rejected"
+      )
+    ) {
 
-        } =
 
-            await supabaseClient.rpc(
-
-                "reject_task_with_refund",
-
-                {
-
-                    p_task_id:
-
-                        taskId
-
-                }
-
-            );
-
-
-
-        /* =====================================
-           CHECK ERROR
-        ====================================== */
-
-        if (error) {
-
-
-            console.error(
-
-                "Reject task RPC error:",
-
-                error
-
-            );
-
-
-            throw error;
-
-        }
-
-
-
-        /* =====================================
-           CHECK RESPONSE
-        ====================================== */
-
-        if (
-
-            !data ||
-
-            data.success !== true
-
-        ) {
-
-
-            throw new Error(
-
-                data?.message ||
-
-                "Task rejection failed."
-
-            );
-
-
-        }
-
-
-
-        /* =====================================
-           FORMAT REFUND
-        ====================================== */
-
-        const refundAmount =
-
-            formatNaira(
-
-                data.amount_refunded
-
-            );
-
-
-
-        /* =====================================
-           FORMAT BALANCE
-        ====================================== */
-
-        const newBalance =
-
-            formatNaira(
-
-                data.new_wallet_balance
-
-            );
-
-
-
-        /* =====================================
-           SUCCESS MESSAGE
-        ====================================== */
-
-        showMessage(
-
-
-            "Task rejected successfully. " +
-
-
-            refundAmount +
-
-
-            " has been refunded to the task " +
-
-            "owner's wallet. " +
-
-
-            "New wallet balance: " +
-
-
-            newBalance +
-
-
-            ". The refund was not counted as earnings.",
-
-
-            "success"
-
-        );
-
-
-
-        /* =====================================
-           LOG
-        ====================================== */
-
-        console.log(
-
-            "Task rejected successfully:",
-
-            data
-
-        );
-
-
-
-        /* =====================================
-           RELOAD TASKS
-
-           Short delay allows the administrator
-           to see the success message.
-        ====================================== */
-
-        setTimeout(
-
-            async function() {
-
-
-                await loadTasks();
-
-
-            },
-
-            1000
-
-        );
+      message =
+        "This task has already been rejected and refunded.";
 
 
     }
 
 
-    catch (error) {
-
-
-        console.error(
-
-            "Task rejection failed:",
-
-            error
-
-        );
-
-
-        let message =
-
-            error?.message ||
-
-            "Unable to reject task. Please try again.";
-
-
-
-        const lowerMessage =
-
-            String(
-
-                message
-
-            ).toLowerCase();
-
-
-
-        /* =====================================
-           FRIENDLY ERRORS
-        ====================================== */
-
-        if (
-
-            lowerMessage.includes(
-
-                "already been rejected"
-
-            )
-
-        ) {
-
-
-            message =
-
-                "This task has already been " +
-
-                "rejected and refunded.";
-
-
-        }
-
-
-        else if (
-
-            lowerMessage.includes(
-
-                "task not found"
-
-            )
-
-        ) {
-
-
-            message =
-
-                "The task could not be found.";
-
-
-        }
-
-
-        else if (
-
-            lowerMessage.includes(
-
-                "wallet not found"
-
-            )
-
-        ) {
-
-
-            message =
-
-                "The task owner's wallet could " +
-
-                "not be found. The rejection was " +
-
-                "not completed.";
-
-
-        }
-
-
-        else if (
-
-            lowerMessage.includes(
-
-                "not authenticated"
-
-            )
-
-        ) {
-
-
-            message =
-
-                "Your session has expired. " +
-
-                "Please log in again.";
-
-
-        }
-
-
-        else if (
-
-            lowerMessage.includes(
-
-                "only pending tasks"
-
-            )
-
-        ) {
-
-
-            message =
-
-                "Only pending tasks can be rejected.";
-
-
-        }
-
-
-
-        /* =====================================
-           SHOW ERROR
-        ====================================== */
-
-        showMessage(
-
-            message,
-
-            "error"
-
-        );
+    else if (
+      lowerMessage.includes(
+        "task not found"
+      )
+    ) {
+
+
+      message =
+        "The task could not be found.";
 
 
     }
 
 
-    finally {
+    else if (
+      lowerMessage.includes(
+        "wallet not found"
+      )
+    ) {
 
 
-        /* =====================================
-           RE-ENABLE BUTTONS
-
-           loadTasks() may remove the buttons,
-           but this is safe if they still exist.
-        ====================================== */
-
-        if (rejectButton) {
-
-
-            rejectButton.disabled = false;
-
-
-            rejectButton.textContent =
-
-                "Reject & Refund";
-
-
-        }
-
-
-        if (approveButton) {
-
-
-            approveButton.disabled = false;
-
-
-        }
+      message =
+        "The task owner's wallet could not be found. " +
+        "The rejection was not completed.";
 
 
     }
+
+
+    else if (
+      lowerMessage.includes(
+        "not authenticated"
+      )
+    ) {
+
+
+      message =
+        "Your session has expired. " +
+        "Please log in again.";
+
+
+    }
+
+
+    else if (
+      lowerMessage.includes(
+        "only pending tasks"
+      )
+    ) {
+
+
+      message =
+        "Only pending tasks can be rejected.";
+
+
+    }
+
+
+
+    showMessage(
+      message,
+      "error"
+    );
+
+
+  }
+
+
+  finally {
+
+
+    if (rejectButton) {
+
+
+      rejectButton.disabled =
+        false;
+
+
+      rejectButton.textContent =
+        "Reject & Refund";
+
+
+    }
+
+
+    if (approveButton) {
+
+      approveButton.disabled =
+        false;
+
+    }
+
+
+  }
 
 
 }
@@ -2720,36 +2430,31 @@ async function rejectTask(taskId) {
 
 
 /* =========================================
-   INITIALIZE PAGE
+   INITIALIZE ADMIN PAGE
 ========================================= */
 
 async function initializeAdminTasks() {
 
 
-    const user =
-
-        await getCurrentUser();
-
-
-    if (!user) {
+  const user =
+    await getCurrentUser();
 
 
-        return;
+  if (!user) {
 
-    }
+    return;
+
+  }
 
 
 
-    await Promise.all([
+  await Promise.all([
 
+    loadTaskStatistics(),
 
-        loadTaskStatistics(),
+    loadTasks()
 
-
-        loadTasks()
-
-
-    ]);
+  ]);
 
 
 }
@@ -2757,7 +2462,7 @@ async function initializeAdminTasks() {
 
 
 /* =========================================
-   START
+   START PAGE
 ========================================= */
 
 initializeAdminTasks();
@@ -2767,6 +2472,5 @@ initializeAdminTasks();
 
 
 </body>
-
 
 </html>

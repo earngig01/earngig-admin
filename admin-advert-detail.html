@@ -1,0 +1,1996 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Advert Details | EarnGig Admin</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f5fa;
+      color: #17172b;
+    }
+
+    .page {
+      max-width: 1050px;
+      margin: 0 auto;
+      padding: 25px 20px 60px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .brand {
+      font-size: 25px;
+      font-weight: 800;
+      color: #7c3aed;
+    }
+
+    .back-btn {
+      text-decoration: none;
+      background: white;
+      border: 1px solid #ddd;
+      color: #33334a;
+      padding: 10px 15px;
+      border-radius: 9px;
+      font-weight: 700;
+    }
+
+    .panel {
+      background: white;
+      border: 1px solid #e3e3eb;
+      border-radius: 16px;
+      padding: 22px;
+      margin-bottom: 18px;
+    }
+
+    .campaign-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 20px;
+    }
+
+    h1 {
+      margin: 0 0 7px;
+      font-size: 28px;
+    }
+
+    .campaign-id {
+      color: #9999aa;
+      font-size: 12px;
+      word-break: break-all;
+    }
+
+    .status {
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .pending {
+      background: #fff3cd;
+      color: #8a6500;
+    }
+
+    .revision {
+      background: #fff0d6;
+      color: #a05b00;
+    }
+
+    .approved {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .paid {
+      background: #dbeafe;
+      color: #1d4ed8;
+    }
+
+    .active {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .rejected {
+      background: #fee2e2;
+      color: #b91c1c;
+    }
+
+    .section-title {
+      font-size: 19px;
+      font-weight: 800;
+      margin: 0 0 15px;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .info {
+      background: #f8f8fc;
+      border-radius: 10px;
+      padding: 13px;
+    }
+
+    .info-label {
+      color: #858598;
+      font-size: 12px;
+      margin-bottom: 5px;
+    }
+
+    .info-value {
+      font-weight: 700;
+      word-break: break-word;
+    }
+
+    .video-wrap {
+      background: #11111c;
+      border-radius: 13px;
+      overflow: hidden;
+    }
+
+    video {
+      display: block;
+      width: 100%;
+      max-height: 600px;
+      background: #000;
+    }
+
+    .video-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 11px 12px;
+      background: #11111c;
+    }
+
+    .video-note {
+      color: #aaaabb;
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .download-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      text-decoration: none;
+      background: #7c3aed;
+      color: white;
+      border-radius: 8px;
+      padding: 9px 13px;
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .download-btn:hover {
+      background: #6d28d9;
+    }
+
+    .no-video {
+      background: #f8f8fc;
+      border-radius: 10px;
+      padding: 25px;
+      color: #77778b;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 130px;
+      resize: vertical;
+      border: 1px solid #d9d9e4;
+      border-radius: 11px;
+      padding: 13px;
+      font: inherit;
+      outline: none;
+    }
+
+    textarea:focus {
+      border-color: #7c3aed;
+    }
+
+    .button-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 10px;
+      padding: 13px;
+      color: white;
+      font-weight: 800;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .approve {
+      background: #16834c;
+    }
+
+    .changes {
+      background: #d99200;
+    }
+
+    .reject {
+      background: #c82d3b;
+    }
+
+    button:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    .note {
+      background: #f8f8fc;
+      border-left: 4px solid #7c3aed;
+      padding: 14px;
+      border-radius: 8px;
+      line-height: 1.6;
+      white-space: pre-wrap;
+    }
+
+    .history-item {
+      padding: 13px 0;
+      border-bottom: 1px solid #ececf2;
+    }
+
+    .history-item:last-child {
+      border-bottom: 0;
+    }
+
+    .history-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      margin-bottom: 5px;
+    }
+
+    .history-action {
+      font-weight: 800;
+    }
+
+    .history-date {
+      color: #9999aa;
+      font-size: 12px;
+    }
+
+    .history-note {
+      color: #55556b;
+      white-space: pre-wrap;
+      line-height: 1.5;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 50px;
+      color: #77778b;
+    }
+
+    .error {
+      background: #fff1f2;
+      border: 1px solid #fecdd3;
+      color: #b91c1c;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+
+    @media (max-width: 700px) {
+
+      .page {
+        padding: 18px 12px 45px;
+      }
+
+      .campaign-header {
+        flex-direction: column;
+      }
+
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .button-grid {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 23px;
+      }
+
+      .panel {
+        padding: 16px;
+      }
+
+      .video-footer {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .download-btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="page">
+
+  <div class="topbar">
+
+    <div class="brand">
+      EarnGig Admin
+    </div>
+
+    <a
+      href="admin-adverts.html"
+      class="back-btn"
+    >
+      ← All Adverts
+    </a>
+
+  </div>
+
+
+  <div
+    id="loading"
+    class="loading"
+  >
+    Loading advert...
+  </div>
+
+
+  <div
+    id="error-box"
+    class="error"
+    style="display:none;"
+  ></div>
+
+
+  <main
+    id="content"
+    style="display:none;"
+  >
+
+    <!-- HEADER -->
+
+    <section class="panel">
+
+      <div class="campaign-header">
+
+        <div>
+
+          <h1 id="campaign-name">
+            —
+          </h1>
+
+          <div
+            id="campaign-id"
+            class="campaign-id"
+          ></div>
+
+        </div>
+
+        <span
+          id="status"
+          class="status"
+        >
+          —
+        </span>
+
+      </div>
+
+    </section>
+
+
+    <!-- INFORMATION -->
+
+    <section class="panel">
+
+      <h2 class="section-title">
+        Advert Information
+      </h2>
+
+      <div class="info-grid">
+
+        <div class="info">
+          <div class="info-label">
+            Advertiser
+          </div>
+
+          <div
+            id="advertiser"
+            class="info-value"
+          >
+            —
+          </div>
+        </div>
+
+
+        <div class="info">
+          <div class="info-label">
+            Advert Title
+          </div>
+
+          <div
+            id="ad-title"
+            class="info-value"
+          >
+            —
+          </div>
+        </div>
+
+
+        <div class="info">
+          <div class="info-label">
+            Placement
+          </div>
+
+          <div
+            id="placement"
+            class="info-value"
+          >
+            —
+          </div>
+        </div>
+
+
+        <div class="info">
+          <div class="info-label">
+            Campaign Amount
+          </div>
+
+          <div
+            id="amount"
+            class="info-value"
+          >
+            —
+          </div>
+        </div>
+
+
+        <div class="info">
+          <div class="info-label">
+            Payment Status
+          </div>
+
+          <div
+            id="payment-status"
+            class="info-value"
+          >
+            —
+          </div>
+        </div>
+
+
+        <div class="info">
+          <div class="info-label">
+            Submitted
+          </div>
+
+          <div
+            id="submitted"
+            class="info-value"
+          >
+            —
+          </div>
+        </div>
+
+
+        <div class="info">
+          <div class="info-label">
+            EarnGig Duration
+          </div>
+
+          <div
+            id="duration"
+            class="info-value"
+          >
+            —
+          </div>
+        </div>
+
+
+        <div class="info">
+          <div class="info-label">
+            TikTok Videos
+          </div>
+
+          <div
+            id="tiktok-count"
+            class="info-value"
+          >
+            —
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- DESCRIPTION -->
+
+    <section class="panel">
+
+      <h2 class="section-title">
+        Advert Description
+      </h2>
+
+      <div
+        id="description"
+        class="note"
+      ></div>
+
+    </section>
+
+
+    <!-- DESTINATION -->
+
+    <section class="panel">
+
+      <h2 class="section-title">
+        Destination Link
+      </h2>
+
+      <div
+        id="destination"
+        class="note"
+      ></div>
+
+    </section>
+
+
+    <!-- EARNGIG VIDEO -->
+
+    <section class="panel">
+
+      <h2 class="section-title">
+        EarnGig Advert Video
+      </h2>
+
+      <div id="earngig-video"></div>
+
+    </section>
+
+
+    <!-- TIKTOK VIDEOS -->
+
+    <section class="panel">
+
+      <h2 class="section-title">
+        TikTok Videos
+      </h2>
+
+      <div id="tiktok-videos"></div>
+
+    </section>
+
+
+    <!-- CURRENT REVIEW -->
+
+    <section
+      id="current-review-panel"
+      class="panel"
+      style="display:none;"
+    >
+
+      <h2 class="section-title">
+        Current Admin Review
+      </h2>
+
+      <div
+        id="current-review"
+        class="note"
+      ></div>
+
+    </section>
+
+
+    <!-- ADMIN ACTIONS -->
+
+    <section
+      id="action-panel"
+      class="panel"
+    >
+
+      <h2 class="section-title">
+        Admin Review
+      </h2>
+
+      <p
+        style="
+          color:#77778b;
+          margin-top:-5px;
+          line-height:1.5;
+        "
+      >
+        A note is required for Request Changes
+        and Reject. Approval does not require
+        a note.
+      </p>
+
+      <textarea
+        id="review-note"
+        placeholder="Write your review note here..."
+      ></textarea>
+
+
+      <div class="button-grid">
+
+        <button
+          id="approve-btn"
+          class="approve"
+        >
+          ✓ Approve & Request Payment
+        </button>
+
+        <button
+          id="changes-btn"
+          class="changes"
+        >
+          ✎ Request Changes
+        </button>
+
+        <button
+          id="reject-btn"
+          class="reject"
+        >
+          ✕ Reject
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- REVIEW HISTORY -->
+
+    <section class="panel">
+
+      <h2 class="section-title">
+        Review History
+      </h2>
+
+      <div
+        id="review-history"
+      ></div>
+
+    </section>
+
+  </main>
+
+</div>
+
+
+<script>
+
+const VIDEO_BUCKET =
+  "advert-videos";
+
+let campaign = null;
+
+let adminUser = null;
+
+
+
+function escapeHtml(value) {
+
+  return String(value || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+
+}
+
+
+
+function formatNaira(amount) {
+
+  return "₦" +
+    Number(amount || 0)
+      .toLocaleString("en-NG");
+
+}
+
+
+
+function getStatus(campaign) {
+
+  return (
+    campaign.status ||
+    campaign.approval_status ||
+    ""
+  ).toLowerCase();
+
+}
+
+
+
+function getStatusLabel(status) {
+
+  const labels = {
+
+    pending_review:
+      "Pending Review",
+
+    revision_required:
+      "Changes Requested",
+
+    approved_payment_required:
+      "Awaiting Payment",
+
+    paid:
+      "Paid",
+
+    active:
+      "Active",
+
+    rejected:
+      "Rejected"
+
+  };
+
+  return labels[status] ||
+    status ||
+    "Unknown";
+
+}
+
+
+
+function getStatusClass(status) {
+
+  if (
+    status === "pending_review"
+  ) return "pending";
+
+  if (
+    status === "revision_required"
+  ) return "revision";
+
+  if (
+    status === "approved_payment_required"
+  ) return "approved";
+
+  if (
+    status === "paid"
+  ) return "paid";
+
+  if (
+    status === "active"
+  ) return "active";
+
+  if (
+    status === "rejected"
+  ) return "rejected";
+
+  return "pending";
+
+}
+
+
+
+function getPlacementLabel(value) {
+
+  if (!value) return "—";
+
+  const parts =
+    String(value).split(",");
+
+  const labels = [];
+
+  if (
+    parts.includes(
+      "watch_and_earn"
+    )
+  ) {
+
+    labels.push(
+      "EarnGig Watch & Earn"
+    );
+
+  }
+
+  if (
+    parts.includes(
+      "tiktok"
+    )
+  ) {
+
+    labels.push(
+      "TikTok"
+    );
+
+  }
+
+  return labels.join(" + ") ||
+    value;
+
+}
+
+
+
+function formatDate(value) {
+
+  if (!value) {
+    return "—";
+  }
+
+  return new Date(
+    value
+  ).toLocaleString(
+    "en-NG"
+  );
+
+}
+
+
+
+async function verifyAdmin() {
+
+  const {
+    data: {
+      user
+    },
+    error
+  } =
+    await supabaseClient.auth.getUser();
+
+
+  if (
+    error ||
+    !user
+  ) {
+
+    window.location.href =
+      "login.html";
+
+    return null;
+
+  }
+
+
+  const {
+    data: profile,
+    error: profileError
+  } =
+    await supabaseClient
+      .from("profiles")
+      .select(
+        "id,is_admin,account_status"
+      )
+      .eq(
+        "id",
+        user.id
+      )
+      .maybeSingle();
+
+
+  if (
+    profileError ||
+    !profile ||
+    !profile.is_admin ||
+    profile.account_status !== "active"
+  ) {
+
+    alert(
+      "Administrator privileges are required."
+    );
+
+    window.location.href =
+      "dashboard.html";
+
+    return null;
+
+  }
+
+
+  return user;
+
+}
+
+
+
+async function loadCampaign() {
+
+  const params =
+    new URLSearchParams(
+      window.location.search
+    );
+
+  const id =
+    params.get("id");
+
+
+  if (!id) {
+
+    throw new Error(
+      "No advert campaign ID was provided."
+    );
+
+  }
+
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("brand_ad_campaigns")
+      .select("*")
+      .eq(
+        "id",
+        id
+      )
+      .maybeSingle();
+
+
+  if (error) {
+
+    throw new Error(
+      "Unable to load advert: " +
+      error.message
+    );
+
+  }
+
+
+  if (!data) {
+
+    throw new Error(
+      "Advert campaign was not found."
+    );
+
+  }
+
+
+  campaign =
+    data;
+
+}
+
+
+
+async function loadAdvertiser() {
+
+  if (!campaign.brand_id) {
+    return "Unknown";
+  }
+
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("profiles")
+      .select("*")
+      .eq(
+        "id",
+        campaign.brand_id
+      )
+      .maybeSingle();
+
+
+  if (
+    error ||
+    !data
+  ) {
+
+    return String(
+      campaign.brand_id
+    ).slice(0, 12) + "...";
+
+  }
+
+
+  return (
+    data.name ||
+    data.full_name ||
+    data.display_name ||
+    data.username ||
+    data.user_name ||
+    [
+      data.first_name,
+      data.last_name
+    ]
+      .filter(Boolean)
+      .join(" ") ||
+    String(
+      campaign.brand_id
+    ).slice(0, 12) + "..."
+  );
+
+}
+
+
+/*
+ * Get a signed video URL.
+ *
+ * The download option tells Supabase Storage
+ * to return the file as a downloadable file.
+ */
+
+async function getVideoUrl(
+  storedValue,
+  downloadName = "earngig-advert-video.mp4"
+) {
+
+  if (!storedValue) {
+    return null;
+  }
+
+
+  if (
+    String(storedValue)
+      .startsWith("http://") ||
+    String(storedValue)
+      .startsWith("https://")
+  ) {
+
+    return storedValue;
+
+  }
+
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .storage
+      .from(VIDEO_BUCKET)
+      .createSignedUrl(
+        storedValue,
+        3600,
+        {
+          download: downloadName
+        }
+      );
+
+
+  if (error) {
+
+    console.error(
+      "Video URL error:",
+      error
+    );
+
+    return null;
+
+  }
+
+
+  return data?.signedUrl ||
+    null;
+
+}
+
+
+
+async function renderVideo(
+  container,
+  path,
+  label,
+  downloadName
+) {
+
+  if (!path) {
+
+    container.innerHTML = `
+      <div class="no-video">
+        No ${escapeHtml(label)}
+        was uploaded.
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  const url =
+    await getVideoUrl(
+      path,
+      downloadName
+    );
+
+
+  if (!url) {
+
+    container.innerHTML = `
+      <div class="no-video">
+        Unable to load this video.
+        Stored path:
+        ${escapeHtml(path)}
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  /*
+   * Create a separate viewing URL so that
+   * clicking the video plays normally.
+   */
+
+  const {
+    data: viewData,
+    error: viewError
+  } =
+    await supabaseClient
+      .storage
+      .from(VIDEO_BUCKET)
+      .createSignedUrl(
+        path,
+        3600
+      );
+
+
+  const viewUrl =
+    viewError
+      ? url
+      : viewData?.signedUrl || url;
+
+
+  container.innerHTML = `
+    <div class="video-wrap">
+
+      <video
+        controls
+        playsinline
+        preload="metadata"
+        src="${escapeHtml(viewUrl)}"
+      ></video>
+
+      <div class="video-footer">
+
+        <div class="video-note">
+          ${escapeHtml(label)}
+        </div>
+
+        <a
+          class="download-btn"
+          href="${escapeHtml(url)}"
+        >
+          ⬇ Download Video
+        </a>
+
+      </div>
+
+    </div>
+  `;
+
+}
+
+
+
+async function renderPage() {
+
+  const advertiser =
+    await loadAdvertiser();
+
+
+  const status =
+    getStatus(
+      campaign
+    );
+
+
+  document.getElementById(
+    "campaign-name"
+  ).textContent =
+    campaign.campaign_name ||
+    campaign.ad_title ||
+    "Untitled Campaign";
+
+
+  document.getElementById(
+    "campaign-id"
+  ).textContent =
+    "Campaign ID: " +
+    campaign.id;
+
+
+  const statusElement =
+    document.getElementById(
+      "status"
+    );
+
+
+  statusElement.textContent =
+    getStatusLabel(
+      status
+    );
+
+
+  statusElement.className =
+    "status " +
+    getStatusClass(
+      status
+    );
+
+
+  document.getElementById(
+    "advertiser"
+  ).textContent =
+    advertiser;
+
+
+  document.getElementById(
+    "ad-title"
+  ).textContent =
+    campaign.ad_title ||
+    "—";
+
+
+  document.getElementById(
+    "placement"
+  ).textContent =
+    getPlacementLabel(
+      campaign.placement
+    );
+
+
+  document.getElementById(
+    "amount"
+  ).textContent =
+    formatNaira(
+      campaign.campaign_budget
+    );
+
+
+  document.getElementById(
+    "payment-status"
+  ).textContent =
+    campaign.payment_status ||
+    "—";
+
+
+  document.getElementById(
+    "submitted"
+  ).textContent =
+    formatDate(
+      campaign.submitted_at ||
+      campaign.created_at
+    );
+
+
+  document.getElementById(
+    "duration"
+  ).textContent =
+    campaign.duration_days
+      ? campaign.duration_days +
+        (
+          Number(
+            campaign.duration_days
+          ) === 1
+            ? " day"
+            : " days"
+        )
+      : "Not selected";
+
+
+  let tiktokCount = 0;
+
+  if (
+    campaign.tiktok_video_1_url
+  ) tiktokCount++;
+
+  if (
+    campaign.tiktok_video_2_url
+  ) tiktokCount++;
+
+  if (
+    campaign.tiktok_video_3_url
+  ) tiktokCount++;
+
+
+  document.getElementById(
+    "tiktok-count"
+  ).textContent =
+    tiktokCount +
+    (
+      tiktokCount === 1
+        ? " video"
+        : " videos"
+    );
+
+
+  document.getElementById(
+    "description"
+  ).textContent =
+    campaign.description ||
+    "No description provided.";
+
+
+  const destination =
+    document.getElementById(
+      "destination"
+    );
+
+
+  if (
+    campaign.destination_url
+  ) {
+
+    destination.innerHTML = `
+      <a
+        href="${escapeHtml(campaign.destination_url)}"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        ${escapeHtml(campaign.destination_url)}
+      </a>
+    `;
+
+  } else {
+
+    destination.textContent =
+      "No destination link provided.";
+
+  }
+
+
+  /*
+   * EarnGig video
+   */
+
+  await renderVideo(
+    document.getElementById(
+      "earngig-video"
+    ),
+    campaign.video_url,
+    "EarnGig Advert",
+    "earngig-advert-" +
+      campaign.id +
+      ".mp4"
+  );
+
+
+  /*
+   * TikTok videos
+   */
+
+  const tiktokContainer =
+    document.getElementById(
+      "tiktok-videos"
+    );
+
+
+  const tiktokVideos = [
+    {
+      path:
+        campaign.tiktok_video_1_url,
+
+      name:
+        "TikTok Video 1"
+    },
+
+    {
+      path:
+        campaign.tiktok_video_2_url,
+
+      name:
+        "TikTok Video 2"
+    },
+
+    {
+      path:
+        campaign.tiktok_video_3_url,
+
+      name:
+        "TikTok Video 3"
+    }
+  ].filter(
+    item => item.path
+  );
+
+
+  if (!tiktokVideos.length) {
+
+    tiktokContainer.innerHTML = `
+      <div class="no-video">
+        No TikTok videos were uploaded.
+      </div>
+    `;
+
+  } else {
+
+    tiktokContainer.innerHTML = "";
+
+    for (
+      let i = 0;
+      i < tiktokVideos.length;
+      i++
+    ) {
+
+      const wrapper =
+        document.createElement(
+          "div"
+        );
+
+      wrapper.style.marginBottom =
+        "15px";
+
+      tiktokContainer.appendChild(
+        wrapper
+      );
+
+
+      await renderVideo(
+        wrapper,
+        tiktokVideos[i].path,
+        tiktokVideos[i].name,
+        "tiktok-video-" +
+          (i + 1) +
+          "-" +
+          campaign.id +
+          ".mp4"
+      );
+
+    }
+
+  }
+
+
+  if (
+    campaign.admin_review_note
+  ) {
+
+    document.getElementById(
+      "current-review-panel"
+    ).style.display =
+      "block";
+
+
+    document.getElementById(
+      "current-review"
+    ).textContent =
+      campaign.admin_review_note;
+
+  }
+
+
+  if (
+    status === "rejected"
+  ) {
+
+    document.getElementById(
+      "action-panel"
+    ).style.display =
+      "none";
+
+  }
+
+
+  if (
+    status === "active" ||
+    status === "paid"
+  ) {
+
+    document.getElementById(
+      "action-panel"
+    ).style.display =
+      "none";
+
+  }
+
+
+  document.getElementById(
+    "content"
+  ).style.display =
+    "block";
+
+}
+
+
+
+async function loadReviewHistory() {
+
+  const container =
+    document.getElementById(
+      "review-history"
+    );
+
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("brand_ad_campaign_reviews")
+      .select("*")
+      .eq(
+        "campaign_id",
+        campaign.id
+      )
+      .order(
+        "created_at",
+        {
+          ascending: false
+        }
+      );
+
+
+  if (error) {
+
+    container.innerHTML = `
+      <div class="no-video">
+        Unable to load review history.
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  if (
+    !data ||
+    !data.length
+  ) {
+
+    container.innerHTML = `
+      <div class="no-video">
+        No review history yet.
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  container.innerHTML =
+    data.map(
+      item => {
+
+        let label =
+          "Review";
+
+
+        if (
+          item.action ===
+          "approved"
+        ) {
+
+          label =
+            "Advert Approved";
+
+        } else if (
+          item.action ===
+          "changes_requested"
+        ) {
+
+          label =
+            "Changes Requested";
+
+        } else if (
+          item.action ===
+          "rejected"
+        ) {
+
+          label =
+            "Advert Rejected";
+
+        }
+
+
+        return `
+          <div class="history-item">
+
+            <div class="history-top">
+
+              <div class="history-action">
+                ${escapeHtml(label)}
+              </div>
+
+              <div class="history-date">
+                ${escapeHtml(
+                  formatDate(
+                    item.created_at
+                  )
+                )}
+              </div>
+
+            </div>
+
+            ${
+              item.review_note
+                ? `
+                  <div class="history-note">
+                    ${escapeHtml(
+                      item.review_note
+                    )}
+                  </div>
+                `
+                : ""
+            }
+
+          </div>
+        `;
+
+      }
+    )
+    .join("");
+
+}
+
+
+
+function setButtonsDisabled(
+  disabled
+) {
+
+  document.getElementById(
+    "approve-btn"
+  ).disabled =
+    disabled;
+
+
+  document.getElementById(
+    "changes-btn"
+  ).disabled =
+    disabled;
+
+
+  document.getElementById(
+    "reject-btn"
+  ).disabled =
+    disabled;
+
+}
+
+
+
+async function saveReview(
+  action
+) {
+
+  const note =
+    document.getElementById(
+      "review-note"
+    ).value.trim();
+
+
+  if (
+    (
+      action ===
+      "changes_requested" ||
+      action ===
+      "rejected"
+    ) &&
+    !note
+  ) {
+
+    alert(
+      "Please write a review note."
+    );
+
+    return;
+
+  }
+
+
+  setButtonsDisabled(
+    true
+  );
+
+
+  try {
+
+    const now =
+      new Date().toISOString();
+
+
+    let newStatus =
+      "pending_review";
+
+    let approvalStatus =
+      "pending";
+
+
+    if (
+      action ===
+      "approved"
+    ) {
+
+      newStatus =
+        "approved_payment_required";
+
+      approvalStatus =
+        "approved";
+
+    }
+
+
+    if (
+      action ===
+      "changes_requested"
+    ) {
+
+      newStatus =
+        "revision_required";
+
+      approvalStatus =
+        "revision_required";
+
+    }
+
+
+    if (
+      action ===
+      "rejected"
+    ) {
+
+      newStatus =
+        "rejected";
+
+      approvalStatus =
+        "rejected";
+
+    }
+
+
+    const updateData = {
+
+      status:
+        newStatus,
+
+      approval_status:
+        approvalStatus,
+
+      admin_review_note:
+        note || null,
+
+      reviewed_by:
+        adminUser.id,
+
+      reviewed_at:
+        now
+
+    };
+
+
+    if (
+      action ===
+      "approved"
+    ) {
+
+      updateData.approved_at =
+        now;
+
+      updateData.approved_by =
+        adminUser.id;
+
+    }
+
+
+    const {
+      error: updateError
+    } =
+      await supabaseClient
+        .from("brand_ad_campaigns")
+        .update(
+          updateData
+        )
+        .eq(
+          "id",
+          campaign.id
+        );
+
+
+    if (updateError) {
+
+      throw new Error(
+        "Campaign update failed: " +
+        updateError.message
+      );
+
+    }
+
+
+    const {
+      error: historyError
+    } =
+      await supabaseClient
+        .from("brand_ad_campaign_reviews")
+        .insert({
+
+          campaign_id:
+            campaign.id,
+
+          admin_id:
+            adminUser.id,
+
+          action:
+            action,
+
+          review_note:
+            note || null
+
+        });
+
+
+    if (historyError) {
+
+      throw new Error(
+        "Review history update failed: " +
+        historyError.message
+      );
+
+    }
+
+
+    alert(
+      action === "approved"
+        ? "Advert approved. The advertiser can now proceed to payment."
+        : action === "changes_requested"
+          ? "Changes have been requested."
+          : "Advert rejected."
+    );
+
+
+    window.location.reload();
+
+  } catch (error) {
+
+    console.error(
+      error
+    );
+
+    alert(
+      error.message ||
+      "Unable to save review."
+    );
+
+  } finally {
+
+    setButtonsDisabled(
+      false
+    );
+
+  }
+
+}
+
+
+
+document
+  .getElementById(
+    "approve-btn"
+  )
+  .addEventListener(
+    "click",
+    () =>
+      saveReview(
+        "approved"
+      )
+  );
+
+
+document
+  .getElementById(
+    "changes-btn"
+  )
+  .addEventListener(
+    "click",
+    () =>
+      saveReview(
+        "changes_requested"
+      )
+  );
+
+
+document
+  .getElementById(
+    "reject-btn"
+  )
+  .addEventListener(
+    "click",
+    () =>
+      saveReview(
+        "rejected"
+      )
+  );
+
+
+
+async function initialise() {
+
+  try {
+
+    adminUser =
+      await verifyAdmin();
+
+
+    if (!adminUser) {
+      return;
+    }
+
+
+    await loadCampaign();
+
+    await renderPage();
+
+    await loadReviewHistory();
+
+
+    document.getElementById(
+      "loading"
+    ).style.display =
+      "none";
+
+  } catch (error) {
+
+    console.error(
+      error
+    );
+
+
+    document.getElementById(
+      "loading"
+    ).style.display =
+      "none";
+
+
+    const errorBox =
+      document.getElementById(
+        "error-box"
+      );
+
+
+    errorBox.textContent =
+      error.message ||
+      "Unable to load advert.";
+
+
+    errorBox.style.display =
+      "block";
+
+  }
+
+}
+
+
+
+initialise();
+
+</script>
+
+</body>
+</html>

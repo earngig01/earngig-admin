@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EarnGig Admin — Rankings</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #080b1d;
+      color: #ffffff;
+    }
+
+    .page {
+      max-width: 1150px;
+      margin: 0 auto;
+      padding: 18px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .back-btn {
+      border: 0;
+      background: #171b38;
+      color: #ffffff;
+      padding: 10px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .back-btn:hover {
+      background: #222750;
+    }
+
+    .title-wrap h1 {
+      margin: 0;
+      font-size: 22px;
+    }
+
+    .title-wrap p {
+      margin: 5px 0 0;
+      color: #9da4c7;
+      font-size: 13px;
+    }
+
+    .controls {
+      background: #10142d;
+      border: 1px solid #252b52;
+      border-radius: 14px;
+      padding: 14px;
+      margin-bottom: 16px;
+    }
+
+    .control-row {
+      display: flex;
+      align-items: end;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 170px;
+    }
+
+    .control-group label {
+      color: #9da4c7;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    select,
+    input {
+      width: 100%;
+      border: 1px solid #30375f;
+      background: #0a0e24;
+      color: #ffffff;
+      border-radius: 9px;
+      padding: 10px 11px;
+      outline: none;
+    }
+
+    select:focus,
+    input:focus {
+      border-color: #7657ff;
+    }
+
+    #monthGroup {
+      display: none;
+    }
+
+    .refresh-btn {
+      border: 0;
+      background: linear-gradient(135deg, #6d4aff, #8b5cf6);
+      color: white;
+      padding: 10px 16px;
+      border-radius: 9px;
+      cursor: pointer;
+      font-weight: 700;
+      height: 39px;
+    }
+
+    .refresh-btn:hover {
+      opacity: 0.92;
+    }
+
+    .status {
+      margin-top: 10px;
+      color: #9da4c7;
+      font-size: 12px;
+      min-height: 16px;
+    }
+
+    .categories {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      margin-bottom: 10px;
+    }
+
+    .category-btn {
+      flex: 0 0 auto;
+      border: 1px solid #2d345c;
+      background: #111630;
+      color: #cbd0e8;
+      padding: 9px 13px;
+      border-radius: 9px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .category-btn.active {
+      background: #6d4aff;
+      border-color: #6d4aff;
+      color: #ffffff;
+    }
+
+    .ranking-card {
+      background: #10142d;
+      border: 1px solid #252b52;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    .ranking-header {
+      padding: 14px 15px;
+      border-bottom: 1px solid #252b52;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .ranking-header h2 {
+      margin: 0;
+      font-size: 16px;
+    }
+
+    .ranking-header span {
+      color: #9da4c7;
+      font-size: 12px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 650px;
+    }
+
+    th {
+      text-align: left;
+      padding: 10px 12px;
+      color: #8f97bc;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      background: #0d1128;
+    }
+
+    td {
+      padding: 11px 12px;
+      border-top: 1px solid #20264a;
+      font-size: 13px;
+      vertical-align: middle;
+    }
+
+    tr:hover td {
+      background: #131834;
+    }
+
+    .rank {
+      width: 55px;
+      font-weight: 800;
+      color: #c5b9ff;
+    }
+
+    .member-name {
+      font-weight: 700;
+    }
+
+    .user-id {
+      color: #747da5;
+      font-size: 10px;
+      margin-top: 3px;
+      word-break: break-all;
+    }
+
+    .amount {
+      font-weight: 800;
+      color: #d9d2ff;
+      white-space: nowrap;
+    }
+
+    .count {
+      color: #aeb5d2;
+      white-space: nowrap;
+    }
+
+    .empty {
+      padding: 30px 15px;
+      text-align: center;
+      color: #858daf;
+      font-size: 13px;
+    }
+
+    .error {
+      color: #ff9d9d;
+    }
+
+    .loading {
+      padding: 28px 15px;
+      text-align: center;
+      color: #9da4c7;
+      font-size: 13px;
+    }
+
+    @media (max-width: 700px) {
+      .page {
+        padding: 12px;
+      }
+
+      .topbar {
+        align-items: flex-start;
+      }
+
+      .title-wrap h1 {
+        font-size: 19px;
+      }
+
+      .control-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .control-group {
+        min-width: 0;
+      }
+
+      .refresh-btn {
+        width: 100%;
+      }
+
+      .ranking-header {
+        padding: 12px;
+      }
+
+      th,
+      td {
+        padding: 9px 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="page">
+
+    <div class="topbar">
+      <div class="title-wrap">
+        <h1>Rankings</h1>
+        <p>Member performance rankings and award periods</p>
+      </div>
+
+      <button class="back-btn" onclick="goBack()">
+        ← Dashboard
+      </button>
+    </div>
+
+
+    <div class="controls">
+
+      <div class="control-row">
+
+        <div class="control-group">
+          <label for="periodSelect">Period</label>
+
+          <select id="periodSelect">
+            <option value="this_month">This Month</option>
+            <option value="previous_month">Previous Month</option>
+            <option value="specific_month">Specific Month</option>
+            <option value="all_time">All Time</option>
+          </select>
+        </div>
+
+
+        <div class="control-group" id="monthGroup">
+          <label for="monthSelect">Month</label>
+          <input
+            type="month"
+            id="monthSelect"
+          />
+        </div>
+
+
+        <button
+          class="refresh-btn"
+          id="refreshBtn"
+          type="button"
+        >
+          Refresh Rankings
+        </button>
+
+      </div>
+
+      <div
+        class="status"
+        id="statusMessage"
+      ></div>
+
+    </div>
+
+
+    <div class="categories">
+
+      <button
+        class="category-btn active"
+        data-category="referrals"
+      >
+        Referrals
+      </button>
+
+      <button
+        class="category-btn"
+        data-category="seller_sales"
+      >
+        Seller Sales
+      </button>
+
+      <button
+        class="category-btn"
+        data-category="novel_earnings"
+      >
+        Novel Earnings
+      </button>
+
+      <button
+        class="category-btn"
+        data-category="withdrawals"
+      >
+        Withdrawals
+      </button>
+
+      <button
+        class="category-btn"
+        data-category="total_earnings"
+      >
+        Total Earnings
+      </button>
+
+    </div>
+
+
+    <div class="ranking-card">
+
+      <div class="ranking-header">
+
+        <div>
+          <h2 id="rankingTitle">Referrals</h2>
+        </div>
+
+        <span id="rankingSubtitle">
+          Highest referral count
+        </span>
+
+      </div>
+
+
+      <div class="table-wrap">
+
+        <table>
+
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Member</th>
+              <th id="amountHeading">Referral Bonus</th>
+              <th id="countHeading">Referrals</th>
+            </tr>
+          </thead>
+
+          <tbody id="rankingBody">
+
+            <tr>
+              <td colspan="4">
+                <div class="loading">
+                  Loading rankings...
+                </div>
+              </td>
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <script>
+
+    let currentCategory = "referrals";
+
+    const categoryInfo = {
+      referrals: {
+        title: "Referrals",
+        subtitle: "Highest referral count",
+        amountHeading: "Referral Bonus",
+        countHeading: "Referrals"
+      },
+
+      seller_sales: {
+        title: "Seller Sales",
+        subtitle: "Highest marketplace sales",
+        amountHeading: "Sales Amount",
+        countHeading: "Orders"
+      },
+
+      novel_earnings: {
+        title: "Novel Earnings",
+        subtitle: "Highest paid novel earnings",
+        amountHeading: "Earnings",
+        countHeading: "Earnings"
+      },
+
+      withdrawals: {
+        title: "Withdrawals",
+        subtitle: "Highest approved withdrawals",
+        amountHeading: "Withdrawn",
+        countHeading: "Withdrawals"
+      },
+
+      total_earnings: {
+        title: "Total Earnings",
+        subtitle: "Highest member earnings",
+        amountHeading: "Total Earned",
+        countHeading: "Activities"
+      }
+    };
+
+
+    function goBack() {
+      window.location.href = "admin-dashboard.html";
+    }
+
+
+    function formatMoney(value) {
+
+      const amount = Number(value || 0);
+
+      return "₦" + amount.toLocaleString(
+        "en-NG",
+        {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 2
+        }
+      );
+    }
+
+
+    function escapeHtml(value) {
+
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+
+    function getPeriodLabel() {
+
+      const period =
+        document.getElementById("periodSelect").value;
+
+      if (period === "this_month") {
+        return "This Month";
+      }
+
+      if (period === "previous_month") {
+        return "Previous Month";
+      }
+
+      if (period === "all_time") {
+        return "All Time";
+      }
+
+      const month =
+        document.getElementById("monthSelect").value;
+
+      if (month) {
+
+        const date = new Date(month + "-01T00:00:00");
+
+        return date.toLocaleDateString(
+          "en-US",
+          {
+            month: "long",
+            year: "numeric"
+          }
+        );
+      }
+
+      return "Specific Month";
+    }
+
+
+    function updateCategoryHeader() {
+
+      const info = categoryInfo[currentCategory];
+
+      document.getElementById("rankingTitle").textContent =
+        info.title;
+
+      document.getElementById("rankingSubtitle").textContent =
+        info.subtitle + " · " + getPeriodLabel();
+
+      document.getElementById("amountHeading").textContent =
+        info.amountHeading;
+
+      document.getElementById("countHeading").textContent =
+        info.countHeading;
+    }
+
+
+    function updatePeriodControls() {
+
+      const period =
+        document.getElementById("periodSelect").value;
+
+      const monthGroup =
+        document.getElementById("monthGroup");
+
+      monthGroup.style.display =
+        period === "specific_month"
+          ? "flex"
+          : "none";
+
+      updateCategoryHeader();
+    }
+
+
+    function renderRows(rows) {
+
+      const body =
+        document.getElementById("rankingBody");
+
+      if (!rows || rows.length === 0) {
+
+        body.innerHTML = `
+          <tr>
+            <td colspan="4">
+              <div class="empty">
+                No ranking data for this period.
+              </div>
+            </td>
+          </tr>
+        `;
+
+        return;
+      }
+
+
+      body.innerHTML = rows.map(row => {
+
+        const rank =
+          Number(row.rank_position || 0);
+
+        const amount =
+          formatMoney(row.amount);
+
+        const count =
+          Number(row.activity_count || 0)
+            .toLocaleString("en-NG");
+
+        return `
+          <tr>
+
+            <td class="rank">
+              #${rank}
+            </td>
+
+            <td>
+
+              <div class="member-name">
+                ${escapeHtml(row.member_name || "Unknown Member")}
+              </div>
+
+              <div class="user-id">
+                ${escapeHtml(row.user_id || "")}
+              </div>
+
+            </td>
+
+            <td class="amount">
+              ${amount}
+            </td>
+
+            <td class="count">
+              ${count}
+            </td>
+
+          </tr>
+        `;
+
+      }).join("");
+    }
+
+
+    async function loadRankings() {
+
+      const body =
+        document.getElementById("rankingBody");
+
+      const status =
+        document.getElementById("statusMessage");
+
+      body.innerHTML = `
+        <tr>
+          <td colspan="4">
+            <div class="loading">
+              Loading rankings...
+            </div>
+          </td>
+        </tr>
+      `;
+
+      status.textContent = "";
+      status.className = "status";
+
+
+      const period =
+        document.getElementById("periodSelect").value;
+
+      let month = null;
+
+
+      if (period === "specific_month") {
+
+        month =
+          document.getElementById("monthSelect").value;
+
+        if (!month) {
+
+          body.innerHTML = `
+            <tr>
+              <td colspan="4">
+                <div class="empty">
+                  Select a month first.
+                </div>
+              </td>
+            </tr>
+          `;
+
+          return;
+        }
+
+        month = month + "-01";
+      }
+
+
+      updateCategoryHeader();
+
+
+      const {
+        data: {
+          user
+        },
+        error: authError
+      } = await supabaseClient.auth.getUser();
+
+
+      if (authError || !user) {
+
+        status.textContent =
+          "Your admin session has expired. Please sign in again.";
+
+        status.className =
+          "status error";
+
+        return;
+      }
+
+
+      const {
+        data,
+        error
+      } = await supabaseClient.rpc(
+        "get_admin_rankings",
+        {
+          p_category: currentCategory,
+          p_period: period,
+          p_month: month
+        }
+      );
+
+
+      if (error) {
+
+        console.error(error);
+
+        status.textContent =
+          error.message || "Unable to load rankings.";
+
+        status.className =
+          "status error";
+
+        body.innerHTML = `
+          <tr>
+            <td colspan="4">
+              <div class="empty error">
+                Unable to load rankings.
+              </div>
+            </td>
+          </tr>
+        `;
+
+        return;
+      }
+
+
+      renderRows(data || []);
+
+      status.textContent =
+        `${(data || []).length} member${(data || []).length === 1 ? "" : "s"} ranked.`;
+    }
+
+
+    async function verifyAdmin() {
+
+      const {
+        data: {
+          user
+        },
+        error
+      } = await supabaseClient.auth.getUser();
+
+
+      if (error || !user) {
+
+        window.location.href =
+          "index.html";
+
+        return false;
+      }
+
+
+      const {
+        data: profile,
+        error: profileError
+      } = await supabaseClient
+        .from("profiles")
+        .select(
+          "id, name, is_admin, account_status"
+        )
+        .eq("id", user.id)
+        .single();
+
+
+      if (
+        profileError ||
+        !profile ||
+        profile.is_admin !== true ||
+        profile.account_status !== "active"
+      ) {
+
+        alert("Admin access required.");
+
+        window.location.href =
+          "admin-dashboard.html";
+
+        return false;
+      }
+
+
+      return true;
+    }
+
+
+    document
+      .getElementById("periodSelect")
+      .addEventListener(
+        "change",
+        async function() {
+
+          updatePeriodControls();
+
+          if (
+            this.value !== "specific_month" ||
+            document.getElementById("monthSelect").value
+          ) {
+            await loadRankings();
+          }
+
+        }
+      );
+
+
+    document
+      .getElementById("monthSelect")
+      .addEventListener(
+        "change",
+        async function() {
+
+          if (
+            document.getElementById("periodSelect").value ===
+            "specific_month"
+          ) {
+            await loadRankings();
+          }
+
+        }
+      );
+
+
+    document
+      .getElementById("refreshBtn")
+      .addEventListener(
+        "click",
+        loadRankings
+      );
+
+
+    document
+      .querySelectorAll(".category-btn")
+      .forEach(button => {
+
+        button.addEventListener(
+          "click",
+          async function() {
+
+            document
+              .querySelectorAll(".category-btn")
+              .forEach(btn =>
+                btn.classList.remove("active")
+              );
+
+            this.classList.add("active");
+
+            currentCategory =
+              this.dataset.category;
+
+            updateCategoryHeader();
+
+            await loadRankings();
+
+          }
+        );
+
+      });
+
+
+    async function init() {
+
+      const allowed =
+        await verifyAdmin();
+
+      if (!allowed) {
+        return;
+      }
+
+      updatePeriodControls();
+
+      await loadRankings();
+
+    }
+
+
+    init();
+
+  </script>
+
+</body>
+</html>

@@ -2,12 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <title>EarnGig Admin - Competition Participants</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Competition Participants - EarnGig Admin</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase.js"></script>
@@ -20,2790 +16,1145 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #070b22;
+      background: #080d2d;
       color: #fff;
     }
 
-    header {
-      background: #0d1233;
-      border-bottom: 1px solid #242a58;
-      padding: 15px 20px;
-      position: sticky;
-      top: 0;
-      z-index: 20;
+    .container {
+      width: min(1500px, 96%);
+      margin: 0 auto;
+      padding: 22px 0 50px;
     }
 
-    .header-inner {
-      max-width: 1250px;
-      margin: auto;
+    header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 12px;
+      gap: 15px;
+      margin-bottom: 20px;
     }
 
-    .logo {
-      font-size: 21px;
+    .brand {
+      font-size: 25px;
       font-weight: 800;
       color: #9b7cff;
     }
 
     .back-btn {
+      background: #171d4a;
       color: #fff;
-      text-decoration: none;
-      background: #171d45;
-      border: 1px solid #30376c;
-      padding: 9px 13px;
-      border-radius: 9px;
-      font-size: 13px;
-    }
-
-    main {
-      max-width: 1250px;
-      margin: auto;
-      padding: 21px 15px 60px;
-    }
-
-    h1 {
-      margin: 0 0 5px;
-      font-size: 25px;
-    }
-
-    .subtitle {
-      color: #9da6ca;
-      font-size: 13px;
-      margin-bottom: 18px;
-      line-height: 1.45;
-    }
-
-    .message {
-      display: none;
-      padding: 12px 14px;
+      border: 1px solid #3b3f72;
+      padding: 11px 16px;
       border-radius: 10px;
-      margin-bottom: 16px;
-      font-size: 13px;
-      line-height: 1.45;
+      text-decoration: none;
+      cursor: pointer;
     }
 
-    .message.success {
-      display: block;
-      background: #103b31;
-      border: 1px solid #1d705c;
-      color: #9ff3dc;
-    }
-
-    .message.error {
-      display: block;
-      background: #431d2a;
-      border: 1px solid #84394e;
-      color: #ffb7c9;
+    .back-btn:hover {
+      background: #22285d;
     }
 
     .panel {
-      background: #0d1233;
-      border: 1px solid #252d60;
-      border-radius: 13px;
-      padding: 15px;
-      margin-bottom: 15px;
-    }
-
-    .competition-summary {
-      display: flex;
-      justify-content: space-between;
-      gap: 15px;
-      align-items: flex-start;
-      flex-wrap: wrap;
+      background: #10163b;
+      border: 1px solid #292f61;
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.18);
     }
 
     .competition-title {
-      font-size: 19px;
+      font-size: 24px;
       font-weight: 800;
       margin-bottom: 7px;
     }
 
-    .competition-description {
-      color: #9ca5c8;
-      font-size: 12px;
-      line-height: 1.45;
-      max-width: 900px;
+    .muted {
+      color: #9299bd;
     }
 
-    .badges {
+    .stats {
       display: flex;
+      gap: 10px;
       flex-wrap: wrap;
-      gap: 5px;
-      margin-top: 8px;
+      margin-top: 15px;
+    }
+
+    .stat {
+      background: #171d49;
+      border: 1px solid #30366b;
+      border-radius: 10px;
+      padding: 9px 13px;
+    }
+
+    .stat strong {
+      color: #bba8ff;
+      margin-right: 5px;
+    }
+
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      border: 1px solid #2b3165;
+      border-radius: 12px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    table {
+      width: 100%;
+      min-width: 1100px;
+      border-collapse: collapse;
+    }
+
+    th {
+      background: #171d49;
+      color: #aaa4d8;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .4px;
+      padding: 13px 10px;
+      text-align: left;
+      white-space: nowrap;
+      border-bottom: 1px solid #30366b;
+    }
+
+    td {
+      padding: 12px 10px;
+      border-bottom: 1px solid #252b59;
+      white-space: nowrap;
+      vertical-align: middle;
+      font-size: 14px;
+    }
+
+    tbody tr:hover {
+      background: #141b45;
+    }
+
+    tbody tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .rank {
+      font-size: 18px;
+      font-weight: 800;
+      color: #f2d36b;
+      width: 55px;
+      text-align: center;
+    }
+
+    .name {
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .user-id {
+      display: block;
+      color: #69719c;
+      font-size: 10px;
+      margin-top: 3px;
+    }
+
+    .score {
+      font-size: 16px;
+      font-weight: 800;
+      color: #bda8ff;
+    }
+
+    .time {
+      color: #aeb6dc;
+      font-family: monospace;
     }
 
     .badge {
       display: inline-block;
-      padding: 4px 7px;
-      border-radius: 999px;
-      font-size: 10px;
-      font-weight: 700;
-      background: #242b59;
-      color: #dfe3ff;
-    }
-
-    .badge.published {
-      background: #123f35;
-      color: #9ef2d9;
-    }
-
-    .badge.closed {
-      background: #45351a;
-      color: #ffd77c;
-    }
-
-    .badge.completed,
-    .badge.winners_announced {
-      background: #29316c;
-      color: #c9cfff;
-    }
-
-    .badge.cancelled {
-      background: #451e2d;
-      color: #ffb6c8;
-    }
-
-    .summary-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 7px 15px;
-      margin-top: 11px;
-      padding-top: 9px;
-      border-top: 1px solid #282f60;
-      color: #8f98bd;
+      padding: 5px 9px;
+      border-radius: 20px;
       font-size: 11px;
+      font-weight: 700;
     }
 
-    .summary-meta strong {
-      color: #e7e9ff;
+    .badge.submitted {
+      background: #242b56;
+      color: #dce1ff;
     }
 
-    .toolbar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      align-items: center;
-      margin-bottom: 12px;
+    .badge.review {
+      background: #55451a;
+      color: #ffe08a;
     }
 
-    button,
+    .badge.qualified {
+      background: #123f31;
+      color: #65e8b5;
+    }
+
+    .badge.disqualified {
+      background: #4a1d2b;
+      color: #ff91a7;
+    }
+
+    .badge.winner {
+      background: #123e30;
+      color: #6ff0b5;
+    }
+
+    .badge.fulfilled {
+      background: #26346c;
+      color: #b9c6ff;
+    }
+
     select,
     input {
-      font: inherit;
+      background: #0c1233;
+      color: #fff;
+      border: 1px solid #3a4174;
+      border-radius: 8px;
+      padding: 9px 10px;
+      outline: none;
+    }
+
+    select {
+      min-width: 180px;
+    }
+
+    input.position {
+      width: 70px;
+      text-align: center;
     }
 
     button {
       border: 0;
       cursor: pointer;
+      font-weight: 700;
+      border-radius: 8px;
+      padding: 9px 12px;
     }
 
-    .btn {
-      padding: 8px 11px;
+    .assign-btn {
+      background: #7448e8;
+      color: #fff;
+    }
+
+    .assign-btn:hover {
+      background: #855df0;
+    }
+
+    .assign-btn:disabled {
+      opacity: .45;
+      cursor: not-allowed;
+    }
+
+    .fulfill-btn {
+      background: #079b6c;
+      color: #fff;
+    }
+
+    .fulfill-btn:hover {
+      background: #08b27d;
+    }
+
+    .email-btn {
+      background: #6b4ce6;
+      color: #fff;
+      text-decoration: none;
+      display: inline-block;
+      padding: 9px 12px;
       border-radius: 8px;
       font-weight: 700;
-      font-size: 12px;
-    }
-
-    .btn-primary {
-      background: #7657ff;
-      color: #fff;
-    }
-
-    .btn-secondary {
-      background: #171d45;
-      color: #fff;
-      border: 1px solid #30376c;
-    }
-
-    .btn-success {
-      background: #087f63;
-      color: #fff;
-    }
-
-    .btn-danger {
-      background: #a83252;
-      color: #fff;
-    }
-
-    .btn-warning {
-      background: #8b6513;
-      color: #fff;
-    }
-
-    /*
-     * RANKING TABLE
-     */
-    .ranking-header {
-      display: grid;
-
-      grid-template-columns:
-        55px
-        minmax(180px, 1.7fr)
-        90px
-        90px
-        90px
-        110px
-        minmax(130px, 1fr)
-        65px
-        85px;
-
-      gap: 8px;
-
-      padding: 9px 10px;
-
-      color: #8f98bd;
-
-      font-size: 10px;
-
-      text-transform: uppercase;
-
-      letter-spacing: .35px;
-
-      border-bottom: 1px solid #292f5f;
-    }
-
-    .participant-list {
-      display: grid;
-    }
-
-    /*
-     * Each participant is ONE compact row.
-     */
-    .participant-row {
-      display: grid;
-
-      grid-template-columns:
-        55px
-        minmax(180px, 1.7fr)
-        90px
-        90px
-        90px
-        110px
-        minmax(130px, 1fr)
-        65px
-        85px;
-
-      gap: 8px;
-
-      align-items: center;
-
-      padding: 9px 10px;
-
-      border-bottom: 1px solid #202752;
-
-      background: #101638;
-    }
-
-    .participant-row:nth-child(even) {
-      background: #0f1535;
-    }
-
-    .participant-row:hover {
-      background: #151d47;
-    }
-
-    .rank-cell {
-      font-size: 17px;
-      font-weight: 900;
-      color: #9b7cff;
-      text-align: center;
-    }
-
-    .rank-cell.first {
-      color: #ffd76a;
-    }
-
-    .rank-cell.second {
-      color: #d7dbea;
-    }
-
-    .rank-cell.third {
-      color: #d89d72;
-    }
-
-    .participant-name {
-      font-size: 13px;
-      font-weight: 800;
-      min-width: 0;
-      word-break: break-word;
-    }
-
-    .participant-sub {
-      color: #777fa5;
-      font-size: 9px;
-      margin-top: 3px;
-      word-break: break-all;
-    }
-
-    .cell {
-      color: #dfe2ff;
-      font-size: 12px;
-    }
-
-    .cell-muted {
-      color: #929bc0;
-      font-size: 11px;
-    }
-
-    .score {
-      font-weight: 900;
-      color: #c9cfff;
-      font-size: 14px;
-    }
-
-    .status {
-      display: inline-block;
-      padding: 4px 7px;
-      border-radius: 999px;
-      background: #242b59;
-      color: #dfe3ff;
-      font-size: 9px;
-      font-weight: 700;
-      white-space: nowrap;
-    }
-
-    .status.qualified,
-    .status.fulfilled {
-      background: #123f35;
-      color: #9ef2d9;
-    }
-
-    .status.disqualified {
-      background: #451e2d;
-      color: #ffb6c8;
-    }
-
-    .status.under_review {
-      background: #45351a;
-      color: #ffd77c;
-    }
-
-    .prize-select {
-      width: 100%;
-
-      background: #080d29;
-
-      color: #fff;
-
-      border: 1px solid #30376c;
-
-      border-radius: 7px;
-
-      padding: 7px;
-
-      font-size: 10px;
-
-      outline: none;
-    }
-
-    .prize-select:focus {
-      border-color: #7657ff;
-    }
-
-    .position-input {
-      width: 55px;
-
-      background: #080d29;
-
-      color: #fff;
-
-      border: 1px solid #30376c;
-
-      border-radius: 7px;
-
-      padding: 7px;
-
-      font-size: 11px;
-
-      text-align: center;
-
-      outline: none;
-    }
-
-    .position-input:focus {
-      border-color: #7657ff;
-    }
-
-    .winner-action {
-      white-space: nowrap;
-    }
-
-    .quiz-note {
-      background: #171d45;
-      border: 1px solid #343c73;
-      color: #aeb5d5;
-      border-radius: 9px;
-      padding: 10px 12px;
-      margin-bottom: 11px;
-      font-size: 11px;
-      line-height: 1.45;
-    }
-
-    .ranking-title {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-bottom: 10px;
-    }
-
-    .ranking-title h2 {
-      margin: 0;
-      font-size: 16px;
-    }
-
-    .ranking-title span {
-      color: #858eaf;
-      font-size: 11px;
-    }
-
-    /*
-     * WINNERS
-     */
-    .section-title {
-      margin: 0 0 12px;
-      font-size: 16px;
-    }
-
-    .winner-list {
-      display: grid;
-      gap: 7px;
-    }
-
-    .winner-row {
-      display: grid;
-
-      grid-template-columns:
-        55px
-        minmax(170px, 1.5fr)
-        minmax(150px, 1fr)
-        100px
-        120px
-        auto;
-
-      gap: 9px;
-
-      align-items: center;
-
-      background: #101638;
-
-      border: 1px solid #293264;
-
-      border-radius: 9px;
-
-      padding: 9px 10px;
-    }
-
-    .position {
-      font-weight: 900;
-      color: #ffd76a;
-    }
-
-    .winner-name {
-      font-size: 12px;
-      font-weight: 800;
-    }
-
-    .winner-prize {
-      color: #aeb5d5;
-      font-size: 11px;
-    }
-
-    .fulfilled {
-      color: #9ef2d9;
-      font-size: 10px;
-      font-weight: 800;
     }
 
     .empty {
       text-align: center;
-      color: #8f98bd;
-      padding: 30px 10px;
-      font-size: 13px;
+      padding: 30px;
+      color: #8e96bb;
     }
 
-    .hidden {
-      display: none !important;
+    .winner-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
 
-    @media (max-width: 1150px) {
-
-      .ranking-header {
-        display: none;
-      }
-
-      .participant-row {
-        grid-template-columns:
-          50px
-          minmax(160px, 1.5fr)
-          80px
-          80px
-          80px
-          100px
-          minmax(120px, 1fr)
-          60px
-          80px;
-      }
+    .winner-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      background: #151b43;
+      border: 1px solid #2b3165;
+      border-radius: 10px;
+      padding: 12px 14px;
     }
 
-    @media (max-width: 900px) {
+    .winner-main {
+      min-width: 0;
+    }
 
-      .participant-row {
-        grid-template-columns:
-          48px
-          minmax(150px, 1.4fr)
-          80px
-          80px
-          80px
-          100px;
-      }
+    .winner-name {
+      font-weight: 800;
+    }
 
-      .participant-row .prize-cell,
-      .participant-row .position-cell,
-      .participant-row .winner-action {
-        grid-column: span 1;
-      }
+    .winner-detail {
+      color: #929abd;
+      font-size: 12px;
+      margin-top: 3px;
+    }
 
-      .winner-row {
-        grid-template-columns:
-          45px
-          1fr
-          1fr
-          90px
-          auto;
-      }
+    .message {
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      display: none;
+    }
+
+    .message.success {
+      display: block;
+      background: #103c2e;
+      color: #72efbb;
+      border: 1px solid #1a7356;
+    }
+
+    .message.error {
+      display: block;
+      background: #451d2a;
+      color: #ff9bad;
+      border: 1px solid #7b3047;
+    }
+
+    .loading {
+      padding: 25px;
+      text-align: center;
+      color: #9ba4ca;
     }
 
     @media (max-width: 700px) {
+      .container {
+        width: 98%;
+        padding-top: 12px;
+      }
 
       header {
+        align-items: flex-start;
+      }
+
+      .brand {
+        font-size: 20px;
+      }
+
+      .competition-title {
+        font-size: 19px;
+      }
+
+      .panel {
         padding: 12px;
       }
 
-      main {
-        padding: 17px 10px 40px;
-      }
-
-      h1 {
-        font-size: 22px;
-      }
-
-      .participant-row {
-        grid-template-columns: 48px 1fr 1fr;
-        gap: 8px;
-        padding: 10px;
-      }
-
-      .rank-cell {
-        grid-row: span 2;
-      }
-
-      .participant-row > .participant-info {
-        grid-column: span 2;
-      }
-
-      .participant-row > .prize-cell {
-        grid-column: span 2;
-      }
-
-      .participant-row > .winner-action {
-        grid-column: span 1;
-      }
-
-      .position-cell {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-      }
-
-      .winner-row {
-        grid-template-columns: 45px 1fr;
-      }
-
-      .winner-row > div:nth-child(n+3) {
-        grid-column: 2;
+      table {
+        min-width: 1100px;
       }
     }
   </style>
 </head>
 
 <body>
+  <div class="container">
 
-<header>
-  <div class="header-inner">
+    <header>
+      <div class="brand">EarnGig Admin</div>
+      <a href="admin-competitions.html" class="back-btn">← Competitions</a>
+    </header>
 
-    <div class="logo">
-      EarnGig Admin
-    </div>
+    <div id="message" class="message"></div>
 
-    <a
-      href="admin-competitions.html"
-      class="back-btn"
-    >
-      ← Competitions
-    </a>
+    <section class="panel">
+      <div id="competitionTitle" class="competition-title">Loading competition...</div>
+      <div id="competitionDescription" class="muted"></div>
+
+      <div class="stats">
+        <div class="stat">
+          <strong>Participants:</strong>
+          <span id="participantCount">0</span>
+        </div>
+
+        <div class="stat">
+          <strong>Type:</strong>
+          <span id="competitionType">-</span>
+        </div>
+
+        <div class="stat">
+          <strong>Status:</strong>
+          <span id="competitionStatus">-</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>📊 Participant Ranking</h2>
+
+      <div class="muted" style="margin-bottom:15px;">
+        Quiz participants are ranked from highest score to lowest score.
+        Equal scores are ranked by fastest completion time.
+      </div>
+
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Participant</th>
+              <th>Score</th>
+              <th>Correct</th>
+              <th>Time</th>
+              <th>Status</th>
+              <th>Prize</th>
+              <th>Position</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+
+          <tbody id="participantsBody">
+            <tr>
+              <td colspan="9" class="loading">Loading participants...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>🏆 Selected Winners</h2>
+      <div id="winnersList" class="winner-list">
+        <div class="loading">Loading winners...</div>
+      </div>
+    </section>
 
   </div>
-</header>
-
-<main>
-
-  <h1>👥 Competition Participants</h1>
-
-  <div class="subtitle">
-    Participants are ranked automatically. Quiz results are ordered by
-    highest score first, with fastest completion time used as the tie-breaker.
-  </div>
-
-  <div
-    id="message"
-    class="message"
-  ></div>
-
-  <!-- COMPETITION SUMMARY -->
-  <section
-    id="competitionSummary"
-    class="panel"
-  >
-    <div class="empty">
-      Loading competition...
-    </div>
-  </section>
-
-  <!-- PARTICIPANTS -->
-  <section class="panel">
-
-    <div class="toolbar">
-
-      <button
-        class="btn btn-secondary"
-        onclick="loadPage()"
-      >
-        ↻ Refresh Ranking
-      </button>
-
-      <button
-        class="btn btn-secondary"
-        onclick="window.location.href='admin-competitions.html'"
-      >
-        ← All Competitions
-      </button>
-
-    </div>
-
-    <div
-      id="quizNote"
-      class="quiz-note hidden"
-    >
-      🏆 <strong>Quiz Ranking:</strong>
-      highest score appears first.
-      When two participants have the same score,
-      the participant who completed the quiz faster appears first.
-    </div>
-
-    <div class="ranking-title">
-
-      <h2>
-        📊 Participant Ranking
-      </h2>
-
-      <span id="rankingCount">
-        0 participants
-      </span>
-
-    </div>
-
-    <div class="ranking-header">
-
-      <div>Rank</div>
-
-      <div>Participant</div>
-
-      <div>Score</div>
-
-      <div>Correct</div>
-
-      <div>Time</div>
-
-      <div>Status</div>
-
-      <div>Prize</div>
-
-      <div>Position</div>
-
-      <div>Action</div>
-
-    </div>
-
-    <div
-      id="participantList"
-      class="participant-list"
-    >
-      <div class="empty">
-        Loading participants...
-      </div>
-    </div>
-
-  </section>
-
-  <!-- WINNERS -->
-  <section class="panel">
-
-    <h2 class="section-title">
-      🏆 Selected Winners
-    </h2>
-
-    <div
-      id="winnerList"
-      class="winner-list"
-    >
-      <div class="empty">
-        Loading winners...
-      </div>
-    </div>
-
-  </section>
-
-</main>
 
 <script>
-  let adminUser = null;
+const params = new URLSearchParams(window.location.search);
+const competitionId = params.get("id");
 
-  let competition = null;
+let competition = null;
+let participants = [];
+let prizes = [];
+let winners = [];
+let profiles = {};
 
-  let prizes = [];
+function showMessage(text, type = "success") {
+  const box = document.getElementById("message");
+  box.textContent = text;
+  box.className = "message " + type;
 
-  let entries = [];
+  setTimeout(() => {
+    box.className = "message";
+  }, 5000);
+}
 
-  let winners = [];
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
 
-  let profiles = {};
-
-  const params =
-    new URLSearchParams(
-      window.location.search
-    );
-
-  const competitionId =
-    params.get("id");
-
-  document.addEventListener(
-    "DOMContentLoaded",
-    async () => {
-      await verifyAdmin();
-    }
-  );
-
-  /*
-   * ============================
-   * ADMIN VERIFICATION
-   * ============================
-   */
-
-  async function verifyAdmin() {
-
-    try {
-
-      if (!competitionId) {
-
-        showMessage(
-          "No competition was selected.",
-          "error"
-        );
-
-        return;
-      }
-
-      const {
-        data: {
-          user
-        },
-        error: userError
-      } = await supabaseClient.auth.getUser();
-
-      if (userError) {
-        throw userError;
-      }
-
-      if (!user) {
-
-        window.location.href =
-          "index.html";
-
-        return;
-      }
-
-      const {
-        data: profile,
-        error: profileError
-      } = await supabaseClient
-        .from("profiles")
-        .select(
-          "id, is_admin, account_status"
-        )
-        .eq(
-          "id",
-          user.id
-        )
-        .maybeSingle();
-
-      if (profileError) {
-        throw profileError;
-      }
-
-      if (
-        !profile ||
-        profile.is_admin !== true ||
-        profile.account_status !== "active"
-      ) {
-
-        showMessage(
-          "Administrator access is required for this page.",
-          "error"
-        );
-
-        return;
-      }
-
-      adminUser =
-        user;
-
-      await loadPage();
-
-    } catch (err) {
-
-      console.error(
-        "verifyAdmin error:",
-        err
-      );
-
-      showMessage(
-        err.message ||
-        "Unable to verify administrator.",
-        "error"
-      );
-    }
+function formatDuration(seconds) {
+  if (seconds === null || seconds === undefined || seconds === "") {
+    return "-";
   }
 
-  /*
-   * ============================
-   * LOAD EVERYTHING
-   * ============================
-   */
+  seconds = Number(seconds);
 
-  async function loadPage() {
-
-    try {
-
-      const [
-        competitionResult,
-        prizesResult,
-        entriesResult,
-        winnersResult
-      ] = await Promise.all([
-
-        supabaseClient
-          .from("competitions")
-          .select("*")
-          .eq(
-            "id",
-            competitionId
-          )
-          .single(),
-
-        supabaseClient
-          .from("competition_prizes")
-          .select("*")
-          .eq(
-            "competition_id",
-            competitionId
-          )
-          .order(
-            "prize_order"
-          ),
-
-        supabaseClient
-          .from("competition_entries")
-          .select("*")
-          .eq(
-            "competition_id",
-            competitionId
-          ),
-
-        supabaseClient
-          .from("competition_winners")
-          .select("*")
-          .eq(
-            "competition_id",
-            competitionId
-          )
-          .order(
-            "winner_position"
-          )
-
-      ]);
-
-      if (competitionResult.error) {
-        throw competitionResult.error;
-      }
-
-      if (prizesResult.error) {
-        throw prizesResult.error;
-      }
-
-      if (entriesResult.error) {
-        throw entriesResult.error;
-      }
-
-      if (winnersResult.error) {
-        throw winnersResult.error;
-      }
-
-      competition =
-        competitionResult.data;
-
-      prizes =
-        prizesResult.data || [];
-
-      entries =
-        entriesResult.data || [];
-
-      winners =
-        winnersResult.data || [];
-
-      await loadProfiles();
-
-      renderCompetitionSummary();
-
-      renderParticipants();
-
-      renderWinners();
-
-    } catch (err) {
-
-      console.error(
-        "loadPage error:",
-        err
-      );
-
-      showMessage(
-        err.message ||
-        "Unable to load competition participants.",
-        "error"
-      );
-    }
+  if (!Number.isFinite(seconds)) {
+    return "-";
   }
 
-  /*
-   * ============================
-   * LOAD PARTICIPANT PROFILES
-   * ============================
-   */
+  const minutes = Math.floor(seconds / 60);
+  const secs = seconds % 60;
 
-  async function loadProfiles() {
+  return String(minutes).padStart(2, "0") + ":" +
+         String(secs).padStart(2, "0");
+}
 
-    profiles = {};
+function formatMoney(amount) {
+  if (amount === null || amount === undefined || amount === "") {
+    return "";
+  }
 
-    const userIds = [
-      ...new Set(
-        entries
-          .map(
-            x => x.user_id
-          )
-          .filter(Boolean)
-          .concat(
-            winners
-              .map(
-                x => x.user_id
-              )
-              .filter(Boolean)
-          )
-      )
-    ];
+  return "₦" + Number(amount).toLocaleString("en-NG");
+}
 
-    if (!userIds.length) {
-      return;
-    }
+function getProfileName(profile, userId) {
+  if (!profile) {
+    return userId ? userId.slice(0, 8) : "Unknown";
+  }
 
-    /*
-     * We intentionally select all profile fields.
-     * The existing profiles table does not have a guaranteed
-     * "name" column, so getProfileName() checks several
-     * possible name fields safely.
-     */
-    const {
-      data,
-      error
-    } = await supabaseClient
+  const direct =
+    profile.name ||
+    profile.full_name ||
+    profile.display_name ||
+    profile.username ||
+    profile.user_name;
+
+  if (direct) {
+    return direct;
+  }
+
+  const first = profile.first_name || "";
+  const last = profile.last_name || "";
+
+  if ((first + last).trim()) {
+    return (first + " " + last).trim();
+  }
+
+  return userId ? userId.slice(0, 8) : "Unknown";
+}
+
+function prizeLabel(prize) {
+  if (!prize) return "No prize";
+
+  let label = prize.prize_name || prize.prize_type || "Prize";
+
+  if (prize.amount !== null && prize.amount !== undefined) {
+    label += " — " + formatMoney(prize.amount);
+  }
+
+  return label;
+}
+
+function getWinnerForEntry(entryId) {
+  return winners.find(w => w.entry_id === entryId);
+}
+
+function getNextWinnerPosition() {
+  const used = winners
+    .map(w => Number(w.winner_position))
+    .filter(n => Number.isFinite(n));
+
+  let next = 1;
+
+  while (used.includes(next)) {
+    next++;
+  }
+
+  return next;
+}
+
+function statusBadge(status) {
+  const value = String(status || "submitted").toLowerCase();
+
+  let cls = "submitted";
+
+  if (value === "under_review") cls = "review";
+  if (value === "qualified") cls = "qualified";
+  if (value === "disqualified") cls = "disqualified";
+
+  return `<span class="badge ${cls}">${escapeHtml(
+    value.replace(/_/g, " ")
+  )}</span>`;
+}
+
+async function verifyAdmin() {
+  const {
+    data: { user },
+    error
+  } = await supabaseClient.auth.getUser();
+
+  if (error || !user) {
+    window.location.href = "index.html";
+    return false;
+  }
+
+  const { data: profile, error: profileError } =
+    await supabaseClient
       .from("profiles")
-      .select("*")
-      .in(
-        "id",
-        userIds
-      );
+      .select("id,is_admin,account_status")
+      .eq("id", user.id)
+      .maybeSingle();
 
-    if (error) {
-
-      console.warn(
-        "Unable to load participant profiles:",
-        error
-      );
-
-      return;
-    }
-
-    (data || []).forEach(
-      profile => {
-
-        profiles[
-          profile.id
-        ] =
-          profile;
-
-      }
-    );
-  }
-
-  /*
-   * ============================
-   * COMPETITION SUMMARY
-   * ============================
-   */
-
-  function renderCompetitionSummary() {
-
-    if (!competition) {
-      return;
-    }
-
-    const isQuiz =
-      competition.competition_type ===
-        "quiz" ||
-      competition.entry_method ===
-        "quiz";
-
-    document.getElementById(
-      "competitionSummary"
-    ).innerHTML = `
-
-      <div class="competition-summary">
-
-        <div>
-
-          <div class="competition-title">
-            ${escapeHtml(
-              competition.title
-            )}
-          </div>
-
-          <div class="competition-description">
-            ${escapeHtml(
-              competition.description ||
-              "No description."
-            )}
-          </div>
-
-          <div class="badges">
-
-            <span class="badge ${
-              escapeHtml(
-                competition.status ||
-                ""
-              )
-            }">
-              ${formatStatus(
-                competition.status
-              )}
-            </span>
-
-            <span class="badge">
-              ${formatType(
-                competition.competition_type
-              )}
-            </span>
-
-            <span class="badge">
-              Entry:
-              ${formatEntryMethod(
-                competition.entry_method
-              )}
-            </span>
-
-            ${
-              isQuiz &&
-              competition.quiz_time_limit_minutes
-                ? `
-                  <span class="badge">
-                    ⏱
-                    ${competition.quiz_time_limit_minutes}
-                    min
-                  </span>
-                `
-                : ""
-            }
-
-          </div>
-
-        </div>
-
-      </div>
-
-      <div class="summary-meta">
-
-        <span>
-          Start:
-          <strong>
-            ${formatDate(
-              competition.start_at
-            )}
-          </strong>
-        </span>
-
-        <span>
-          End:
-          <strong>
-            ${formatDate(
-              competition.end_at
-            )}
-          </strong>
-        </span>
-
-        <span>
-          Participants:
-          <strong>
-            ${entries.length}
-          </strong>
-        </span>
-
-        <span>
-          Winners:
-          <strong>
-            ${winners.length}
-          </strong>
-        </span>
-
-      </div>
-    `;
-
-    document.getElementById(
-      "quizNote"
-    ).classList.toggle(
-      "hidden",
-      !isQuiz
-    );
-  }
-
-  /*
-   * ============================
-   * PARTICIPANT RANKING
-   * ============================
-   */
-
-  function renderParticipants() {
-
-    const list =
-      document.getElementById(
-        "participantList"
-      );
-
-    const count =
-      document.getElementById(
-        "rankingCount"
-      );
-
-    count.textContent =
-      `${entries.length} ${
-        entries.length === 1
-          ? "participant"
-          : "participants"
-      }`;
-
-    if (!entries.length) {
-
-      list.innerHTML =
-        `
-          <div class="empty">
-            No participants have entered this competition yet.
-          </div>
-        `;
-
-      return;
-    }
-
-    const isQuiz =
-      competition.competition_type ===
-        "quiz" ||
-      competition.entry_method ===
-        "quiz";
-
-    /*
-     * COPY THE ENTRIES.
-     *
-     * We do not mutate the original entries array.
-     */
-    let rankedEntries =
-      [...entries];
-
-    if (isQuiz) {
-
-      /*
-       * QUIZ RANKING:
-       *
-       * 1. Highest score first
-       * 2. Equal score = fastest completion first
-       * 3. If both score and time are equal,
-       *    preserve a stable order using submission date.
-       */
-      rankedEntries.sort(
-        (a, b) => {
-
-          const scoreA =
-            a.score === null ||
-            a.score === undefined
-              ? -1
-              : Number(
-                  a.score
-                );
-
-          const scoreB =
-            b.score === null ||
-            b.score === undefined
-              ? -1
-              : Number(
-                  b.score
-                );
-
-          /*
-           * Highest score first.
-           */
-          if (
-            scoreA !==
-            scoreB
-          ) {
-            return (
-              scoreB -
-              scoreA
-            );
-          }
-
-          /*
-           * Same score:
-           * fastest completion first.
-           *
-           * A participant without a completion
-           * time goes after someone with a time.
-           */
-          const timeA =
-            a.time_taken_seconds ===
-              null ||
-            a.time_taken_seconds ===
-              undefined
-              ? Number.MAX_SAFE_INTEGER
-              : Number(
-                  a.time_taken_seconds
-                );
-
-          const timeB =
-            b.time_taken_seconds ===
-              null ||
-            b.time_taken_seconds ===
-              undefined
-              ? Number.MAX_SAFE_INTEGER
-              : Number(
-                  b.time_taken_seconds
-                );
-
-          if (
-            timeA !==
-            timeB
-          ) {
-            return (
-              timeA -
-              timeB
-            );
-          }
-
-          /*
-           * Final stable tie-breaker:
-           * earliest submission first.
-           */
-          const submittedA =
-            new Date(
-              a.submitted_at ||
-              a.created_at ||
-              0
-            ).getTime();
-
-          const submittedB =
-            new Date(
-              b.submitted_at ||
-              b.created_at ||
-              0
-            ).getTime();
-
-          return (
-            submittedA -
-            submittedB
-          );
-        }
-      );
-
-    } else {
-
-      /*
-       * Non-quiz competitions don't have
-       * score-based ranking.
-       *
-       * Show newest submissions first.
-       */
-      rankedEntries.sort(
-        (a, b) => {
-
-          const dateA =
-            new Date(
-              a.submitted_at ||
-              a.created_at ||
-              0
-            ).getTime();
-
-          const dateB =
-            new Date(
-              b.submitted_at ||
-              b.created_at ||
-              0
-            ).getTime();
-
-          return (
-            dateB -
-            dateA
-          );
-        }
-      );
-    }
-
-    /*
-     * Assign rank numbers based on the sorted order.
-     */
-    list.innerHTML =
-      rankedEntries
-        .map(
-          (entry, index) =>
-            renderParticipantRow(
-              entry,
-              index + 1,
-              isQuiz
-            )
-        )
-        .join("");
-  }
-
-  /*
-   * ============================
-   * ONE PARTICIPANT ROW
-   * ============================
-   */
-
-  function renderParticipantRow(
-    entry,
-    rank,
-    isQuiz
+  if (
+    profileError ||
+    !profile ||
+    profile.is_admin !== true ||
+    profile.account_status !== "active"
   ) {
+    alert("Administrator access required.");
+    window.location.href = "admin-dashboard.html";
+    return false;
+  }
 
-    const profile =
-      profiles[
-        entry.user_id
-      ] || {};
+  return true;
+}
 
-    const name =
-      getProfileName(
-        profile,
-        entry.user_id
-      );
+async function loadCompetition() {
+  const { data, error } = await supabaseClient
+    .from("competitions")
+    .select("*")
+    .eq("id", competitionId)
+    .single();
 
-    const alreadyWinner =
-      winners.some(
-        winner =>
-          winner.entry_id ===
-          entry.id
-      );
+  if (error) {
+    throw error;
+  }
+
+  competition = data;
+
+  document.getElementById("competitionTitle").textContent =
+    competition.title || "Competition";
+
+  document.getElementById("competitionDescription").textContent =
+    competition.description || "";
+
+  document.getElementById("competitionType").textContent =
+    competition.competition_type || "-";
+
+  document.getElementById("competitionStatus").textContent =
+    competition.status || "-";
+}
+
+async function loadPrizes() {
+  const { data, error } = await supabaseClient
+    .from("competition_prizes")
+    .select("*")
+    .eq("competition_id", competitionId)
+    .order("prize_order", { ascending: true });
+
+  if (error) throw error;
+
+  prizes = data || [];
+}
+
+async function loadParticipants() {
+  const { data, error } = await supabaseClient
+    .from("competition_entries")
+    .select("*")
+    .eq("competition_id", competitionId);
+
+  if (error) throw error;
+
+  participants = data || [];
+
+  if (competition.competition_type === "quiz") {
+    participants.sort((a, b) => {
+      const scoreA = Number(a.score ?? 0);
+      const scoreB = Number(b.score ?? 0);
+
+      if (scoreA !== scoreB) {
+        return scoreB - scoreA;
+      }
+
+      const timeA =
+        a.time_taken_seconds === null ||
+        a.time_taken_seconds === undefined
+          ? Number.MAX_SAFE_INTEGER
+          : Number(a.time_taken_seconds);
+
+      const timeB =
+        b.time_taken_seconds === null ||
+        b.time_taken_seconds === undefined
+          ? Number.MAX_SAFE_INTEGER
+          : Number(b.time_taken_seconds);
+
+      if (timeA !== timeB) {
+        return timeA - timeB;
+      }
+
+      return new Date(a.submitted_at || a.created_at || 0) -
+             new Date(b.submitted_at || b.created_at || 0);
+    });
+  } else {
+    participants.sort((a, b) =>
+      new Date(a.submitted_at || a.created_at || 0) -
+      new Date(b.submitted_at || b.created_at || 0)
+    );
+  }
+
+  document.getElementById("participantCount").textContent =
+    participants.length;
+}
+
+async function loadProfiles() {
+  const ids = [...new Set(
+    participants
+      .map(p => p.user_id)
+      .filter(Boolean)
+  )];
+
+  if (!ids.length) {
+    profiles = {};
+    return;
+  }
+
+  const { data, error } = await supabaseClient
+    .from("profiles")
+    .select("*")
+    .in("id", ids);
+
+  if (error) {
+    profiles = {};
+    return;
+  }
+
+  profiles = {};
+
+  (data || []).forEach(profile => {
+    profiles[profile.id] = profile;
+  });
+}
+
+async function loadWinners() {
+  const { data, error } = await supabaseClient
+    .from("competition_winners")
+    .select("*")
+    .eq("competition_id", competitionId)
+    .order("winner_position", { ascending: true });
+
+  if (error) throw error;
+
+  winners = data || [];
+}
+
+function renderParticipants() {
+  const body = document.getElementById("participantsBody");
+
+  if (!participants.length) {
+    body.innerHTML = `
+      <tr>
+        <td colspan="9" class="empty">
+          No participants yet.
+        </td>
+      </tr>
+    `;
+    return;
+  }
+
+  body.innerHTML = participants.map((entry, index) => {
+    const winner = getWinnerForEntry(entry.id);
+    const profile = profiles[entry.user_id];
+    const name = getProfileName(profile, entry.user_id);
 
     const score =
-      entry.score !== null &&
-      entry.score !== undefined
-        ? Number(
-            entry.score
-          )
-        : null;
-
-    const correct =
-      entry.correct_answers !== null &&
-      entry.correct_answers !== undefined
-        ? `${
-            Number(
-              entry.correct_answers
-            )
-          }/${
-            Number(
-              entry.total_questions ||
-              0
-            )
-          }`
-        : "—";
-
-    const time =
-      entry.time_taken_seconds !== null &&
-      entry.time_taken_seconds !== undefined
-        ? formatDuration(
-            entry.time_taken_seconds
-          )
-        : "—";
-
-    const rankClass =
-      rank === 1
-        ? "first"
-        : rank === 2
-          ? "second"
-          : rank === 3
-            ? "third"
-            : "";
-
-    const defaultPosition =
-      getNextWinnerPosition();
-
-    return `
-
-      <div class="participant-row">
-
-        <!-- RANK -->
-        <div class="rank-cell ${rankClass}">
-          ${rank}
-        </div>
-
-        <!-- PARTICIPANT -->
-        <div class="participant-info">
-
-          <div class="participant-name">
-            ${escapeHtml(
-              name
-            )}
-          </div>
-
-          <div class="participant-sub">
-            ${escapeHtml(
-              entry.user_id
-            )}
-          </div>
-
-        </div>
-
-        <!-- SCORE -->
-        <div class="cell">
-
-          ${
-            score !== null
-              ? `
-                <span class="score">
-                  ${score}
-                </span>
-              `
-              : "—"
-          }
-
-        </div>
-
-        <!-- CORRECT -->
-        <div class="cell">
-          ${
-            isQuiz
-              ? correct
-              : "—"
-          }
-        </div>
-
-        <!-- TIME -->
-        <div class="cell-muted">
-          ${
-            isQuiz
-              ? time
-              : "—"
-          }
-        </div>
-
-        <!-- STATUS -->
-        <div>
-
-          <span class="status ${
-            escapeHtml(
-              entry.entry_status ||
-              ""
-            )
-          }">
-            ${formatStatus(
-              entry.entry_status
-            )}
-          </span>
-
-        </div>
-
-        <!-- PRIZE -->
-        <div class="prize-cell">
-
-          ${
-            alreadyWinner
-              ? renderAssignedPrize(
-                  entry.id
-                )
-              : `
-                <select
-                  id="prize-${entry.id}"
-                  class="prize-select"
-                >
-
-                  <option value="">
-                    No prize
-                  </option>
-
-                  ${prizes.map(
-                    prize => `
-                      <option
-                        value="${prize.id}"
-                      >
-
-                        ${escapeHtml(
-                          prize.prize_name ||
-                          "Prize"
-                        )}
-
-                        ${
-                          prize.amount !== null
-                            ? ` — ₦${formatMoney(
-                                prize.amount
-                              )}`
-                            : ""
-                        }
-
-                      </option>
-                    `
-                  ).join("")}
-
-                </select>
-              `
-          }
-
-        </div>
-
-        <!-- POSITION -->
-        <div class="position-cell">
-
-          ${
-            alreadyWinner
-              ? `
-                <span class="status qualified">
-                  Winner
-                </span>
-              `
-              : `
-                <input
-                  id="position-${entry.id}"
-                  class="position-input"
-                  type="number"
-                  min="1"
-                  value="${defaultPosition}"
-                >
-              `
-          }
-
-        </div>
-
-        <!-- ACTION -->
-        <div class="winner-action">
-
-          ${
-            alreadyWinner
-              ? `
-                <span class="cell-muted">
-                  Selected
-                </span>
-              `
-              : `
-                <button
-                  class="btn btn-success"
-                  onclick="assignWinner('${entry.id}')"
-                >
-                  🏆 Assign
-                </button>
-              `
-          }
-
-        </div>
-
-      </div>
-    `;
-  }
-
-  function renderAssignedPrize(
-    entryId
-  ) {
-
-    const winner =
-      winners.find(
-        item =>
-          item.entry_id ===
-          entryId
-      );
-
-    if (!winner) {
-      return "—";
-    }
-
-    const prize =
-      prizes.find(
-        item =>
-          item.id ===
-          winner.prize_id
-      );
-
-    if (!prize) {
-      return "No prize";
-    }
-
-    return `
-      <div class="cell">
-
-        <strong>
-          ${escapeHtml(
-            prize.prize_name ||
-            "Prize"
-          )}
-        </strong>
-
-        ${
-          prize.amount !== null
-            ? `
-              <div class="participant-sub">
-                ₦${formatMoney(
-                  prize.amount
-                )}
-              </div>
-            `
-            : ""
-        }
-
-      </div>
-    `;
-  }
-
-  /*
-   * ============================
-   * ASSIGN WINNER
-   * ============================
-   */
-
-  async function assignWinner(
-    entryId
-  ) {
-
-    const positionInput =
-      document.getElementById(
-        `position-${entryId}`
-      );
-
-    const prizeSelect =
-      document.getElementById(
-        `prize-${entryId}`
-      );
-
-    const position =
-      Number(
-        positionInput?.value
-      );
-
-    const prizeId =
-      prizeSelect?.value ||
-      null;
-
-    if (
-      !Number.isInteger(
-        position
-      ) ||
-      position < 1
-    ) {
-
-      showMessage(
-        "Please enter a valid winner position.",
-        "error"
-      );
-
-      return;
-    }
-
-    const entry =
-      entries.find(
-        item =>
-          item.id ===
-          entryId
-      );
-
-    if (!entry) {
-
-      showMessage(
-        "Participant entry could not be found.",
-        "error"
-      );
-
-      return;
-    }
-
-    const existingWinner =
-      winners.find(
-        item =>
-          item.entry_id ===
-          entryId
-      );
-
-    if (existingWinner) {
-
-      showMessage(
-        "This participant has already been selected as a winner.",
-        "error"
-      );
-
-      return;
-    }
-
-    const existingPosition =
-      winners.find(
-        item =>
-          Number(
-            item.winner_position
-          ) === position
-      );
-
-    if (existingPosition) {
-
-      if (
-        !confirm(
-          `Winner position ${position} is already assigned. Continue anyway?`
-        )
-      ) {
-        return;
-      }
-    }
-
-    const profile =
-      profiles[
-        entry.user_id
-      ] || {};
-
-    const participantName =
-      getProfileName(
-        profile,
-        entry.user_id
-      );
-
-    const prize =
-      prizeId
-        ? prizes.find(
-            item =>
-              item.id ===
-              prizeId
-          )
-        : null;
-
-    let confirmation =
-      `Assign ${participantName} as winner position ${position}?`;
-
-    if (prize) {
-
-      confirmation +=
-        `\n\nPrize: ${
-          prize.prize_name
-        }`;
-
-      if (
-        prize.amount !==
-        null
-      ) {
-        confirmation +=
-          `\nAmount: ₦${
-            formatMoney(
-              prize.amount
-            )
-          }`;
-      }
-    }
-
-    if (
-      !confirm(
-        confirmation
-      )
-    ) {
-      return;
-    }
-
-    try {
-
-      const {
-        error
-      } = await supabaseClient
-        .from(
-          "competition_winners"
-        )
-        .insert({
-
-          competition_id:
-            competition.id,
-
-          entry_id:
-            entry.id,
-
-          user_id:
-            entry.user_id,
-
-          prize_id:
-            prizeId,
-
-          winner_position:
-            position,
-
-          winner_status:
-            "selected",
-
-          selected_by:
-            adminUser.id,
-
-          selected_at:
-            new Date().toISOString()
-
-        });
-
-      if (error) {
-        throw error;
-      }
-
-      showMessage(
-        `${participantName} has been selected as winner position ${position}.`,
-        "success"
-      );
-
-      await loadPage();
-
-    } catch (err) {
-
-      console.error(
-        "assignWinner error:",
-        err
-      );
-
-      showMessage(
-        err.message ||
-        "Unable to assign winner.",
-        "error"
-      );
-    }
-  }
-
-  /*
-   * ============================
-   * WINNERS
-   * ============================
-   */
-
-  function renderWinners() {
-
-    const list =
-      document.getElementById(
-        "winnerList"
-      );
-
-    if (!winners.length) {
-
-      list.innerHTML =
-        `
-          <div class="empty">
-            No winners selected yet.
-          </div>
-        `;
-
-      return;
-    }
-
-    list.innerHTML =
-      winners
-        .map(
-          winner =>
-            renderWinnerRow(
-              winner
-            )
-        )
-        .join("");
-  }
-
-  function renderWinnerRow(
-    winner
-  ) {
-
-    const profile =
-      profiles[
-        winner.user_id
-      ] || {};
-
-    const name =
-      getProfileName(
-        profile,
-        winner.user_id
-      );
-
-    const prize =
-      prizes.find(
-        item =>
-          item.id ===
-          winner.prize_id
-      );
-
-    const isFulfilled =
-      winner.winner_status ===
-        "fulfilled" ||
-      Boolean(
-        winner.fulfilled_at
-      );
-
-    const isCash =
-      prize &&
-      prize.prize_type ===
-        "cash" &&
-      Number(
-        prize.amount || 0
-      ) > 0;
-
-    return `
-
-      <div class="winner-row">
-
-        <div class="position">
-          #${winner.winner_position}
-        </div>
-
-        <div>
-
-          <div class="winner-name">
-            ${escapeHtml(
-              name
-            )}
-          </div>
-
-          <div class="participant-sub">
-            ${escapeHtml(
-              winner.user_id
-            )}
-          </div>
-
-        </div>
-
-        <div class="winner-prize">
-
-          ${
-            prize
-              ? `
-
-                <strong>
-                  ${escapeHtml(
-                    prize.prize_name ||
-                    "Prize"
-                  )}
-                </strong>
-
-                ${
-                  prize.amount !==
-                  null
-                    ? `
-                      <br>
-                      ₦${formatMoney(
-                        prize.amount
-                      )}
-                    `
-                    : ""
-                }
-
-                ${
-                  prize.prize_type !==
-                  "cash"
-                    ? `
-                      <br>
-                      ${escapeHtml(
-                        formatPrizeType(
-                          prize.prize_type
-                        )
-                      )}
-                    `
-                    : ""
-                }
-
-              `
-              : "No prize assigned"
-          }
-
-        </div>
-
-        <div>
-
-          <span class="status ${
-            isFulfilled
-              ? "fulfilled"
-              : ""
-          }">
-
-            ${formatStatus(
-              winner.winner_status
-            )}
-
-          </span>
-
-        </div>
-
-        <div>
-
-          ${
-            winner.fulfilled_at
-              ? `
-
-                <div class="fulfilled">
-                  ✓ Fulfilled
-                </div>
-
-                <div class="participant-sub">
-                  ${formatDate(
-                    winner.fulfilled_at
-                  )}
-                </div>
-
-              `
-              : `
-                <div class="cell-muted">
-                  Not fulfilled
-                </div>
-              `
-          }
-
-        </div>
-
-        <div>
-
-          ${
-            !isFulfilled
-              ? `
-
-                <button
-                  class="btn ${
-                    isCash
-                      ? "btn-success"
-                      : "btn-warning"
-                  }"
-                  onclick="fulfillPrize(
-                    '${winner.id}',
-                    '${winner.prize_id || ""}'
-                  )"
-                >
-
-                  ${
-                    isCash
-                      ? "💰 Fulfill Prize"
-                      : "✓ Mark Fulfilled"
-                  }
-
-                </button>
-
-              `
-              : `
-
-                <span class="fulfilled">
-                  ✓ Completed
-                </span>
-
-              `
-          }
-
-        </div>
-
-      </div>
-    `;
-  }
-
-  /*
-   * ============================
-   * FULFILL PRIZE
-   * ============================
-   */
-
-  async function fulfillPrize(
-    winnerId,
-    prizeId
-  ) {
-
-    const prize =
-      prizes.find(
-        item =>
-          item.id ===
-          prizeId
-      );
-
-    if (!prize) {
-
-      showMessage(
-        "This winner has no prize assigned.",
-        "error"
-      );
-
-      return;
-    }
-
-    const winner =
-      winners.find(
-        item =>
-          item.id ===
-          winnerId
-      );
-
-    if (!winner) {
-
-      showMessage(
-        "Winner record could not be found.",
-        "error"
-      );
-
-      return;
-    }
-
-    const profile =
-      profiles[
-        winner.user_id
-      ] || {};
-
-    const winnerName =
-      getProfileName(
-        profile,
-        winner.user_id
-      );
-
-    /*
-     * CASH PRIZE
-     *
-     * Use the secure database RPC.
-     */
-    if (
-      prize.prize_type ===
-      "cash"
-    ) {
-
-      if (
-        Number(
-          prize.amount || 0
-        ) <= 0
-      ) {
-
-        showMessage(
-          "This cash prize does not have a valid amount.",
-          "error"
-        );
-
-        return;
-      }
-
-      if (
-        !confirm(
-          `Credit ₦${formatMoney(
-            prize.amount
-          )} to ${winnerName}'s EarnGig wallet?`
-        )
-      ) {
-        return;
-      }
-
-      const note =
-        prompt(
-          "Optional fulfillment note:",
-          "Cash prize credited to EarnGig wallet."
-        );
-
-      try {
-
-        const {
-          data,
-          error
-        } = await supabaseClient.rpc(
-          "fulfill_competition_cash_prize",
-          {
-            p_winner_id:
-              winnerId,
-
-            p_fulfillment_note:
-              note || null
-          }
-        );
-
-        if (error) {
-          throw error;
-        }
-
-        if (
-          !data ||
-          data.success !== true
-        ) {
-
-          throw new Error(
-            data?.message ||
-            "Prize fulfillment failed."
-          );
-        }
-
-        showMessage(
-          `₦${formatMoney(
-            data.amount
-          )} has been credited to ${winnerName}'s wallet.`,
-          "success"
-        );
-
-        await loadPage();
-
-      } catch (err) {
-
-        console.error(
-          "fulfillCompetitionCashPrize error:",
-          err
-        );
-
-        showMessage(
-          err.message ||
-          "Unable to fulfill cash prize.",
-          "error"
-        );
-      }
-
-      return;
-    }
-
-    /*
-     * NON-CASH PRIZE
-     */
-    if (
-      !confirm(
-        `Mark ${winnerName}'s ${formatPrizeType(
-          prize.prize_type
-        )} prize as fulfilled?`
-      )
-    ) {
-      return;
-    }
-
-    const note =
-      prompt(
-        "Fulfillment note:",
-        "Prize fulfilled manually."
-      );
-
-    try {
-
-      const {
-        error
-      } = await supabaseClient
-        .from(
-          "competition_winners"
-        )
-        .update({
-
-          winner_status:
-            "fulfilled",
-
-          fulfilled_at:
-            new Date().toISOString(),
-
-          fulfillment_note:
-            note ||
-            "Prize fulfilled manually."
-
-        })
-        .eq(
-          "id",
-          winnerId
-        );
-
-      if (error) {
-        throw error;
-      }
-
-      showMessage(
-        `${winnerName}'s prize has been marked fulfilled.`,
-        "success"
-      );
-
-      await loadPage();
-
-    } catch (err) {
-
-      console.error(
-        "manual fulfillment error:",
-        err
-      );
-
-      showMessage(
-        err.message ||
-        "Unable to mark prize as fulfilled.",
-        "error"
-      );
-    }
-  }
-
-  /*
-   * ============================
-   * NEXT WINNER POSITION
-   * ============================
-   */
-
-  function getNextWinnerPosition() {
-
-    const used =
-      winners
-        .map(
-          winner =>
-            Number(
-              winner.winner_position
-            )
-        )
-        .filter(
-          value =>
-            Number.isInteger(
-              value
-            ) &&
-            value > 0
-        );
-
-    let position = 1;
-
-    while (
-      used.includes(
-        position
-      )
-    ) {
-      position++;
-    }
-
-    return position;
-  }
-
-  /*
-   * ============================
-   * PROFILE NAME
-   * ============================
-   */
-
-  function getProfileName(
-    profile,
-    fallbackId
-  ) {
-
-    if (!profile) {
-      return shortId(
-        fallbackId
-      );
-    }
-
-    const fields = [
-      "name",
-      "full_name",
-      "display_name",
-      "username",
-      "user_name"
-    ];
-
-    for (
-      const field of fields
-    ) {
-
-      const value =
-        profile[field];
-
-      if (
-        typeof value ===
-          "string" &&
-        value.trim()
-      ) {
-
-        return value.trim();
-      }
-    }
-
-    const first =
-      profile.first_name;
-
-    const last =
-      profile.last_name;
-
-    if (
-      typeof first ===
-        "string" &&
-      first.trim()
-    ) {
-
-      return [
-        first,
-        typeof last ===
-          "string"
-          ? last
-          : ""
-      ]
-        .join(" ")
-        .trim();
-    }
-
-    return shortId(
-      fallbackId
-    );
-  }
-
-  function shortId(
-    value
-  ) {
-
-    const text =
-      String(
-        value || ""
-      );
-
-    if (
-      text.length <=
-      16
-    ) {
-      return text;
-    }
-
-    return (
-      text.slice(0, 8) +
-      "..." +
-      text.slice(-5)
-    );
-  }
-
-  /*
-   * ============================
-   * FORMATTING
-   * ============================
-   */
-
-  function formatDate(
-    value
-  ) {
-
-    if (!value) {
-      return "—";
-    }
-
-    const d =
-      new Date(
-        value
-      );
-
-    if (
-      Number.isNaN(
-        d.getTime()
-      )
-    ) {
-      return "—";
-    }
-
-    return d.toLocaleString(
-      "en-NG",
-      {
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-        hour: "numeric",
-        minute: "2-digit"
-      }
-    );
-  }
-
-  function formatDuration(
-    seconds
-  ) {
+      competition.competition_type === "quiz"
+        ? `${Number(entry.score ?? 0)}`
+        : "-";
 
     const total =
-      Math.max(
-        0,
-        Number(
-          seconds
-        ) || 0
-      );
+      competition.competition_type === "quiz"
+        ? `${Number(entry.correct_answers ?? 0)}/${Number(entry.total_questions ?? 0)}`
+        : "-";
 
-    const hours =
-      Math.floor(
-        total / 3600
-      );
+    const time =
+      competition.competition_type === "quiz"
+        ? formatDuration(entry.time_taken_seconds)
+        : "-";
 
-    const minutes =
-      Math.floor(
-        (total % 3600) /
-        60
-      );
+    const defaultPosition =
+      winner?.winner_position || (index + 1);
 
-    const secs =
-      total % 60;
+    const prizeOptions = `
+      <option value="">No prize</option>
+      ${prizes.map(prize => `
+        <option
+          value="${escapeHtml(prize.id)}"
+          ${winner?.prize_id === prize.id ? "selected" : ""}
+        >
+          ${escapeHtml(prizeLabel(prize))}
+        </option>
+      `).join("")}
+    `;
 
-    if (
-      hours > 0
-    ) {
+    let actionHtml = "";
 
-      return `${hours}h ${
-        String(
-          minutes
-        ).padStart(
-          2,
-          "0"
-        )
-      }m ${
-        String(
-          secs
-        ).padStart(
-          2,
-          "0"
-        )
-      }s`;
+    if (winner) {
+      const selectedPrize =
+        prizes.find(p => p.id === winner.prize_id);
+
+      const winnerStatus =
+        String(winner.winner_status || "selected").toLowerCase();
+
+      actionHtml = `
+        <span class="badge winner">Winner</span>
+        ${winnerStatus === "fulfilled"
+          ? `<span class="badge fulfilled">Fulfilled</span>`
+          : ""
+        }
+      `;
+    } else {
+      actionHtml = `
+        <select id="prize-${entry.id}">
+          ${prizeOptions}
+        </select>
+
+        <input
+          id="position-${entry.id}"
+          class="position"
+          type="number"
+          min="1"
+          value="${defaultPosition}"
+        >
+
+        <button
+          class="assign-btn"
+          onclick="assignWinner('${entry.id}')"
+        >
+          🏆 Assign
+        </button>
+      `;
     }
 
-    return `${
-      String(
-        minutes
-      ).padStart(
-        2,
-        "0"
-      )
-    }:${
-      String(
-        secs
-      ).padStart(
-        2,
-        "0"
-      )
-    }`;
+    return `
+      <tr>
+        <td class="rank">${index + 1}</td>
+
+        <td>
+          <span class="name">${escapeHtml(name)}</span>
+          <span class="user-id">${escapeHtml(entry.user_id)}</span>
+        </td>
+
+        <td class="score">${escapeHtml(score)}</td>
+
+        <td>${escapeHtml(total)}</td>
+
+        <td class="time">${escapeHtml(time)}</td>
+
+        <td>${statusBadge(entry.entry_status)}</td>
+
+        <td>
+          ${winner
+            ? escapeHtml(prizeLabel(
+                prizes.find(p => p.id === winner.prize_id)
+              ))
+            : "-"
+          }
+        </td>
+
+        <td>
+          ${winner
+            ? "#" + escapeHtml(winner.winner_position)
+            : `<input
+                 id="position-display-${entry.id}"
+                 class="position"
+                 type="number"
+                 min="1"
+                 value="${defaultPosition}"
+                 onchange="
+                   document.getElementById('position-${entry.id}').value=this.value
+                 "
+               >`
+          }
+        </td>
+
+        <td>
+          ${actionHtml}
+        </td>
+      </tr>
+    `;
+  }).join("");
+}
+
+function renderWinners() {
+  const box = document.getElementById("winnersList");
+
+  if (!winners.length) {
+    box.innerHTML = `
+      <div class="empty">
+        No winners selected yet.
+      </div>
+    `;
+    return;
   }
 
-  function formatMoney(
-    value
-  ) {
+  box.innerHTML = winners.map(winner => {
+    const entry = participants.find(
+      p => p.id === winner.entry_id
+    );
 
-    return Number(
-      value || 0
-    ).toLocaleString(
-      "en-NG",
+    const profile = profiles[winner.user_id];
+    const name = getProfileName(profile, winner.user_id);
+
+    const prize = prizes.find(
+      p => p.id === winner.prize_id
+    );
+
+    const isSchoolFees =
+      prize?.prize_type === "school_fees";
+
+    const isCash =
+      prize?.prize_type === "cash";
+
+    let action = "";
+
+    if (winner.winner_status === "fulfilled") {
+      action = `<span class="badge fulfilled">Fulfilled</span>`;
+    } else if (isCash) {
+      action = `
+        <button
+          class="fulfill-btn"
+          onclick="fulfillCashPrize('${winner.id}')"
+        >
+          💰 Fulfill Cash Prize
+        </button>
+      `;
+    } else if (isSchoolFees) {
+      const email = buildSchoolFeesEmail(
+        name,
+        prize,
+        winner
+      );
+
+      action = `
+        <a
+          class="email-btn"
+          href="${email}"
+        >
+          📧 Contact Winner / School Fees
+        </a>
+
+        <button
+          class="fulfill-btn"
+          onclick="markManualFulfilled('${winner.id}')"
+          style="margin-left:6px;"
+        >
+          ✓ Mark Fulfilled
+        </button>
+      `;
+    } else {
+      action = `
+        <button
+          class="fulfill-btn"
+          onclick="markManualFulfilled('${winner.id}')"
+        >
+          ✓ Mark Fulfilled
+        </button>
+      `;
+    }
+
+    return `
+      <div class="winner-row">
+        <div class="winner-main">
+          <div class="winner-name">
+            #${escapeHtml(winner.winner_position)}
+            ${escapeHtml(name)}
+          </div>
+
+          <div class="winner-detail">
+            ${escapeHtml(prizeLabel(prize))}
+            · ${escapeHtml(winner.winner_status || "selected")}
+          </div>
+        </div>
+
+        <div>
+          ${action}
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+function buildSchoolFeesEmail(name, prize, winner) {
+  const amount = prize?.amount
+    ? formatMoney(prize.amount)
+    : "School fees award";
+
+  const subject =
+    "EarnGig School Fees Award - " +
+    (competition?.title || "Competition");
+
+  const body =
+`Hello EarnGig,
+
+I am contacting you regarding my School Fees Award.
+
+Competition: ${competition?.title || ""}
+Award: ${amount}
+Winner Position: ${winner?.winner_position || ""}
+Winner Name: ${name}
+
+I would like to proceed with the school fees award.
+
+Thank you.`;
+
+  return "mailto:ahruhenterprises@gmail.com" +
+    "?subject=" + encodeURIComponent(subject) +
+    "&body=" + encodeURIComponent(body);
+}
+
+async function assignWinner(entryId) {
+  const prizeSelect =
+    document.getElementById("prize-" + entryId);
+
+  const positionInput =
+    document.getElementById("position-" + entryId);
+
+  const prizeId = prizeSelect?.value || null;
+  const position = Number(positionInput?.value || 0);
+
+  if (!position || position < 1) {
+    showMessage("Enter a valid winner position.", "error");
+    return;
+  }
+
+  const entry = participants.find(
+    p => p.id === entryId
+  );
+
+  if (!entry) {
+    showMessage("Participant not found.", "error");
+    return;
+  }
+
+  if (!prizeId) {
+    showMessage("Select a prize before assigning the winner.", "error");
+    return;
+  }
+
+  const alreadyWinner = winners.find(
+    w => Number(w.winner_position) === position
+  );
+
+  if (alreadyWinner) {
+    showMessage(
+      "That winner position is already assigned.",
+      "error"
+    );
+    return;
+  }
+
+  const { data: authData } =
+    await supabaseClient.auth.getUser();
+
+  const adminId = authData?.user?.id || null;
+
+  const { error } = await supabaseClient
+    .from("competition_winners")
+    .insert({
+      competition_id: competitionId,
+      entry_id: entryId,
+      user_id: entry.user_id,
+      prize_id: prizeId,
+      winner_position: position,
+      winner_status: "selected",
+      selected_by: adminId,
+      selected_at: new Date().toISOString()
+    });
+
+  if (error) {
+    showMessage(error.message, "error");
+    return;
+  }
+
+  showMessage("Winner successfully assigned.");
+
+  await refreshData();
+}
+
+async function fulfillCashPrize(winnerId) {
+  const note = prompt(
+    "Optional fulfillment note:",
+    "Cash prize credited to EarnGig wallet."
+  );
+
+  if (note === null) {
+    return;
+  }
+
+  const { data, error } =
+    await supabaseClient.rpc(
+      "fulfill_competition_cash_prize",
       {
-        minimumFractionDigits:
-          0,
-
-        maximumFractionDigits:
-          2
+        p_winner_id: winnerId,
+        p_fulfillment_note: note
       }
     );
+
+  if (error) {
+    showMessage(error.message, "error");
+    return;
   }
 
-  function formatStatus(
-    status
-  ) {
-
-    return String(
-      status || ""
-    )
-      .replaceAll(
-        "_",
-        " "
-      )
-      .replace(
-        /\b\w/g,
-        x =>
-          x.toUpperCase()
-      );
+  if (!data?.success) {
+    showMessage(
+      data?.message || "Unable to fulfill prize.",
+      "error"
+    );
+    return;
   }
 
-  function formatType(
-    type
-  ) {
+  showMessage(
+    "Cash prize fulfilled and credited to the winner's wallet."
+  );
 
-    const map = {
+  await refreshData();
+}
 
-      quiz:
-        "Quiz",
+async function markManualFulfilled(winnerId) {
+  const note = prompt(
+    "Enter fulfillment note:",
+    "Award fulfilled manually."
+  );
 
-      video:
-        "Video",
+  if (note === null) {
+    return;
+  }
 
-      giveaway:
-        "Giveaway",
+  const { error } = await supabaseClient
+    .from("competition_winners")
+    .update({
+      winner_status: "fulfilled",
+      fulfilled_at: new Date().toISOString(),
+      fulfillment_note: note
+    })
+    .eq("id", winnerId);
 
-      challenge:
-        "Challenge",
+  if (error) {
+    showMessage(error.message, "error");
+    return;
+  }
 
-      application:
-        "Application"
+  showMessage("Award marked as fulfilled.");
 
-    };
+  await refreshData();
+}
 
-    return (
-      map[type] ||
-      formatStatus(
-        type
-      )
+async function refreshData() {
+  await loadWinners();
+  renderParticipants();
+  renderWinners();
+}
+
+async function init() {
+  if (!competitionId) {
+    alert("Competition ID is missing.");
+    window.location.href = "admin-competitions.html";
+    return;
+  }
+
+  const allowed = await verifyAdmin();
+
+  if (!allowed) {
+    return;
+  }
+
+  try {
+    await loadCompetition();
+    await loadPrizes();
+    await loadParticipants();
+    await loadProfiles();
+    await loadWinners();
+
+    renderParticipants();
+    renderWinners();
+  } catch (error) {
+    console.error(error);
+    showMessage(
+      error.message || "Unable to load competition.",
+      "error"
     );
   }
+}
 
-  function formatEntryMethod(
-    method
-  ) {
-
-    const map = {
-
-      quiz:
-        "Quiz",
-
-      url:
-        "URL",
-
-      simple:
-        "Simple Entry",
-
-      evidence:
-        "Evidence",
-
-      application:
-        "Application"
-
-    };
-
-    return (
-      map[method] ||
-      formatStatus(
-        method
-      )
-    );
-  }
-
-  function formatPrizeType(
-    type
-  ) {
-
-    const map = {
-
-      cash:
-        "Cash",
-
-      school_fees:
-        "School Fees",
-
-      physical_item:
-        "Physical Item",
-
-      gift:
-        "Gift",
-
-      other:
-        "Other"
-
-    };
-
-    return (
-      map[type] ||
-      formatStatus(
-        type
-      )
-    );
-  }
-
-  /*
-   * ============================
-   * SECURITY / HTML ESCAPING
-   * ============================
-   */
-
-  function escapeHtml(
-    value
-  ) {
-
-    return String(
-      value ?? ""
-    )
-      .replaceAll(
-        "&",
-        "&amp;"
-      )
-      .replaceAll(
-        "<",
-        "&lt;"
-      )
-      .replaceAll(
-        ">",
-        "&gt;"
-      )
-      .replaceAll(
-        '"',
-        "&quot;"
-      )
-      .replaceAll(
-        "'",
-        "&#039;"
-      );
-  }
-
-  function escapeAttr(
-    value
-  ) {
-
-    return escapeHtml(
-      value
-    );
-  }
-
-  /*
-   * ============================
-   * MESSAGE
-   * ============================
-   */
-
-  function showMessage(
-    text,
-    type
-  ) {
-
-    const box =
-      document.getElementById(
-        "message"
-      );
-
-    box.className =
-      "message " +
-      type;
-
-    box.textContent =
-      text;
-
-    clearTimeout(
-      window.messageTimer
-    );
-
-    window.messageTimer =
-      setTimeout(
-        () => {
-
-          box.className =
-            "message";
-
-          box.textContent =
-            "";
-
-        },
-        7000
-      );
-  }
+init();
 </script>
 
 </body>

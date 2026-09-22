@@ -1,0 +1,2593 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>EarnGig - Create Task</title>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script src="supabase.js"></script>
+
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+
+    body {
+
+      margin: 0;
+
+      font-family: Arial, sans-serif;
+
+      background: #070b1c;
+
+      color: #f5f7ff;
+
+    }
+
+
+    /* =========================================
+       TOP BAR
+    ========================================= */
+
+    .topbar {
+
+      height: 70px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      padding: 0 24px;
+
+      border-bottom:
+        1px solid #252a45;
+
+      background: #0b1024;
+
+      position: sticky;
+
+      top: 0;
+
+      z-index: 20;
+
+    }
+
+
+    .brand {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 12px;
+
+      font-size: 20px;
+
+      font-weight: 700;
+
+    }
+
+
+    .logo {
+
+      width: 38px;
+
+      height: 38px;
+
+      border-radius: 11px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      background:
+        linear-gradient(
+          135deg,
+          #8b5cf6,
+          #6d28d9
+        );
+
+      font-weight: 800;
+
+      font-size: 20px;
+
+    }
+
+
+    .back-btn {
+
+      border:
+        1px solid #343a5d;
+
+      background: #171d38;
+
+      color: #dfe4ff;
+
+      border-radius: 10px;
+
+      padding: 9px 14px;
+
+      cursor: pointer;
+
+      font-weight: 600;
+
+    }
+
+
+    .back-btn:hover {
+
+      background: #20284a;
+
+    }
+
+
+    /* =========================================
+       PAGE
+    ========================================= */
+
+    .page {
+
+      max-width: 900px;
+
+      margin: 0 auto;
+
+      padding: 26px 20px 50px;
+
+    }
+
+
+    .heading {
+
+      margin-bottom: 20px;
+
+    }
+
+
+    .heading h1 {
+
+      margin: 0;
+
+      font-size: 26px;
+
+    }
+
+
+    .heading p {
+
+      margin: 7px 0 0;
+
+      color: #8f97b7;
+
+      font-size: 14px;
+
+      line-height: 1.6;
+
+    }
+
+
+    /* =========================================
+       FORM CARD
+    ========================================= */
+
+    .form-card {
+
+      background: #11172d;
+
+      border:
+        1px solid #252c49;
+
+      border-radius: 15px;
+
+      padding: 20px;
+
+      margin-bottom: 14px;
+
+    }
+
+
+    .card-title {
+
+      margin: 0 0 4px;
+
+      font-size: 16px;
+
+      font-weight: 800;
+
+    }
+
+
+    .card-description {
+
+      margin: 0 0 17px;
+
+      color: #7f89aa;
+
+      font-size: 12px;
+
+      line-height: 1.5;
+
+    }
+
+
+    /* =========================================
+       FORM
+    ========================================= */
+
+    .form-grid {
+
+      display: grid;
+
+      grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+      gap: 13px;
+
+    }
+
+
+    .form-group {
+
+      margin-bottom: 14px;
+
+    }
+
+
+    .form-grid .form-group {
+
+      margin-bottom: 0;
+
+    }
+
+
+    .full {
+
+      grid-column: 1 / -1;
+
+    }
+
+
+    label {
+
+      display: block;
+
+      margin-bottom: 6px;
+
+      color: #b9c0dc;
+
+      font-size: 12px;
+
+      font-weight: 700;
+
+    }
+
+
+    .required {
+
+      color: #c7a7ff;
+
+    }
+
+
+    input,
+    textarea,
+    select {
+
+      width: 100%;
+
+      border:
+        1px solid #303754;
+
+      background: #090e21;
+
+      color: #f3f5ff;
+
+      border-radius: 9px;
+
+      padding: 11px 12px;
+
+      outline: none;
+
+      font-family: inherit;
+
+      font-size: 13px;
+
+    }
+
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+
+      border-color: #7656db;
+
+      box-shadow:
+        0 0 0 2px
+        rgba(118, 86, 219, .12);
+
+    }
+
+
+    textarea {
+
+      min-height: 115px;
+
+      resize: vertical;
+
+      line-height: 1.55;
+
+    }
+
+
+    select {
+
+      cursor: pointer;
+
+    }
+
+
+    .hint {
+
+      margin-top: 5px;
+
+      color: #68718f;
+
+      font-size: 11px;
+
+      line-height: 1.45;
+
+    }
+
+
+    /* =========================================
+       DYNAMIC INFO BOX
+    ========================================= */
+
+    .info-box {
+
+      padding: 12px 13px;
+
+      border-radius: 10px;
+
+      background:
+        rgba(139, 92, 246, .08);
+
+      border:
+        1px solid
+        rgba(139, 92, 246, .22);
+
+      color: #b9adff;
+
+      font-size: 12px;
+
+      line-height: 1.55;
+
+      margin-top: 12px;
+
+      display: none;
+
+    }
+
+
+    .info-box.show {
+
+      display: block;
+
+    }
+
+
+    /* =========================================
+       PROOF SETTINGS
+    ========================================= */
+
+    .proof-box {
+
+      display: grid;
+
+      grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+      gap: 10px;
+
+      margin-top: 5px;
+
+    }
+
+
+    .proof-option {
+
+      border:
+        1px solid #303754;
+
+      background: #0c1227;
+
+      border-radius: 10px;
+
+      padding: 12px;
+
+      cursor: pointer;
+
+      transition: .15s ease;
+
+    }
+
+
+    .proof-option:hover {
+
+      border-color: #5c4aa5;
+
+    }
+
+
+    .proof-option.selected {
+
+      background:
+        rgba(124, 92, 230, .12);
+
+      border-color: #7656db;
+
+    }
+
+
+    .proof-option strong {
+
+      display: block;
+
+      font-size: 12px;
+
+      margin-bottom: 4px;
+
+    }
+
+
+    .proof-option span {
+
+      color: #7f89aa;
+
+      font-size: 10px;
+
+      line-height: 1.4;
+
+    }
+
+
+    /* =========================================
+       STATUS
+    ========================================= */
+
+    .status-options {
+
+      display: flex;
+
+      gap: 8px;
+
+      flex-wrap: wrap;
+
+    }
+
+
+    .status-option {
+
+      border:
+        1px solid #303754;
+
+      background: #0c1227;
+
+      color: #aeb6d0;
+
+      border-radius: 8px;
+
+      padding: 8px 11px;
+
+      cursor: pointer;
+
+      font-size: 11px;
+
+      font-weight: 700;
+
+    }
+
+
+    .status-option.selected {
+
+      background: #21184b;
+
+      border-color: #7656db;
+
+      color: #c8b8ff;
+
+    }
+
+
+    /* =========================================
+       TOTAL
+    ========================================= */
+
+    .total-box {
+
+      margin-top: 15px;
+
+      padding: 14px;
+
+      border-radius: 10px;
+
+      background: #0c1227;
+
+      border:
+        1px solid #252c49;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      gap: 15px;
+
+    }
+
+
+    .total-label {
+
+      color: #8992b0;
+
+      font-size: 12px;
+
+    }
+
+
+    .total-value {
+
+      color: #d8caff;
+
+      font-size: 19px;
+
+      font-weight: 800;
+
+    }
+
+
+    /* =========================================
+       ALERT
+    ========================================= */
+
+    .alert {
+
+      display: none;
+
+      padding: 13px;
+
+      border-radius: 10px;
+
+      margin-bottom: 15px;
+
+      font-size: 12px;
+
+      line-height: 1.5;
+
+    }
+
+
+    .alert.error {
+
+      background:
+        rgba(239, 68, 68, .10);
+
+      border:
+        1px solid
+        rgba(239, 68, 68, .25);
+
+      color: #ff9696;
+
+    }
+
+
+    .alert.success {
+
+      background:
+        rgba(34, 197, 94, .10);
+
+      border:
+        1px solid
+        rgba(34, 197, 94, .25);
+
+      color: #75e69a;
+
+    }
+
+
+    /* =========================================
+       BOTTOM ACTIONS
+    ========================================= */
+
+    .form-actions {
+
+      display: flex;
+
+      justify-content: flex-end;
+
+      gap: 9px;
+
+      margin-top: 18px;
+
+    }
+
+
+    .btn {
+
+      border: 0;
+
+      border-radius: 9px;
+
+      padding: 10px 15px;
+
+      font-size: 12px;
+
+      font-weight: 700;
+
+      cursor: pointer;
+
+    }
+
+
+    .btn.cancel {
+
+      background: #171d38;
+
+      border:
+        1px solid #343a5d;
+
+      color: #c7cde2;
+
+    }
+
+
+    .btn.create {
+
+      background:
+        linear-gradient(
+          135deg,
+          #8b5cf6,
+          #6d28d9
+        );
+
+      color: #ffffff;
+
+    }
+
+
+    .btn:disabled {
+
+      opacity: .5;
+
+      cursor: not-allowed;
+
+    }
+
+
+    /* =========================================
+       HIDDEN
+    ========================================= */
+
+    .hidden {
+
+      display: none !important;
+
+    }
+
+
+    /* =========================================
+       MOBILE
+    ========================================= */
+
+    @media (max-width: 650px) {
+
+      .topbar {
+
+        padding: 0 14px;
+
+      }
+
+
+      .brand {
+
+        font-size: 17px;
+
+      }
+
+
+      .logo {
+
+        width: 34px;
+
+        height: 34px;
+
+        font-size: 18px;
+
+      }
+
+
+      .page {
+
+        padding:
+          20px 14px 40px;
+
+      }
+
+
+      .heading h1 {
+
+        font-size: 22px;
+
+      }
+
+
+      .form-card {
+
+        padding: 15px;
+
+      }
+
+
+      .form-grid {
+
+        grid-template-columns: 1fr;
+
+      }
+
+
+      .full {
+
+        grid-column: auto;
+
+      }
+
+
+      .proof-box {
+
+        grid-template-columns: 1fr;
+
+      }
+
+
+      .total-box {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+
+      }
+
+
+      .form-actions {
+
+        flex-direction: column-reverse;
+
+      }
+
+
+      .form-actions .btn {
+
+        width: 100%;
+
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+
+<body>
+
+
+<!-- =========================================
+     TOP BAR
+========================================= -->
+
+<header class="topbar">
+
+
+  <div class="brand">
+
+    <div class="logo">
+      E
+    </div>
+
+    <span>
+      EarnGig Admin
+    </span>
+
+  </div>
+
+
+  <button
+    class="back-btn"
+    type="button"
+    onclick="goBack()"
+  >
+    ← Tasks
+  </button>
+
+
+</header>
+
+
+
+<!-- =========================================
+     MAIN
+========================================= -->
+
+<main class="page">
+
+
+  <div class="heading">
+
+    <h1>
+      Create Task
+    </h1>
+
+    <p>
+      Create an EarnGig task for members to complete.
+      Admin-created tasks do not require payment from the admin wallet.
+    </p>
+
+  </div>
+
+
+
+  <div
+    id="errorAlert"
+    class="alert error"
+  ></div>
+
+
+  <div
+    id="successAlert"
+    class="alert success"
+  ></div>
+
+
+
+  <!-- =======================================
+       BASIC INFORMATION
+  ======================================== -->
+
+  <section class="form-card">
+
+
+    <h2 class="card-title">
+      Basic Task Information
+    </h2>
+
+
+    <p class="card-description">
+      Give members clear instructions about what they need to complete.
+    </p>
+
+
+
+    <div class="form-group">
+
+      <label for="title">
+        Task Title
+        <span class="required">*</span>
+      </label>
+
+
+      <input
+        id="title"
+        type="text"
+        placeholder="e.g. Follow EarnGig on TikTok"
+        maxlength="150"
+      >
+
+    </div>
+
+
+
+    <div class="form-group">
+
+      <label for="description">
+        Instructions / Description
+        <span class="required">*</span>
+      </label>
+
+
+      <textarea
+        id="description"
+        placeholder="Explain exactly what the member must do and what proof they need to submit."
+      ></textarea>
+
+    </div>
+
+
+
+    <div class="form-grid">
+
+
+      <div class="form-group">
+
+        <label for="category">
+          Category
+          <span class="required">*</span>
+        </label>
+
+
+        <select id="category">
+
+          <option value="Social Media">
+            Social Media
+          </option>
+
+          <option value="Videos">
+            Videos
+          </option>
+
+          <option value="Surveys">
+            Surveys
+          </option>
+
+          <option value="Engagement">
+            Engagement
+          </option>
+
+          <option value="General">
+            General
+          </option>
+
+          <option value="Other">
+            Other
+          </option>
+
+        </select>
+
+      </div>
+
+
+
+      <div class="form-group">
+
+        <label for="taskType">
+          Task Type
+          <span class="required">*</span>
+        </label>
+
+
+        <select id="taskType">
+
+          <option value="social">
+            Social Media
+          </option>
+
+          <option value="question">
+            Question / Feedback
+          </option>
+
+          <option value="riddle">
+            Riddle
+          </option>
+
+          <option value="photo">
+            Photo Task
+          </option>
+
+          <option value="custom">
+            Other / Custom
+          </option>
+
+        </select>
+
+      </div>
+
+
+    </div>
+
+
+  </section>
+
+
+
+  <!-- =======================================
+       SOCIAL MEDIA SETTINGS
+  ======================================== -->
+
+  <section
+    id="socialSettings"
+    class="form-card"
+  >
+
+
+    <h2 class="card-title">
+      Social Media Task
+    </h2>
+
+
+    <p class="card-description">
+      Select the platform and action the member must complete.
+    </p>
+
+
+
+    <div class="form-grid">
+
+
+      <div class="form-group">
+
+        <label for="platform">
+          Platform
+          <span class="required">*</span>
+        </label>
+
+
+        <select id="platform">
+
+
+          <option value="TikTok">
+            TikTok
+          </option>
+
+
+          <option value="Instagram">
+            Instagram
+          </option>
+
+
+          <option value="YouTube">
+            YouTube
+          </option>
+
+
+        </select>
+
+      </div>
+
+
+
+      <div class="form-group">
+
+        <label for="actionType">
+          Action
+          <span class="required">*</span>
+        </label>
+
+
+        <select id="actionType">
+
+        </select>
+
+      </div>
+
+
+    </div>
+
+
+
+    <div class="info-box show">
+
+      The member will submit proof of the completed action.
+      For social-media tasks, the member should provide a screenshot/photo
+      and the URL of the social account used for the action.
+
+    </div>
+
+
+  </section>
+
+
+
+  <!-- =======================================
+       QUESTION / RIDDLE SETTINGS
+  ======================================== -->
+
+  <section
+    id="answerSettings"
+    class="form-card hidden"
+  >
+
+
+    <h2 class="card-title">
+      Answer Settings
+    </h2>
+
+
+    <p class="card-description">
+      The member will provide their answer when completing this task.
+    </p>
+
+
+
+    <div class="form-group">
+
+      <label for="answerInstruction">
+        Answer Instructions
+      </label>
+
+
+      <textarea
+        id="answerInstruction"
+        placeholder="Tell the member what answer they should provide."
+      ></textarea>
+
+    </div>
+
+
+    <div class="info-box show">
+
+      The submitted answer will be stored with the task attempt.
+      You can review the answer from the admin submission detail page
+      before approving the reward.
+
+    </div>
+
+
+  </section>
+
+
+
+  <!-- =======================================
+       PHOTO SETTINGS
+  ======================================== -->
+
+  <section
+    id="photoSettings"
+    class="form-card hidden"
+  >
+
+
+    <h2 class="card-title">
+      Photo Proof
+    </h2>
+
+
+    <p class="card-description">
+      This task requires the member to upload photo or screenshot proof.
+    </p>
+
+
+
+    <div class="proof-box">
+
+
+      <div
+        class="proof-option selected"
+        id="photoRequiredOption"
+      >
+
+        <strong>
+          📷 Photo Required
+        </strong>
+
+        <span>
+          Member must upload photo or screenshot proof.
+          Admin manually verifies the submission.
+        </span>
+
+      </div>
+
+
+      <div class="proof-option">
+
+        <strong>
+          👤 Admin Verification
+        </strong>
+
+        <span>
+          Photo-related tasks are reviewed manually before reward approval.
+        </span>
+
+      </div>
+
+
+    </div>
+
+
+    <div class="info-box show">
+
+      Photo-related submissions will require admin verification.
+      The reward is not automatically credited simply because a photo was uploaded.
+
+    </div>
+
+
+  </section>
+
+
+
+  <!-- =======================================
+       PROOF / VERIFICATION
+  ======================================== -->
+
+  <section class="form-card">
+
+
+    <h2 class="card-title">
+      Verification
+    </h2>
+
+
+    <p class="card-description">
+      Choose how the member's submission will be handled.
+    </p>
+
+
+
+    <div class="form-group">
+
+      <label for="verificationType">
+        Verification Type
+      </label>
+
+
+      <select id="verificationType">
+
+
+        <option value="admin">
+          Admin Verification
+        </option>
+
+
+        <option value="text">
+          Text Submission
+        </option>
+
+
+        <option value="photo">
+          Photo / Screenshot
+        </option>
+
+
+        <option value="photo_url">
+          Photo + Account URL
+        </option>
+
+
+      </select>
+
+
+      <div class="hint">
+
+        For social media and photo tasks, admin verification is required.
+
+      </div>
+
+    </div>
+
+
+  </section>
+
+
+
+  <!-- =======================================
+       TASK LINK
+  ======================================== -->
+
+  <section class="form-card">
+
+
+    <h2 class="card-title">
+      Task Link
+    </h2>
+
+
+    <p class="card-description">
+      Add the page or social-media URL the member needs to visit.
+    </p>
+
+
+
+    <div class="form-group">
+
+      <label for="taskLink">
+        Task URL
+      </label>
+
+
+      <input
+        id="taskLink"
+        type="url"
+        placeholder="https://..."
+      >
+
+
+      <div class="hint">
+
+        Example: your TikTok profile, Instagram post,
+        YouTube channel, website, survey or other destination.
+
+      </div>
+
+    </div>
+
+
+  </section>
+
+
+
+  <!-- =======================================
+       REWARD & PARTICIPANTS
+  ======================================== -->
+
+  <section class="form-card">
+
+
+    <h2 class="card-title">
+      Reward & Participants
+    </h2>
+
+
+    <p class="card-description">
+      Set how much each approved participant earns and how many members can complete the task.
+    </p>
+
+
+
+    <div class="form-grid">
+
+
+      <div class="form-group">
+
+        <label for="reward">
+          Reward per Participant (₦)
+          <span class="required">*</span>
+        </label>
+
+
+        <input
+          id="reward"
+          type="number"
+          min="0"
+          step="0.01"
+          value="0"
+          placeholder="500"
+        >
+
+      </div>
+
+
+
+      <div class="form-group">
+
+        <label for="maxParticipants">
+          Maximum Participants
+          <span class="required">*</span>
+        </label>
+
+
+        <input
+          id="maxParticipants"
+          type="number"
+          min="1"
+          step="1"
+          value="10"
+          placeholder="10"
+        >
+
+      </div>
+
+
+    </div>
+
+
+
+    <div class="total-box">
+
+
+      <div>
+
+        <div class="total-label">
+          Maximum task reward commitment
+        </div>
+
+        <div class="hint">
+          Reward × maximum participants. This is task accounting information only;
+          admin-created tasks do not deduct this amount from the admin wallet.
+        </div>
+
+      </div>
+
+
+      <div
+        id="totalAmount"
+        class="total-value"
+      >
+        ₦0.00
+      </div>
+
+
+    </div>
+
+
+  </section>
+
+
+
+  <!-- =======================================
+       STATUS
+  ======================================== -->
+
+  <section class="form-card">
+
+
+    <h2 class="card-title">
+      Task Status
+    </h2>
+
+
+    <p class="card-description">
+      Active tasks are immediately available to eligible members.
+    </p>
+
+
+
+    <div class="status-options">
+
+
+      <button
+        type="button"
+        class="status-option selected"
+        data-status="active"
+      >
+        Active
+      </button>
+
+
+      <button
+        type="button"
+        class="status-option"
+        data-status="pending"
+      >
+        Pending
+      </button>
+
+
+    </div>
+
+
+  </section>
+
+
+
+  <!-- =======================================
+       ACTIONS
+  ======================================== -->
+
+  <div class="form-actions">
+
+
+    <button
+      type="button"
+      class="btn cancel"
+      onclick="goBack()"
+    >
+      Cancel
+    </button>
+
+
+    <button
+      type="button"
+      id="createButton"
+      class="btn create"
+      onclick="createTask()"
+    >
+      Create Task
+    </button>
+
+
+  </div>
+
+
+</main>
+
+
+
+<script>
+
+
+/* =========================================
+   GLOBAL
+========================================= */
+
+let currentAdmin = null;
+
+let selectedStatus = "active";
+
+
+
+/* =========================================
+   INITIALIZE
+========================================= */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  init
+);
+
+
+
+async function init() {
+
+  try {
+
+    await verifyAdmin();
+
+    updateActionOptions();
+
+    updateTotal();
+
+    setupEvents();
+
+  } catch (error) {
+
+    console.error(error);
+
+    showError(
+      error.message ||
+      "Unable to load task creation."
+    );
+
+  }
+
+}
+
+
+
+/* =========================================
+   VERIFY ADMIN
+========================================= */
+
+async function verifyAdmin() {
+
+
+  const {
+    data: {
+      user
+    },
+    error
+  } =
+    await supabaseClient.auth.getUser();
+
+
+  if (error) {
+
+    throw new Error(
+      error.message
+    );
+
+  }
+
+
+  if (!user) {
+
+    window.location.href =
+      "index.html";
+
+    return;
+
+  }
+
+
+  const {
+    data: profile,
+    error: profileError
+  } =
+    await supabaseClient
+
+      .from("profiles")
+
+      .select(
+        "id,is_admin,account_status"
+      )
+
+      .eq(
+        "id",
+        user.id
+      )
+
+      .maybeSingle();
+
+
+  if (profileError) {
+
+    throw new Error(
+      profileError.message
+    );
+
+  }
+
+
+  if (
+    !profile ||
+    profile.is_admin !== true ||
+    profile.account_status !== "active"
+  ) {
+
+    throw new Error(
+      "Administrator access is required."
+    );
+
+  }
+
+
+  currentAdmin =
+    user;
+
+}
+
+
+
+/* =========================================
+   SETUP EVENTS
+========================================= */
+
+function setupEvents() {
+
+
+  document
+    .getElementById("taskType")
+    .addEventListener(
+      "change",
+      handleTaskTypeChange
+    );
+
+
+  document
+    .getElementById("platform")
+    .addEventListener(
+      "change",
+      updateActionOptions
+    );
+
+
+  document
+    .getElementById("reward")
+    .addEventListener(
+      "input",
+      updateTotal
+    );
+
+
+  document
+    .getElementById("maxParticipants")
+    .addEventListener(
+      "input",
+      updateTotal
+    );
+
+
+  document
+    .querySelectorAll(
+      ".status-option"
+    )
+    .forEach(button => {
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          document
+            .querySelectorAll(
+              ".status-option"
+            )
+            .forEach(item =>
+              item.classList.remove(
+                "selected"
+              )
+            );
+
+
+          button.classList.add(
+            "selected"
+          );
+
+
+          selectedStatus =
+            button.dataset.status;
+
+        }
+      );
+
+    });
+
+}
+
+
+
+/* =========================================
+   TASK TYPE CHANGE
+========================================= */
+
+function handleTaskTypeChange() {
+
+
+  const taskType =
+    document.getElementById(
+      "taskType"
+    ).value;
+
+
+  const socialSettings =
+    document.getElementById(
+      "socialSettings"
+    );
+
+
+  const answerSettings =
+    document.getElementById(
+      "answerSettings"
+    );
+
+
+  const photoSettings =
+    document.getElementById(
+      "photoSettings"
+    );
+
+
+  socialSettings
+    .classList
+    .add("hidden");
+
+
+  answerSettings
+    .classList
+    .add("hidden");
+
+
+  photoSettings
+    .classList
+    .add("hidden");
+
+
+  if (
+    taskType ===
+    "social"
+  ) {
+
+    socialSettings
+      .classList
+      .remove("hidden");
+
+
+    document.getElementById(
+      "verificationType"
+    ).value =
+      "photo_url";
+
+  }
+
+
+  else if (
+    taskType ===
+    "question"
+  ) {
+
+    answerSettings
+      .classList
+      .remove("hidden");
+
+
+    document.getElementById(
+      "verificationType"
+    ).value =
+      "text";
+
+  }
+
+
+  else if (
+    taskType ===
+    "riddle"
+  ) {
+
+    answerSettings
+      .classList
+      .remove("hidden");
+
+
+    document.getElementById(
+      "verificationType"
+    ).value =
+      "admin";
+
+  }
+
+
+  else if (
+    taskType ===
+    "photo"
+  ) {
+
+    photoSettings
+      .classList
+      .remove("hidden");
+
+
+    document.getElementById(
+      "verificationType"
+    ).value =
+      "photo";
+
+  }
+
+
+  else {
+
+    document.getElementById(
+      "verificationType"
+    ).value =
+      "admin";
+
+  }
+
+}
+
+
+
+/* =========================================
+   SOCIAL ACTIONS
+========================================= */
+
+function updateActionOptions() {
+
+
+  const platform =
+    document.getElementById(
+      "platform"
+    ).value;
+
+
+  const actionSelect =
+    document.getElementById(
+      "actionType"
+    );
+
+
+  let actions = [];
+
+
+  if (
+    platform ===
+    "TikTok"
+  ) {
+
+    actions = [
+
+      {
+        value: "Follow",
+        label: "Follow"
+      },
+
+      {
+        value: "Like",
+        label: "Like"
+      }
+
+    ];
+
+  }
+
+
+  else if (
+    platform ===
+    "Instagram"
+  ) {
+
+    actions = [
+
+      {
+        value: "Follow",
+        label: "Follow"
+      },
+
+      {
+        value: "Like",
+        label: "Like"
+      }
+
+    ];
+
+  }
+
+
+  else if (
+    platform ===
+    "YouTube"
+  ) {
+
+    actions = [
+
+      {
+        value: "Subscribe",
+        label: "Subscribe"
+      },
+
+      {
+        value: "Like",
+        label: "Like"
+      }
+
+    ];
+
+  }
+
+
+  actionSelect.innerHTML =
+    actions
+      .map(
+        action => `
+
+          <option value="${escapeHtml(action.value)}">
+            ${escapeHtml(action.label)}
+          </option>
+
+        `
+      )
+      .join("");
+
+}
+
+
+
+/* =========================================
+   UPDATE TOTAL
+========================================= */
+
+function updateTotal() {
+
+
+  const reward =
+    Number(
+      document.getElementById(
+        "reward"
+      ).value
+    ) || 0;
+
+
+  const participants =
+    Number(
+      document.getElementById(
+        "maxParticipants"
+      ).value
+    ) || 0;
+
+
+  const total =
+    reward *
+    participants;
+
+
+  document.getElementById(
+    "totalAmount"
+  ).textContent =
+
+    "₦" +
+
+    total.toLocaleString(
+      "en-NG",
+      {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      }
+    );
+
+}
+
+
+
+/* =========================================
+   CREATE TASK
+========================================= */
+
+async function createTask() {
+
+
+  clearAlerts();
+
+
+  if (!currentAdmin) {
+
+    showError(
+      "Administrator session not found."
+    );
+
+    return;
+
+  }
+
+
+  const title =
+    document
+      .getElementById("title")
+      .value
+      .trim();
+
+
+  const description =
+    document
+      .getElementById("description")
+      .value
+      .trim();
+
+
+  const category =
+    document
+      .getElementById("category")
+      .value
+      .trim();
+
+
+  const taskType =
+    document
+      .getElementById("taskType")
+      .value;
+
+
+  const platform =
+    document
+      .getElementById("platform")
+      .value;
+
+
+  const actionType =
+    document
+      .getElementById("actionType")
+      .value;
+
+
+  const verificationType =
+    document
+      .getElementById(
+        "verificationType"
+      )
+      .value;
+
+
+  const taskLink =
+    document
+      .getElementById("taskLink")
+      .value
+      .trim();
+
+
+  const reward =
+    Number(
+      document
+        .getElementById("reward")
+        .value
+    );
+
+
+  const maxParticipants =
+    Number(
+      document
+        .getElementById(
+          "maxParticipants"
+        )
+        .value
+    );
+
+
+  const answerInstruction =
+    document
+      .getElementById(
+        "answerInstruction"
+      )
+      .value
+      .trim();
+
+
+
+  /* =======================================
+     VALIDATION
+  ======================================== */
+
+  if (!title) {
+
+    showError(
+      "Please enter a task title."
+    );
+
+    return;
+
+  }
+
+
+  if (!description) {
+
+    showError(
+      "Please enter task instructions."
+    );
+
+    return;
+
+  }
+
+
+  if (!category) {
+
+    showError(
+      "Please select a category."
+    );
+
+    return;
+
+  }
+
+
+  if (
+    !Number.isFinite(reward) ||
+    reward < 0
+  ) {
+
+    showError(
+      "Please enter a valid reward amount."
+    );
+
+    return;
+
+  }
+
+
+  if (
+    !Number.isInteger(
+      maxParticipants
+    ) ||
+    maxParticipants < 1
+  ) {
+
+    showError(
+      "Maximum participants must be at least 1."
+    );
+
+    return;
+
+  }
+
+
+
+  /* =======================================
+     TYPE-SPECIFIC VALIDATION
+  ======================================== */
+
+  if (
+    taskType === "social" &&
+    !platform
+  ) {
+
+    showError(
+      "Please select a social-media platform."
+    );
+
+    return;
+
+  }
+
+
+  if (
+    taskType === "social" &&
+    !actionType
+  ) {
+
+    showError(
+      "Please select the social-media action."
+    );
+
+    return;
+
+  }
+
+
+  if (
+    (
+      taskType === "question" ||
+      taskType === "riddle"
+    ) &&
+    !answerInstruction
+  ) {
+
+    showError(
+      "Please enter the answer instructions."
+    );
+
+    return;
+
+  }
+
+
+
+  /* =======================================
+     DETERMINE PROOF REQUIREMENT
+  ======================================== */
+
+  let requireProof = true;
+
+
+  if (
+    taskType === "question"
+  ) {
+
+    requireProof = true;
+
+  }
+
+
+  if (
+    taskType === "riddle"
+  ) {
+
+    requireProof = true;
+
+  }
+
+
+  if (
+    taskType === "photo"
+  ) {
+
+    requireProof = true;
+
+  }
+
+
+  if (
+    taskType === "social"
+  ) {
+
+    requireProof = true;
+
+  }
+
+
+
+  /* =======================================
+     PREPARE DESCRIPTION
+     
+     For answer-based tasks, include the
+     creator's answer instruction in the
+     task description so the member can
+     see exactly what is required.
+  ======================================== */
+
+  let finalDescription =
+    description;
+
+
+  if (
+    answerInstruction &&
+    (
+      taskType === "question" ||
+      taskType === "riddle"
+    )
+  ) {
+
+    finalDescription +=
+
+      "\n\nAnswer instructions:\n" +
+
+      answerInstruction;
+
+  }
+
+
+
+  /* =======================================
+     DISABLE BUTTON
+  ======================================== */
+
+  const button =
+    document.getElementById(
+      "createButton"
+    );
+
+
+  button.disabled =
+    true;
+
+
+  button.textContent =
+    "Creating...";
+
+
+
+  try {
+
+
+    /* =====================================
+       INSERT TASK
+       
+       IMPORTANT:
+       Admin-created tasks do NOT charge
+       admin wallet.
+    ====================================== */
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
+
+        .from("tasks")
+
+        .insert({
+
+          title:
+            title,
+
+          description:
+            finalDescription,
+
+          category:
+            category,
+
+          reward_amount:
+            reward,
+
+          status:
+            selectedStatus,
+
+          created_by:
+            currentAdmin.id,
+
+          task_link:
+            taskLink ||
+            null,
+
+          max_participants:
+            maxParticipants,
+
+          user_id:
+            null,
+
+          participant_count:
+            0,
+
+          platform_fee:
+            0,
+
+          total_amount:
+            reward *
+            maxParticipants,
+
+          created_by_admin:
+            true,
+
+          require_proof:
+            requireProof,
+
+          task_type:
+            taskType,
+
+          action_type:
+            taskType === "social"
+              ? actionType
+              : null,
+
+          platform:
+            taskType === "social"
+              ? platform
+              : null,
+
+          verification_type:
+            verificationType
+
+        })
+
+        .select()
+
+        .single();
+
+
+    if (error) {
+
+      throw new Error(
+        error.message
+      );
+
+    }
+
+
+    if (!data) {
+
+      throw new Error(
+        "Task was not created."
+      );
+
+    }
+
+
+
+    /* =====================================
+       SUCCESS
+    ====================================== */
+
+    showSuccess(
+      "Task created successfully."
+    );
+
+
+    /*
+     * Give the success message a moment
+     * before returning to task management.
+     */
+
+    setTimeout(
+      function() {
+
+        window.location.href =
+          "admin-tasks.html";
+
+      },
+      800
+    );
+
+
+  } catch (error) {
+
+    console.error(
+      "Create task error:",
+      error
+    );
+
+
+    showError(
+      error.message ||
+      "Unable to create task."
+    );
+
+
+    button.disabled =
+      false;
+
+
+    button.textContent =
+      "Create Task";
+
+  }
+
+}
+
+
+
+/* =========================================
+   NAVIGATION
+========================================= */
+
+function goBack() {
+
+  window.location.href =
+    "admin-tasks.html";
+
+}
+
+
+
+/* =========================================
+   ALERTS
+========================================= */
+
+function showError(message) {
+
+
+  const box =
+    document.getElementById(
+      "errorAlert"
+    );
+
+
+  box.textContent =
+    message;
+
+
+  box.style.display =
+    "block";
+
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+
+}
+
+
+
+function showSuccess(message) {
+
+
+  const box =
+    document.getElementById(
+      "successAlert"
+    );
+
+
+  box.textContent =
+    message;
+
+
+  box.style.display =
+    "block";
+
+}
+
+
+
+function clearAlerts() {
+
+
+  document.getElementById(
+    "errorAlert"
+  ).style.display =
+    "none";
+
+
+  document.getElementById(
+    "successAlert"
+  ).style.display =
+    "none";
+
+}
+
+
+
+/* =========================================
+   ESCAPE HTML
+========================================= */
+
+function escapeHtml(value) {
+
+  return String(
+    value ?? ""
+  )
+
+    .replaceAll(
+      "&",
+      "&amp;"
+    )
+
+    .replaceAll(
+      "<",
+      "&lt;"
+    )
+
+    .replaceAll(
+      ">",
+      "&gt;"
+    )
+
+    .replaceAll(
+      '"',
+      "&quot;"
+    )
+
+    .replaceAll(
+      "'",
+      "&#039;"
+    );
+
+}
+
+</script>
+
+
+</body>
+
+</html>

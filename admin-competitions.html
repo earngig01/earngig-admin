@@ -76,6 +76,7 @@
       border-radius: 10px;
       margin-bottom: 18px;
       font-size: 14px;
+      line-height: 1.5;
     }
 
     .message.success {
@@ -652,7 +653,6 @@
     </select>
   </div>
 
-  <!-- CREATE / EDIT -->
   <section id="formPanel" class="panel hidden">
 
     <h2 id="formTitle">Create Competition</h2>
@@ -765,7 +765,6 @@
 
       </div>
 
-      <!-- QUIZ TIMER -->
       <div id="quizTimeBox" class="quiz-time-box hidden">
 
         <strong>⏱ Quiz Time Limit</strong>
@@ -787,7 +786,6 @@
 
       </div>
 
-      <!-- PRIZES -->
       <div class="section-title">🎁 Prizes</div>
 
       <div id="prizesContainer"></div>
@@ -800,7 +798,6 @@
         ＋ Add Prize Tier
       </button>
 
-      <!-- QUIZ QUESTIONS -->
       <div id="quizSection">
 
         <div class="section-title">📝 Quiz Questions</div>
@@ -836,7 +833,6 @@
     </form>
   </section>
 
-  <!-- COMPETITION LIST -->
   <section class="panel">
 
     <h2>Competitions</h2>
@@ -847,7 +843,6 @@
 
   </section>
 
-  <!-- DETAILS -->
   <section id="detailPanel" class="panel hidden">
 
     <div style="display:flex; justify-content:space-between; gap:10px; align-items:center;">
@@ -878,14 +873,36 @@
     await verifyAdmin();
   });
 
+  /*
+   * ADMIN VERIFICATION
+   *
+   * Important:
+   * We only redirect to the login page when there is genuinely
+   * no signed-in user.
+   *
+   * We no longer redirect to admin-dashboard.html when the
+   * profiles query itself fails. Instead, the actual error is
+   * displayed on this page so the page does not disappear.
+   */
   async function verifyAdmin() {
     try {
       const {
         data: { user },
-        error
+        error: userError
       } = await supabaseClient.auth.getUser();
 
-      if (error || !user) {
+      if (userError) {
+        console.error("Auth error:", userError);
+
+        showMessage(
+          "Unable to verify your login session. Please refresh the page.",
+          "error"
+        );
+
+        return;
+      }
+
+      if (!user) {
         window.location.href = "index.html";
         return;
       }
@@ -897,15 +914,54 @@
         .from("profiles")
         .select("id, is_admin, account_status, name")
         .eq("id", user.id)
-        .single();
+        .maybeSingle();
+
+      if (profileError) {
+        console.error(
+          "Profile verification error:",
+          profileError
+        );
+
+        showMessage(
+          "Admin verification failed: " +
+          (
+            profileError.message ||
+            "Unable to read your admin profile."
+          ),
+          "error"
+        );
+
+        return;
+      }
+
+      if (!profile) {
+        console.error(
+          "No profile found for signed-in user:",
+          user.id
+        );
+
+        showMessage(
+          "Your EarnGig profile could not be found.",
+          "error"
+        );
+
+        return;
+      }
 
       if (
-        profileError ||
-        !profile ||
         profile.is_admin !== true ||
         profile.account_status !== "active"
       ) {
-        window.location.href = "admin-dashboard.html";
+        console.error(
+          "Admin access denied:",
+          profile
+        );
+
+        showMessage(
+          "Administrator access is required for this page.",
+          "error"
+        );
+
         return;
       }
 
@@ -914,8 +970,14 @@
       await loadCompetitions();
 
     } catch (err) {
+      console.error(
+        "verifyAdmin error:",
+        err
+      );
+
       showMessage(
-        err.message || "Unable to verify administrator.",
+        err.message ||
+        "Unable to verify administrator.",
         "error"
       );
     }
@@ -929,7 +991,9 @@
       } = await supabaseClient
         .from("competitions")
         .select("*")
-        .order("created_at", { ascending: false });
+        .order("created_at", {
+          ascending: false
+        });
 
       if (error) throw error;
 
@@ -939,8 +1003,14 @@
       renderCompetitions();
 
     } catch (err) {
+      console.error(
+        "loadCompetitions error:",
+        err
+      );
+
       showMessage(
-        err.message || "Failed to load competitions.",
+        err.message ||
+        "Failed to load competitions.",
         "error"
       );
     }
@@ -948,33 +1018,51 @@
 
   function updateStats() {
     const count = status =>
-      competitions.filter(x => x.status === status).length;
+      competitions.filter(
+        x => x.status === status
+      ).length;
 
-    document.getElementById("statTotal").textContent =
+    document.getElementById(
+      "statTotal"
+    ).textContent =
       competitions.length;
 
-    document.getElementById("statDraft").textContent =
+    document.getElementById(
+      "statDraft"
+    ).textContent =
       count("draft");
 
-    document.getElementById("statPublished").textContent =
+    document.getElementById(
+      "statPublished"
+    ).textContent =
       count("published");
 
-    document.getElementById("statClosed").textContent =
+    document.getElementById(
+      "statClosed"
+    ).textContent =
       count("closed");
 
-    document.getElementById("statWinners").textContent =
+    document.getElementById(
+      "statWinners"
+    ).textContent =
       count("winners_announced");
 
-    document.getElementById("statCompleted").textContent =
+    document.getElementById(
+      "statCompleted"
+    ).textContent =
       count("completed");
   }
 
   function renderCompetitions() {
     const list =
-      document.getElementById("competitionList");
+      document.getElementById(
+        "competitionList"
+      );
 
     const filter =
-      document.getElementById("statusFilter").value;
+      document.getElementById(
+        "statusFilter"
+      ).value;
 
     const rows =
       filter === "all"
@@ -989,122 +1077,138 @@
       return;
     }
 
-    list.innerHTML = rows.map(c => {
+    list.innerHTML =
+      rows.map(c => {
 
-      const isQuiz =
-        c.competition_type === "quiz" ||
-        c.entry_method === "quiz";
+        const isQuiz =
+          c.competition_type === "quiz" ||
+          c.entry_method === "quiz";
 
-      return `
-        <div class="competition-card">
+        return `
+          <div class="competition-card">
 
-          <div class="competition-top">
+            <div class="competition-top">
 
-            <div>
+              <div>
 
-              <div class="competition-title">
-                ${escapeHtml(c.title)}
+                <div class="competition-title">
+                  ${escapeHtml(c.title)}
+                </div>
+
+                <div class="competition-description">
+                  ${escapeHtml(
+                    c.description ||
+                    "No description."
+                  )}
+                </div>
+
+                <div class="badges">
+
+                  <span class="badge ${escapeHtml(c.status)}">
+                    ${formatStatus(c.status)}
+                  </span>
+
+                  <span class="badge">
+                    ${formatType(c.competition_type)}
+                  </span>
+
+                  <span class="badge">
+                    Entry:
+                    ${formatEntryMethod(c.entry_method)}
+                  </span>
+
+                  ${
+                    isQuiz &&
+                    c.quiz_time_limit_minutes
+                      ? `
+                        <span class="badge">
+                          ⏱
+                          ${c.quiz_time_limit_minutes}
+                          min
+                        </span>
+                      `
+                      : ""
+                  }
+
+                </div>
+
               </div>
 
-              <div class="competition-description">
-                ${escapeHtml(c.description || "No description.")}
+              <button
+                class="btn btn-secondary"
+                onclick="viewCompetition('${c.id}')"
+              >
+                Manage
+              </button>
+
+            </div>
+
+            <div class="competition-meta">
+
+              <div class="meta-item">
+                Start
+                <strong>
+                  ${formatDate(c.start_at)}
+                </strong>
               </div>
 
-              <div class="badges">
-
-                <span class="badge ${escapeHtml(c.status)}">
-                  ${formatStatus(c.status)}
-                </span>
-
-                <span class="badge">
-                  ${formatType(c.competition_type)}
-                </span>
-
-                <span class="badge">
-                  Entry: ${formatEntryMethod(c.entry_method)}
-                </span>
-
-                ${
-                  isQuiz && c.quiz_time_limit_minutes
-                    ? `
-                      <span class="badge">
-                        ⏱ ${c.quiz_time_limit_minutes} min
-                      </span>
-                    `
-                    : ""
-                }
-
+              <div class="meta-item">
+                End
+                <strong>
+                  ${formatDate(c.end_at)}
+                </strong>
               </div>
 
+              <div class="meta-item">
+                Max Participants
+                <strong>
+                  ${c.max_participants || "Unlimited"}
+                </strong>
+              </div>
+
+              <div class="meta-item">
+                Created
+                <strong>
+                  ${formatDate(c.created_at)}
+                </strong>
+              </div>
+
+              ${
+                isQuiz
+                  ? `
+                    <div class="meta-item">
+                      Quiz Time
+                      <strong>
+                        ${
+                          c.quiz_time_limit_minutes
+                            ? `${c.quiz_time_limit_minutes} minutes`
+                            : "Not set"
+                        }
+                      </strong>
+                    </div>
+                  `
+                  : `
+                    <div class="meta-item">
+                      Type
+                      <strong>
+                        ${formatType(
+                          c.competition_type
+                        )}
+                      </strong>
+                    </div>
+                  `
+              }
+
             </div>
 
-            <button
-              class="btn btn-secondary"
-              onclick="viewCompetition('${c.id}')"
-            >
-              Manage
-            </button>
+            <div class="card-actions">
+              ${statusButtons(c)}
+            </div>
 
           </div>
+        `;
 
-          <div class="competition-meta">
-
-            <div class="meta-item">
-              Start
-              <strong>${formatDate(c.start_at)}</strong>
-            </div>
-
-            <div class="meta-item">
-              End
-              <strong>${formatDate(c.end_at)}</strong>
-            </div>
-
-            <div class="meta-item">
-              Max Participants
-              <strong>
-                ${c.max_participants || "Unlimited"}
-              </strong>
-            </div>
-
-            <div class="meta-item">
-              Created
-              <strong>${formatDate(c.created_at)}</strong>
-            </div>
-
-            ${
-              isQuiz
-                ? `
-                  <div class="meta-item">
-                    Quiz Time
-                    <strong>
-                      ${
-                        c.quiz_time_limit_minutes
-                          ? `${c.quiz_time_limit_minutes} minutes`
-                          : "Not set"
-                      }
-                    </strong>
-                  </div>
-                `
-                : `
-                  <div class="meta-item">
-                    Type
-                    <strong>${formatType(c.competition_type)}</strong>
-                  </div>
-                `
-            }
-
-          </div>
-
-          <div class="card-actions">
-
-            ${statusButtons(c)}
-
-          </div>
-
-        </div>
-      `;
-
-    }).join("");
+      }).join("");
   }
 
   function statusButtons(c) {
@@ -1200,16 +1304,26 @@
       .getElementById("formPanel")
       .classList.remove("hidden");
 
-    document.getElementById("formTitle").textContent =
+    document.getElementById(
+      "formTitle"
+    ).textContent =
       "Create Competition";
 
-    document.getElementById("competitionForm").reset();
+    document.getElementById(
+      "competitionForm"
+    ).reset();
 
-    document.getElementById("editingId").value = "";
+    document.getElementById(
+      "editingId"
+    ).value = "";
 
-    document.getElementById("prizesContainer").innerHTML = "";
+    document.getElementById(
+      "prizesContainer"
+    ).innerHTML = "";
 
-    document.getElementById("questionsContainer").innerHTML = "";
+    document.getElementById(
+      "questionsContainer"
+    ).innerHTML = "";
 
     addPrizeRow();
 
@@ -1217,7 +1331,9 @@
 
     window.scrollTo({
       top:
-        document.getElementById("formPanel").offsetTop - 70,
+        document.getElementById(
+          "formPanel"
+        ).offsetTop - 70,
       behavior: "smooth"
     });
   }
@@ -1231,10 +1347,14 @@
   function updateEntryFields() {
 
     const type =
-      document.getElementById("competitionType").value;
+      document.getElementById(
+        "competitionType"
+      ).value;
 
     const method =
-      document.getElementById("entryMethod").value;
+      document.getElementById(
+        "entryMethod"
+      ).value;
 
     const quiz =
       type === "quiz" ||
@@ -1242,21 +1362,31 @@
 
     document
       .getElementById("quizSection")
-      .classList.toggle("hidden", !quiz);
+      .classList.toggle(
+        "hidden",
+        !quiz
+      );
 
     document
       .getElementById("quizTimeBox")
-      .classList.toggle("hidden", !quiz);
+      .classList.toggle(
+        "hidden",
+        !quiz
+      );
 
     if (!quiz) {
-      document.getElementById("quizTimeLimit").value = "";
+      document.getElementById(
+        "quizTimeLimit"
+      ).value = "";
     }
   }
 
   function addPrizeRow(data = {}) {
 
     const container =
-      document.getElementById("prizesContainer");
+      document.getElementById(
+        "prizesContainer"
+      );
 
     const div =
       document.createElement("div");
@@ -1271,7 +1401,9 @@
 
           <input
             class="prize-name"
-            value="${escapeAttr(data.prize_name || "")}"
+            value="${escapeAttr(
+              data.prize_name || ""
+            )}"
             placeholder="e.g. 1st Place"
           >
         </div>
@@ -1280,7 +1412,9 @@
           <label>Prize Type</label>
 
           <select class="prize-type">
-            ${prizeTypeOptions(data.prize_type || "cash")}
+            ${prizeTypeOptions(
+              data.prize_type || "cash"
+            )}
           </select>
         </div>
 
@@ -1302,7 +1436,9 @@
 
           <input
             class="prize-description"
-            value="${escapeAttr(data.item_description || "")}"
+            value="${escapeAttr(
+              data.item_description || ""
+            )}"
             placeholder="Optional physical prize details"
           >
         </div>
@@ -1377,7 +1513,9 @@
   function addQuestionRow(data = {}) {
 
     const container =
-      document.getElementById("questionsContainer");
+      document.getElementById(
+        "questionsContainer"
+      );
 
     const div =
       document.createElement("div");
@@ -1394,7 +1532,9 @@
           <textarea
             class="question-text"
             placeholder="Enter the quiz question"
-          >${escapeHtml(data.question_text || "")}</textarea>
+          >${escapeHtml(
+            data.question_text || ""
+          )}</textarea>
 
         </div>
 
@@ -1404,7 +1544,9 @@
 
           <input
             class="option-a"
-            value="${escapeAttr(data.option_a || "")}"
+            value="${escapeAttr(
+              data.option_a || ""
+            )}"
           >
 
         </div>
@@ -1415,7 +1557,9 @@
 
           <input
             class="option-b"
-            value="${escapeAttr(data.option_b || "")}"
+            value="${escapeAttr(
+              data.option_b || ""
+            )}"
           >
 
         </div>
@@ -1426,7 +1570,9 @@
 
           <input
             class="option-c"
-            value="${escapeAttr(data.option_c || "")}"
+            value="${escapeAttr(
+              data.option_c || ""
+            )}"
           >
 
         </div>
@@ -1437,7 +1583,9 @@
 
           <input
             class="option-d"
-            value="${escapeAttr(data.option_d || "")}"
+            value="${escapeAttr(
+              data.option_d || ""
+            )}"
           >
 
         </div>
@@ -1527,265 +1675,322 @@
 
   document
     .getElementById("competitionForm")
-    .addEventListener("submit", async e => {
+    .addEventListener(
+      "submit",
+      async e => {
 
-      e.preventDefault();
+        e.preventDefault();
 
-      try {
+        try {
 
-        const title =
-          document.getElementById("title").value.trim();
+          const title =
+            document
+              .getElementById("title")
+              .value
+              .trim();
 
-        const description =
-          document
-            .getElementById("description")
-            .value.trim();
+          const description =
+            document
+              .getElementById("description")
+              .value
+              .trim();
 
-        const competitionType =
-          document.getElementById("competitionType").value;
+          const competitionType =
+            document
+              .getElementById("competitionType")
+              .value;
 
-        const entryMethod =
-          document.getElementById("entryMethod").value;
+          const entryMethod =
+            document
+              .getElementById("entryMethod")
+              .value;
 
-        const instructions =
-          document
-            .getElementById("instructions")
-            .value.trim();
+          const instructions =
+            document
+              .getElementById("instructions")
+              .value
+              .trim();
 
-        const eligibility =
-          document
-            .getElementById("eligibility")
-            .value.trim();
+          const eligibility =
+            document
+              .getElementById("eligibility")
+              .value
+              .trim();
 
-        const maxParticipantsValue =
-          document.getElementById("maxParticipants").value;
+          const maxParticipantsValue =
+            document
+              .getElementById("maxParticipants")
+              .value;
 
-        const startAt =
-          document.getElementById("startAt").value;
+          const startAt =
+            document
+              .getElementById("startAt")
+              .value;
 
-        const endAt =
-          document.getElementById("endAt").value;
+          const endAt =
+            document
+              .getElementById("endAt")
+              .value;
 
-        const editingId =
-          document.getElementById("editingId").value;
+          const editingId =
+            document
+              .getElementById("editingId")
+              .value;
 
-        const isQuiz =
-          competitionType === "quiz" ||
-          entryMethod === "quiz";
+          const isQuiz =
+            competitionType === "quiz" ||
+            entryMethod === "quiz";
 
-        const quizTimeValue =
-          document
-            .getElementById("quizTimeLimit")
-            .value;
-
-        if (
-          !title ||
-          !description ||
-          !startAt ||
-          !endAt
-        ) {
-          showMessage(
-            "Please complete all required fields.",
-            "error"
-          );
-          return;
-        }
-
-        if (
-          new Date(endAt) <=
-          new Date(startAt)
-        ) {
-          showMessage(
-            "The end date must be after the start date.",
-            "error"
-          );
-          return;
-        }
-
-        if (isQuiz) {
-
-          const minutes =
-            Number(quizTimeValue);
+          const quizTimeValue =
+            document
+              .getElementById("quizTimeLimit")
+              .value;
 
           if (
-            !Number.isInteger(minutes) ||
-            minutes < 1 ||
-            minutes > 1440
+            !title ||
+            !description ||
+            !startAt ||
+            !endAt
           ) {
             showMessage(
-              "Quiz time limit must be between 1 and 1440 minutes.",
+              "Please complete all required fields.",
               "error"
             );
             return;
           }
-        }
 
-        const competitionData = {
+          if (
+            new Date(endAt) <=
+            new Date(startAt)
+          ) {
+            showMessage(
+              "The end date must be after the start date.",
+              "error"
+            );
+            return;
+          }
 
-          title,
+          if (isQuiz) {
 
-          description,
+            const minutes =
+              Number(quizTimeValue);
 
-          competition_type:
+            if (
+              !Number.isInteger(minutes) ||
+              minutes < 1 ||
+              minutes > 1440
+            ) {
+              showMessage(
+                "Quiz time limit must be between 1 and 1440 minutes.",
+                "error"
+              );
+              return;
+            }
+          }
+
+          const competitionData = {
+
+            title,
+
+            description,
+
+            competition_type:
+              competitionType,
+
+            entry_method:
+              entryMethod,
+
+            instructions:
+              instructions || null,
+
+            eligibility:
+              eligibility || null,
+
+            max_participants:
+              maxParticipantsValue
+                ? Number(
+                    maxParticipantsValue
+                  )
+                : null,
+
+            start_at:
+              new Date(
+                startAt
+              ).toISOString(),
+
+            end_at:
+              new Date(
+                endAt
+              ).toISOString(),
+
+            quiz_time_limit_minutes:
+              isQuiz
+                ? Number(
+                    quizTimeValue
+                  )
+                : null,
+
+            updated_at:
+              new Date().toISOString()
+          };
+
+          let competitionId =
+            editingId;
+
+          if (editingId) {
+
+            const {
+              error
+            } = await supabaseClient
+              .from("competitions")
+              .update(
+                competitionData
+              )
+              .eq(
+                "id",
+                editingId
+              );
+
+            if (error) throw error;
+
+          } else {
+
+            competitionData.status =
+              "draft";
+
+            competitionData.created_by =
+              adminUser.id;
+
+            const {
+              data,
+              error
+            } = await supabaseClient
+              .from("competitions")
+              .insert(
+                competitionData
+              )
+              .select()
+              .single();
+
+            if (error) throw error;
+
+            competitionId =
+              data.id;
+          }
+
+          await savePrizes(
+            competitionId
+          );
+
+          await saveQuestions(
+            competitionId,
             competitionType,
+            entryMethod
+          );
 
-          entry_method:
-            entryMethod,
+          showMessage(
+            editingId
+              ? "Competition updated successfully."
+              : "Competition created successfully as Draft.",
+            "success"
+          );
 
-          instructions:
-            instructions || null,
+          closeForm();
 
-          eligibility:
-            eligibility || null,
+          await loadCompetitions();
 
-          max_participants:
-            maxParticipantsValue
-              ? Number(maxParticipantsValue)
-              : null,
+        } catch (err) {
 
-          start_at:
-            new Date(startAt).toISOString(),
+          console.error(
+            "Competition save error:",
+            err
+          );
 
-          end_at:
-            new Date(endAt).toISOString(),
-
-          quiz_time_limit_minutes:
-            isQuiz
-              ? Number(quizTimeValue)
-              : null,
-
-          updated_at:
-            new Date().toISOString()
-        };
-
-        let competitionId =
-          editingId;
-
-        if (editingId) {
-
-          const {
-            error
-          } = await supabaseClient
-            .from("competitions")
-            .update(competitionData)
-            .eq("id", editingId);
-
-          if (error) throw error;
-
-        } else {
-
-          competitionData.status =
-            "draft";
-
-          competitionData.created_by =
-            adminUser.id;
-
-          const {
-            data,
-            error
-          } = await supabaseClient
-            .from("competitions")
-            .insert(competitionData)
-            .select()
-            .single();
-
-          if (error) throw error;
-
-          competitionId =
-            data.id;
+          showMessage(
+            err.message ||
+            "Unable to save competition.",
+            "error"
+          );
         }
-
-        await savePrizes(
-          competitionId
-        );
-
-        await saveQuestions(
-          competitionId,
-          competitionType,
-          entryMethod
-        );
-
-        showMessage(
-          editingId
-            ? "Competition updated successfully."
-            : "Competition created successfully as Draft.",
-          "success"
-        );
-
-        closeForm();
-
-        await loadCompetitions();
-
-      } catch (err) {
-
-        showMessage(
-          err.message ||
-          "Unable to save competition.",
-          "error"
-        );
       }
-    });
+    );
 
-  async function savePrizes(competitionId) {
+  async function savePrizes(
+    competitionId
+  ) {
 
-    const rows =
-      [
-        ...document.querySelectorAll(
-          ".prize-row"
-        )
-      ];
+    const rows = [
+      ...document.querySelectorAll(
+        ".prize-row"
+      )
+    ];
 
     const prizes =
-      rows.map((row, index) => ({
+      rows.map(
+        (row, index) => ({
 
-        competition_id:
-          competitionId,
+          competition_id:
+            competitionId,
 
-        prize_name:
-          row
-            .querySelector(".prize-name")
-            .value
-            .trim() ||
-          `Prize ${index + 1}`,
-
-        prize_type:
-          row
-            .querySelector(".prize-type")
-            .value,
-
-        amount:
-          row
-            .querySelector(".prize-amount")
-            .value
-            ? Number(
-                row
-                  .querySelector(".prize-amount")
-                  .value
+          prize_name:
+            row
+              .querySelector(
+                ".prize-name"
               )
-            : null,
-
-        item_description:
-          row
-            .querySelector(".prize-description")
-            .value
-            .trim() ||
-          null,
-
-        winner_count:
-          Number(
-            row
-              .querySelector(".prize-winners")
               .value
-          ) || 1,
+              .trim() ||
+            `Prize ${index + 1}`,
 
-        prize_order:
-          Number(
+          prize_type:
             row
-              .querySelector(".prize-order")
-              .value
-          ) || index + 1
+              .querySelector(
+                ".prize-type"
+              )
+              .value,
 
-      }));
+          amount:
+            row
+              .querySelector(
+                ".prize-amount"
+              )
+              .value
+              ? Number(
+                  row
+                    .querySelector(
+                      ".prize-amount"
+                    )
+                    .value
+                )
+              : null,
+
+          item_description:
+            row
+              .querySelector(
+                ".prize-description"
+              )
+              .value
+              .trim() ||
+            null,
+
+          winner_count:
+            Number(
+              row
+                .querySelector(
+                  ".prize-winners"
+                )
+                .value
+            ) || 1,
+
+          prize_order:
+            Number(
+              row
+                .querySelector(
+                  ".prize-order"
+                )
+                .value
+            ) || index + 1
+        })
+      );
 
     const {
       error: deleteError
@@ -1841,65 +2046,79 @@
       return;
     }
 
-    const rows =
-      [
-        ...document.querySelectorAll(
-          ".question-row"
-        )
-      ];
+    const rows = [
+      ...document.querySelectorAll(
+        ".question-row"
+      )
+    ];
 
     const questions =
-      rows.map((row, index) => ({
+      rows.map(
+        (row, index) => ({
 
-        competition_id:
-          competitionId,
+          competition_id:
+            competitionId,
 
-        question_text:
-          row
-            .querySelector(".question-text")
-            .value
-            .trim(),
-
-        option_a:
-          row
-            .querySelector(".option-a")
-            .value
-            .trim(),
-
-        option_b:
-          row
-            .querySelector(".option-b")
-            .value
-            .trim(),
-
-        option_c:
-          row
-            .querySelector(".option-c")
-            .value
-            .trim(),
-
-        option_d:
-          row
-            .querySelector(".option-d")
-            .value
-            .trim(),
-
-        correct_option:
-          row
-            .querySelector(".correct-option")
-            .value,
-
-        question_order:
-          index + 1,
-
-        points:
-          Number(
+          question_text:
             row
-              .querySelector(".question-points")
+              .querySelector(
+                ".question-text"
+              )
               .value
-          ) || 0
+              .trim(),
 
-      }));
+          option_a:
+            row
+              .querySelector(
+                ".option-a"
+              )
+              .value
+              .trim(),
+
+          option_b:
+            row
+              .querySelector(
+                ".option-b"
+              )
+              .value
+              .trim(),
+
+          option_c:
+            row
+              .querySelector(
+                ".option-c"
+              )
+              .value
+              .trim(),
+
+          option_d:
+            row
+              .querySelector(
+                ".option-d"
+              )
+              .value
+              .trim(),
+
+          correct_option:
+            row
+              .querySelector(
+                ".correct-option"
+              )
+              .value,
+
+          question_order:
+            index + 1,
+
+          points:
+            Number(
+              row
+                .querySelector(
+                  ".question-points"
+                )
+                .value
+            ) || 0
+        })
+      );
 
     for (const q of questions) {
 
@@ -1954,7 +2173,9 @@
           x => x.id === id
         );
 
-      if (!competition) return;
+      if (!competition) {
+        return;
+      }
 
       const [
         {
@@ -1982,7 +2203,9 @@
             "competition_id",
             id
           )
-          .order("prize_order"),
+          .order(
+            "prize_order"
+          ),
 
         supabaseClient
           .from("competition_questions")
@@ -1991,7 +2214,9 @@
             "competition_id",
             id
           )
-          .order("question_order"),
+          .order(
+            "question_order"
+          ),
 
         supabaseClient
           .from("competition_entries")
@@ -2017,13 +2242,23 @@
           .order(
             "winner_position"
           )
-
       ]);
 
-      if (prizeError) throw prizeError;
-      if (questionError) throw questionError;
-      if (entryError) throw entryError;
-      if (winnerError) throw winnerError;
+      if (prizeError) {
+        throw prizeError;
+      }
+
+      if (questionError) {
+        throw questionError;
+      }
+
+      if (entryError) {
+        throw entryError;
+      }
+
+      if (winnerError) {
+        throw winnerError;
+      }
 
       renderDetail(
         competition,
@@ -2034,6 +2269,11 @@
       );
 
     } catch (err) {
+
+      console.error(
+        "viewCompetition error:",
+        err
+      );
 
       showMessage(
         err.message ||
@@ -2053,7 +2293,8 @@
 
     document.getElementById(
       "detailTitle"
-    ).textContent = c.title;
+    ).textContent =
+      c.title;
 
     const isQuiz =
       c.competition_type === "quiz" ||
@@ -2061,101 +2302,107 @@
 
     const prizeHtml =
       prizes.length
-        ? prizes.map(p => `
-            <div class="prize-display">
+        ? prizes.map(
+            p => `
+              <div class="prize-display">
 
-              <strong>
-                ${escapeHtml(
-                  p.prize_name ||
-                  "Prize"
-                )}
-              </strong>
+                <strong>
+                  ${escapeHtml(
+                    p.prize_name ||
+                    "Prize"
+                  )}
+                </strong>
 
-              <div class="entry-text">
+                <div class="entry-text">
 
-                Type:
-                ${formatPrizeType(
-                  p.prize_type
-                )}
+                  Type:
+                  ${formatPrizeType(
+                    p.prize_type
+                  )}
 
-                ${
-                  p.amount !== null
-                    ? ` · ₦${formatMoney(p.amount)}`
-                    : ""
-                }
+                  ${
+                    p.amount !== null
+                      ? ` · ₦${formatMoney(
+                          p.amount
+                        )}`
+                      : ""
+                  }
 
-                · ${p.winner_count}
-                winner${
-                  p.winner_count === 1
-                    ? ""
-                    : "s"
-                }
+                  · ${p.winner_count}
+                  winner${
+                    p.winner_count === 1
+                      ? ""
+                      : "s"
+                  }
 
-                ${
-                  p.item_description
-                    ? `<br>${escapeHtml(
-                        p.item_description
-                      )}`
-                    : ""
-                }
+                  ${
+                    p.item_description
+                      ? `<br>${escapeHtml(
+                          p.item_description
+                        )}`
+                      : ""
+                  }
+
+                </div>
 
               </div>
-
-            </div>
-          `).join("")
+            `
+          ).join("")
         : `<div class="empty">No prizes configured.</div>`;
 
     const questionHtml =
       questions.length
-        ? questions.map((q, i) => `
-            <div class="question-display">
+        ? questions.map(
+            (q, i) => `
+              <div class="question-display">
 
-              <strong>
-                ${i + 1}.
-                ${escapeHtml(
-                  q.question_text
-                )}
-              </strong>
-
-              <div
-                class="entry-text"
-                style="margin-top:6px;"
-              >
-
-                A:
-                ${escapeHtml(q.option_a)}
-                <br>
-
-                B:
-                ${escapeHtml(q.option_b)}
-                <br>
-
-                C:
-                ${escapeHtml(q.option_c)}
-                <br>
-
-                D:
-                ${escapeHtml(q.option_d)}
-                <br>
-
-                Correct:
                 <strong>
+                  ${i + 1}.
                   ${escapeHtml(
-                    q.correct_option
+                    q.question_text
                   )}
                 </strong>
 
-                · ${q.points}
-                point${
-                  q.points === 1
-                    ? ""
-                    : "s"
-                }
+                <div
+                  class="entry-text"
+                  style="margin-top:6px;"
+                >
+
+                  A:
+                  ${escapeHtml(q.option_a)}
+                  <br>
+
+                  B:
+                  ${escapeHtml(q.option_b)}
+                  <br>
+
+                  C:
+                  ${escapeHtml(q.option_c)}
+                  <br>
+
+                  D:
+                  ${escapeHtml(q.option_d)}
+                  <br>
+
+                  Correct:
+                  <strong>
+                    ${escapeHtml(
+                      q.correct_option
+                    )}
+                  </strong>
+
+                  · ${q.points}
+                  point${
+                    q.points === 1
+                      ? ""
+                      : "s"
+                  }
+
+                </div>
 
               </div>
-
-            </div>
-          `).join("")
+            `
+          ).join("")
         : `<div class="empty">No quiz questions.</div>`;
 
     const entryHtml =
@@ -2172,47 +2419,49 @@
 
     const winnerHtml =
       winners.length
-        ? winners.map(w => `
-            <div class="winner-card">
+        ? winners.map(
+            w => `
+              <div class="winner-card">
 
-              <strong>
-                Position ${w.winner_position}
-              </strong>
+                <strong>
+                  Position ${w.winner_position}
+                </strong>
 
-              <div class="entry-text">
+                <div class="entry-text">
 
-                User:
-                ${escapeHtml(w.user_id)}
+                  User:
+                  ${escapeHtml(w.user_id)}
 
-                <br>
+                  <br>
 
-                Status:
-                ${formatStatus(
-                  w.winner_status
-                )}
+                  Status:
+                  ${formatStatus(
+                    w.winner_status
+                  )}
 
-                ${
-                  w.prize_id
-                    ? `<br>Prize ID:
-                       ${escapeHtml(
-                         w.prize_id
-                       )}`
-                    : ""
-                }
+                  ${
+                    w.prize_id
+                      ? `<br>Prize ID:
+                         ${escapeHtml(
+                           w.prize_id
+                         )}`
+                      : ""
+                  }
 
-                ${
-                  w.fulfillment_note
-                    ? `<br>Note:
-                       ${escapeHtml(
-                         w.fulfillment_note
-                       )}`
-                    : ""
-                }
+                  ${
+                    w.fulfillment_note
+                      ? `<br>Note:
+                         ${escapeHtml(
+                           w.fulfillment_note
+                         )}`
+                      : ""
+                  }
+
+                </div>
 
               </div>
-
-            </div>
-          `).join("")
+            `
+          ).join("")
         : `<div class="empty">No winners selected yet.</div>`;
 
     document.getElementById(
@@ -2439,22 +2688,24 @@
                               e.id
                           )
                       )
-                      .map(e => `
-                        <option value="${e.id}">
+                      .map(
+                        e => `
+                          <option value="${e.id}">
 
-                          ${escapeHtml(
-                            e.user_id
-                          )}
+                            ${escapeHtml(
+                              e.user_id
+                            )}
 
-                          —
-                          ${
-                            e.score !== null
-                              ? `Score ${e.score}`
-                              : "Entry"
-                          }
+                            —
+                            ${
+                              e.score !== null
+                                ? `Score ${e.score}`
+                                : "Entry"
+                            }
 
-                        </option>
-                      `)
+                          </option>
+                        `
+                      )
                       .join("")}
 
                   </select>
@@ -2471,23 +2722,27 @@
                       No prize assigned
                     </option>
 
-                    ${prizes.map(p => `
-                      <option value="${p.id}">
+                    ${prizes
+                      .map(
+                        p => `
+                          <option value="${p.id}">
 
-                        ${escapeHtml(
-                          p.prize_name
-                        )}
+                            ${escapeHtml(
+                              p.prize_name
+                            )}
 
-                        ${
-                          p.amount !== null
-                            ? ` — ₦${formatMoney(
-                                p.amount
-                              )}`
-                            : ""
-                        }
+                            ${
+                              p.amount !== null
+                                ? ` — ₦${formatMoney(
+                                    p.amount
+                                  )}`
+                                : ""
+                            }
 
-                      </option>
-                    `).join("")}
+                          </option>
+                        `
+                      )
+                      .join("")}
 
                   </select>
 
@@ -2588,36 +2843,45 @@
               entry.entry_status !==
               "disqualified"
           )
-          .sort((a, b) => {
+          .sort(
+            (a, b) => {
 
-            const scoreA =
-              Number(a.score ?? -1);
+              const scoreA =
+                Number(
+                  a.score ?? -1
+                );
 
-            const scoreB =
-              Number(b.score ?? -1);
+              const scoreB =
+                Number(
+                  b.score ?? -1
+                );
 
-            if (scoreA !== scoreB) {
-              return scoreB - scoreA;
+              if (
+                scoreA !==
+                scoreB
+              ) {
+                return scoreB - scoreA;
+              }
+
+              const timeA =
+                a.time_taken_seconds === null ||
+                a.time_taken_seconds === undefined
+                  ? Number.MAX_SAFE_INTEGER
+                  : Number(
+                      a.time_taken_seconds
+                    );
+
+              const timeB =
+                b.time_taken_seconds === null ||
+                b.time_taken_seconds === undefined
+                  ? Number.MAX_SAFE_INTEGER
+                  : Number(
+                      b.time_taken_seconds
+                    );
+
+              return timeA - timeB;
             }
-
-            const timeA =
-              a.time_taken_seconds === null ||
-              a.time_taken_seconds === undefined
-                ? Number.MAX_SAFE_INTEGER
-                : Number(
-                    a.time_taken_seconds
-                  );
-
-            const timeB =
-              b.time_taken_seconds === null ||
-              b.time_taken_seconds === undefined
-                ? Number.MAX_SAFE_INTEGER
-                : Number(
-                    b.time_taken_seconds
-                  );
-
-            return timeA - timeB;
-          });
+          );
 
       renderResults(
         competition,
@@ -2625,6 +2889,11 @@
       );
 
     } catch (err) {
+
+      console.error(
+        "viewResults error:",
+        err
+      );
 
       showMessage(
         err.message ||
@@ -2665,8 +2934,12 @@
 
     target.innerHTML = `
 
-      <div class="entry-text" style="margin-bottom:12px;">
-        Ranked by <strong>highest score first</strong>.
+      <div
+        class="entry-text"
+        style="margin-bottom:12px;"
+      >
+        Ranked by
+        <strong>highest score first</strong>.
         Equal scores are ranked by
         <strong>fastest completion time</strong>.
       </div>
@@ -2680,19 +2953,12 @@
             <tr>
 
               <th>Position</th>
-
               <th>Member</th>
-
               <th>Score</th>
-
               <th>Correct</th>
-
               <th>Percentage</th>
-
               <th>Time Taken</th>
-
               <th>Status</th>
-
               <th>Submitted</th>
 
             </tr>
@@ -2701,128 +2967,130 @@
 
           <tbody>
 
-            ${entries.map((entry, index) => {
+            ${entries.map(
+              (entry, index) => {
 
-              const position =
-                index + 1;
+                const position =
+                  index + 1;
 
-              const score =
-                entry.score !== null
-                  ? Number(
-                      entry.score
-                    )
-                  : 0;
+                const score =
+                  entry.score !== null
+                    ? Number(
+                        entry.score
+                      )
+                    : 0;
 
-              const totalQuestions =
-                Number(
-                  entry.total_questions ||
-                  0
-                );
+                const totalQuestions =
+                  Number(
+                    entry.total_questions ||
+                    0
+                  );
 
-              const correct =
-                entry.correct_answers !== null
-                  ? Number(
-                      entry.correct_answers
-                    )
-                  : null;
+                const correct =
+                  entry.correct_answers !== null
+                    ? Number(
+                        entry.correct_answers
+                      )
+                    : null;
 
-              let percentage = "—";
+                let percentage =
+                  "—";
 
-              if (
-                correct !== null &&
-                totalQuestions > 0
-              ) {
-                percentage =
-                  (
-                    correct /
-                    totalQuestions *
-                    100
-                  ).toFixed(2) +
-                  "%";
+                if (
+                  correct !== null &&
+                  totalQuestions > 0
+                ) {
+                  percentage =
+                    (
+                      correct /
+                      totalQuestions *
+                      100
+                    ).toFixed(2) +
+                    "%";
+                }
+
+                return `
+
+                  <tr>
+
+                    <td>
+
+                      <span
+                        class="rank ${
+                          position === 1
+                            ? "top-rank"
+                            : ""
+                        }"
+                      >
+                        ${position}
+                      </span>
+
+                    </td>
+
+                    <td>
+
+                      <strong>
+                        ${escapeHtml(
+                          entry.user_id
+                        )}
+                      </strong>
+
+                    </td>
+
+                    <td>
+
+                      <span class="score">
+                        ${score}
+                      </span>
+
+                    </td>
+
+                    <td>
+                      ${
+                        correct !== null
+                          ? `${correct}/${totalQuestions}`
+                          : "—"
+                      }
+                    </td>
+
+                    <td>
+                      ${percentage}
+                    </td>
+
+                    <td>
+                      ${
+                        entry.time_taken_seconds !==
+                          null &&
+                        entry.time_taken_seconds !==
+                          undefined
+                          ? formatDuration(
+                              entry.time_taken_seconds
+                            )
+                          : "—"
+                      }
+                    </td>
+
+                    <td>
+
+                      <span class="result-status">
+                        ${formatStatus(
+                          entry.entry_status
+                        )}
+                      </span>
+
+                    </td>
+
+                    <td>
+                      ${formatDate(
+                        entry.submitted_at
+                      )}
+                    </td>
+
+                  </tr>
+
+                `;
               }
-
-              return `
-
-                <tr>
-
-                  <td>
-
-                    <span
-                      class="rank ${
-                        position === 1
-                          ? "top-rank"
-                          : ""
-                      }"
-                    >
-                      ${position}
-                    </span>
-
-                  </td>
-
-                  <td>
-
-                    <strong>
-                      ${escapeHtml(
-                        entry.user_id
-                      )}
-                    </strong>
-
-                  </td>
-
-                  <td>
-
-                    <span class="score">
-                      ${score}
-                    </span>
-
-                  </td>
-
-                  <td>
-                    ${
-                      correct !== null
-                        ? `${correct}/${totalQuestions}`
-                        : "—"
-                    }
-                  </td>
-
-                  <td>
-                    ${percentage}
-                  </td>
-
-                  <td>
-                    ${
-                      entry.time_taken_seconds !==
-                        null &&
-                      entry.time_taken_seconds !==
-                        undefined
-                        ? formatDuration(
-                            entry.time_taken_seconds
-                          )
-                        : "—"
-                    }
-                  </td>
-
-                  <td>
-
-                    <span class="result-status">
-                      ${formatStatus(
-                        entry.entry_status
-                      )}
-                    </span>
-
-                  </td>
-
-                  <td>
-                    ${formatDate(
-                      entry.submitted_at
-                    )}
-                  </td>
-
-                </tr>
-
-              `;
-
-            }).join("")}
+            ).join("")}
 
           </tbody>
 
@@ -3067,6 +3335,11 @@
 
     } catch (err) {
 
+      console.error(
+        "reviewEntry error:",
+        err
+      );
+
       showMessage(
         err.message ||
         "Unable to update entry.",
@@ -3173,6 +3446,11 @@
 
     } catch (err) {
 
+      console.error(
+        "selectWinner error:",
+        err
+      );
+
       showMessage(
         err.message ||
         "Unable to select winner.",
@@ -3212,7 +3490,9 @@
         x => x.id === id
       );
 
-    if (!competition) return;
+    if (!competition) {
+      return;
+    }
 
     const actionText = {
 
@@ -3313,6 +3593,11 @@
 
     } catch (err) {
 
+      console.error(
+        "changeStatus error:",
+        err
+      );
+
       showMessage(
         err.message ||
         "Unable to update competition.",
@@ -3321,7 +3606,9 @@
     }
   }
 
-  async function editCompetition(id) {
+  async function editCompetition(
+    id
+  ) {
 
     try {
 
@@ -3330,7 +3617,9 @@
           x => x.id === id
         );
 
-      if (!competition) return;
+      if (!competition) {
+        return;
+      }
 
       const [
         {
@@ -3350,7 +3639,9 @@
             "competition_id",
             id
           )
-          .order("prize_order"),
+          .order(
+            "prize_order"
+          ),
 
         supabaseClient
           .from("competition_questions")
@@ -3359,12 +3650,19 @@
             "competition_id",
             id
           )
-          .order("question_order")
+          .order(
+            "question_order"
+          )
 
       ]);
 
-      if (prizeError) throw prizeError;
-      if (questionError) throw questionError;
+      if (prizeError) {
+        throw prizeError;
+      }
+
+      if (questionError) {
+        throw questionError;
+      }
 
       document
         .getElementById("formPanel")
@@ -3477,6 +3775,11 @@
 
     } catch (err) {
 
+      console.error(
+        "editCompetition error:",
+        err
+      );
+
       showMessage(
         err.message ||
         "Unable to load competition for editing.",
@@ -3517,15 +3820,18 @@
     );
 
     window.messageTimer =
-      setTimeout(() => {
+      setTimeout(
+        () => {
 
-        box.className =
-          "message";
+          box.className =
+            "message";
 
-        box.textContent =
-          "";
+          box.textContent =
+            "";
 
-      }, 5000);
+        },
+        7000
+      );
   }
 
   function formatDate(
@@ -3743,17 +4049,29 @@
     if (hours > 0) {
 
       return `${hours}h ${
-        String(minutes).padStart(2, "0")
+        String(minutes).padStart(
+          2,
+          "0"
+        )
       }m ${
-        String(secs).padStart(2, "0")
+        String(secs).padStart(
+          2,
+          "0"
+        )
       }s`;
 
     }
 
     return `${
-      String(minutes).padStart(2, "0")
+      String(minutes).padStart(
+        2,
+        "0"
+      )
     }:${
-      String(secs).padStart(2, "0")
+      String(secs).padStart(
+        2,
+        "0"
+      )
     }`;
   }
 

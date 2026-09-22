@@ -912,7 +912,7 @@
         error: profileError
       } = await supabaseClient
         .from("profiles")
-        .select("id, is_admin, account_status, name")
+        .select("id, is_admin, account_status")
         .eq("id", user.id)
         .maybeSingle();
 

@@ -10,10 +10,7 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title>Rankings | EarnGig Admin</title>
-
-
-  <!-- SUPABASE -->
+  <title>Rankings | EarnGig</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -36,17 +33,17 @@
         sans-serif;
 
       background:
-        #070817;
+        #050617;
 
       color:
-        #ffffff;
+        #f7f7ff;
 
     }
 
 
-    /* ========================================
+    /* =====================================
        HEADER
-    ======================================== */
+    ===================================== */
 
     header {
 
@@ -63,13 +60,445 @@
     .nav {
 
       max-width:
-        1200px;
+        1250px;
 
       margin:
         auto;
 
       padding:
-        16px 20px;
+        18px 22px;
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        space-between;
+
+      gap:
+        20px;
+
+    }
+
+
+    .logo {
+
+      color:
+        white;
+
+      text-decoration:
+        none;
+
+      font-size:
+        27px;
+
+      font-weight:
+        800;
+
+    }
+
+
+    .logo span {
+
+      color:
+        #7c5cff;
+
+    }
+
+
+    .dashboard-btn {
+
+      border:
+        1px solid
+        rgba(255,255,255,.15);
+
+      background:
+        rgba(255,255,255,.04);
+
+      color:
+        white;
+
+      padding:
+        10px 16px;
+
+      border-radius:
+        9px;
+
+      cursor:
+        pointer;
+
+      font-size:
+        14px;
+
+    }
+
+
+    .dashboard-btn:hover {
+
+      background:
+        rgba(124,92,255,.15);
+
+    }
+
+
+
+    /* =====================================
+       MAIN
+    ===================================== */
+
+    main {
+
+      max-width:
+        1250px;
+
+      margin:
+        auto;
+
+      padding:
+        35px 20px 60px;
+
+    }
+
+
+    .page-title {
+
+      margin-bottom:
+        25px;
+
+    }
+
+
+    .page-title h1 {
+
+      margin:
+        0 0 7px;
+
+      font-size:
+        34px;
+
+    }
+
+
+    .page-title p {
+
+      margin:
+        0;
+
+      color:
+        #9294b7;
+
+      font-size:
+        15px;
+
+    }
+
+
+
+    /* =====================================
+       CATEGORY TABS
+    ===================================== */
+
+    .categories {
+
+      display:
+        grid;
+
+      grid-template-columns:
+        repeat(
+          4,
+          1fr
+        );
+
+      gap:
+        12px;
+
+      margin-bottom:
+        20px;
+
+    }
+
+
+    .category-btn {
+
+      min-height:
+        88px;
+
+      border:
+        1px solid
+        #252a55;
+
+      background:
+        #0d1130;
+
+      color:
+        white;
+
+      border-radius:
+        12px;
+
+      padding:
+        16px;
+
+      cursor:
+        pointer;
+
+      text-align:
+        left;
+
+      transition:
+        .2s ease;
+
+    }
+
+
+    .category-btn:hover {
+
+      border-color:
+        #6948ff;
+
+      background:
+        #111640;
+
+    }
+
+
+    .category-btn.active {
+
+      background:
+        linear-gradient(
+          135deg,
+          #6738ff,
+          #8b55ff
+        );
+
+      border-color:
+        #8b55ff;
+
+      box-shadow:
+        0 8px 25px
+        rgba(105,72,255,.22);
+
+    }
+
+
+    .category-icon {
+
+      font-size:
+        24px;
+
+      margin-bottom:
+        8px;
+
+    }
+
+
+    .category-title {
+
+      display:
+        block;
+
+      font-size:
+        16px;
+
+      font-weight:
+        700;
+
+    }
+
+
+    .category-description {
+
+      display:
+        block;
+
+      margin-top:
+        5px;
+
+      color:
+        #aaaed0;
+
+      font-size:
+        12px;
+
+    }
+
+
+    .category-btn.active
+    .category-description {
+
+      color:
+        #eeeaff;
+
+    }
+
+
+
+    /* =====================================
+       CONTROL PANEL
+    ===================================== */
+
+    .controls {
+
+      background:
+        #0d1130;
+
+      border:
+        1px solid
+        #252a55;
+
+      border-radius:
+        13px;
+
+      padding:
+        18px;
+
+      display:
+        grid;
+
+      grid-template-columns:
+        1fr 1fr;
+
+      gap:
+        14px;
+
+      margin-bottom:
+        20px;
+
+    }
+
+
+    .field label {
+
+      display:
+        block;
+
+      margin-bottom:
+        8px;
+
+      color:
+        #aaaed0;
+
+      font-size:
+        13px;
+
+    }
+
+
+    select {
+
+      width:
+        100%;
+
+      padding:
+        13px;
+
+      border:
+        1px solid
+        #34396d;
+
+      border-radius:
+        9px;
+
+      background:
+        #07091b;
+
+      color:
+        white;
+
+      font-size:
+        14px;
+
+      outline:
+        none;
+
+    }
+
+
+    select:focus {
+
+      border-color:
+        #754cff;
+
+    }
+
+
+    .refresh-btn {
+
+      width:
+        100%;
+
+      height:
+        46px;
+
+      margin-top:
+        21px;
+
+      border:
+        0;
+
+      border-radius:
+        9px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #663cff,
+          #8b50ff
+        );
+
+      color:
+        white;
+
+      font-weight:
+        700;
+
+      cursor:
+        pointer;
+
+    }
+
+
+    .refresh-btn:hover {
+
+      opacity:
+        .92;
+
+    }
+
+
+
+    /* =====================================
+       RANKING CARD
+    ===================================== */
+
+    .ranking-card {
+
+      background:
+        #0d1130;
+
+      border:
+        1px solid
+        #252a55;
+
+      border-radius:
+        13px;
+
+      overflow:
+        hidden;
+
+    }
+
+
+    .ranking-header {
+
+      padding:
+        22px;
+
+      border-bottom:
+        1px solid
+        #252a55;
 
       display:
         flex;
@@ -86,51 +515,24 @@
     }
 
 
-    .brand {
+    .ranking-header h2 {
 
-      color:
-        white;
-
-      text-decoration:
-        none;
+      margin:
+        0 0 6px;
 
       font-size:
-        22px;
-
-      font-weight:
-        700;
+        23px;
 
     }
 
 
-    .brand span {
+    .ranking-header p {
+
+      margin:
+        0;
 
       color:
-        #7c5cff;
-
-    }
-
-
-    .back-btn {
-
-      border:
-        1px solid
-        rgba(255,255,255,.12);
-
-      background:
-        rgba(255,255,255,.04);
-
-      color:
-        #ffffff;
-
-      padding:
-        9px 14px;
-
-      border-radius:
-        9px;
-
-      text-decoration:
-        none;
+        #9699bd;
 
       font-size:
         13px;
@@ -138,316 +540,34 @@
     }
 
 
-    .back-btn:hover {
-
-      background:
-        rgba(255,255,255,.08);
-
-    }
-
-
-
-    /* ========================================
-       MAIN
-    ======================================== */
-
-    main {
-
-      max-width:
-        1200px;
-
-      margin:
-        auto;
+    .period-badge {
 
       padding:
-        30px 20px 60px;
-
-    }
-
-
-    .page-title {
-
-      margin-bottom:
-        22px;
-
-    }
-
-
-    .page-title h1 {
-
-      margin:
-        0 0 7px;
-
-      font-size:
-        30px;
-
-    }
-
-
-    .page-title p {
-
-      margin:
-        0;
-
-      color:
-        #8d90aa;
-
-      font-size:
-        14px;
-
-    }
-
-
-
-    /* ========================================
-       CONTROL PANEL
-    ======================================== */
-
-    .controls {
-
-      background:
-        #101331;
+        8px 13px;
 
       border:
         1px solid
-        rgba(255,255,255,.08);
+        #353a69;
 
       border-radius:
-        14px;
-
-      padding:
-        18px;
-
-      margin-bottom:
-        18px;
-
-    }
-
-
-    .controls-grid {
-
-      display:
-        grid;
-
-      grid-template-columns:
-        1fr
-        1fr;
-
-      gap:
-        14px;
-
-    }
-
-
-    .field label {
-
-      display:
-        block;
-
-      margin-bottom:
-        7px;
+        20px;
 
       color:
-        #aeb1c8;
+        #c8caff;
 
       font-size:
         12px;
 
-      font-weight:
-        700;
-
-    }
-
-
-    select {
-
-      width:
-        100%;
-
-      background:
-        #080a1b;
-
-      color:
-        white;
-
-      border:
-        1px solid
-        #292d54;
-
-      border-radius:
-        9px;
-
-      padding:
-        12px;
-
-      outline:
-        none;
-
-    }
-
-
-    select:focus {
-
-      border-color:
-        #6d4aff;
-
-    }
-
-
-    .refresh-btn {
-
-      width:
-        100%;
-
-      height:
-        43px;
-
-      border:
-        0;
-
-      border-radius:
-        9px;
-
-      background:
-        #6d4aff;
-
-      color:
-        white;
-
-      font-weight:
-        700;
-
-      cursor:
-        pointer;
-
-      margin-top:
-        19px;
-
-    }
-
-
-    .refresh-btn:hover {
-
-      opacity:
-        .9;
+      white-space:
+        nowrap;
 
     }
 
 
 
-    /* ========================================
-       RESULTS
-    ======================================== */
-
-    .results {
-
-      background:
-        #101331;
-
-      border:
-        1px solid
-        rgba(255,255,255,.08);
-
-      border-radius:
-        14px;
-
-      overflow:
-        hidden;
-
-    }
-
-
-    .results-header {
-
-      padding:
-        17px 18px;
-
-      border-bottom:
-        1px solid
-        rgba(255,255,255,.08);
-
-      display:
-        flex;
-
-      justify-content:
-        space-between;
-
-      align-items:
-        center;
-
-      gap:
-        10px;
-
-    }
-
-
-    .results-header h2 {
-
-      margin:
-        0;
-
-      font-size:
-        18px;
-
-    }
-
-
-    .period-label {
-
-      color:
-        #8d90aa;
-
-      font-size:
-        12px;
-
-    }
-
-
-    .loading {
-
-      padding:
-        45px 20px;
-
-      text-align:
-        center;
-
-      color:
-        #8d90aa;
-
-    }
-
-
-    .error {
-
-      margin:
-        18px;
-
-      padding:
-        16px;
-
-      background:
-        rgba(255,70,70,.08);
-
-      border:
-        1px solid
-        rgba(255,70,70,.25);
-
-      border-radius:
-        10px;
-
-      color:
-        #ffb2b2;
-
-      line-height:
-        1.5;
-
-    }
-
-
-
-    /* ========================================
+    /* =====================================
        TABLE
-    ======================================== */
+    ===================================== */
 
     .table-wrap {
 
@@ -466,33 +586,31 @@
         collapse;
 
       min-width:
-        650px;
+        720px;
 
     }
 
 
     th {
 
+      padding:
+        14px 20px;
+
       text-align:
         left;
 
-      padding:
-        13px 15px;
-
-      background:
-        #0c0f29;
+      font-size:
+        12px;
 
       color:
-        #8d90aa;
+        #8e92b6;
 
-      font-size:
-        11px;
+      font-weight:
+        700;
 
-      text-transform:
-        uppercase;
-
-      letter-spacing:
-        .04em;
+      border-bottom:
+        1px solid
+        #20254d;
 
     }
 
@@ -500,11 +618,11 @@
     td {
 
       padding:
-        14px 15px;
+        16px 20px;
 
-      border-top:
+      border-bottom:
         1px solid
-        rgba(255,255,255,.06);
+        #1d2248;
 
       font-size:
         14px;
@@ -512,37 +630,48 @@
     }
 
 
-    tbody tr:hover {
+    tbody tr:last-child td {
 
-      background:
-        rgba(255,255,255,.025);
+      border-bottom:
+        0;
 
     }
 
 
-    .rank {
+    .rank-number {
 
       width:
-        65px;
+        40px;
 
       font-weight:
-        700;
-
-    }
-
-
-    .top-rank {
+        800;
 
       color:
-        #c4a7ff;
+        #c7c9eb;
 
     }
 
 
-    .name {
+    .member-name {
 
       font-weight:
         700;
+
+    }
+
+
+    .metric {
+
+      font-weight:
+        700;
+
+    }
+
+
+    .secondary {
+
+      color:
+        #aaaed0;
 
     }
 
@@ -550,10 +679,10 @@
     .user-id {
 
       color:
-        #777b99;
+        #7f83aa;
 
       font-size:
-        11px;
+        12px;
 
       word-break:
         break-all;
@@ -561,53 +690,285 @@
     }
 
 
-    .amount {
+    .rank-medal {
 
-      font-weight:
-        700;
+      display:
+        inline-flex;
 
-      color:
-        #ffffff;
+      align-items:
+        center;
+
+      justify-content:
+        center;
+
+      width:
+        28px;
+
+      height:
+        28px;
+
+      border-radius:
+        50%;
+
+      background:
+        #1a1f46;
 
     }
 
 
-    .empty {
+    .rank-1 {
+
+      background:
+        #f4c72d;
+
+      color:
+        #171000;
+
+    }
+
+
+    .rank-2 {
+
+      background:
+        #c5c8d0;
+
+      color:
+        #17182f;
+
+    }
+
+
+    .rank-3 {
+
+      background:
+        #b87843;
+
+      color:
+        white;
+
+    }
+
+
+
+    /* =====================================
+       LOADING / EMPTY / ERROR
+    ===================================== */
+
+    .message {
 
       padding:
-        45px 20px;
+        55px 20px;
 
       text-align:
         center;
 
       color:
-        #8d90aa;
+        #8f93b7;
+
+    }
+
+
+    .message-icon {
+
+      font-size:
+        36px;
+
+      margin-bottom:
+        12px;
+
+    }
+
+
+    .error {
+
+      color:
+        #ffb5b5;
 
     }
 
 
 
-    /* ========================================
+    /* =====================================
+       ABOUT
+    ===================================== */
+
+    .about {
+
+      margin-top:
+        18px;
+
+      padding:
+        20px;
+
+      border:
+        1px solid
+        #23477c;
+
+      border-radius:
+        12px;
+
+      background:
+        #0b1736;
+
+    }
+
+
+    .about h3 {
+
+      margin:
+        0 0 7px;
+
+      font-size:
+        16px;
+
+    }
+
+
+    .about p {
+
+      margin:
+        0;
+
+      color:
+        #aeb4d8;
+
+      font-size:
+        13px;
+
+      line-height:
+        1.6;
+
+    }
+
+
+
+    /* =====================================
+       FOOTER LEGEND
+    ===================================== */
+
+    .legend {
+
+      margin-top:
+        18px;
+
+      display:
+        grid;
+
+      grid-template-columns:
+        repeat(
+          4,
+          1fr
+        );
+
+      gap:
+        1px;
+
+      border:
+        1px solid
+        #252a55;
+
+      border-radius:
+        12px;
+
+      overflow:
+        hidden;
+
+      background:
+        #252a55;
+
+    }
+
+
+    .legend-item {
+
+      background:
+        #0d1130;
+
+      padding:
+        18px;
+
+    }
+
+
+    .legend-icon {
+
+      font-size:
+        23px;
+
+      margin-bottom:
+        8px;
+
+    }
+
+
+    .legend-title {
+
+      font-weight:
+        700;
+
+      margin-bottom:
+        6px;
+
+    }
+
+
+    .legend-text {
+
+      color:
+        #9397bc;
+
+      font-size:
+        12px;
+
+      line-height:
+        1.5;
+
+    }
+
+
+
+    /* =====================================
        MOBILE
-    ======================================== */
+    ===================================== */
 
     @media (
-      max-width: 650px
+      max-width: 800px
     ) {
+
+      .categories {
+
+        grid-template-columns:
+          repeat(2, 1fr);
+
+      }
+
+
+      .legend {
+
+        grid-template-columns:
+          repeat(2, 1fr);
+
+      }
+
+    }
+
+
+    @media (
+      max-width: 600px
+    ) {
+
+      .nav {
+
+        padding:
+          15px;
+
+      }
 
 
       main {
 
         padding:
-          24px 14px 45px;
-
-      }
-
-
-      .nav {
-
-        padding:
-          14px;
+          25px 14px 45px;
 
       }
 
@@ -615,12 +976,50 @@
       .page-title h1 {
 
         font-size:
-          26px;
+          28px;
 
       }
 
 
-      .controls-grid {
+      .categories {
+
+        grid-template-columns:
+          1fr 1fr;
+
+        gap:
+          8px;
+
+      }
+
+
+      .category-btn {
+
+        min-height:
+          92px;
+
+        padding:
+          13px;
+
+      }
+
+
+      .category-title {
+
+        font-size:
+          14px;
+
+      }
+
+
+      .category-description {
+
+        font-size:
+          11px;
+
+      }
+
+
+      .controls {
 
         grid-template-columns:
           1fr;
@@ -636,12 +1035,26 @@
       }
 
 
+      .ranking-header {
+
+        align-items:
+          flex-start;
+
+      }
+
+
+      .legend {
+
+        grid-template-columns:
+          1fr;
+
+      }
+
     }
 
   </style>
 
 </head>
-
 
 
 <body>
@@ -652,19 +1065,20 @@
   <div class="nav">
 
     <a
+      class="logo"
       href="admin-dashboard.html"
-      class="brand"
     >
       Earn<span>Gig</span>
     </a>
 
 
-    <a
-      href="admin-dashboard.html"
-      class="back-btn"
+    <button
+      type="button"
+      class="dashboard-btn"
+      onclick="location.href='admin-dashboard.html'"
     >
       ← Dashboard
-    </a>
+    </button>
 
   </div>
 
@@ -689,49 +1103,135 @@
 
 
 
+  <!-- ===================================
+       CATEGORY BUTTONS
+  ==================================== -->
+
+  <section class="categories">
+
+
+    <button
+      type="button"
+      class="category-btn active"
+      data-category="referrals"
+    >
+
+      <div class="category-icon">
+        👥
+      </div>
+
+      <span class="category-title">
+        Referrals
+      </span>
+
+      <span class="category-description">
+        Most referred users
+      </span>
+
+    </button>
+
+
+
+    <button
+      type="button"
+      class="category-btn"
+      data-category="total_earnings"
+    >
+
+      <div class="category-icon">
+        ⭐
+      </div>
+
+      <span class="category-title">
+        Total Earnings
+      </span>
+
+      <span class="category-description">
+        Highest total earnings
+      </span>
+
+    </button>
+
+
+
+    <button
+      type="button"
+      class="category-btn"
+      data-category="novel_earnings"
+    >
+
+      <div class="category-icon">
+        📖
+      </div>
+
+      <span class="category-title">
+        Novel Earnings
+      </span>
+
+      <span class="category-description">
+        Highest novel earnings
+      </span>
+
+    </button>
+
+
+
+    <button
+      type="button"
+      class="category-btn"
+      data-category="seller_orders"
+    >
+
+      <div class="category-icon">
+        🛒
+      </div>
+
+      <span class="category-title">
+        Seller Orders
+      </span>
+
+      <span class="category-description">
+        Most marketplace orders
+      </span>
+
+    </button>
+
+
+  </section>
+
+
+
+  <!-- ===================================
+       CONTROLS
+  ==================================== -->
+
   <section class="controls">
 
 
-    <div class="controls-grid">
+    <div class="field">
+
+      <label for="periodSelect">
+        Period
+      </label>
+
+      <select id="periodSelect"></select>
+
+    </div>
 
 
-      <div class="field">
+    <div class="field">
 
-        <label for="period">
-          Period
-        </label>
+      <label>
+        &nbsp;
+      </label>
 
-        <select id="period">
-
-          <option value="this_month">
-            This Month
-          </option>
-
-          <option value="previous_month">
-            Previous Month
-          </option>
-
-          <option value="all_time">
-            All Time
-          </option>
-
-        </select>
-
-      </div>
-
-
-      <div>
-
-        <button
-          type="button"
-          class="refresh-btn"
-          id="refreshButton"
-        >
-          Refresh Rankings
-        </button>
-
-      </div>
-
+      <button
+        type="button"
+        class="refresh-btn"
+        id="refreshButton"
+      >
+        ↻ Refresh Rankings
+      </button>
 
     </div>
 
@@ -740,29 +1240,155 @@
 
 
 
-  <section class="results">
+  <!-- ===================================
+       RANKING
+  ==================================== -->
+
+  <section class="ranking-card">
 
 
-    <div class="results-header">
+    <div class="ranking-header">
 
-      <h2 id="rankingTitle">
-        Referrals
-      </h2>
+      <div>
 
-      <span
-        class="period-label"
-        id="periodLabel"
+        <h2 id="rankingTitle">
+          Referrals
+        </h2>
+
+        <p id="rankingDescription">
+          Members ranked by number of users they have referred
+        </p>
+
+      </div>
+
+
+      <div
+        class="period-badge"
+        id="periodBadge"
       >
-        This Month
-      </span>
+        All Time
+      </div>
 
     </div>
 
 
-    <div id="rankingContent">
+    <div
+      class="table-wrap"
+      id="rankingContent"
+    >
 
-      <div class="loading">
+      <div class="message">
+
+        <div class="message-icon">
+          ⏳
+        </div>
+
         Loading rankings...
+
+      </div>
+
+    </div>
+
+
+  </section>
+
+
+
+  <!-- ===================================
+       ABOUT
+  ==================================== -->
+
+  <section class="about">
+
+    <h3 id="aboutTitle">
+      About Referral Rankings
+    </h3>
+
+    <p id="aboutText">
+      This ranking shows the number of distinct users
+      each member has referred. Individual referral
+      bonus transactions are not counted as separate
+      referrals.
+    </p>
+
+  </section>
+
+
+
+  <!-- ===================================
+       LEGEND
+  ==================================== -->
+
+  <section class="legend">
+
+
+    <div class="legend-item">
+
+      <div class="legend-icon">
+        👥
+      </div>
+
+      <div class="legend-title">
+        Referrals
+      </div>
+
+      <div class="legend-text">
+        Ranked by the number of unique users each
+        member has referred.
+      </div>
+
+    </div>
+
+
+    <div class="legend-item">
+
+      <div class="legend-icon">
+        ⭐
+      </div>
+
+      <div class="legend-title">
+        Total Earnings
+      </div>
+
+      <div class="legend-text">
+        Ranked by total earnings recorded for each
+        member.
+      </div>
+
+    </div>
+
+
+    <div class="legend-item">
+
+      <div class="legend-icon">
+        📖
+      </div>
+
+      <div class="legend-title">
+        Novel Earnings
+      </div>
+
+      <div class="legend-text">
+        Ranked by earnings recorded through the
+        novel writer earnings system.
+      </div>
+
+    </div>
+
+
+    <div class="legend-item">
+
+      <div class="legend-icon">
+        🛒
+      </div>
+
+      <div class="legend-title">
+        Seller Orders
+      </div>
+
+      <div class="legend-text">
+        Ranked by the number of marketplace orders
+        received by each seller.
       </div>
 
     </div>
@@ -778,12 +1404,298 @@
 <script>
 
 
-/* ========================================
-   ADMIN SECURITY CHECK
-   SAME LOGIC AS WORKING DASHBOARD
-======================================== */
+/* =========================================
+   CATEGORY INFORMATION
+========================================= */
 
-async function checkAdmin() {
+const CATEGORY_INFO = {
+
+  referrals: {
+
+    title:
+      "Referrals",
+
+    description:
+      "Members ranked by number of users they have referred",
+
+    aboutTitle:
+      "About Referral Rankings",
+
+    aboutText:
+      "This ranking counts distinct users referred by each member. Individual referral bonus transactions are not counted as separate referrals.",
+
+    metricLabel:
+      "Referrals",
+
+    secondaryLabel:
+      "Referral Bonus",
+
+    type:
+      "count"
+
+  },
+
+
+  total_earnings: {
+
+    title:
+      "Total Earnings",
+
+    description:
+      "Members ranked by total earnings",
+
+    aboutTitle:
+      "About Total Earnings",
+
+    aboutText:
+      "This ranking uses the platform's recorded total earnings for each member. Period rankings use positive earning transactions recorded during the selected period.",
+
+    metricLabel:
+      "Total Earnings",
+
+    secondaryLabel:
+      "",
+
+    type:
+      "money"
+
+  },
+
+
+  novel_earnings: {
+
+    title:
+      "Novel Earnings",
+
+    description:
+      "Members ranked by earnings from the novel system",
+
+    aboutTitle:
+      "About Novel Earnings",
+
+    aboutText:
+      "This ranking sums the writer earnings recorded in the novel writer earnings system for each member.",
+
+    metricLabel:
+      "Novel Earnings",
+
+    secondaryLabel:
+      "",
+
+    type:
+      "money"
+
+  },
+
+
+  seller_orders: {
+
+    title:
+      "Seller Orders",
+
+    description:
+      "Members ranked by number of marketplace orders",
+
+    aboutTitle:
+      "About Seller Orders",
+
+    aboutText:
+      "This ranking is based on the number of marketplace orders received by each seller. The naira value of the orders does not determine this ranking.",
+
+    metricLabel:
+      "Orders",
+
+    secondaryLabel:
+      "",
+
+    type:
+      "count"
+
+  }
+
+};
+
+
+
+/* =========================================
+   PERIODS
+========================================= */
+
+function buildPeriods() {
+
+  const select =
+    document.getElementById(
+      "periodSelect"
+    );
+
+
+  select.innerHTML = "";
+
+
+  const allTime =
+    document.createElement(
+      "option"
+    );
+
+  allTime.value =
+    "all";
+
+  allTime.textContent =
+    "All Time";
+
+  select.appendChild(
+    allTime
+  );
+
+
+  const now =
+    new Date();
+
+
+  for (
+    let i = 0;
+    i < 12;
+    i++
+  ) {
+
+    const date =
+      new Date(
+        now.getFullYear(),
+        now.getMonth() - i,
+        1
+      );
+
+
+    const year =
+      date.getFullYear();
+
+
+    const month =
+      date.getMonth();
+
+
+    const value =
+      `${year}-${String(month + 1).padStart(2, "0")}`;
+
+
+    const label =
+      date.toLocaleDateString(
+        "en-US",
+        {
+          month: "long",
+          year: "numeric"
+        }
+      );
+
+
+    const option =
+      document.createElement(
+        "option"
+      );
+
+
+    option.value =
+      value;
+
+    option.textContent =
+      label;
+
+
+    select.appendChild(
+      option
+    );
+
+  }
+
+}
+
+
+
+/* =========================================
+   GET PERIOD RANGE
+========================================= */
+
+function getPeriodRange(
+  value
+) {
+
+
+  if (
+    value === "all"
+  ) {
+
+    return {
+
+      start:
+        null,
+
+      end:
+        null,
+
+      label:
+        "All Time"
+
+    };
+
+  }
+
+
+  const [
+    year,
+    month
+  ] =
+    value
+      .split("-")
+      .map(Number);
+
+
+  const start =
+    new Date(
+      year,
+      month - 1,
+      1
+    );
+
+
+  const end =
+    new Date(
+      year,
+      month,
+      1
+    );
+
+
+  const label =
+    start.toLocaleDateString(
+      "en-US",
+      {
+        month: "long",
+        year: "numeric"
+      }
+    );
+
+
+  return {
+
+    start:
+      start.toISOString(),
+
+    end:
+      end.toISOString(),
+
+    label
+
+  };
+
+}
+
+
+
+/* =========================================
+   ADMIN CHECK
+========================================= */
+
+async function verifyAdmin() {
 
 
   const {
@@ -795,15 +1707,10 @@ async function checkAdmin() {
     error
 
   } =
-  await supabaseClient
-    .auth
-    .getUser();
+    await supabaseClient
+      .auth
+      .getUser();
 
-
-
-  /*
-   * USER NOT LOGGED IN
-   */
 
   if (
     error ||
@@ -813,15 +1720,10 @@ async function checkAdmin() {
     window.location.href =
       "index.html";
 
-    return null;
+    return false;
 
   }
 
-
-
-  /*
-   * LOAD ADMIN PROFILE
-   */
 
   const {
 
@@ -830,30 +1732,21 @@ async function checkAdmin() {
     error: profileError
 
   } =
-  await supabaseClient
+    await supabaseClient
+      .from("profiles")
+      .select(
+        `
+          full_name,
+          is_admin,
+          account_status
+        `
+      )
+      .eq(
+        "id",
+        user.id
+      )
+      .single();
 
-    .from("profiles")
-
-    .select(`
-
-      full_name,
-      is_admin,
-      account_status
-
-    `)
-
-    .eq(
-      "id",
-      user.id
-    )
-
-    .single();
-
-
-
-  /*
-   * CHECK ADMIN ACCESS
-   */
 
   if (
 
@@ -861,42 +1754,12 @@ async function checkAdmin() {
 
     !profile ||
 
-    profile.is_admin !== true
+    profile.is_admin !== true ||
 
-  ) {
-
-    console.error(
-      "Rankings admin profile error:",
-      profileError
-    );
-
-    await supabaseClient
-      .auth
-      .signOut();
-
-    alert(
-      "Access denied. Administrator privileges are required."
-    );
-
-    window.location.href =
-      "index.html";
-
-    return null;
-
-  }
-
-
-
-  /*
-   * CHECK ACCOUNT STATUS
-   */
-
-  if (
-
-    profile.account_status &&
-
-    profile.account_status !==
-    "active"
+    (
+      profile.account_status &&
+      profile.account_status !== "active"
+    )
 
   ) {
 
@@ -904,661 +1767,78 @@ async function checkAdmin() {
       .auth
       .signOut();
 
+
     alert(
-      "This administrator account is not active."
+      "Admin access required."
     );
+
 
     window.location.href =
       "index.html";
 
-    return null;
+
+    return false;
 
   }
 
 
-
-  return user;
+  return true;
 
 }
 
 
 
-/* ========================================
-   PERIOD HELPERS
-======================================== */
-
-function getPeriodDates() {
-
-
-  const selected =
-    document.getElementById(
-      "period"
-    ).value;
-
-
-  const now =
-    new Date();
-
-
-  let start;
-  let end;
-
-
-  /*
-   * THIS MONTH
-   */
-
-  if (
-    selected ===
-    "this_month"
-  ) {
-
-    start =
-      new Date(
-        now.getFullYear(),
-        now.getMonth(),
-        1
-      );
-
-    end =
-      new Date(
-        now.getFullYear(),
-        now.getMonth() + 1,
-        1
-      );
-
-  }
-
-
-  /*
-   * PREVIOUS MONTH
-   */
-
-  else if (
-    selected ===
-    "previous_month"
-  ) {
-
-    start =
-      new Date(
-        now.getFullYear(),
-        now.getMonth() - 1,
-        1
-      );
-
-    end =
-      new Date(
-        now.getFullYear(),
-        now.getMonth(),
-        1
-      );
-
-  }
-
-
-  /*
-   * ALL TIME
-   */
-
-  else {
-
-    start = null;
-    end = null;
-
-  }
-
-
-  return {
-    start,
-    end
-  };
-
-}
-
-
-
-/* ========================================
-   PERIOD LABEL
-======================================== */
-
-function updatePeriodLabel() {
-
-
-  const selected =
-    document.getElementById(
-      "period"
-    ).value;
-
-
-  const label =
-    document.getElementById(
-      "periodLabel"
-    );
-
-
-  if (
-    selected ===
-    "this_month"
-  ) {
-
-    label.textContent =
-      "This Month";
-
-  }
-
-  else if (
-    selected ===
-    "previous_month"
-  ) {
-
-    label.textContent =
-      "Previous Month";
-
-  }
-
-  else {
-
-    label.textContent =
-      "All Time";
-
-  }
-
-}
-
-
-
-/* ========================================
-   LOAD REFERRAL RANKINGS
-======================================== */
-
-async function loadRankings() {
-
-
-  const content =
-    document.getElementById(
-      "rankingContent"
-    );
-
-
-  content.innerHTML = `
-
-    <div class="loading">
-      Loading rankings...
-    </div>
-
-  `;
-
-
-  updatePeriodLabel();
-
-
-  const {
-    start,
-    end
-  } =
-  getPeriodDates();
-
-
-
-  try {
-
-
-    /*
-     * IMPORTANT:
-     *
-     * Referrals are recorded in
-     * referral_bonus_ledger.
-     *
-     * We count DISTINCT referred users,
-     * not ledger rows.
-     */
-
-
-    let query =
-      supabaseClient
-
-        .from(
-          "referral_bonus_ledger"
-        )
-
-        .select(
-          `
-            referrer_user_id,
-            referred_user_id,
-            created_at,
-            bonus_amount
-          `
-        );
-
-
-
-    /*
-     * APPLY PERIOD
-     */
-
-    if (start) {
-
-      query =
-        query.gte(
-          "created_at",
-          start.toISOString()
-        );
-
-    }
-
-
-    if (end) {
-
-      query =
-        query.lt(
-          "created_at",
-          end.toISOString()
-        );
-
-    }
-
-
-
-    const {
-
-      data,
-      error
-
-    } =
-    await query;
-
-
-
-    if (error) {
-
-      throw error;
-
-    }
-
-
-
-    /*
-     * GROUP REFERRALS
-     */
-
-    const rankings =
-      new Map();
-
-
-
-    for (
-      const row of
-      data || []
-    ) {
-
-
-      if (
-        !row.referrer_user_id ||
-        !row.referred_user_id
-      ) {
-
-        continue;
-
+/* =========================================
+   FORMAT MONEY
+========================================= */
+
+function formatMoney(
+  value
+) {
+
+  return (
+
+    "₦" +
+
+    Number(
+      value || 0
+    ).toLocaleString(
+      "en-NG",
+      {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2
       }
+    )
 
-
-
-      if (
-        !rankings.has(
-          row.referrer_user_id
-        )
-      ) {
-
-        rankings.set(
-          row.referrer_user_id,
-          {
-            user_id:
-              row.referrer_user_id,
-
-            referred:
-              new Set(),
-
-            bonus:
-              0
-          }
-        );
-
-      }
-
-
-
-      const item =
-        rankings.get(
-          row.referrer_user_id
-        );
-
-
-      item.referred.add(
-        row.referred_user_id
-      );
-
-
-      item.bonus +=
-        Number(
-          row.bonus_amount || 0
-        );
-
-    }
-
-
-
-    const rows =
-      Array.from(
-        rankings.values()
-      )
-      .map(
-        item => ({
-
-          user_id:
-            item.user_id,
-
-          referral_count:
-            item.referred.size,
-
-          bonus:
-            item.bonus
-
-        })
-      )
-      .sort(
-        (a, b) =>
-          b.referral_count -
-          a.referral_count
-      );
-
-
-
-    /*
-     * NO RESULTS
-     */
-
-    if (!rows.length) {
-
-      content.innerHTML = `
-
-        <div class="empty">
-
-          No referral records were found
-          for this period.
-
-        </div>
-
-      `;
-
-      return;
-
-    }
-
-
-
-    /*
-     * LOAD MEMBER NAMES
-     */
-
-    const userIds =
-      rows.map(
-        row => row.user_id
-      );
-
-
-    const {
-
-      data: profiles,
-      error: profilesError
-
-    } =
-    await supabaseClient
-
-      .from("profiles")
-
-      .select(`
-        id,
-        full_name
-      `)
-
-      .in(
-        "id",
-        userIds
-      );
-
-
-
-    if (profilesError) {
-
-      throw profilesError;
-
-    }
-
-
-
-    const profileMap =
-      new Map(
-        (profiles || [])
-          .map(
-            profile => [
-              profile.id,
-              profile.full_name
-            ]
-          )
-      );
-
-
-
-    /*
-     * RENDER
-     */
-
-    let html = `
-
-      <div class="table-wrap">
-
-        <table>
-
-          <thead>
-
-            <tr>
-
-              <th>
-                Rank
-              </th>
-
-              <th>
-                Member
-              </th>
-
-              <th>
-                Referrals
-              </th>
-
-              <th>
-                Referral Bonus
-              </th>
-
-              <th>
-                User ID
-              </th>
-
-            </tr>
-
-          </thead>
-
-          <tbody>
-
-    `;
-
-
-
-    rows.forEach(
-      (row, index) => {
-
-
-        const rank =
-          index + 1;
-
-
-        const name =
-          profileMap.get(
-            row.user_id
-          ) ||
-          "Unknown Member";
-
-
-
-        html += `
-
-          <tr>
-
-            <td
-              class="
-                rank
-                ${
-                  rank <= 3
-                    ? "top-rank"
-                    : ""
-                }
-              "
-            >
-
-              #${rank}
-
-            </td>
-
-
-            <td>
-
-              <div class="name">
-
-                ${
-                  escapeHtml(
-                    name
-                  )
-                }
-
-              </div>
-
-            </td>
-
-
-            <td>
-
-              <span class="amount">
-
-                ${
-                  Number(
-                    row.referral_count
-                  ).toLocaleString()
-                }
-
-              </span>
-
-            </td>
-
-
-            <td>
-
-              <span class="amount">
-
-                ₦${
-                  Number(
-                    row.bonus
-                  ).toLocaleString(
-                    "en-NG"
-                  )
-                }
-
-              </span>
-
-            </td>
-
-
-            <td>
-
-              <div class="user-id">
-
-                ${
-                  escapeHtml(
-                    row.user_id
-                  )
-                }
-
-              </div>
-
-            </td>
-
-          </tr>
-
-        `;
-
-      }
-    );
-
-
-
-    html += `
-
-          </tbody>
-
-        </table>
-
-      </div>
-
-    `;
-
-
-
-    content.innerHTML =
-      html;
-
-
-  }
-
-
-  catch (error) {
-
-
-    console.error(
-      "Rankings error:",
-      error
-    );
-
-
-    content.innerHTML = `
-
-      <div class="error">
-
-        <strong>
-          Rankings could not be loaded.
-        </strong>
-
-        <br><br>
-
-        ${
-          escapeHtml(
-            error.message ||
-            "Unknown error"
-          )
-        }
-
-      </div>
-
-    `;
-
-  }
+  );
 
 }
 
 
 
-/* ========================================
-   HTML ESCAPE
-======================================== */
+/* =========================================
+   FORMAT COUNT
+========================================= */
 
-function escapeHtml(value) {
+function formatCount(
+  value
+) {
+
+  return Number(
+    value || 0
+  ).toLocaleString();
+
+}
+
+
+
+/* =========================================
+   ESCAPE HTML
+========================================= */
+
+function escapeHtml(
+  value
+) {
 
   return String(
     value ?? ""
@@ -1593,9 +1873,452 @@ function escapeHtml(value) {
 
 
 
-/* ========================================
-   EVENTS
-======================================== */
+/* =========================================
+   LOAD RANKINGS
+========================================= */
+
+async function loadRankings() {
+
+
+  const category =
+    document
+      .querySelector(
+        ".category-btn.active"
+      )
+      .dataset
+      .category;
+
+
+  const info =
+    CATEGORY_INFO[
+      category
+    ];
+
+
+  const periodValue =
+    document
+      .getElementById(
+        "periodSelect"
+      )
+      .value;
+
+
+  const period =
+    getPeriodRange(
+      periodValue
+    );
+
+
+  const content =
+    document.getElementById(
+      "rankingContent"
+    );
+
+
+  content.innerHTML = `
+
+    <div class="message">
+
+      <div class="message-icon">
+        ⏳
+      </div>
+
+      Loading rankings...
+
+    </div>
+
+  `;
+
+
+  document.getElementById(
+    "rankingTitle"
+  ).textContent =
+    info.title;
+
+
+  document.getElementById(
+    "rankingDescription"
+  ).textContent =
+    info.description;
+
+
+  document.getElementById(
+    "periodBadge"
+  ).textContent =
+    period.label;
+
+
+  document.getElementById(
+    "aboutTitle"
+  ).textContent =
+    info.aboutTitle;
+
+
+  document.getElementById(
+    "aboutText"
+  ).textContent =
+    info.aboutText;
+
+
+  try {
+
+
+    const {
+
+      data,
+
+      error
+
+    } =
+      await supabaseClient
+        .rpc(
+          "get_admin_rankings",
+          {
+            p_category:
+              category,
+
+            p_start:
+              period.start,
+
+            p_end:
+              period.end
+          }
+        );
+
+
+    if (error) {
+
+      throw error;
+
+    }
+
+
+    const rows =
+      Array.isArray(data)
+        ? data
+        : [];
+
+
+    if (
+      rows.length === 0
+    ) {
+
+      content.innerHTML = `
+
+        <div class="message">
+
+          <div class="message-icon">
+            👥
+          </div>
+
+          <strong>
+            No ranking records were found for this period.
+          </strong>
+
+          <div style="margin-top:8px;">
+            Try a different period or check back later.
+          </div>
+
+        </div>
+
+      `;
+
+      return;
+
+    }
+
+
+    const secondaryHeader =
+      category === "referrals"
+        ? "REFERRAL BONUS"
+        : "";
+
+
+    let html = `
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>
+              #
+            </th>
+
+            <th>
+              MEMBER
+            </th>
+
+            <th>
+              ${escapeHtml(
+                info.metricLabel
+              )}
+            </th>
+
+            ${
+              secondaryHeader
+                ? `
+                  <th>
+                    ${secondaryHeader}
+                  </th>
+                `
+                : ""
+            }
+
+            <th>
+              USER ID
+            </th>
+
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+    `;
+
+
+    rows.forEach(
+      function(row) {
+
+
+        const rank =
+          Number(
+            row.rank_no || 0
+          );
+
+
+        let rankClass =
+          "";
+
+
+        if (
+          rank === 1
+        ) {
+
+          rankClass =
+            "rank-1";
+
+        }
+        else if (
+          rank === 2
+        ) {
+
+          rankClass =
+            "rank-2";
+
+        }
+        else if (
+          rank === 3
+        ) {
+
+          rankClass =
+            "rank-3";
+
+        }
+
+
+        const metric =
+          info.type === "money"
+            ? formatMoney(
+                row.metric
+              )
+            : formatCount(
+                row.metric
+              );
+
+
+        const secondary =
+          category === "referrals"
+            ? formatMoney(
+                row.secondary_metric
+              )
+            : "";
+
+
+        html += `
+
+          <tr>
+
+            <td class="rank-number">
+
+              <span
+                class="rank-medal ${rankClass}"
+              >
+
+                ${rank}
+
+              </span>
+
+            </td>
+
+
+            <td>
+
+              <div class="member-name">
+
+                ${escapeHtml(
+                  row.member_name ||
+                  "Member"
+                )}
+
+              </div>
+
+            </td>
+
+
+            <td class="metric">
+
+              ${metric}
+
+            </td>
+
+
+            ${
+              category === "referrals"
+                ? `
+                  <td class="secondary">
+                    ${secondary}
+                  </td>
+                `
+                : ""
+            }
+
+
+            <td class="user-id">
+
+              ${escapeHtml(
+                row.user_id
+              )}
+
+            </td>
+
+          </tr>
+
+        `;
+
+      }
+    );
+
+
+    html += `
+
+        </tbody>
+
+      </table>
+
+    `;
+
+
+    content.innerHTML =
+      html;
+
+
+  }
+
+  catch (error) {
+
+
+    console.error(
+      "Rankings error:",
+      error
+    );
+
+
+    content.innerHTML = `
+
+      <div class="message error">
+
+        <div class="message-icon">
+          ⚠️
+        </div>
+
+        <strong>
+          Rankings could not be loaded.
+        </strong>
+
+        <div style="margin-top:8px;">
+          ${escapeHtml(
+            error.message ||
+            "Unknown error"
+          )}
+        </div>
+
+      </div>
+
+    `;
+
+  }
+
+}
+
+
+
+/* =========================================
+   CATEGORY CLICK
+========================================= */
+
+document
+  .querySelectorAll(
+    ".category-btn"
+  )
+  .forEach(
+    function(button) {
+
+      button.addEventListener(
+        "click",
+        function() {
+
+
+          document
+            .querySelectorAll(
+              ".category-btn"
+            )
+            .forEach(
+              function(item) {
+
+                item.classList.remove(
+                  "active"
+                );
+
+              }
+            );
+
+
+          button.classList.add(
+            "active"
+          );
+
+
+          loadRankings();
+
+        }
+      );
+
+    }
+  );
+
+
+
+/* =========================================
+   PERIOD CHANGE
+========================================= */
+
+document
+  .getElementById(
+    "periodSelect"
+  )
+  .addEventListener(
+    "change",
+    loadRankings
+  );
+
+
+
+/* =========================================
+   REFRESH
+========================================= */
 
 document
   .getElementById(
@@ -1607,40 +2330,32 @@ document
   );
 
 
-document
-  .getElementById(
-    "period"
-  )
-  .addEventListener(
-    "change",
-    loadRankings
-  );
 
-
-
-/* ========================================
+/* =========================================
    START
-======================================== */
+========================================= */
 
 (async function() {
 
 
-  const user =
-    await checkAdmin();
+  const allowed =
+    await verifyAdmin();
 
 
-  if (!user) {
+  if (!allowed) {
 
     return;
 
   }
 
 
+  buildPeriods();
+
+
   await loadRankings();
 
 
 })();
-
 
 </script>
 

@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EarnGig - Task Participants</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #070b1c;
+      color: #f5f7ff;
+    }
+
+    .topbar {
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      border-bottom: 1px solid #252a45;
+      background: #0b1024;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .logo {
+      width: 38px;
+      height: 38px;
+      border-radius: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+      font-weight: 800;
+      font-size: 20px;
+    }
+
+    .back-btn {
+      border: 1px solid #343a5d;
+      background: #171d38;
+      color: #dfe4ff;
+      border-radius: 10px;
+      padding: 9px 14px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .back-btn:hover {
+      background: #20284a;
+    }
+
+    .page {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 22px;
+    }
+
+    .task-card {
+      background: #11172d;
+      border: 1px solid #282f4d;
+      border-radius: 13px;
+      padding: 17px;
+      margin-bottom: 14px;
+    }
+
+    .task-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: flex-start;
+    }
+
+    .task-title {
+      margin: 0;
+      font-size: 22px;
+    }
+
+    .task-description {
+      margin: 7px 0 0;
+      color: #929bb9;
+      font-size: 13px;
+      line-height: 1.5;
+      white-space: pre-wrap;
+    }
+
+    .reward {
+      color: #cbb7ff;
+      font-size: 18px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .task-meta {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 13px;
+    }
+
+    .meta {
+      background: #181f39;
+      border: 1px solid #2b3352;
+      color: #aeb7d3;
+      border-radius: 8px;
+      padding: 6px 9px;
+      font-size: 11px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 9px;
+      margin-bottom: 15px;
+    }
+
+    .stat {
+      background: #11172d;
+      border: 1px solid #252c49;
+      border-radius: 11px;
+      padding: 12px 14px;
+    }
+
+    .stat-label {
+      color: #8089a8;
+      font-size: 11px;
+      margin-bottom: 5px;
+    }
+
+    .stat-value {
+      font-size: 19px;
+      font-weight: 800;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 11px;
+    }
+
+    .filter-btn {
+      border: 1px solid #303754;
+      background: #11172d;
+      color: #aeb6d0;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .filter-btn.active {
+      background: #21184b;
+      color: #c9b6ff;
+      border-color: #7858db;
+    }
+
+    .participant-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .participant-row {
+      background: #11172d;
+      border: 1px solid #252c49;
+      border-radius: 10px;
+      min-height: 56px;
+      padding: 9px 11px;
+      display: grid;
+      grid-template-columns:
+        minmax(170px, 2fr)
+        100px
+        95px
+        115px
+        125px;
+      align-items: center;
+      gap: 9px;
+      cursor: pointer;
+      transition: .15s ease;
+    }
+
+    .participant-row:hover {
+      background: #161d38;
+      border-color: #51459a;
+      transform: translateY(-1px);
+    }
+
+    .participant-header {
+      background: #0c1227;
+      border-color: #202640;
+      color: #7e87a5;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      cursor: default;
+    }
+
+    .participant-header:hover {
+      background: #0c1227;
+      border-color: #202640;
+      transform: none;
+    }
+
+    .user-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: #eef1ff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .user-id {
+      margin-top: 3px;
+      font-size: 9px;
+      color: #646e8e;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .cell {
+      font-size: 11px;
+      color: #aeb6d0;
+    }
+
+    .reward-cell {
+      color: #cbb7ff;
+      font-weight: 700;
+    }
+
+    .status {
+      display: inline-flex;
+      width: fit-content;
+      padding: 5px 8px;
+      border-radius: 7px;
+      font-size: 9px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .status.pending,
+    .status.started,
+    .status.submitted {
+      background: rgba(245, 158, 11, .13);
+      color: #f6c45d;
+    }
+
+    .status.approved,
+    .status.completed,
+    .status.verified {
+      background: rgba(34, 197, 94, .13);
+      color: #64e391;
+    }
+
+    .status.rejected,
+    .status.failed {
+      background: rgba(239, 68, 68, .13);
+      color: #ff7e7e;
+    }
+
+    .status.other {
+      background: rgba(139, 92, 246, .13);
+      color: #b99cff;
+    }
+
+    .view {
+      color: #a98aff;
+      font-weight: 700;
+      font-size: 11px;
+      text-align: right;
+    }
+
+    .empty {
+      text-align: center;
+      padding: 38px 20px;
+      border: 1px dashed #303754;
+      border-radius: 12px;
+      color: #7f88a7;
+      background: #0d1328;
+    }
+
+    .loading {
+      padding: 35px;
+      text-align: center;
+      color: #858eac;
+    }
+
+    .error {
+      display: none;
+      padding: 13px;
+      border-radius: 10px;
+      background: rgba(239, 68, 68, .1);
+      border: 1px solid rgba(239, 68, 68, .25);
+      color: #ff9292;
+      margin-bottom: 12px;
+      font-size: 13px;
+    }
+
+    @media (max-width: 900px) {
+      .participant-row {
+        grid-template-columns:
+          minmax(150px, 2fr)
+          85px
+          90px
+          105px;
+      }
+
+      .participant-row > :nth-child(4) {
+        display: none;
+      }
+
+      .participant-header > :nth-child(4) {
+        display: none;
+      }
+    }
+
+    @media (max-width: 650px) {
+      .topbar {
+        padding: 0 14px;
+      }
+
+      .page {
+        padding: 14px;
+      }
+
+      .task-top {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .task-title {
+        font-size: 19px;
+      }
+
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .participant-row {
+        grid-template-columns:
+          minmax(135px, 2fr)
+          75px
+          85px;
+        gap: 7px;
+        padding: 9px;
+      }
+
+      .participant-row > :nth-child(4),
+      .participant-row > :nth-child(5) {
+        display: none;
+      }
+
+      .participant-header > :nth-child(4),
+      .participant-header > :nth-child(5) {
+        display: none;
+      }
+
+      .view {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">E</div>
+      <span>EarnGig Admin</span>
+    </div>
+
+    <button class="back-btn" onclick="goBack()">
+      ← Tasks
+    </button>
+  </header>
+
+  <main class="page">
+
+    <div id="errorBox" class="error"></div>
+
+    <section id="taskBox">
+      <div class="loading">Loading task...</div>
+    </section>
+
+    <section class="stats">
+      <div class="stat">
+        <div class="stat-label">Participants</div>
+        <div class="stat-value" id="participantCount">0</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-label">Pending Review</div>
+        <div class="stat-value" id="pendingCount">0</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-label">Approved</div>
+        <div class="stat-value" id="approvedCount">0</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-label">Rejected</div>
+        <div class="stat-value" id="rejectedCount">0</div>
+      </div>
+    </section>
+
+    <div class="toolbar">
+
+      <button
+        class="filter-btn active"
+        data-filter="all"
+      >
+        All
+      </button>
+
+      <button
+        class="filter-btn"
+        data-filter="pending"
+      >
+        Pending
+      </button>
+
+      <button
+        class="filter-btn"
+        data-filter="approved"
+      >
+        Approved
+      </button>
+
+      <button
+        class="filter-btn"
+        data-filter="rejected"
+      >
+        Rejected
+      </button>
+
+    </div>
+
+    <section id="participantList">
+      <div class="loading">
+        Loading participants...
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    let currentUser = null;
+    let currentTask = null;
+    let attempts = [];
+    let currentFilter = "all";
+
+    const params = new URLSearchParams(window.location.search);
+    const taskId = params.get("id");
+
+    document.addEventListener("DOMContentLoaded", init);
+
+    async function init() {
+      try {
+        if (!taskId) {
+          throw new Error("No task was selected.");
+        }
+
+        await verifyAdmin();
+        await loadTask();
+        await loadAttempts();
+
+      } catch (error) {
+        console.error(error);
+        showError(error.message || "Unable to load task.");
+      }
+    }
+
+    async function verifyAdmin() {
+      const {
+        data: { user },
+        error
+      } = await supabaseClient.auth.getUser();
+
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      if (!user) {
+        window.location.href = "index.html";
+        return;
+      }
+
+      currentUser = user;
+
+      const { data: profile, error: profileError } =
+        await supabaseClient
+          .from("profiles")
+          .select("id,is_admin,account_status")
+          .eq("id", user.id)
+          .maybeSingle();
+
+      if (profileError) {
+        throw new Error(profileError.message);
+      }
+
+      if (
+        !profile ||
+        profile.is_admin !== true ||
+        profile.account_status !== "active"
+      ) {
+        throw new Error("Administrator access is required.");
+      }
+    }
+
+    async function loadTask() {
+      const { data, error } =
+        await supabaseClient
+          .from("tasks")
+          .select("*")
+          .eq("id", taskId)
+          .maybeSingle();
+
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      if (!data) {
+        throw new Error("Task not found.");
+      }
+
+      currentTask = data;
+
+      renderTask();
+    }
+
+    async function loadAttempts() {
+
+      const { data, error } =
+        await supabaseClient
+          .from("task_attempts")
+          .select(`
+            id,
+            task_id,
+            user_id,
+            status,
+            reward_amount,
+            reward_status,
+            started_at,
+            completed_at,
+            verified_at,
+            created_at,
+            updated_at,
+            proof_text,
+            proof_url,
+            admin_note
+          `)
+          .eq("task_id", taskId)
+          .order("created_at", { ascending: false });
+
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      attempts = data || [];
+
+      await attachProfiles();
+
+      updateStats();
+      renderAttempts();
+    }
+
+    async function attachProfiles() {
+
+      const userIds = [
+        ...new Set(
+          attempts
+            .map(item => item.user_id)
+            .filter(Boolean)
+        )
+      ];
+
+      if (!userIds.length) {
+        attempts = attempts.map(item => ({
+          ...item,
+          profile: null
+        }));
+
+        return;
+      }
+
+      const { data, error } =
+        await supabaseClient
+          .from("profiles")
+          .select(`
+            id,
+            full_name,
+            username,
+            email
+          `)
+          .in("id", userIds);
+
+      if (error) {
+        /*
+          If your profiles table doesn't have one of the optional
+          display columns, we still keep the participant visible.
+        */
+        console.warn(
+          "Could not load profile display information:",
+          error.message
+        );
+
+        attempts = attempts.map(item => ({
+          ...item,
+          profile: null
+        }));
+
+        return;
+      }
+
+      const map = {};
+
+      (data || []).forEach(profile => {
+        map[profile.id] = profile;
+      });
+
+      attempts = attempts.map(item => ({
+        ...item,
+        profile: map[item.user_id] || null
+      }));
+    }
+
+    function renderTask() {
+
+      const reward =
+        Number(currentTask.reward_amount || 0);
+
+      const category =
+        currentTask.category ||
+        currentTask.platform ||
+        "General";
+
+      const action =
+        currentTask.action_type ||
+        currentTask.task_type ||
+        currentTask.verification_type ||
+        "Task";
+
+      const status =
+        currentTask.status || "unknown";
+
+      document.getElementById("taskBox").innerHTML = `
+        <div class="task-card">
+
+          <div class="task-top">
+
+            <div>
+              <h1 class="task-title">
+                ${escapeHtml(
+                  currentTask.title || "Untitled Task"
+                )}
+              </h1>
+
+              <div class="task-description">
+                ${escapeHtml(
+                  currentTask.description || "No description provided."
+                )}
+              </div>
+            </div>
+
+            <div class="reward">
+              ₦${formatMoney(reward)}
+            </div>
+
+          </div>
+
+          <div class="task-meta">
+
+            <span class="meta">
+              ${escapeHtml(category)}
+            </span>
+
+            <span class="meta">
+              ${escapeHtml(action)}
+            </span>
+
+            <span class="meta">
+              Max participants:
+              ${
+                currentTask.max_participants == null
+                  ? "Unlimited"
+                  : escapeHtml(currentTask.max_participants)
+              }
+            </span>
+
+            <span class="meta">
+              Proof:
+              ${
+                currentTask.require_proof
+                  ? "Required"
+                  : "Not required"
+              }
+            </span>
+
+            <span class="meta">
+              Status:
+              ${escapeHtml(status)}
+            </span>
+
+          </div>
+
+        </div>
+      `;
+    }
+
+    function updateStats() {
+
+      document.getElementById("participantCount").textContent =
+        attempts.length;
+
+      document.getElementById("pendingCount").textContent =
+        attempts.filter(isPending).length;
+
+      document.getElementById("approvedCount").textContent =
+        attempts.filter(isApproved).length;
+
+      document.getElementById("rejectedCount").textContent =
+        attempts.filter(isRejected).length;
+    }
+
+    function renderAttempts() {
+
+      const container =
+        document.getElementById("participantList");
+
+      let list = attempts;
+
+      if (currentFilter === "pending") {
+        list = attempts.filter(isPending);
+      }
+
+      if (currentFilter === "approved") {
+        list = attempts.filter(isApproved);
+      }
+
+      if (currentFilter === "rejected") {
+        list = attempts.filter(isRejected);
+      }
+
+      if (!list.length) {
+        container.innerHTML = `
+          <div class="empty">
+            No participants found for this filter.
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = `
+        <div class="participant-list">
+
+          <div class="participant-row participant-header">
+            <div>Participant</div>
+            <div>Status</div>
+            <div>Reward</div>
+            <div>Submitted</div>
+            <div>Open</div>
+          </div>
+
+          ${list.map(renderAttempt).join("")}
+
+        </div>
+      `;
+
+      container
+        .querySelectorAll("[data-attempt-id]")
+        .forEach(row => {
+
+          row.addEventListener("click", () => {
+
+            const attemptId =
+              row.dataset.attemptId;
+
+            window.location.href =
+              "admin-task-submission.html?id=" +
+              encodeURIComponent(attemptId) +
+              "&task_id=" +
+              encodeURIComponent(taskId);
+          });
+
+        });
+    }
+
+    function renderAttempt(attempt) {
+
+      const profile = attempt.profile;
+
+      const name =
+        profile?.full_name ||
+        profile?.username ||
+        profile?.email ||
+        "User";
+
+      const status =
+        String(attempt.status || "unknown")
+          .toLowerCase();
+
+      let statusClass = "other";
+
+      if (
+        status === "pending" ||
+        status === "started" ||
+        status === "submitted"
+      ) {
+        statusClass = "pending";
+      }
+
+      if (
+        status === "approved" ||
+        status === "completed" ||
+        status === "verified"
+      ) {
+        statusClass = "approved";
+      }
+
+      if (
+        status === "rejected" ||
+        status === "failed"
+      ) {
+        statusClass = "rejected";
+      }
+
+      const reward =
+        Number(attempt.reward_amount || 0);
+
+      const date =
+        attempt.completed_at ||
+        attempt.created_at;
+
+      return `
+        <div
+          class="participant-row"
+          data-attempt-id="${escapeHtml(attempt.id)}"
+        >
+
+          <div>
+            <div class="user-name">
+              ${escapeHtml(name)}
+            </div>
+
+            <div class="user-id">
+              ${escapeHtml(
+                attempt.user_id || ""
+              )}
+            </div>
+          </div>
+
+          <div>
+            <span class="status ${statusClass}">
+              ${escapeHtml(status)}
+            </span>
+          </div>
+
+          <div class="cell reward-cell">
+            ₦${formatMoney(reward)}
+          </div>
+
+          <div class="cell">
+            ${formatDate(date)}
+          </div>
+
+          <div class="view">
+            View Submission →
+          </div>
+
+        </div>
+      `;
+    }
+
+    function isPending(item) {
+      const status =
+        String(item.status || "").toLowerCase();
+
+      return (
+        status === "pending" ||
+        status === "started" ||
+        status === "submitted"
+      );
+    }
+
+    function isApproved(item) {
+      const status =
+        String(item.status || "").toLowerCase();
+
+      return (
+        status === "approved" ||
+        status === "completed" ||
+        status === "verified"
+      );
+    }
+
+    function isRejected(item) {
+      return String(item.status || "")
+        .toLowerCase() === "rejected";
+    }
+
+    document
+      .querySelectorAll(".filter-btn")
+      .forEach(button => {
+
+        button.addEventListener("click", () => {
+
+          document
+            .querySelectorAll(".filter-btn")
+            .forEach(btn =>
+              btn.classList.remove("active")
+            );
+
+          button.classList.add("active");
+
+          currentFilter =
+            button.dataset.filter;
+
+          renderAttempts();
+        });
+
+      });
+
+    function goBack() {
+      window.location.href = "admin-tasks.html";
+    }
+
+    function formatMoney(value) {
+      return Number(value || 0).toLocaleString(
+        "en-NG",
+        {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        }
+      );
+    }
+
+    function formatDate(value) {
+
+      if (!value) {
+        return "—";
+      }
+
+      const date = new Date(value);
+
+      if (Number.isNaN(date.getTime())) {
+        return "—";
+      }
+
+      return date.toLocaleDateString(
+        "en-NG",
+        {
+          day: "2-digit",
+          month: "short",
+          year: "numeric"
+        }
+      );
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function showError(message) {
+
+      const box =
+        document.getElementById("errorBox");
+
+      box.textContent = message;
+      box.style.display = "block";
+    }
+  </script>
+
+</body>
+</html>

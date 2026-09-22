@@ -12,11 +12,8 @@
 
   <title>EarnGig - Create Task</title>
 
-
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
   <script src="supabase.js"></script>
-
 
   <style>
 
@@ -24,768 +21,332 @@
       box-sizing: border-box;
     }
 
-
     body {
-
       margin: 0;
-
       font-family: Arial, sans-serif;
-
       background: #070b1c;
-
       color: #f5f7ff;
-
     }
-
-
-    /* =========================================
-       TOP BAR
-    ========================================= */
 
     .topbar {
-
       height: 70px;
-
       display: flex;
-
       align-items: center;
-
       justify-content: space-between;
-
       padding: 0 24px;
-
-      border-bottom:
-        1px solid #252a45;
-
+      border-bottom: 1px solid #252a45;
       background: #0b1024;
-
       position: sticky;
-
       top: 0;
-
       z-index: 20;
-
     }
-
 
     .brand {
-
       display: flex;
-
       align-items: center;
-
       gap: 12px;
-
       font-size: 20px;
-
       font-weight: 700;
-
     }
-
 
     .logo {
-
       width: 38px;
-
       height: 38px;
-
       border-radius: 11px;
-
       display: flex;
-
       align-items: center;
-
       justify-content: center;
-
-      background:
-        linear-gradient(
-          135deg,
-          #8b5cf6,
-          #6d28d9
-        );
-
+      background: linear-gradient(135deg, #8b5cf6, #6d28d9);
       font-weight: 800;
-
       font-size: 20px;
-
     }
-
 
     .back-btn {
-
-      border:
-        1px solid #343a5d;
-
+      border: 1px solid #343a5d;
       background: #171d38;
-
       color: #dfe4ff;
-
       border-radius: 10px;
-
       padding: 9px 14px;
-
       cursor: pointer;
-
       font-weight: 600;
-
     }
-
 
     .back-btn:hover {
-
       background: #20284a;
-
     }
-
-
-    /* =========================================
-       PAGE
-    ========================================= */
 
     .page {
-
       max-width: 900px;
-
       margin: 0 auto;
-
       padding: 26px 20px 50px;
-
     }
-
 
     .heading {
-
       margin-bottom: 20px;
-
     }
-
 
     .heading h1 {
-
       margin: 0;
-
       font-size: 26px;
-
     }
-
 
     .heading p {
-
       margin: 7px 0 0;
-
       color: #8f97b7;
-
       font-size: 14px;
-
       line-height: 1.6;
-
     }
-
-
-    /* =========================================
-       FORM CARD
-    ========================================= */
 
     .form-card {
-
       background: #11172d;
-
-      border:
-        1px solid #252c49;
-
+      border: 1px solid #252c49;
       border-radius: 15px;
-
       padding: 20px;
-
       margin-bottom: 14px;
-
     }
-
 
     .card-title {
-
       margin: 0 0 4px;
-
       font-size: 16px;
-
       font-weight: 800;
-
     }
-
 
     .card-description {
-
       margin: 0 0 17px;
-
       color: #7f89aa;
-
       font-size: 12px;
-
       line-height: 1.5;
-
     }
-
-
-    /* =========================================
-       FORM
-    ========================================= */
 
     .form-grid {
-
       display: grid;
-
-      grid-template-columns:
-        repeat(2, minmax(0, 1fr));
-
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 13px;
-
     }
-
 
     .form-group {
-
       margin-bottom: 14px;
-
     }
-
 
     .form-grid .form-group {
-
       margin-bottom: 0;
-
     }
-
 
     .full {
-
       grid-column: 1 / -1;
-
     }
-
 
     label {
-
       display: block;
-
       margin-bottom: 6px;
-
       color: #b9c0dc;
-
       font-size: 12px;
-
       font-weight: 700;
-
     }
-
 
     .required {
-
       color: #c7a7ff;
-
     }
-
 
     input,
     textarea,
     select {
-
       width: 100%;
-
-      border:
-        1px solid #303754;
-
+      border: 1px solid #303754;
       background: #090e21;
-
       color: #f3f5ff;
-
       border-radius: 9px;
-
       padding: 11px 12px;
-
       outline: none;
-
       font-family: inherit;
-
       font-size: 13px;
-
     }
-
 
     input:focus,
     textarea:focus,
     select:focus {
-
       border-color: #7656db;
-
-      box-shadow:
-        0 0 0 2px
-        rgba(118, 86, 219, .12);
-
+      box-shadow: 0 0 0 2px rgba(118, 86, 219, .12);
     }
-
 
     textarea {
-
       min-height: 115px;
-
       resize: vertical;
-
       line-height: 1.55;
-
     }
-
 
     select {
-
       cursor: pointer;
-
     }
-
 
     .hint {
-
       margin-top: 5px;
-
       color: #68718f;
-
       font-size: 11px;
-
       line-height: 1.45;
-
     }
-
-
-    /* =========================================
-       DYNAMIC INFO BOX
-    ========================================= */
 
     .info-box {
-
       padding: 12px 13px;
-
       border-radius: 10px;
-
-      background:
-        rgba(139, 92, 246, .08);
-
-      border:
-        1px solid
-        rgba(139, 92, 246, .22);
-
+      background: rgba(139, 92, 246, .08);
+      border: 1px solid rgba(139, 92, 246, .22);
       color: #b9adff;
-
       font-size: 12px;
-
       line-height: 1.55;
-
       margin-top: 12px;
-
-      display: none;
-
     }
-
-
-    .info-box.show {
-
-      display: block;
-
-    }
-
-
-    /* =========================================
-       PROOF SETTINGS
-    ========================================= */
-
-    .proof-box {
-
-      display: grid;
-
-      grid-template-columns:
-        repeat(2, minmax(0, 1fr));
-
-      gap: 10px;
-
-      margin-top: 5px;
-
-    }
-
-
-    .proof-option {
-
-      border:
-        1px solid #303754;
-
-      background: #0c1227;
-
-      border-radius: 10px;
-
-      padding: 12px;
-
-      cursor: pointer;
-
-      transition: .15s ease;
-
-    }
-
-
-    .proof-option:hover {
-
-      border-color: #5c4aa5;
-
-    }
-
-
-    .proof-option.selected {
-
-      background:
-        rgba(124, 92, 230, .12);
-
-      border-color: #7656db;
-
-    }
-
-
-    .proof-option strong {
-
-      display: block;
-
-      font-size: 12px;
-
-      margin-bottom: 4px;
-
-    }
-
-
-    .proof-option span {
-
-      color: #7f89aa;
-
-      font-size: 10px;
-
-      line-height: 1.4;
-
-    }
-
-
-    /* =========================================
-       STATUS
-    ========================================= */
-
-    .status-options {
-
-      display: flex;
-
-      gap: 8px;
-
-      flex-wrap: wrap;
-
-    }
-
-
-    .status-option {
-
-      border:
-        1px solid #303754;
-
-      background: #0c1227;
-
-      color: #aeb6d0;
-
-      border-radius: 8px;
-
-      padding: 8px 11px;
-
-      cursor: pointer;
-
-      font-size: 11px;
-
-      font-weight: 700;
-
-    }
-
-
-    .status-option.selected {
-
-      background: #21184b;
-
-      border-color: #7656db;
-
-      color: #c8b8ff;
-
-    }
-
-
-    /* =========================================
-       TOTAL
-    ========================================= */
-
-    .total-box {
-
-      margin-top: 15px;
-
-      padding: 14px;
-
-      border-radius: 10px;
-
-      background: #0c1227;
-
-      border:
-        1px solid #252c49;
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: space-between;
-
-      gap: 15px;
-
-    }
-
-
-    .total-label {
-
-      color: #8992b0;
-
-      font-size: 12px;
-
-    }
-
-
-    .total-value {
-
-      color: #d8caff;
-
-      font-size: 19px;
-
-      font-weight: 800;
-
-    }
-
-
-    /* =========================================
-       ALERT
-    ========================================= */
-
-    .alert {
-
-      display: none;
-
-      padding: 13px;
-
-      border-radius: 10px;
-
-      margin-bottom: 15px;
-
-      font-size: 12px;
-
-      line-height: 1.5;
-
-    }
-
-
-    .alert.error {
-
-      background:
-        rgba(239, 68, 68, .10);
-
-      border:
-        1px solid
-        rgba(239, 68, 68, .25);
-
-      color: #ff9696;
-
-    }
-
-
-    .alert.success {
-
-      background:
-        rgba(34, 197, 94, .10);
-
-      border:
-        1px solid
-        rgba(34, 197, 94, .25);
-
-      color: #75e69a;
-
-    }
-
-
-    /* =========================================
-       BOTTOM ACTIONS
-    ========================================= */
-
-    .form-actions {
-
-      display: flex;
-
-      justify-content: flex-end;
-
-      gap: 9px;
-
-      margin-top: 18px;
-
-    }
-
-
-    .btn {
-
-      border: 0;
-
-      border-radius: 9px;
-
-      padding: 10px 15px;
-
-      font-size: 12px;
-
-      font-weight: 700;
-
-      cursor: pointer;
-
-    }
-
-
-    .btn.cancel {
-
-      background: #171d38;
-
-      border:
-        1px solid #343a5d;
-
-      color: #c7cde2;
-
-    }
-
-
-    .btn.create {
-
-      background:
-        linear-gradient(
-          135deg,
-          #8b5cf6,
-          #6d28d9
-        );
-
-      color: #ffffff;
-
-    }
-
-
-    .btn:disabled {
-
-      opacity: .5;
-
-      cursor: not-allowed;
-
-    }
-
-
-    /* =========================================
-       HIDDEN
-    ========================================= */
 
     .hidden {
-
       display: none !important;
-
     }
 
+    .status-options {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
 
-    /* =========================================
-       MOBILE
-    ========================================= */
+    .status-option {
+      border: 1px solid #303754;
+      background: #0c1227;
+      color: #aeb6d0;
+      border-radius: 8px;
+      padding: 8px 11px;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .status-option.selected {
+      background: #21184b;
+      border-color: #7656db;
+      color: #c8b8ff;
+    }
+
+    .total-box {
+      margin-top: 15px;
+      padding: 14px;
+      border-radius: 10px;
+      background: #0c1227;
+      border: 1px solid #252c49;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .total-label {
+      color: #8992b0;
+      font-size: 12px;
+    }
+
+    .total-value {
+      color: #d8caff;
+      font-size: 19px;
+      font-weight: 800;
+    }
+
+    .alert {
+      display: none;
+      padding: 13px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .alert.error {
+      background: rgba(239, 68, 68, .10);
+      border: 1px solid rgba(239, 68, 68, .25);
+      color: #ff9696;
+    }
+
+    .alert.success {
+      background: rgba(34, 197, 94, .10);
+      border: 1px solid rgba(34, 197, 94, .25);
+      color: #75e69a;
+    }
+
+    .form-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 9px;
+      margin-top: 18px;
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 9px;
+      padding: 10px 15px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn.cancel {
+      background: #171d38;
+      border: 1px solid #343a5d;
+      color: #c7cde2;
+    }
+
+    .btn.create {
+      background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+      color: #ffffff;
+    }
+
+    .btn:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+    }
 
     @media (max-width: 650px) {
 
       .topbar {
-
         padding: 0 14px;
-
       }
-
 
       .brand {
-
         font-size: 17px;
-
       }
-
 
       .logo {
-
         width: 34px;
-
         height: 34px;
-
         font-size: 18px;
-
       }
-
 
       .page {
-
-        padding:
-          20px 14px 40px;
-
+        padding: 20px 14px 40px;
       }
-
 
       .heading h1 {
-
         font-size: 22px;
-
       }
-
 
       .form-card {
-
         padding: 15px;
-
       }
-
 
       .form-grid {
-
         grid-template-columns: 1fr;
-
       }
-
 
       .full {
-
         grid-column: auto;
-
       }
-
-
-      .proof-box {
-
-        grid-template-columns: 1fr;
-
-      }
-
 
       .total-box {
-
         align-items: flex-start;
-
         flex-direction: column;
-
       }
-
 
       .form-actions {
-
         flex-direction: column-reverse;
-
       }
 
-
       .form-actions .btn {
-
         width: 100%;
-
       }
 
     }
@@ -795,16 +356,10 @@
 </head>
 
 
-
 <body>
 
 
-<!-- =========================================
-     TOP BAR
-========================================= -->
-
 <header class="topbar">
-
 
   <div class="brand">
 
@@ -827,14 +382,9 @@
     ← Tasks
   </button>
 
-
 </header>
 
 
-
-<!-- =========================================
-     MAIN
-========================================= -->
 
 <main class="page">
 
@@ -867,22 +417,19 @@
 
 
 
-  <!-- =======================================
+  <!-- =====================================
        BASIC INFORMATION
-  ======================================== -->
+  ====================================== -->
 
   <section class="form-card">
-
 
     <h2 class="card-title">
       Basic Task Information
     </h2>
 
-
     <p class="card-description">
-      Give members clear instructions about what they need to complete.
+      Enter the basic information members will see.
     </p>
-
 
 
     <div class="form-group">
@@ -892,33 +439,29 @@
         <span class="required">*</span>
       </label>
 
-
       <input
         id="title"
         type="text"
-        placeholder="e.g. Follow EarnGig on TikTok"
         maxlength="150"
+        placeholder="e.g. Answer this question"
       >
 
     </div>
 
 
-
     <div class="form-group">
 
       <label for="description">
-        Instructions / Description
+        General Instructions
         <span class="required">*</span>
       </label>
 
-
       <textarea
         id="description"
-        placeholder="Explain exactly what the member must do and what proof they need to submit."
+        placeholder="Explain what the member needs to do."
       ></textarea>
 
     </div>
-
 
 
     <div class="form-grid">
@@ -930,7 +473,6 @@
           Category
           <span class="required">*</span>
         </label>
-
 
         <select id="category">
 
@@ -963,7 +505,6 @@
       </div>
 
 
-
       <div class="form-group">
 
         <label for="taskType">
@@ -971,12 +512,7 @@
           <span class="required">*</span>
         </label>
 
-
         <select id="taskType">
-
-          <option value="social">
-            Social Media
-          </option>
 
           <option value="question">
             Question / Feedback
@@ -990,6 +526,10 @@
             Photo Task
           </option>
 
+          <option value="social">
+            Social Media
+          </option>
+
           <option value="custom">
             Other / Custom
           </option>
@@ -1001,30 +541,129 @@
 
     </div>
 
+  </section>
+
+
+
+  <!-- =====================================
+       QUESTION / RIDDLE
+  ====================================== -->
+
+  <section
+    id="questionSection"
+    class="form-card"
+  >
+
+    <h2
+      id="questionSectionTitle"
+      class="card-title"
+    >
+      Question
+    </h2>
+
+    <p
+      id="questionSectionDescription"
+      class="card-description"
+    >
+      Enter the question the member must answer.
+    </p>
+
+
+    <div class="form-group">
+
+      <label for="questionText">
+
+        <span id="questionLabel">
+          Question / Prompt
+        </span>
+
+        <span class="required">
+          *
+        </span>
+
+      </label>
+
+      <textarea
+        id="questionText"
+        placeholder="Enter the question the member will see."
+      ></textarea>
+
+    </div>
+
+
+    <!-- PRIVATE RIDDLE ANSWER -->
+
+    <div
+      id="correctAnswerGroup"
+      class="form-group hidden"
+    >
+
+      <label for="correctAnswer">
+
+        Correct Answer
+        <span class="required">*</span>
+
+      </label>
+
+      <input
+        id="correctAnswer"
+        type="text"
+        placeholder="Enter the correct answer. This is private to admins."
+      >
+
+      <div class="hint">
+        This answer is stored for admin verification and is not shown to members.
+      </div>
+
+    </div>
+
+
+    <div class="form-group">
+
+      <label for="answerInstruction">
+        Answer Instructions
+      </label>
+
+      <textarea
+        id="answerInstruction"
+        placeholder="Optional. Tell members how they should answer."
+      ></textarea>
+
+      <div class="hint">
+        Example: "Answer in one or two sentences."
+      </div>
+
+    </div>
+
+
+    <div
+      id="questionInfo"
+      class="info-box"
+    >
+      Members will see the question and submit their answer.
+      Their answer will be stored in the task attempt for admin review.
+    </div>
 
   </section>
 
 
 
-  <!-- =======================================
-       SOCIAL MEDIA SETTINGS
-  ======================================== -->
+  <!-- =====================================
+       SOCIAL MEDIA
+  ====================================== -->
 
   <section
-    id="socialSettings"
-    class="form-card"
+    id="socialSection"
+    class="form-card hidden"
   >
-
 
     <h2 class="card-title">
       Social Media Task
     </h2>
 
-
     <p class="card-description">
       Select the platform and action the member must complete.
     </p>
-
 
 
     <div class="form-grid">
@@ -1037,29 +676,23 @@
           <span class="required">*</span>
         </label>
 
-
         <select id="platform">
-
 
           <option value="TikTok">
             TikTok
           </option>
 
-
           <option value="Instagram">
             Instagram
           </option>
-
 
           <option value="YouTube">
             YouTube
           </option>
 
-
         </select>
 
       </div>
-
 
 
       <div class="form-group">
@@ -1069,10 +702,7 @@
           <span class="required">*</span>
         </label>
 
-
-        <select id="actionType">
-
-        </select>
+        <select id="actionType"></select>
 
       </div>
 
@@ -1080,154 +710,60 @@
     </div>
 
 
+    <div class="info-box">
 
-    <div class="info-box show">
-
-      The member will submit proof of the completed action.
-      For social-media tasks, the member should provide a screenshot/photo
-      and the URL of the social account used for the action.
+      The member will submit a screenshot/photo as proof,
+      together with the URL of the social account used for the action.
+      Admin verification is required before the reward is credited.
 
     </div>
-
 
   </section>
 
 
 
-  <!-- =======================================
-       QUESTION / RIDDLE SETTINGS
-  ======================================== -->
+  <!-- =====================================
+       PHOTO TASK
+  ====================================== -->
 
   <section
-    id="answerSettings"
+    id="photoSection"
     class="form-card hidden"
   >
-
-
-    <h2 class="card-title">
-      Answer Settings
-    </h2>
-
-
-    <p class="card-description">
-      The member will provide their answer when completing this task.
-    </p>
-
-
-
-    <div class="form-group">
-
-      <label for="answerInstruction">
-        Answer Instructions
-      </label>
-
-
-      <textarea
-        id="answerInstruction"
-        placeholder="Tell the member what answer they should provide."
-      ></textarea>
-
-    </div>
-
-
-    <div class="info-box show">
-
-      The submitted answer will be stored with the task attempt.
-      You can review the answer from the admin submission detail page
-      before approving the reward.
-
-    </div>
-
-
-  </section>
-
-
-
-  <!-- =======================================
-       PHOTO SETTINGS
-  ======================================== -->
-
-  <section
-    id="photoSettings"
-    class="form-card hidden"
-  >
-
 
     <h2 class="card-title">
       Photo Proof
     </h2>
-
 
     <p class="card-description">
       This task requires the member to upload photo or screenshot proof.
     </p>
 
 
+    <div class="info-box">
 
-    <div class="proof-box">
-
-
-      <div
-        class="proof-option selected"
-        id="photoRequiredOption"
-      >
-
-        <strong>
-          📷 Photo Required
-        </strong>
-
-        <span>
-          Member must upload photo or screenshot proof.
-          Admin manually verifies the submission.
-        </span>
-
-      </div>
-
-
-      <div class="proof-option">
-
-        <strong>
-          👤 Admin Verification
-        </strong>
-
-        <span>
-          Photo-related tasks are reviewed manually before reward approval.
-        </span>
-
-      </div>
-
+      Photo-related submissions always require admin verification.
+      Uploading a photo does not automatically earn the reward.
 
     </div>
-
-
-    <div class="info-box show">
-
-      Photo-related submissions will require admin verification.
-      The reward is not automatically credited simply because a photo was uploaded.
-
-    </div>
-
 
   </section>
 
 
 
-  <!-- =======================================
-       PROOF / VERIFICATION
-  ======================================== -->
+  <!-- =====================================
+       VERIFICATION
+  ====================================== -->
 
   <section class="form-card">
-
 
     <h2 class="card-title">
       Verification
     </h2>
 
-
     <p class="card-description">
-      Choose how the member's submission will be handled.
+      Choose how the completed task will be verified.
     </p>
-
 
 
     <div class="form-group">
@@ -1236,62 +772,52 @@
         Verification Type
       </label>
 
-
       <select id="verificationType">
-
-
-        <option value="admin">
-          Admin Verification
-        </option>
-
 
         <option value="text">
           Text Submission
         </option>
 
+        <option value="admin">
+          Admin Verification
+        </option>
 
         <option value="photo">
           Photo / Screenshot
         </option>
 
-
         <option value="photo_url">
           Photo + Account URL
         </option>
 
-
       </select>
-
-
-      <div class="hint">
-
-        For social media and photo tasks, admin verification is required.
-
-      </div>
 
     </div>
 
+
+    <div class="hint">
+      Social media tasks use Photo + Account URL.
+      Photo tasks use Photo / Screenshot.
+      Riddles use Admin Verification.
+    </div>
 
   </section>
 
 
 
-  <!-- =======================================
+  <!-- =====================================
        TASK LINK
-  ======================================== -->
+  ====================================== -->
 
   <section class="form-card">
-
 
     <h2 class="card-title">
       Task Link
     </h2>
 
-
     <p class="card-description">
-      Add the page or social-media URL the member needs to visit.
+      Add the URL the member needs to visit, when applicable.
     </p>
-
 
 
     <div class="form-group">
@@ -1300,44 +826,36 @@
         Task URL
       </label>
 
-
       <input
         id="taskLink"
         type="url"
         placeholder="https://..."
       >
 
-
       <div class="hint">
-
-        Example: your TikTok profile, Instagram post,
-        YouTube channel, website, survey or other destination.
-
+        Example: TikTok profile, Instagram post,
+        YouTube channel, website or survey.
       </div>
 
     </div>
-
 
   </section>
 
 
 
-  <!-- =======================================
-       REWARD & PARTICIPANTS
-  ======================================== -->
+  <!-- =====================================
+       REWARD
+  ====================================== -->
 
   <section class="form-card">
-
 
     <h2 class="card-title">
       Reward & Participants
     </h2>
 
-
     <p class="card-description">
-      Set how much each approved participant earns and how many members can complete the task.
+      Set the reward for each approved participant and the maximum number of participants.
     </p>
-
 
 
     <div class="form-grid">
@@ -1350,18 +868,15 @@
           <span class="required">*</span>
         </label>
 
-
         <input
           id="reward"
           type="number"
           min="0"
           step="0.01"
           value="0"
-          placeholder="500"
         >
 
       </div>
-
 
 
       <div class="form-group">
@@ -1371,14 +886,12 @@
           <span class="required">*</span>
         </label>
 
-
         <input
           id="maxParticipants"
           type="number"
           min="1"
           step="1"
           value="10"
-          placeholder="10"
         >
 
       </div>
@@ -1387,9 +900,7 @@
     </div>
 
 
-
     <div class="total-box">
-
 
       <div>
 
@@ -1398,8 +909,9 @@
         </div>
 
         <div class="hint">
-          Reward × maximum participants. This is task accounting information only;
-          admin-created tasks do not deduct this amount from the admin wallet.
+          Reward × maximum participants.
+          This is accounting information only.
+          It does not deduct money from the admin wallet.
         </div>
 
       </div>
@@ -1412,34 +924,28 @@
         ₦0.00
       </div>
 
-
     </div>
-
 
   </section>
 
 
 
-  <!-- =======================================
+  <!-- =====================================
        STATUS
-  ======================================== -->
+  ====================================== -->
 
   <section class="form-card">
-
 
     <h2 class="card-title">
       Task Status
     </h2>
-
 
     <p class="card-description">
       Active tasks are immediately available to eligible members.
     </p>
 
 
-
     <div class="status-options">
-
 
       <button
         type="button"
@@ -1458,20 +964,17 @@
         Pending
       </button>
 
-
     </div>
-
 
   </section>
 
 
 
-  <!-- =======================================
+  <!-- =====================================
        ACTIONS
-  ======================================== -->
+  ====================================== -->
 
   <div class="form-actions">
-
 
     <button
       type="button"
@@ -1491,7 +994,6 @@
       Create Task
     </button>
 
-
   </div>
 
 
@@ -1501,20 +1003,11 @@
 
 <script>
 
-
-/* =========================================
-   GLOBAL
-========================================= */
-
 let currentAdmin = null;
 
 let selectedStatus = "active";
 
 
-
-/* =========================================
-   INITIALIZE
-========================================= */
 
 document.addEventListener(
   "DOMContentLoaded",
@@ -1529,11 +1022,13 @@ async function init() {
 
     await verifyAdmin();
 
+    setupEvents();
+
     updateActionOptions();
 
-    updateTotal();
+    updateTaskTypeFields();
 
-    setupEvents();
+    updateTotal();
 
   } catch (error) {
 
@@ -1551,11 +1046,10 @@ async function init() {
 
 
 /* =========================================
-   VERIFY ADMIN
+   ADMIN VERIFICATION
 ========================================= */
 
 async function verifyAdmin() {
-
 
   const {
     data: {
@@ -1567,11 +1061,7 @@ async function verifyAdmin() {
 
 
   if (error) {
-
-    throw new Error(
-      error.message
-    );
-
+    throw new Error(error.message);
   }
 
 
@@ -1606,11 +1096,7 @@ async function verifyAdmin() {
 
 
   if (profileError) {
-
-    throw new Error(
-      profileError.message
-    );
-
+    throw new Error(profileError.message);
   }
 
 
@@ -1627,15 +1113,14 @@ async function verifyAdmin() {
   }
 
 
-  currentAdmin =
-    user;
+  currentAdmin = user;
 
 }
 
 
 
 /* =========================================
-   SETUP EVENTS
+   EVENTS
 ========================================= */
 
 function setupEvents() {
@@ -1645,7 +1130,7 @@ function setupEvents() {
     .getElementById("taskType")
     .addEventListener(
       "change",
-      handleTaskTypeChange
+      updateTaskTypeFields
     );
 
 
@@ -1674,9 +1159,7 @@ function setupEvents() {
 
 
   document
-    .querySelectorAll(
-      ".status-option"
-    )
+    .querySelectorAll(".status-option")
     .forEach(button => {
 
       button.addEventListener(
@@ -1684,20 +1167,13 @@ function setupEvents() {
         () => {
 
           document
-            .querySelectorAll(
-              ".status-option"
-            )
+            .querySelectorAll(".status-option")
             .forEach(item =>
-              item.classList.remove(
-                "selected"
-              )
+              item.classList.remove("selected")
             );
 
 
-          button.classList.add(
-            "selected"
-          );
-
+          button.classList.add("selected");
 
           selectedStatus =
             button.dataset.status;
@@ -1712,10 +1188,10 @@ function setupEvents() {
 
 
 /* =========================================
-   TASK TYPE CHANGE
+   TASK TYPE FIELDS
 ========================================= */
 
-function handleTaskTypeChange() {
+function updateTaskTypeFields() {
 
 
   const taskType =
@@ -1724,106 +1200,130 @@ function handleTaskTypeChange() {
     ).value;
 
 
-  const socialSettings =
+  const questionSection =
     document.getElementById(
-      "socialSettings"
+      "questionSection"
     );
 
 
-  const answerSettings =
+  const socialSection =
     document.getElementById(
-      "answerSettings"
+      "socialSection"
     );
 
 
-  const photoSettings =
+  const photoSection =
     document.getElementById(
-      "photoSettings"
+      "photoSection"
     );
 
 
-  socialSettings
-    .classList
-    .add("hidden");
+  const correctAnswerGroup =
+    document.getElementById(
+      "correctAnswerGroup"
+    );
 
 
-  answerSettings
-    .classList
-    .add("hidden");
+  const questionTitle =
+    document.getElementById(
+      "questionSectionTitle"
+    );
 
 
-  photoSettings
-    .classList
-    .add("hidden");
+  const questionDescription =
+    document.getElementById(
+      "questionSectionDescription"
+    );
 
 
-  if (
-    taskType ===
-    "social"
-  ) {
-
-    socialSettings
-      .classList
-      .remove("hidden");
+  const questionLabel =
+    document.getElementById(
+      "questionLabel"
+    );
 
 
+  const questionText =
+    document.getElementById(
+      "questionText"
+    );
+
+
+  const verification =
     document.getElementById(
       "verificationType"
-    ).value =
-      "photo_url";
-
-  }
+    );
 
 
-  else if (
-    taskType ===
-    "question"
-  ) {
+  questionSection.classList.add("hidden");
 
-    answerSettings
-      .classList
-      .remove("hidden");
+  socialSection.classList.add("hidden");
+
+  photoSection.classList.add("hidden");
+
+  correctAnswerGroup.classList.add("hidden");
 
 
-    document.getElementById(
-      "verificationType"
-    ).value =
+  if (taskType === "question") {
+
+    questionSection.classList.remove("hidden");
+
+    questionTitle.textContent =
+      "Question & Answer";
+
+    questionDescription.textContent =
+      "Enter the question the member must answer.";
+
+    questionLabel.textContent =
+      "Question / Prompt";
+
+    questionText.placeholder =
+      "Enter the question the member will see.";
+
+    verification.value =
       "text";
 
   }
 
 
-  else if (
-    taskType ===
-    "riddle"
-  ) {
+  else if (taskType === "riddle") {
 
-    answerSettings
-      .classList
-      .remove("hidden");
+    questionSection.classList.remove("hidden");
 
+    correctAnswerGroup.classList.remove("hidden");
 
-    document.getElementById(
-      "verificationType"
-    ).value =
+    questionTitle.textContent =
+      "Riddle & Answer";
+
+    questionDescription.textContent =
+      "Enter the riddle, the private correct answer and optional answer instructions.";
+
+    questionLabel.textContent =
+      "Riddle / Question";
+
+    questionText.placeholder =
+      "Enter the riddle the member will see.";
+
+    verification.value =
       "admin";
 
   }
 
 
-  else if (
-    taskType ===
-    "photo"
-  ) {
+  else if (taskType === "social") {
 
-    photoSettings
-      .classList
-      .remove("hidden");
+    socialSection.classList.remove("hidden");
+
+    verification.value =
+      "photo_url";
+
+  }
 
 
-    document.getElementById(
-      "verificationType"
-    ).value =
+  else if (taskType === "photo") {
+
+    photoSection.classList.remove("hidden");
+
+    verification.value =
       "photo";
 
   }
@@ -1831,9 +1331,7 @@ function handleTaskTypeChange() {
 
   else {
 
-    document.getElementById(
-      "verificationType"
-    ).value =
+    verification.value =
       "admin";
 
   }
@@ -1864,67 +1362,31 @@ function updateActionOptions() {
   let actions = [];
 
 
-  if (
-    platform ===
-    "TikTok"
-  ) {
+  if (platform === "TikTok") {
 
     actions = [
-
-      {
-        value: "Follow",
-        label: "Follow"
-      },
-
-      {
-        value: "Like",
-        label: "Like"
-      }
-
+      "Follow",
+      "Like"
     ];
 
   }
 
 
-  else if (
-    platform ===
-    "Instagram"
-  ) {
+  else if (platform === "Instagram") {
 
     actions = [
-
-      {
-        value: "Follow",
-        label: "Follow"
-      },
-
-      {
-        value: "Like",
-        label: "Like"
-      }
-
+      "Follow",
+      "Like"
     ];
 
   }
 
 
-  else if (
-    platform ===
-    "YouTube"
-  ) {
+  else if (platform === "YouTube") {
 
     actions = [
-
-      {
-        value: "Subscribe",
-        label: "Subscribe"
-      },
-
-      {
-        value: "Like",
-        label: "Like"
-      }
-
+      "Subscribe",
+      "Like"
     ];
 
   }
@@ -1933,13 +1395,8 @@ function updateActionOptions() {
   actionSelect.innerHTML =
     actions
       .map(
-        action => `
-
-          <option value="${escapeHtml(action.value)}">
-            ${escapeHtml(action.label)}
-          </option>
-
-        `
+        action =>
+          `<option value="${escapeHtml(action)}">${escapeHtml(action)}</option>`
       )
       .join("");
 
@@ -1948,7 +1405,7 @@ function updateActionOptions() {
 
 
 /* =========================================
-   UPDATE TOTAL
+   TOTAL
 ========================================= */
 
 function updateTotal() {
@@ -1999,7 +1456,6 @@ function updateTotal() {
 
 async function createTask() {
 
-
   clearAlerts();
 
 
@@ -2015,90 +1471,91 @@ async function createTask() {
 
 
   const title =
-    document
-      .getElementById("title")
-      .value
-      .trim();
+    document.getElementById(
+      "title"
+    ).value.trim();
 
 
   const description =
-    document
-      .getElementById("description")
-      .value
-      .trim();
+    document.getElementById(
+      "description"
+    ).value.trim();
 
 
   const category =
-    document
-      .getElementById("category")
-      .value
-      .trim();
+    document.getElementById(
+      "category"
+    ).value.trim();
 
 
   const taskType =
-    document
-      .getElementById("taskType")
-      .value;
+    document.getElementById(
+      "taskType"
+    ).value;
+
+
+  const questionText =
+    document.getElementById(
+      "questionText"
+    ).value.trim();
+
+
+  const correctAnswer =
+    document.getElementById(
+      "correctAnswer"
+    ).value.trim();
+
+
+  const answerInstruction =
+    document.getElementById(
+      "answerInstruction"
+    ).value.trim();
 
 
   const platform =
-    document
-      .getElementById("platform")
-      .value;
+    document.getElementById(
+      "platform"
+    ).value;
 
 
   const actionType =
-    document
-      .getElementById("actionType")
-      .value;
+    document.getElementById(
+      "actionType"
+    ).value;
 
 
   const verificationType =
-    document
-      .getElementById(
-        "verificationType"
-      )
-      .value;
+    document.getElementById(
+      "verificationType"
+    ).value;
 
 
   const taskLink =
-    document
-      .getElementById("taskLink")
-      .value
-      .trim();
+    document.getElementById(
+      "taskLink"
+    ).value.trim();
 
 
   const reward =
     Number(
-      document
-        .getElementById("reward")
-        .value
+      document.getElementById(
+        "reward"
+      ).value
     );
 
 
   const maxParticipants =
     Number(
-      document
-        .getElementById(
-          "maxParticipants"
-        )
-        .value
+      document.getElementById(
+        "maxParticipants"
+      ).value
     );
 
 
-  const answerInstruction =
-    document
-      .getElementById(
-        "answerInstruction"
-      )
-      .value
-      .trim();
 
-
-
-  /* =======================================
+  /* =====================================
      VALIDATION
-  ======================================== */
+  ====================================== */
 
   if (!title) {
 
@@ -2114,7 +1571,7 @@ async function createTask() {
   if (!description) {
 
     showError(
-      "Please enter task instructions."
+      "Please enter the general task instructions."
     );
 
     return;
@@ -2122,10 +1579,33 @@ async function createTask() {
   }
 
 
-  if (!category) {
+  if (
+    taskType === "question" ||
+    taskType === "riddle"
+  ) {
+
+    if (!questionText) {
+
+      showError(
+        taskType === "riddle"
+          ? "Please enter the riddle."
+          : "Please enter the question."
+      );
+
+      return;
+
+    }
+
+  }
+
+
+  if (
+    taskType === "riddle" &&
+    !correctAnswer
+  ) {
 
     showError(
-      "Please select a category."
+      "Please enter the correct answer for the riddle."
     );
 
     return;
@@ -2148,9 +1628,7 @@ async function createTask() {
 
 
   if (
-    !Number.isInteger(
-      maxParticipants
-    ) ||
+    !Number.isInteger(maxParticipants) ||
     maxParticipants < 1
   ) {
 
@@ -2164,134 +1642,17 @@ async function createTask() {
 
 
 
-  /* =======================================
-     TYPE-SPECIFIC VALIDATION
-  ======================================== */
+  /* =====================================
+     PROOF REQUIREMENT
+  ====================================== */
 
-  if (
-    taskType === "social" &&
-    !platform
-  ) {
-
-    showError(
-      "Please select a social-media platform."
-    );
-
-    return;
-
-  }
-
-
-  if (
-    taskType === "social" &&
-    !actionType
-  ) {
-
-    showError(
-      "Please select the social-media action."
-    );
-
-    return;
-
-  }
-
-
-  if (
-    (
-      taskType === "question" ||
-      taskType === "riddle"
-    ) &&
-    !answerInstruction
-  ) {
-
-    showError(
-      "Please enter the answer instructions."
-    );
-
-    return;
-
-  }
+  const requireProof = true;
 
 
 
-  /* =======================================
-     DETERMINE PROOF REQUIREMENT
-  ======================================== */
-
-  let requireProof = true;
-
-
-  if (
-    taskType === "question"
-  ) {
-
-    requireProof = true;
-
-  }
-
-
-  if (
-    taskType === "riddle"
-  ) {
-
-    requireProof = true;
-
-  }
-
-
-  if (
-    taskType === "photo"
-  ) {
-
-    requireProof = true;
-
-  }
-
-
-  if (
-    taskType === "social"
-  ) {
-
-    requireProof = true;
-
-  }
-
-
-
-  /* =======================================
-     PREPARE DESCRIPTION
-     
-     For answer-based tasks, include the
-     creator's answer instruction in the
-     task description so the member can
-     see exactly what is required.
-  ======================================== */
-
-  let finalDescription =
-    description;
-
-
-  if (
-    answerInstruction &&
-    (
-      taskType === "question" ||
-      taskType === "riddle"
-    )
-  ) {
-
-    finalDescription +=
-
-      "\n\nAnswer instructions:\n" +
-
-      answerInstruction;
-
-  }
-
-
-
-  /* =======================================
-     DISABLE BUTTON
-  ======================================== */
+  /* =====================================
+     INSERT
+  ====================================== */
 
   const button =
     document.getElementById(
@@ -2299,25 +1660,14 @@ async function createTask() {
     );
 
 
-  button.disabled =
-    true;
-
+  button.disabled = true;
 
   button.textContent =
     "Creating...";
 
 
-
   try {
 
-
-    /* =====================================
-       INSERT TASK
-       
-       IMPORTANT:
-       Admin-created tasks do NOT charge
-       admin wallet.
-    ====================================== */
 
     const {
       data,
@@ -2333,7 +1683,20 @@ async function createTask() {
             title,
 
           description:
-            finalDescription,
+            description,
+
+          question_text:
+            (
+              taskType === "question" ||
+              taskType === "riddle"
+            )
+              ? questionText
+              : null,
+
+          correct_answer:
+            taskType === "riddle"
+              ? correctAnswer
+              : null,
 
           category:
             category,
@@ -2348,8 +1711,7 @@ async function createTask() {
             currentAdmin.id,
 
           task_link:
-            taskLink ||
-            null,
+            taskLink || null,
 
           max_participants:
             maxParticipants,
@@ -2414,29 +1776,19 @@ async function createTask() {
     }
 
 
-
-    /* =====================================
-       SUCCESS
-    ====================================== */
-
     showSuccess(
       "Task created successfully."
     );
 
 
-    /*
-     * Give the success message a moment
-     * before returning to task management.
-     */
-
     setTimeout(
-      function() {
+      () => {
 
         window.location.href =
           "admin-tasks.html";
 
       },
-      800
+      900
     );
 
 
@@ -2454,9 +1806,7 @@ async function createTask() {
     );
 
 
-    button.disabled =
-      false;
-
+    button.disabled = false;
 
     button.textContent =
       "Create Task";
@@ -2486,20 +1836,16 @@ function goBack() {
 
 function showError(message) {
 
-
   const box =
     document.getElementById(
       "errorAlert"
     );
 
-
   box.textContent =
     message;
 
-
   box.style.display =
     "block";
-
 
   window.scrollTo({
     top: 0,
@@ -2509,19 +1855,15 @@ function showError(message) {
 }
 
 
-
 function showSuccess(message) {
-
 
   const box =
     document.getElementById(
       "successAlert"
     );
 
-
   box.textContent =
     message;
-
 
   box.style.display =
     "block";
@@ -2529,15 +1871,12 @@ function showSuccess(message) {
 }
 
 
-
 function clearAlerts() {
-
 
   document.getElementById(
     "errorAlert"
   ).style.display =
     "none";
-
 
   document.getElementById(
     "successAlert"

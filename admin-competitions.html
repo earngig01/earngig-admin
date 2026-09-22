@@ -23,7 +23,7 @@
     header {
       background: #0d1233;
       border-bottom: 1px solid #242a58;
-      padding: 18px 20px;
+      padding: 16px 20px;
       position: sticky;
       top: 0;
       z-index: 20;
@@ -39,7 +39,7 @@
     }
 
     .logo {
-      font-size: 22px;
+      font-size: 21px;
       font-weight: 800;
       color: #9b7cff;
     }
@@ -49,34 +49,36 @@
       text-decoration: none;
       background: #171d45;
       border: 1px solid #30376c;
-      padding: 10px 14px;
-      border-radius: 10px;
-      font-size: 14px;
+      padding: 9px 13px;
+      border-radius: 9px;
+      font-size: 13px;
     }
 
     main {
       max-width: 1200px;
       margin: auto;
-      padding: 25px 16px 60px;
+      padding: 22px 16px 60px;
     }
 
     h1 {
-      margin: 0 0 7px;
-      font-size: 28px;
+      margin: 0 0 6px;
+      font-size: 27px;
     }
 
     .subtitle {
       color: #aeb5d5;
-      margin-bottom: 24px;
+      margin-bottom: 22px;
+      line-height: 1.45;
+      font-size: 14px;
     }
 
     .message {
       display: none;
-      padding: 13px 15px;
+      padding: 12px 14px;
       border-radius: 10px;
-      margin-bottom: 18px;
+      margin-bottom: 17px;
       font-size: 14px;
-      line-height: 1.5;
+      line-height: 1.45;
     }
 
     .message.success {
@@ -96,33 +98,33 @@
     .stats {
       display: grid;
       grid-template-columns: repeat(6, 1fr);
-      gap: 12px;
-      margin-bottom: 22px;
+      gap: 10px;
+      margin-bottom: 18px;
     }
 
     .stat {
       background: #101638;
       border: 1px solid #252d60;
-      border-radius: 14px;
-      padding: 17px;
+      border-radius: 12px;
+      padding: 13px;
     }
 
     .stat-label {
       color: #9ca6cf;
-      font-size: 12px;
-      margin-bottom: 8px;
+      font-size: 10px;
+      margin-bottom: 6px;
     }
 
     .stat-value {
-      font-size: 25px;
+      font-size: 22px;
       font-weight: 800;
     }
 
     .toolbar {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 18px;
+      gap: 9px;
+      margin-bottom: 15px;
     }
 
     button,
@@ -138,9 +140,10 @@
     }
 
     .btn {
-      padding: 11px 15px;
-      border-radius: 10px;
+      padding: 9px 12px;
+      border-radius: 9px;
       font-weight: 700;
+      font-size: 13px;
     }
 
     .btn-primary {
@@ -172,59 +175,63 @@
     .panel {
       background: #0d1233;
       border: 1px solid #252d60;
-      border-radius: 16px;
-      padding: 20px;
-      margin-bottom: 20px;
+      border-radius: 14px;
+      padding: 17px;
+      margin-bottom: 18px;
     }
 
     .panel h2 {
-      margin: 0 0 17px;
-      font-size: 20px;
+      margin: 0 0 15px;
+      font-size: 18px;
     }
 
     .competition-list {
       display: grid;
-      gap: 14px;
+      gap: 9px;
     }
 
+    /*
+     * Compact competition card.
+     */
     .competition-card {
       background: #11183d;
       border: 1px solid #2a3268;
-      border-radius: 14px;
-      padding: 17px;
+      border-radius: 11px;
+      padding: 12px;
     }
 
-    .competition-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 15px;
+    .competition-main {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: center;
     }
 
     .competition-title {
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 800;
-      margin-bottom: 7px;
+      margin-bottom: 6px;
+      word-break: break-word;
     }
 
     .competition-description {
-      color: #aeb5d5;
-      line-height: 1.5;
-      white-space: pre-wrap;
+      color: #929bc2;
+      font-size: 12px;
+      line-height: 1.4;
+      margin-bottom: 7px;
     }
 
     .badges {
       display: flex;
       flex-wrap: wrap;
-      gap: 7px;
-      margin-top: 12px;
+      gap: 5px;
     }
 
     .badge {
       display: inline-block;
-      padding: 5px 9px;
+      padding: 4px 7px;
       border-radius: 999px;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 700;
       background: #242b59;
       color: #dfe3ff;
@@ -251,38 +258,40 @@
       color: #c9cfff;
     }
 
-    .competition-meta {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 10px;
-      margin-top: 15px;
-      padding-top: 14px;
-      border-top: 1px solid #282f60;
+    .badge.draft {
+      background: #242b59;
+      color: #dfe3ff;
     }
 
-    .meta-item {
-      font-size: 12px;
-      color: #919ac1;
-    }
-
-    .meta-item strong {
-      display: block;
-      color: #fff;
-      margin-top: 4px;
-      font-size: 13px;
-    }
-
-    .card-actions {
+    .competition-info {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 15px;
+      gap: 7px 14px;
+      margin-top: 10px;
+      padding-top: 9px;
+      border-top: 1px solid #282f60;
+      color: #8f98bd;
+      font-size: 11px;
+    }
+
+    .competition-info strong {
+      color: #dfe3ff;
+      font-weight: 700;
+    }
+
+    .competition-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 6px;
+      margin-top: 10px;
     }
 
     .empty {
       text-align: center;
       color: #8f98bd;
-      padding: 35px 10px;
+      padding: 32px 10px;
+      font-size: 13px;
     }
 
     .hidden {
@@ -292,7 +301,7 @@
     .form-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 15px;
+      gap: 14px;
     }
 
     .full {
@@ -302,9 +311,9 @@
     label {
       display: block;
       color: #c6cbea;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 700;
-      margin-bottom: 7px;
+      margin-bottom: 6px;
     }
 
     input,
@@ -314,13 +323,13 @@
       background: #080d29;
       color: #fff;
       border: 1px solid #30376c;
-      border-radius: 10px;
-      padding: 12px;
+      border-radius: 9px;
+      padding: 11px;
       outline: none;
     }
 
     textarea {
-      min-height: 100px;
+      min-height: 95px;
       resize: vertical;
     }
 
@@ -333,9 +342,9 @@
     .quiz-time-box {
       background: #171d45;
       border: 1px solid #383f78;
-      border-radius: 12px;
-      padding: 14px;
-      margin-top: 15px;
+      border-radius: 11px;
+      padding: 13px;
+      margin-top: 14px;
     }
 
     .quiz-time-box strong {
@@ -344,183 +353,56 @@
     }
 
     .quiz-time-box p {
-      margin: 0 0 10px;
+      margin: 0 0 9px;
       color: #aeb5d5;
-      font-size: 13px;
+      font-size: 12px;
       line-height: 1.45;
     }
 
     .section-title {
-      margin: 24px 0 12px;
-      font-size: 16px;
+      margin: 21px 0 10px;
+      font-size: 15px;
       color: #dce0ff;
+      font-weight: 800;
     }
 
     .prize-row,
     .question-row {
       background: #101638;
       border: 1px solid #293264;
-      border-radius: 12px;
-      padding: 14px;
-      margin-bottom: 10px;
+      border-radius: 11px;
+      padding: 12px;
+      margin-bottom: 9px;
     }
 
     .row-grid {
       display: grid;
-      grid-template-columns: 1.1fr 1fr 1fr 1.1fr 1fr 50px;
-      gap: 9px;
+      grid-template-columns: 1.1fr 1fr 1fr 1.1fr .8fr .7fr;
+      gap: 8px;
       align-items: end;
     }
 
     .question-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 9px;
+      gap: 8px;
     }
 
     .remove-btn {
-      width: 42px;
-      height: 42px;
-      border-radius: 9px;
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
       background: #472034;
       color: #ffb4c8;
       font-weight: 800;
     }
 
     .add-row {
-      margin-top: 3px;
-    }
-
-    .detail-box {
-      background: #080d29;
-      border: 1px solid #292f5f;
-      border-radius: 12px;
-      padding: 14px;
-      margin-top: 15px;
-    }
-
-    .detail-box h3 {
-      margin: 0 0 12px;
-      font-size: 15px;
-    }
-
-    .prize-display,
-    .question-display,
-    .entry-card,
-    .winner-card {
-      background: #11183d;
-      border: 1px solid #293264;
-      border-radius: 10px;
-      padding: 12px;
-      margin-bottom: 8px;
-    }
-
-    .entry-card {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 12px;
-    }
-
-    .entry-main {
-      min-width: 0;
-    }
-
-    .entry-title {
-      font-weight: 800;
-      margin-bottom: 5px;
-    }
-
-    .entry-text {
-      color: #aeb5d5;
-      font-size: 13px;
-      line-height: 1.45;
-      white-space: pre-wrap;
-      word-break: break-word;
-    }
-
-    .entry-actions {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 7px;
-    }
-
-    .entry-actions .btn {
-      padding: 8px 10px;
-      font-size: 12px;
-    }
-
-    .results-table-wrap {
-      width: 100%;
-      overflow-x: auto;
-    }
-
-    .results-table {
-      width: 100%;
-      min-width: 720px;
-      border-collapse: collapse;
-    }
-
-    .results-table th,
-    .results-table td {
-      padding: 12px 10px;
-      border-bottom: 1px solid #292f5f;
-      text-align: left;
-      font-size: 13px;
-    }
-
-    .results-table th {
-      color: #9ca6cf;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: .4px;
-    }
-
-    .results-table td {
-      color: #e6e8ff;
-    }
-
-    .rank {
-      font-weight: 900;
-      color: #9b7cff;
-      font-size: 16px;
-    }
-
-    .top-rank {
-      color: #ffd76a;
-    }
-
-    .score {
-      font-weight: 900;
-      font-size: 15px;
-    }
-
-    .result-status {
-      display: inline-block;
-      padding: 4px 8px;
-      border-radius: 999px;
-      background: #242b59;
-      font-size: 11px;
-    }
-
-    .winner-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr auto;
-      gap: 9px;
-      align-items: end;
-    }
-
-    a {
-      color: #9b88ff;
+      margin-top: 2px;
     }
 
     @media (max-width: 1000px) {
       .stats {
-        grid-template-columns: repeat(3, 1fr);
-      }
-
-      .competition-meta {
         grid-template-columns: repeat(3, 1fr);
       }
 
@@ -531,11 +413,11 @@
 
     @media (max-width: 700px) {
       header {
-        padding: 14px;
+        padding: 13px;
       }
 
       main {
-        padding: 20px 12px 45px;
+        padding: 18px 11px 45px;
       }
 
       h1 {
@@ -546,6 +428,14 @@
         grid-template-columns: repeat(2, 1fr);
       }
 
+      .competition-main {
+        grid-template-columns: 1fr;
+      }
+
+      .competition-actions {
+        justify-content: flex-start;
+      }
+
       .form-grid {
         grid-template-columns: 1fr;
       }
@@ -554,29 +444,9 @@
         grid-column: auto;
       }
 
-      .competition-top {
-        flex-direction: column;
-      }
-
-      .competition-meta {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .row-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .question-grid,
-      .winner-grid {
+      .row-grid,
+      .question-grid {
         grid-template-columns: 1fr;
-      }
-
-      .entry-card {
-        grid-template-columns: 1fr;
-      }
-
-      .entry-actions {
-        justify-content: flex-start;
       }
     }
   </style>
@@ -596,12 +466,14 @@
   <h1>🏆 Competitions & Awards</h1>
 
   <div class="subtitle">
-    Create and manage admin-controlled competitions, prizes, timed quizzes, results and winners.
+    Create and manage admin-controlled competitions, prizes and timed quizzes.
+    Participant review and winner management are handled on each competition's participant page.
   </div>
 
   <div id="message" class="message"></div>
 
   <section class="stats">
+
     <div class="stat">
       <div class="stat-label">TOTAL</div>
       <div id="statTotal" class="stat-value">0</div>
@@ -623,7 +495,7 @@
     </div>
 
     <div class="stat">
-      <div class="stat-label">WINNERS ANNOUNCED</div>
+      <div class="stat-label">WINNERS</div>
       <div id="statWinners" class="stat-value">0</div>
     </div>
 
@@ -631,9 +503,11 @@
       <div class="stat-label">COMPLETED</div>
       <div id="statCompleted" class="stat-value">0</div>
     </div>
+
   </section>
 
   <div class="toolbar">
+
     <button class="btn btn-primary" onclick="openCreateForm()">
       ＋ Create Competition
     </button>
@@ -642,7 +516,11 @@
       ↻ Refresh
     </button>
 
-    <select id="statusFilter" onchange="renderCompetitions()" style="max-width:190px;">
+    <select
+      id="statusFilter"
+      onchange="renderCompetitions()"
+      style="max-width:190px;"
+    >
       <option value="all">All Competitions</option>
       <option value="draft">Draft</option>
       <option value="published">Published</option>
@@ -651,8 +529,10 @@
       <option value="completed">Completed</option>
       <option value="cancelled">Cancelled</option>
     </select>
+
   </div>
 
+  <!-- CREATE / EDIT -->
   <section id="formPanel" class="panel hidden">
 
     <h2 id="formTitle">Create Competition</h2>
@@ -771,7 +651,7 @@
 
         <p>
           The countdown starts when the member presses Start Quiz.
-          When the time reaches zero, the quiz will automatically end.
+          The server-enforced deadline will prevent extra time.
         </p>
 
         <label>Time Limit (minutes) *</label>
@@ -798,6 +678,8 @@
         ＋ Add Prize Tier
       </button>
 
+      <!-- Quiz questions remain available for creation/editing.
+           They are NOT displayed in the competition browsing/management cards. -->
       <div id="quizSection">
 
         <div class="section-title">📝 Quiz Questions</div>
@@ -814,7 +696,7 @@
 
       </div>
 
-      <div style="margin-top:25px; display:flex; flex-wrap:wrap; gap:10px;">
+      <div style="margin-top:23px; display:flex; flex-wrap:wrap; gap:9px;">
 
         <button type="submit" class="btn btn-primary">
           Save Competition
@@ -831,8 +713,10 @@
       </div>
 
     </form>
+
   </section>
 
+  <!-- COMPACT COMPETITION LIST -->
   <section class="panel">
 
     <h2>Competitions</h2>
@@ -843,47 +727,16 @@
 
   </section>
 
-  <section id="detailPanel" class="panel hidden">
-
-    <div style="display:flex; justify-content:space-between; gap:10px; align-items:center;">
-
-      <h2 id="detailTitle">Competition Details</h2>
-
-      <button
-        class="btn btn-secondary"
-        onclick="closeDetails()"
-      >
-        Close
-      </button>
-
-    </div>
-
-    <div id="detailContent"></div>
-
-  </section>
-
 </main>
 
 <script>
   let competitions = [];
-  let currentDetailId = null;
   let adminUser = null;
 
   document.addEventListener("DOMContentLoaded", async () => {
     await verifyAdmin();
   });
 
-  /*
-   * ADMIN VERIFICATION
-   *
-   * Important:
-   * We only redirect to the login page when there is genuinely
-   * no signed-in user.
-   *
-   * We no longer redirect to admin-dashboard.html when the
-   * profiles query itself fails. Instead, the actual error is
-   * displayed on this page so the page does not disappear.
-   */
   async function verifyAdmin() {
     try {
       const {
@@ -935,11 +788,6 @@
       }
 
       if (!profile) {
-        console.error(
-          "No profile found for signed-in user:",
-          user.id
-        );
-
         showMessage(
           "Your EarnGig profile could not be found.",
           "error"
@@ -952,11 +800,6 @@
         profile.is_admin !== true ||
         profile.account_status !== "active"
       ) {
-        console.error(
-          "Admin access denied:",
-          profile
-        );
-
         showMessage(
           "Administrator access is required for this page.",
           "error"
@@ -970,10 +813,7 @@
       await loadCompetitions();
 
     } catch (err) {
-      console.error(
-        "verifyAdmin error:",
-        err
-      );
+      console.error("verifyAdmin error:", err);
 
       showMessage(
         err.message ||
@@ -1022,47 +862,31 @@
         x => x.status === status
       ).length;
 
-    document.getElementById(
-      "statTotal"
-    ).textContent =
+    document.getElementById("statTotal").textContent =
       competitions.length;
 
-    document.getElementById(
-      "statDraft"
-    ).textContent =
+    document.getElementById("statDraft").textContent =
       count("draft");
 
-    document.getElementById(
-      "statPublished"
-    ).textContent =
+    document.getElementById("statPublished").textContent =
       count("published");
 
-    document.getElementById(
-      "statClosed"
-    ).textContent =
+    document.getElementById("statClosed").textContent =
       count("closed");
 
-    document.getElementById(
-      "statWinners"
-    ).textContent =
+    document.getElementById("statWinners").textContent =
       count("winners_announced");
 
-    document.getElementById(
-      "statCompleted"
-    ).textContent =
+    document.getElementById("statCompleted").textContent =
       count("completed");
   }
 
   function renderCompetitions() {
     const list =
-      document.getElementById(
-        "competitionList"
-      );
+      document.getElementById("competitionList");
 
     const filter =
-      document.getElementById(
-        "statusFilter"
-      ).value;
+      document.getElementById("statusFilter").value;
 
     const rows =
       filter === "all"
@@ -1077,138 +901,125 @@
       return;
     }
 
-    list.innerHTML =
-      rows.map(c => {
+    list.innerHTML = rows.map(c => {
 
-        const isQuiz =
-          c.competition_type === "quiz" ||
-          c.entry_method === "quiz";
+      const isQuiz =
+        c.competition_type === "quiz" ||
+        c.entry_method === "quiz";
 
-        return `
-          <div class="competition-card">
+      return `
+        <div class="competition-card">
 
-            <div class="competition-top">
+          <div class="competition-main">
 
-              <div>
+            <div>
 
-                <div class="competition-title">
-                  ${escapeHtml(c.title)}
-                </div>
-
-                <div class="competition-description">
-                  ${escapeHtml(
-                    c.description ||
-                    "No description."
-                  )}
-                </div>
-
-                <div class="badges">
-
-                  <span class="badge ${escapeHtml(c.status)}">
-                    ${formatStatus(c.status)}
-                  </span>
-
-                  <span class="badge">
-                    ${formatType(c.competition_type)}
-                  </span>
-
-                  <span class="badge">
-                    Entry:
-                    ${formatEntryMethod(c.entry_method)}
-                  </span>
-
-                  ${
-                    isQuiz &&
-                    c.quiz_time_limit_minutes
-                      ? `
-                        <span class="badge">
-                          ⏱
-                          ${c.quiz_time_limit_minutes}
-                          min
-                        </span>
-                      `
-                      : ""
-                  }
-
-                </div>
-
+              <div class="competition-title">
+                ${escapeHtml(c.title)}
               </div>
 
-              <button
-                class="btn btn-secondary"
-                onclick="viewCompetition('${c.id}')"
-              >
-                Manage
-              </button>
+              <div class="competition-description">
+                ${escapeHtml(
+                  truncate(
+                    c.description || "No description.",
+                    150
+                  )
+                )}
+              </div>
+
+              <div class="badges">
+
+                <span class="badge ${escapeHtml(c.status || "")}">
+                  ${formatStatus(c.status)}
+                </span>
+
+                <span class="badge">
+                  ${formatType(c.competition_type)}
+                </span>
+
+                <span class="badge">
+                  Entry: ${formatEntryMethod(c.entry_method)}
+                </span>
+
+                ${
+                  isQuiz &&
+                  c.quiz_time_limit_minutes
+                    ? `
+                      <span class="badge">
+                        ⏱ ${c.quiz_time_limit_minutes} min
+                      </span>
+                    `
+                    : ""
+                }
+
+              </div>
 
             </div>
 
-            <div class="competition-meta">
-
-              <div class="meta-item">
-                Start
-                <strong>
-                  ${formatDate(c.start_at)}
-                </strong>
-              </div>
-
-              <div class="meta-item">
-                End
-                <strong>
-                  ${formatDate(c.end_at)}
-                </strong>
-              </div>
-
-              <div class="meta-item">
-                Max Participants
-                <strong>
-                  ${c.max_participants || "Unlimited"}
-                </strong>
-              </div>
-
-              <div class="meta-item">
-                Created
-                <strong>
-                  ${formatDate(c.created_at)}
-                </strong>
-              </div>
-
-              ${
-                isQuiz
-                  ? `
-                    <div class="meta-item">
-                      Quiz Time
-                      <strong>
-                        ${
-                          c.quiz_time_limit_minutes
-                            ? `${c.quiz_time_limit_minutes} minutes`
-                            : "Not set"
-                        }
-                      </strong>
-                    </div>
-                  `
-                  : `
-                    <div class="meta-item">
-                      Type
-                      <strong>
-                        ${formatType(
-                          c.competition_type
-                        )}
-                      </strong>
-                    </div>
-                  `
-              }
-
-            </div>
-
-            <div class="card-actions">
-              ${statusButtons(c)}
-            </div>
+            <button
+              class="btn btn-primary"
+              onclick="openParticipants('${c.id}')"
+            >
+              👥 Participants
+            </button>
 
           </div>
-        `;
 
-      }).join("");
+          <div class="competition-info">
+
+            <span>
+              Start:
+              <strong>${formatDate(c.start_at)}</strong>
+            </span>
+
+            <span>
+              End:
+              <strong>${formatDate(c.end_at)}</strong>
+            </span>
+
+            <span>
+              Max:
+              <strong>
+                ${c.max_participants || "Unlimited"}
+              </strong>
+            </span>
+
+            ${
+              isQuiz
+                ? `
+                  <span>
+                    Quiz:
+                    <strong>
+                      ${
+                        c.quiz_time_limit_minutes
+                          ? `${c.quiz_time_limit_minutes} min`
+                          : "Not set"
+                      }
+                    </strong>
+                  </span>
+                `
+                : ""
+            }
+
+          </div>
+
+          <div class="competition-actions">
+
+            <button
+              class="btn btn-secondary"
+              onclick="editCompetition('${c.id}')"
+            >
+              Edit
+            </button>
+
+            ${statusButtons(c)}
+
+          </div>
+
+        </div>
+      `;
+
+    }).join("");
   }
 
   function statusButtons(c) {
@@ -1216,26 +1027,11 @@
     let html = `
       <button
         class="btn btn-secondary"
-        onclick="viewCompetition('${c.id}')"
+        onclick="openParticipants('${c.id}')"
       >
-        View / Manage
+        Manage
       </button>
     `;
-
-    const isQuiz =
-      c.competition_type === "quiz" ||
-      c.entry_method === "quiz";
-
-    if (isQuiz) {
-      html += `
-        <button
-          class="btn btn-primary"
-          onclick="viewResults('${c.id}')"
-        >
-          📊 Results
-        </button>
-      `;
-    }
 
     if (c.status === "draft") {
       html += `
@@ -1298,32 +1094,27 @@
     return html;
   }
 
+  function openParticipants(id) {
+    window.location.href =
+      `admin-competition-participants.html?id=${encodeURIComponent(id)}`;
+  }
+
   function openCreateForm() {
 
     document
       .getElementById("formPanel")
       .classList.remove("hidden");
 
-    document.getElementById(
-      "formTitle"
-    ).textContent =
+    document.getElementById("formTitle").textContent =
       "Create Competition";
 
-    document.getElementById(
-      "competitionForm"
-    ).reset();
+    document.getElementById("competitionForm").reset();
 
-    document.getElementById(
-      "editingId"
-    ).value = "";
+    document.getElementById("editingId").value = "";
 
-    document.getElementById(
-      "prizesContainer"
-    ).innerHTML = "";
+    document.getElementById("prizesContainer").innerHTML = "";
 
-    document.getElementById(
-      "questionsContainer"
-    ).innerHTML = "";
+    document.getElementById("questionsContainer").innerHTML = "";
 
     addPrizeRow();
 
@@ -1331,9 +1122,7 @@
 
     window.scrollTo({
       top:
-        document.getElementById(
-          "formPanel"
-        ).offsetTop - 70,
+        document.getElementById("formPanel").offsetTop - 65,
       behavior: "smooth"
     });
   }
@@ -1347,14 +1136,10 @@
   function updateEntryFields() {
 
     const type =
-      document.getElementById(
-        "competitionType"
-      ).value;
+      document.getElementById("competitionType").value;
 
     const method =
-      document.getElementById(
-        "entryMethod"
-      ).value;
+      document.getElementById("entryMethod").value;
 
     const quiz =
       type === "quiz" ||
@@ -1375,18 +1160,14 @@
       );
 
     if (!quiz) {
-      document.getElementById(
-        "quizTimeLimit"
-      ).value = "";
+      document.getElementById("quizTimeLimit").value = "";
     }
   }
 
   function addPrizeRow(data = {}) {
 
     const container =
-      document.getElementById(
-        "prizesContainer"
-      );
+      document.getElementById("prizesContainer");
 
     const div =
       document.createElement("div");
@@ -1401,9 +1182,7 @@
 
           <input
             class="prize-name"
-            value="${escapeAttr(
-              data.prize_name || ""
-            )}"
+            value="${escapeAttr(data.prize_name || "")}"
             placeholder="e.g. 1st Place"
           >
         </div>
@@ -1412,9 +1191,7 @@
           <label>Prize Type</label>
 
           <select class="prize-type">
-            ${prizeTypeOptions(
-              data.prize_type || "cash"
-            )}
+            ${prizeTypeOptions(data.prize_type || "cash")}
           </select>
         </div>
 
@@ -1436,10 +1213,8 @@
 
           <input
             class="prize-description"
-            value="${escapeAttr(
-              data.item_description || ""
-            )}"
-            placeholder="Optional physical prize details"
+            value="${escapeAttr(data.item_description || "")}"
+            placeholder="Optional prize details"
           >
         </div>
 
@@ -1474,7 +1249,7 @@
         type="button"
         class="remove-btn"
         onclick="this.closest('.prize-row').remove()"
-        style="margin-top:10px;"
+        style="margin-top:9px;"
       >
         ×
       </button>
@@ -1494,28 +1269,21 @@
     ];
 
     return options.map(
-      ([value, label]) =>
-        `
-          <option
-            value="${value}"
-            ${
-              value === selected
-                ? "selected"
-                : ""
-            }
-          >
-            ${label}
-          </option>
-        `
+      ([value, label]) => `
+        <option
+          value="${value}"
+          ${value === selected ? "selected" : ""}
+        >
+          ${label}
+        </option>
+      `
     ).join("");
   }
 
   function addQuestionRow(data = {}) {
 
     const container =
-      document.getElementById(
-        "questionsContainer"
-      );
+      document.getElementById("questionsContainer");
 
     const div =
       document.createElement("div");
@@ -1532,120 +1300,83 @@
           <textarea
             class="question-text"
             placeholder="Enter the quiz question"
-          >${escapeHtml(
-            data.question_text || ""
-          )}</textarea>
+          >${escapeHtml(data.question_text || "")}</textarea>
 
         </div>
 
         <div>
-
           <label>Option A</label>
 
           <input
             class="option-a"
-            value="${escapeAttr(
-              data.option_a || ""
-            )}"
+            value="${escapeAttr(data.option_a || "")}"
           >
-
         </div>
 
         <div>
-
           <label>Option B</label>
 
           <input
             class="option-b"
-            value="${escapeAttr(
-              data.option_b || ""
-            )}"
+            value="${escapeAttr(data.option_b || "")}"
           >
-
         </div>
 
         <div>
-
           <label>Option C</label>
 
           <input
             class="option-c"
-            value="${escapeAttr(
-              data.option_c || ""
-            )}"
+            value="${escapeAttr(data.option_c || "")}"
           >
-
         </div>
 
         <div>
-
           <label>Option D</label>
 
           <input
             class="option-d"
-            value="${escapeAttr(
-              data.option_d || ""
-            )}"
+            value="${escapeAttr(data.option_d || "")}"
           >
-
         </div>
 
         <div>
-
           <label>Correct Option</label>
 
           <select class="correct-option">
 
             <option
               value="A"
-              ${
-                data.correct_option === "A"
-                  ? "selected"
-                  : ""
-              }
+              ${data.correct_option === "A" ? "selected" : ""}
             >
               A
             </option>
 
             <option
               value="B"
-              ${
-                data.correct_option === "B"
-                  ? "selected"
-                  : ""
-              }
+              ${data.correct_option === "B" ? "selected" : ""}
             >
               B
             </option>
 
             <option
               value="C"
-              ${
-                data.correct_option === "C"
-                  ? "selected"
-                  : ""
-              }
+              ${data.correct_option === "C" ? "selected" : ""}
             >
               C
             </option>
 
             <option
               value="D"
-              ${
-                data.correct_option === "D"
-                  ? "selected"
-                  : ""
-              }
+              ${data.correct_option === "D" ? "selected" : ""}
             >
               D
             </option>
 
           </select>
-
         </div>
 
         <div>
-
           <label>Points</label>
 
           <input
@@ -1655,7 +1386,6 @@
             step="1"
             value="${data.points ?? 1}"
           >
-
         </div>
 
       </div>
@@ -1664,7 +1394,7 @@
         type="button"
         class="remove-btn"
         onclick="this.closest('.question-row').remove()"
-        style="margin-top:10px;"
+        style="margin-top:9px;"
       >
         ×
       </button>
@@ -1675,332 +1405,243 @@
 
   document
     .getElementById("competitionForm")
-    .addEventListener(
-      "submit",
-      async e => {
+    .addEventListener("submit", async e => {
 
-        e.preventDefault();
+      e.preventDefault();
 
-        try {
+      try {
 
-          const title =
-            document
-              .getElementById("title")
-              .value
-              .trim();
+        const title =
+          document.getElementById("title").value.trim();
 
-          const description =
-            document
-              .getElementById("description")
-              .value
-              .trim();
+        const description =
+          document.getElementById("description").value.trim();
 
-          const competitionType =
-            document
-              .getElementById("competitionType")
-              .value;
+        const competitionType =
+          document.getElementById("competitionType").value;
 
-          const entryMethod =
-            document
-              .getElementById("entryMethod")
-              .value;
+        const entryMethod =
+          document.getElementById("entryMethod").value;
 
-          const instructions =
-            document
-              .getElementById("instructions")
-              .value
-              .trim();
+        const instructions =
+          document.getElementById("instructions").value.trim();
 
-          const eligibility =
-            document
-              .getElementById("eligibility")
-              .value
-              .trim();
+        const eligibility =
+          document.getElementById("eligibility").value.trim();
 
-          const maxParticipantsValue =
-            document
-              .getElementById("maxParticipants")
-              .value;
+        const maxParticipantsValue =
+          document.getElementById("maxParticipants").value;
 
-          const startAt =
-            document
-              .getElementById("startAt")
-              .value;
+        const startAt =
+          document.getElementById("startAt").value;
 
-          const endAt =
-            document
-              .getElementById("endAt")
-              .value;
+        const endAt =
+          document.getElementById("endAt").value;
 
-          const editingId =
-            document
-              .getElementById("editingId")
-              .value;
+        const editingId =
+          document.getElementById("editingId").value;
 
-          const isQuiz =
-            competitionType === "quiz" ||
-            entryMethod === "quiz";
+        const isQuiz =
+          competitionType === "quiz" ||
+          entryMethod === "quiz";
 
-          const quizTimeValue =
-            document
-              .getElementById("quizTimeLimit")
-              .value;
+        const quizTimeValue =
+          document.getElementById("quizTimeLimit").value;
 
-          if (
-            !title ||
-            !description ||
-            !startAt ||
-            !endAt
-          ) {
-            showMessage(
-              "Please complete all required fields.",
-              "error"
-            );
-            return;
-          }
-
-          if (
-            new Date(endAt) <=
-            new Date(startAt)
-          ) {
-            showMessage(
-              "The end date must be after the start date.",
-              "error"
-            );
-            return;
-          }
-
-          if (isQuiz) {
-
-            const minutes =
-              Number(quizTimeValue);
-
-            if (
-              !Number.isInteger(minutes) ||
-              minutes < 1 ||
-              minutes > 1440
-            ) {
-              showMessage(
-                "Quiz time limit must be between 1 and 1440 minutes.",
-                "error"
-              );
-              return;
-            }
-          }
-
-          const competitionData = {
-
-            title,
-
-            description,
-
-            competition_type:
-              competitionType,
-
-            entry_method:
-              entryMethod,
-
-            instructions:
-              instructions || null,
-
-            eligibility:
-              eligibility || null,
-
-            max_participants:
-              maxParticipantsValue
-                ? Number(
-                    maxParticipantsValue
-                  )
-                : null,
-
-            start_at:
-              new Date(
-                startAt
-              ).toISOString(),
-
-            end_at:
-              new Date(
-                endAt
-              ).toISOString(),
-
-            quiz_time_limit_minutes:
-              isQuiz
-                ? Number(
-                    quizTimeValue
-                  )
-                : null,
-
-            updated_at:
-              new Date().toISOString()
-          };
-
-          let competitionId =
-            editingId;
-
-          if (editingId) {
-
-            const {
-              error
-            } = await supabaseClient
-              .from("competitions")
-              .update(
-                competitionData
-              )
-              .eq(
-                "id",
-                editingId
-              );
-
-            if (error) throw error;
-
-          } else {
-
-            competitionData.status =
-              "draft";
-
-            competitionData.created_by =
-              adminUser.id;
-
-            const {
-              data,
-              error
-            } = await supabaseClient
-              .from("competitions")
-              .insert(
-                competitionData
-              )
-              .select()
-              .single();
-
-            if (error) throw error;
-
-            competitionId =
-              data.id;
-          }
-
-          await savePrizes(
-            competitionId
-          );
-
-          await saveQuestions(
-            competitionId,
-            competitionType,
-            entryMethod
-          );
-
+        if (
+          !title ||
+          !description ||
+          !startAt ||
+          !endAt
+        ) {
           showMessage(
-            editingId
-              ? "Competition updated successfully."
-              : "Competition created successfully as Draft.",
-            "success"
-          );
-
-          closeForm();
-
-          await loadCompetitions();
-
-        } catch (err) {
-
-          console.error(
-            "Competition save error:",
-            err
-          );
-
-          showMessage(
-            err.message ||
-            "Unable to save competition.",
+            "Please complete all required fields.",
             "error"
           );
+          return;
         }
-      }
-    );
 
-  async function savePrizes(
-    competitionId
-  ) {
+        if (
+          new Date(endAt) <=
+          new Date(startAt)
+        ) {
+          showMessage(
+            "The end date must be after the start date.",
+            "error"
+          );
+          return;
+        }
 
-    const rows = [
-      ...document.querySelectorAll(
-        ".prize-row"
-      )
-    ];
+        if (isQuiz) {
 
-    const prizes =
-      rows.map(
-        (row, index) => ({
+          const minutes =
+            Number(quizTimeValue);
 
-          competition_id:
-            competitionId,
+          if (
+            !Number.isInteger(minutes) ||
+            minutes < 1 ||
+            minutes > 1440
+          ) {
+            showMessage(
+              "Quiz time limit must be between 1 and 1440 minutes.",
+              "error"
+            );
+            return;
+          }
+        }
 
-          prize_name:
-            row
-              .querySelector(
-                ".prize-name"
-              )
-              .value
-              .trim() ||
-            `Prize ${index + 1}`,
+        const competitionData = {
 
-          prize_type:
-            row
-              .querySelector(
-                ".prize-type"
-              )
-              .value,
+          title,
 
-          amount:
-            row
-              .querySelector(
-                ".prize-amount"
-              )
-              .value
-              ? Number(
-                  row
-                    .querySelector(
-                      ".prize-amount"
-                    )
-                    .value
-                )
+          description,
+
+          competition_type:
+            competitionType,
+
+          entry_method:
+            entryMethod,
+
+          instructions:
+            instructions || null,
+
+          eligibility:
+            eligibility || null,
+
+          max_participants:
+            maxParticipantsValue
+              ? Number(maxParticipantsValue)
               : null,
 
-          item_description:
-            row
-              .querySelector(
-                ".prize-description"
+          start_at:
+            new Date(startAt).toISOString(),
+
+          end_at:
+            new Date(endAt).toISOString(),
+
+          quiz_time_limit_minutes:
+            isQuiz
+              ? Number(quizTimeValue)
+              : null,
+
+          updated_at:
+            new Date().toISOString()
+        };
+
+        let competitionId = editingId;
+
+        if (editingId) {
+
+          const {
+            error
+          } = await supabaseClient
+            .from("competitions")
+            .update(competitionData)
+            .eq("id", editingId);
+
+          if (error) throw error;
+
+        } else {
+
+          competitionData.status = "draft";
+          competitionData.created_by = adminUser.id;
+
+          const {
+            data,
+            error
+          } = await supabaseClient
+            .from("competitions")
+            .insert(competitionData)
+            .select()
+            .single();
+
+          if (error) throw error;
+
+          competitionId = data.id;
+        }
+
+        await savePrizes(competitionId);
+
+        await saveQuestions(
+          competitionId,
+          competitionType,
+          entryMethod
+        );
+
+        showMessage(
+          editingId
+            ? "Competition updated successfully."
+            : "Competition created successfully as Draft.",
+          "success"
+        );
+
+        closeForm();
+
+        await loadCompetitions();
+
+      } catch (err) {
+
+        console.error(
+          "Competition save error:",
+          err
+        );
+
+        showMessage(
+          err.message ||
+          "Unable to save competition.",
+          "error"
+        );
+      }
+    });
+
+  async function savePrizes(competitionId) {
+
+    const rows = [
+      ...document.querySelectorAll(".prize-row")
+    ];
+
+    const prizes = rows.map(
+      (row, index) => ({
+
+        competition_id:
+          competitionId,
+
+        prize_name:
+          row.querySelector(".prize-name").value.trim() ||
+          `Prize ${index + 1}`,
+
+        prize_type:
+          row.querySelector(".prize-type").value,
+
+        amount:
+          row.querySelector(".prize-amount").value
+            ? Number(
+                row.querySelector(".prize-amount").value
               )
-              .value
-              .trim() ||
-            null,
+            : null,
 
-          winner_count:
-            Number(
-              row
-                .querySelector(
-                  ".prize-winners"
-                )
-                .value
-            ) || 1,
+        item_description:
+          row.querySelector(".prize-description").value.trim() ||
+          null,
 
-          prize_order:
-            Number(
-              row
-                .querySelector(
-                  ".prize-order"
-                )
-                .value
-            ) || index + 1
-        })
-      );
+        winner_count:
+          Number(
+            row.querySelector(".prize-winners").value
+          ) || 1,
+
+        prize_order:
+          Number(
+            row.querySelector(".prize-order").value
+          ) || index + 1
+      })
+    );
 
     const {
       error: deleteError
     } = await supabaseClient
       .from("competition_prizes")
       .delete()
-      .eq(
-        "competition_id",
-        competitionId
-      );
+      .eq("competition_id", competitionId);
 
     if (deleteError) {
       throw deleteError;
@@ -2036,10 +1677,7 @@
       } = await supabaseClient
         .from("competition_questions")
         .delete()
-        .eq(
-          "competition_id",
-          competitionId
-        );
+        .eq("competition_id", competitionId);
 
       if (error) throw error;
 
@@ -2047,78 +1685,42 @@
     }
 
     const rows = [
-      ...document.querySelectorAll(
-        ".question-row"
-      )
+      ...document.querySelectorAll(".question-row")
     ];
 
-    const questions =
-      rows.map(
-        (row, index) => ({
+    const questions = rows.map(
+      (row, index) => ({
 
-          competition_id:
-            competitionId,
+        competition_id:
+          competitionId,
 
-          question_text:
-            row
-              .querySelector(
-                ".question-text"
-              )
-              .value
-              .trim(),
+        question_text:
+          row.querySelector(".question-text").value.trim(),
 
-          option_a:
-            row
-              .querySelector(
-                ".option-a"
-              )
-              .value
-              .trim(),
+        option_a:
+          row.querySelector(".option-a").value.trim(),
 
-          option_b:
-            row
-              .querySelector(
-                ".option-b"
-              )
-              .value
-              .trim(),
+        option_b:
+          row.querySelector(".option-b").value.trim(),
 
-          option_c:
-            row
-              .querySelector(
-                ".option-c"
-              )
-              .value
-              .trim(),
+        option_c:
+          row.querySelector(".option-c").value.trim(),
 
-          option_d:
-            row
-              .querySelector(
-                ".option-d"
-              )
-              .value
-              .trim(),
+        option_d:
+          row.querySelector(".option-d").value.trim(),
 
-          correct_option:
-            row
-              .querySelector(
-                ".correct-option"
-              )
-              .value,
+        correct_option:
+          row.querySelector(".correct-option").value,
 
-          question_order:
-            index + 1,
+        question_order:
+          index + 1,
 
-          points:
-            Number(
-              row
-                .querySelector(
-                  ".question-points"
-                )
-                .value
-            ) || 0
-        })
-      );
+        points:
+          Number(
+            row.querySelector(".question-points").value
+          ) || 0
+      })
+    );
 
     for (const q of questions) {
 
@@ -2140,10 +1742,7 @@
     } = await supabaseClient
       .from("competition_questions")
       .delete()
-      .eq(
-        "competition_id",
-        competitionId
-      );
+      .eq("competition_id", competitionId);
 
     if (deleteError) {
       throw deleteError;
@@ -2162,9 +1761,7 @@
     if (error) throw error;
   }
 
-  async function viewCompetition(id) {
-
-    currentDetailId = id;
+  async function editCompetition(id) {
 
     try {
 
@@ -2185,63 +1782,21 @@
         {
           data: questions,
           error: questionError
-        },
-        {
-          data: entries,
-          error: entryError
-        },
-        {
-          data: winners,
-          error: winnerError
         }
       ] = await Promise.all([
 
         supabaseClient
           .from("competition_prizes")
           .select("*")
-          .eq(
-            "competition_id",
-            id
-          )
-          .order(
-            "prize_order"
-          ),
+          .eq("competition_id", id)
+          .order("prize_order"),
 
         supabaseClient
           .from("competition_questions")
           .select("*")
-          .eq(
-            "competition_id",
-            id
-          )
-          .order(
-            "question_order"
-          ),
+          .eq("competition_id", id)
+          .order("question_order")
 
-        supabaseClient
-          .from("competition_entries")
-          .select("*")
-          .eq(
-            "competition_id",
-            id
-          )
-          .order(
-            "submitted_at",
-            {
-              ascending: false
-            }
-          ),
-
-        supabaseClient
-          .from("competition_winners")
-          .select("*")
-          .eq(
-            "competition_id",
-            id
-          )
-          .order(
-            "winner_position"
-          )
       ]);
 
       if (prizeError) {
@@ -2252,1238 +1807,82 @@
         throw questionError;
       }
 
-      if (entryError) {
-        throw entryError;
+      document
+        .getElementById("formPanel")
+        .classList.remove("hidden");
+
+      document.getElementById("formTitle").textContent =
+        "Edit Competition";
+
+      document.getElementById("editingId").value =
+        competition.id;
+
+      document.getElementById("title").value =
+        competition.title || "";
+
+      document.getElementById("description").value =
+        competition.description || "";
+
+      document.getElementById("competitionType").value =
+        competition.competition_type;
+
+      document.getElementById("entryMethod").value =
+        competition.entry_method;
+
+      document.getElementById("instructions").value =
+        competition.instructions || "";
+
+      document.getElementById("eligibility").value =
+        competition.eligibility || "";
+
+      document.getElementById("maxParticipants").value =
+        competition.max_participants || "";
+
+      document.getElementById("startAt").value =
+        toDateTimeLocal(competition.start_at);
+
+      document.getElementById("endAt").value =
+        toDateTimeLocal(competition.end_at);
+
+      document.getElementById("quizTimeLimit").value =
+        competition.quiz_time_limit_minutes || "";
+
+      document.getElementById("prizesContainer").innerHTML = "";
+
+      (prizes || []).forEach(addPrizeRow);
+
+      if (!prizes || !prizes.length) {
+        addPrizeRow();
       }
 
-      if (winnerError) {
-        throw winnerError;
-      }
+      document.getElementById("questionsContainer").innerHTML = "";
 
-      renderDetail(
-        competition,
-        prizes || [],
-        questions || [],
-        entries || [],
-        winners || []
-      );
+      (questions || []).forEach(addQuestionRow);
+
+      updateEntryFields();
+
+      window.scrollTo({
+        top:
+          document.getElementById("formPanel").offsetTop - 65,
+        behavior: "smooth"
+      });
 
     } catch (err) {
 
       console.error(
-        "viewCompetition error:",
+        "editCompetition error:",
         err
       );
 
       showMessage(
         err.message ||
-        "Unable to load competition details.",
+        "Unable to load competition for editing.",
         "error"
       );
     }
   }
 
-  function renderDetail(
-    c,
-    prizes,
-    questions,
-    entries,
-    winners
-  ) {
-
-    document.getElementById(
-      "detailTitle"
-    ).textContent =
-      c.title;
-
-    const isQuiz =
-      c.competition_type === "quiz" ||
-      c.entry_method === "quiz";
-
-    const prizeHtml =
-      prizes.length
-        ? prizes.map(
-            p => `
-              <div class="prize-display">
-
-                <strong>
-                  ${escapeHtml(
-                    p.prize_name ||
-                    "Prize"
-                  )}
-                </strong>
-
-                <div class="entry-text">
-
-                  Type:
-                  ${formatPrizeType(
-                    p.prize_type
-                  )}
-
-                  ${
-                    p.amount !== null
-                      ? ` · ₦${formatMoney(
-                          p.amount
-                        )}`
-                      : ""
-                  }
-
-                  · ${p.winner_count}
-                  winner${
-                    p.winner_count === 1
-                      ? ""
-                      : "s"
-                  }
-
-                  ${
-                    p.item_description
-                      ? `<br>${escapeHtml(
-                          p.item_description
-                        )}`
-                      : ""
-                  }
-
-                </div>
-
-              </div>
-            `
-          ).join("")
-        : `<div class="empty">No prizes configured.</div>`;
-
-    const questionHtml =
-      questions.length
-        ? questions.map(
-            (q, i) => `
-              <div class="question-display">
-
-                <strong>
-                  ${i + 1}.
-                  ${escapeHtml(
-                    q.question_text
-                  )}
-                </strong>
-
-                <div
-                  class="entry-text"
-                  style="margin-top:6px;"
-                >
-
-                  A:
-                  ${escapeHtml(q.option_a)}
-                  <br>
-
-                  B:
-                  ${escapeHtml(q.option_b)}
-                  <br>
-
-                  C:
-                  ${escapeHtml(q.option_c)}
-                  <br>
-
-                  D:
-                  ${escapeHtml(q.option_d)}
-                  <br>
-
-                  Correct:
-                  <strong>
-                    ${escapeHtml(
-                      q.correct_option
-                    )}
-                  </strong>
-
-                  · ${q.points}
-                  point${
-                    q.points === 1
-                      ? ""
-                      : "s"
-                  }
-
-                </div>
-
-              </div>
-            `
-          ).join("")
-        : `<div class="empty">No quiz questions.</div>`;
-
-    const entryHtml =
-      entries.length
-        ? entries
-            .map(e =>
-              renderEntry(
-                e,
-                prizes
-              )
-            )
-            .join("")
-        : `<div class="empty">No entries yet.</div>`;
-
-    const winnerHtml =
-      winners.length
-        ? winners.map(
-            w => `
-              <div class="winner-card">
-
-                <strong>
-                  Position ${w.winner_position}
-                </strong>
-
-                <div class="entry-text">
-
-                  User:
-                  ${escapeHtml(w.user_id)}
-
-                  <br>
-
-                  Status:
-                  ${formatStatus(
-                    w.winner_status
-                  )}
-
-                  ${
-                    w.prize_id
-                      ? `<br>Prize ID:
-                         ${escapeHtml(
-                           w.prize_id
-                         )}`
-                      : ""
-                  }
-
-                  ${
-                    w.fulfillment_note
-                      ? `<br>Note:
-                         ${escapeHtml(
-                           w.fulfillment_note
-                         )}`
-                      : ""
-                  }
-
-                </div>
-
-              </div>
-            `
-          ).join("")
-        : `<div class="empty">No winners selected yet.</div>`;
-
-    document.getElementById(
-      "detailContent"
-    ).innerHTML = `
-
-      <div class="badges">
-
-        <span class="badge ${escapeHtml(c.status)}">
-          ${formatStatus(c.status)}
-        </span>
-
-        <span class="badge">
-          ${formatType(c.competition_type)}
-        </span>
-
-        <span class="badge">
-          ${formatEntryMethod(c.entry_method)}
-        </span>
-
-        ${
-          isQuiz &&
-          c.quiz_time_limit_minutes
-            ? `
-              <span class="badge">
-                ⏱
-                ${c.quiz_time_limit_minutes}
-                minute quiz
-              </span>
-            `
-            : ""
-        }
-
-      </div>
-
-      ${
-        isQuiz
-          ? `
-            <div class="detail-box">
-
-              <h3>⏱ Quiz Settings</h3>
-
-              <div class="entry-text">
-
-                Time Limit:
-                <strong>
-                  ${
-                    c.quiz_time_limit_minutes
-                      ? `${c.quiz_time_limit_minutes} minutes`
-                      : "Not configured"
-                  }
-                </strong>
-
-                <br><br>
-
-                The countdown begins when the member presses
-                <strong>Start Quiz</strong>.
-
-                When the time expires, the attempt should
-                automatically submit.
-
-              </div>
-
-            </div>
-          `
-          : ""
-      }
-
-      <div class="detail-box">
-
-        <h3>Competition Information</h3>
-
-        <div class="entry-text">
-
-          <strong>Description</strong><br>
-
-          ${escapeHtml(
-            c.description ||
-            "None"
-          )}
-
-          <br><br>
-
-          <strong>Instructions</strong><br>
-
-          ${escapeHtml(
-            c.instructions ||
-            "None"
-          )}
-
-          <br><br>
-
-          <strong>Eligibility</strong><br>
-
-          ${escapeHtml(
-            c.eligibility ||
-            "None"
-          )}
-
-          <br><br>
-
-          <strong>Period</strong><br>
-
-          ${formatDate(c.start_at)}
-          →
-          ${formatDate(c.end_at)}
-
-          <br><br>
-
-          <strong>Maximum Participants</strong><br>
-
-          ${
-            c.max_participants ||
-            "Unlimited"
-          }
-
-        </div>
-
-      </div>
-
-      <div class="detail-box">
-
-        <h3>🎁 Prizes</h3>
-
-        ${prizeHtml}
-
-      </div>
-
-      ${
-        questions.length
-          ? `
-            <div class="detail-box">
-
-              <h3>📝 Quiz Questions</h3>
-
-              ${questionHtml}
-
-            </div>
-          `
-          : ""
-      }
-
-      ${
-        isQuiz
-          ? `
-            <div class="detail-box">
-
-              <div style="
-                display:flex;
-                justify-content:space-between;
-                align-items:center;
-                gap:10px;
-                flex-wrap:wrap;
-              ">
-
-                <h3 style="margin:0;">
-                  📊 Quiz Results / Leaderboard
-                </h3>
-
-                <button
-                  class="btn btn-primary"
-                  onclick="viewResults('${c.id}')"
-                >
-                  Refresh Results
-                </button>
-
-              </div>
-
-              <div
-                id="results-${c.id}"
-                style="margin-top:15px;"
-              >
-                <div class="empty">
-                  Click "Refresh Results" to load the leaderboard.
-                </div>
-              </div>
-
-            </div>
-          `
-          : ""
-      }
-
-      <div class="detail-box">
-
-        <h3>
-          👥 Entries (${entries.length})
-        </h3>
-
-        ${entryHtml}
-
-      </div>
-
-      <div class="detail-box">
-
-        <h3>
-          🏆 Selected Winners (${winners.length})
-        </h3>
-
-        ${winnerHtml}
-
-      </div>
-
-      <div class="detail-box">
-
-        <h3>🏆 Select Winner</h3>
-
-        ${
-          entries.length
-            ? `
-              <div class="winner-grid">
-
-                <div>
-
-                  <label>Entry</label>
-
-                  <select id="winnerEntry">
-
-                    ${entries
-                      .filter(
-                        e =>
-                          !winners.some(
-                            w =>
-                              w.entry_id ===
-                              e.id
-                          )
-                      )
-                      .map(
-                        e => `
-                          <option value="${e.id}">
-
-                            ${escapeHtml(
-                              e.user_id
-                            )}
-
-                            —
-                            ${
-                              e.score !== null
-                                ? `Score ${e.score}`
-                                : "Entry"
-                            }
-
-                          </option>
-                        `
-                      )
-                      .join("")}
-
-                  </select>
-
-                </div>
-
-                <div>
-
-                  <label>Prize</label>
-
-                  <select id="winnerPrize">
-
-                    <option value="">
-                      No prize assigned
-                    </option>
-
-                    ${prizes
-                      .map(
-                        p => `
-                          <option value="${p.id}">
-
-                            ${escapeHtml(
-                              p.prize_name
-                            )}
-
-                            ${
-                              p.amount !== null
-                                ? ` — ₦${formatMoney(
-                                    p.amount
-                                  )}`
-                                : ""
-                            }
-
-                          </option>
-                        `
-                      )
-                      .join("")}
-
-                  </select>
-
-                </div>
-
-                <div>
-
-                  <label>Winner Position</label>
-
-                  <input
-                    id="winnerPosition"
-                    type="number"
-                    min="1"
-                    value="${
-                      winners.length + 1
-                    }"
-                  >
-
-                </div>
-
-                <button
-                  class="btn btn-success"
-                  onclick="selectWinner()"
-                >
-                  Select
-                </button>
-
-              </div>
-            `
-            : `
-              <div class="empty">
-                There are no entries available for winner selection.
-              </div>
-            `
-        }
-
-      </div>
-
-      <div class="card-actions">
-
-        <button
-          class="btn btn-secondary"
-          onclick="editCompetition('${c.id}')"
-        >
-          Edit Competition
-        </button>
-
-        ${statusButtons(c)}
-
-      </div>
-    `;
-
-    document
-      .getElementById("detailPanel")
-      .classList.remove("hidden");
-
-    window.scrollTo({
-      top:
-        document.getElementById(
-          "detailPanel"
-        ).offsetTop - 70,
-      behavior: "smooth"
-    });
-  }
-
-  async function viewResults(id) {
-
-    currentDetailId = id;
-
-    const competition =
-      competitions.find(
-        x => x.id === id
-      );
-
-    if (!competition) {
-      return;
-    }
-
-    try {
-
-      const {
-        data: entries,
-        error
-      } = await supabaseClient
-        .from("competition_entries")
-        .select("*")
-        .eq(
-          "competition_id",
-          id
-        );
-
-      if (error) throw error;
-
-      const sorted =
-        [...(entries || [])]
-          .filter(
-            entry =>
-              entry.entry_status !==
-              "disqualified"
-          )
-          .sort(
-            (a, b) => {
-
-              const scoreA =
-                Number(
-                  a.score ?? -1
-                );
-
-              const scoreB =
-                Number(
-                  b.score ?? -1
-                );
-
-              if (
-                scoreA !==
-                scoreB
-              ) {
-                return scoreB - scoreA;
-              }
-
-              const timeA =
-                a.time_taken_seconds === null ||
-                a.time_taken_seconds === undefined
-                  ? Number.MAX_SAFE_INTEGER
-                  : Number(
-                      a.time_taken_seconds
-                    );
-
-              const timeB =
-                b.time_taken_seconds === null ||
-                b.time_taken_seconds === undefined
-                  ? Number.MAX_SAFE_INTEGER
-                  : Number(
-                      b.time_taken_seconds
-                    );
-
-              return timeA - timeB;
-            }
-          );
-
-      renderResults(
-        competition,
-        sorted
-      );
-
-    } catch (err) {
-
-      console.error(
-        "viewResults error:",
-        err
-      );
-
-      showMessage(
-        err.message ||
-        "Unable to load quiz results.",
-        "error"
-      );
-    }
-  }
-
-  function renderResults(
-    competition,
-    entries
-  ) {
-
-    const target =
-      document.getElementById(
-        `results-${competition.id}`
-      );
-
-    if (!target) {
-
-      viewCompetition(
-        competition.id
-      );
-
-      return;
-    }
-
-    if (!entries.length) {
-
-      target.innerHTML =
-        `<div class="empty">
-          No quiz submissions yet.
-        </div>`;
-
-      return;
-    }
-
-    target.innerHTML = `
-
-      <div
-        class="entry-text"
-        style="margin-bottom:12px;"
-      >
-        Ranked by
-        <strong>highest score first</strong>.
-        Equal scores are ranked by
-        <strong>fastest completion time</strong>.
-      </div>
-
-      <div class="results-table-wrap">
-
-        <table class="results-table">
-
-          <thead>
-
-            <tr>
-
-              <th>Position</th>
-              <th>Member</th>
-              <th>Score</th>
-              <th>Correct</th>
-              <th>Percentage</th>
-              <th>Time Taken</th>
-              <th>Status</th>
-              <th>Submitted</th>
-
-            </tr>
-
-          </thead>
-
-          <tbody>
-
-            ${entries.map(
-              (entry, index) => {
-
-                const position =
-                  index + 1;
-
-                const score =
-                  entry.score !== null
-                    ? Number(
-                        entry.score
-                      )
-                    : 0;
-
-                const totalQuestions =
-                  Number(
-                    entry.total_questions ||
-                    0
-                  );
-
-                const correct =
-                  entry.correct_answers !== null
-                    ? Number(
-                        entry.correct_answers
-                      )
-                    : null;
-
-                let percentage =
-                  "—";
-
-                if (
-                  correct !== null &&
-                  totalQuestions > 0
-                ) {
-                  percentage =
-                    (
-                      correct /
-                      totalQuestions *
-                      100
-                    ).toFixed(2) +
-                    "%";
-                }
-
-                return `
-
-                  <tr>
-
-                    <td>
-
-                      <span
-                        class="rank ${
-                          position === 1
-                            ? "top-rank"
-                            : ""
-                        }"
-                      >
-                        ${position}
-                      </span>
-
-                    </td>
-
-                    <td>
-
-                      <strong>
-                        ${escapeHtml(
-                          entry.user_id
-                        )}
-                      </strong>
-
-                    </td>
-
-                    <td>
-
-                      <span class="score">
-                        ${score}
-                      </span>
-
-                    </td>
-
-                    <td>
-                      ${
-                        correct !== null
-                          ? `${correct}/${totalQuestions}`
-                          : "—"
-                      }
-                    </td>
-
-                    <td>
-                      ${percentage}
-                    </td>
-
-                    <td>
-                      ${
-                        entry.time_taken_seconds !==
-                          null &&
-                        entry.time_taken_seconds !==
-                          undefined
-                          ? formatDuration(
-                              entry.time_taken_seconds
-                            )
-                          : "—"
-                      }
-                    </td>
-
-                    <td>
-
-                      <span class="result-status">
-                        ${formatStatus(
-                          entry.entry_status
-                        )}
-                      </span>
-
-                    </td>
-
-                    <td>
-                      ${formatDate(
-                        entry.submitted_at
-                      )}
-                    </td>
-
-                  </tr>
-
-                `;
-              }
-            ).join("")}
-
-          </tbody>
-
-        </table>
-
-      </div>
-    `;
-  }
-
-  function renderEntry(
-    entry,
-    prizes
-  ) {
-
-    const submission = [];
-
-    if (entry.submission_url) {
-
-      submission.push(
-        `URL:
-        <a
-          href="${escapeAttr(
-            entry.submission_url
-          )}"
-          target="_blank"
-          rel="noopener"
-        >
-          Open submission
-        </a>`
-      );
-    }
-
-    if (entry.evidence_url) {
-
-      submission.push(
-        `Evidence:
-        <a
-          href="${escapeAttr(
-            entry.evidence_url
-          )}"
-          target="_blank"
-          rel="noopener"
-        >
-          Open evidence
-        </a>`
-      );
-    }
-
-    if (entry.submission_text) {
-
-      submission.push(
-        `Submission:
-        ${escapeHtml(
-          entry.submission_text
-        )}`
-      );
-    }
-
-    if (entry.application_data) {
-
-      submission.push(
-        `Application:
-        ${escapeHtml(
-          JSON.stringify(
-            entry.application_data,
-            null,
-            2
-          )
-        )}`
-      );
-    }
-
-    return `
-      <div class="entry-card">
-
-        <div class="entry-main">
-
-          <div class="entry-title">
-            ${escapeHtml(
-              entry.user_id
-            )}
-          </div>
-
-          <div class="entry-text">
-
-            Status:
-            ${formatStatus(
-              entry.entry_status
-            )}
-
-            ${
-              entry.score !== null
-                ? ` · Score: ${entry.score}`
-                : ""
-            }
-
-            ${
-              entry.correct_answers !== null
-                ? ` · Correct:
-                   ${entry.correct_answers}/
-                   ${
-                     entry.total_questions ||
-                     "?"
-                   }`
-                : ""
-            }
-
-            ${
-              entry.time_taken_seconds !== null &&
-              entry.time_taken_seconds !== undefined
-                ? ` · Time:
-                   ${formatDuration(
-                     entry.time_taken_seconds
-                   )}`
-                : ""
-            }
-
-            <br>
-
-            Submitted:
-            ${formatDate(
-              entry.submitted_at
-            )}
-
-            ${
-              submission.length
-                ? `<br>${submission.join(
-                    "<br>"
-                  )}`
-                : ""
-            }
-
-            ${
-              entry.admin_note
-                ? `<br>Admin note:
-                   ${escapeHtml(
-                     entry.admin_note
-                   )}`
-                : ""
-            }
-
-          </div>
-
-        </div>
-
-        <div class="entry-actions">
-
-          <button
-            class="btn btn-success"
-            onclick="reviewEntry(
-              '${entry.id}',
-              'qualified'
-            )"
-          >
-            Qualify
-          </button>
-
-          <button
-            class="btn btn-warning"
-            onclick="reviewEntry(
-              '${entry.id}',
-              'under_review'
-            )"
-          >
-            Review
-          </button>
-
-          <button
-            class="btn btn-danger"
-            onclick="reviewEntry(
-              '${entry.id}',
-              'disqualified'
-            )"
-          >
-            Disqualify
-          </button>
-
-        </div>
-
-      </div>
-    `;
-  }
-
-  async function reviewEntry(
-    entryId,
-    status
-  ) {
-
-    let note = "";
-
-    if (
-      status ===
-      "disqualified"
-    ) {
-      note =
-        prompt(
-          "Reason for disqualification:"
-        ) || "";
-    }
-
-    try {
-
-      const {
-        error
-      } = await supabaseClient
-        .from("competition_entries")
-        .update({
-
-          entry_status:
-            status,
-
-          reviewed_at:
-            new Date().toISOString(),
-
-          reviewed_by:
-            adminUser.id,
-
-          admin_note:
-            note || null,
-
-          updated_at:
-            new Date().toISOString()
-
-        })
-        .eq(
-          "id",
-          entryId
-        );
-
-      if (error) throw error;
-
-      showMessage(
-        "Entry updated successfully.",
-        "success"
-      );
-
-      if (currentDetailId) {
-        await viewCompetition(
-          currentDetailId
-        );
-      }
-
-    } catch (err) {
-
-      console.error(
-        "reviewEntry error:",
-        err
-      );
-
-      showMessage(
-        err.message ||
-        "Unable to update entry.",
-        "error"
-      );
-    }
-  }
-
-  async function selectWinner() {
-
-    const entryId =
-      document.getElementById(
-        "winnerEntry"
-      )?.value;
-
-    const prizeId =
-      document.getElementById(
-        "winnerPrize"
-      )?.value ||
-      null;
-
-    const position =
-      Number(
-        document.getElementById(
-          "winnerPosition"
-        )?.value
-      );
-
-    if (
-      !entryId ||
-      !position
-    ) {
-
-      showMessage(
-        "Please select an entry and winner position.",
-        "error"
-      );
-
-      return;
-    }
-
-    try {
-
-      const competition =
-        competitions.find(
-          x =>
-            x.id ===
-            currentDetailId
-        );
-
-      if (!competition) {
-        throw new Error(
-          "Competition not found."
-        );
-      }
-
-      const userId =
-        await getEntryUserId(
-          entryId
-        );
-
-      const {
-        error
-      } = await supabaseClient
-        .from("competition_winners")
-        .insert({
-
-          competition_id:
-            competition.id,
-
-          entry_id:
-            entryId,
-
-          user_id:
-            userId,
-
-          prize_id:
-            prizeId,
-
-          winner_position:
-            position,
-
-          winner_status:
-            "selected",
-
-          selected_by:
-            adminUser.id,
-
-          selected_at:
-            new Date().toISOString()
-
-        });
-
-      if (error) throw error;
-
-      showMessage(
-        "Winner selected successfully.",
-        "success"
-      );
-
-      await viewCompetition(
-        currentDetailId
-      );
-
-    } catch (err) {
-
-      console.error(
-        "selectWinner error:",
-        err
-      );
-
-      showMessage(
-        err.message ||
-        "Unable to select winner.",
-        "error"
-      );
-    }
-  }
-
-  async function getEntryUserId(
-    entryId
-  ) {
-
-    const {
-      data,
-      error
-    } = await supabaseClient
-      .from("competition_entries")
-      .select("user_id")
-      .eq(
-        "id",
-        entryId
-      )
-      .single();
-
-    if (error) throw error;
-
-    return data.user_id;
-  }
-
-  async function changeStatus(
-    id,
-    status
-  ) {
+  async function changeStatus(id, status) {
 
     const competition =
       competitions.find(
@@ -3524,10 +1923,7 @@
 
     try {
 
-      if (
-        status ===
-        "winners_announced"
-      ) {
+      if (status === "winners_announced") {
 
         const {
           data: winners,
@@ -3535,19 +1931,13 @@
         } = await supabaseClient
           .from("competition_winners")
           .select("id")
-          .eq(
-            "competition_id",
-            id
-          );
+          .eq("competition_id", id);
 
         if (winnerError) {
           throw winnerError;
         }
 
-        if (
-          !winners ||
-          !winners.length
-        ) {
+        if (!winners || !winners.length) {
 
           if (
             !confirm(
@@ -3564,17 +1954,11 @@
       } = await supabaseClient
         .from("competitions")
         .update({
-
           status,
-
           updated_at:
             new Date().toISOString()
-
         })
-        .eq(
-          "id",
-          id
-        );
+        .eq("id", id);
 
       if (error) throw error;
 
@@ -3584,12 +1968,6 @@
       );
 
       await loadCompetitions();
-
-      if (
-        currentDetailId === id
-      ) {
-        await viewCompetition(id);
-      }
 
     } catch (err) {
 
@@ -3606,250 +1984,36 @@
     }
   }
 
-  async function editCompetition(
-    id
-  ) {
-
-    try {
-
-      const competition =
-        competitions.find(
-          x => x.id === id
-        );
-
-      if (!competition) {
-        return;
-      }
-
-      const [
-        {
-          data: prizes,
-          error: prizeError
-        },
-        {
-          data: questions,
-          error: questionError
-        }
-      ] = await Promise.all([
-
-        supabaseClient
-          .from("competition_prizes")
-          .select("*")
-          .eq(
-            "competition_id",
-            id
-          )
-          .order(
-            "prize_order"
-          ),
-
-        supabaseClient
-          .from("competition_questions")
-          .select("*")
-          .eq(
-            "competition_id",
-            id
-          )
-          .order(
-            "question_order"
-          )
-
-      ]);
-
-      if (prizeError) {
-        throw prizeError;
-      }
-
-      if (questionError) {
-        throw questionError;
-      }
-
-      document
-        .getElementById("formPanel")
-        .classList.remove("hidden");
-
-      document.getElementById(
-        "formTitle"
-      ).textContent =
-        "Edit Competition";
-
-      document.getElementById(
-        "editingId"
-      ).value =
-        competition.id;
-
-      document.getElementById(
-        "title"
-      ).value =
-        competition.title || "";
-
-      document.getElementById(
-        "description"
-      ).value =
-        competition.description || "";
-
-      document.getElementById(
-        "competitionType"
-      ).value =
-        competition.competition_type;
-
-      document.getElementById(
-        "entryMethod"
-      ).value =
-        competition.entry_method;
-
-      document.getElementById(
-        "instructions"
-      ).value =
-        competition.instructions || "";
-
-      document.getElementById(
-        "eligibility"
-      ).value =
-        competition.eligibility || "";
-
-      document.getElementById(
-        "maxParticipants"
-      ).value =
-        competition.max_participants ||
-        "";
-
-      document.getElementById(
-        "startAt"
-      ).value =
-        toDateTimeLocal(
-          competition.start_at
-        );
-
-      document.getElementById(
-        "endAt"
-      ).value =
-        toDateTimeLocal(
-          competition.end_at
-        );
-
-      document.getElementById(
-        "quizTimeLimit"
-      ).value =
-        competition.quiz_time_limit_minutes ||
-        "";
-
-      document.getElementById(
-        "prizesContainer"
-      ).innerHTML = "";
-
-      (prizes || [])
-        .forEach(
-          addPrizeRow
-        );
-
-      if (
-        !prizes ||
-        !prizes.length
-      ) {
-        addPrizeRow();
-      }
-
-      document.getElementById(
-        "questionsContainer"
-      ).innerHTML = "";
-
-      (questions || [])
-        .forEach(
-          addQuestionRow
-        );
-
-      updateEntryFields();
-
-      document
-        .getElementById("detailPanel")
-        .classList.add("hidden");
-
-      window.scrollTo({
-        top:
-          document.getElementById(
-            "formPanel"
-          ).offsetTop - 70,
-        behavior: "smooth"
-      });
-
-    } catch (err) {
-
-      console.error(
-        "editCompetition error:",
-        err
-      );
-
-      showMessage(
-        err.message ||
-        "Unable to load competition for editing.",
-        "error"
-      );
-    }
-  }
-
-  function closeDetails() {
-
-    document
-      .getElementById("detailPanel")
-      .classList.add("hidden");
-
-    currentDetailId =
-      null;
-  }
-
-  function showMessage(
-    text,
-    type
-  ) {
+  function showMessage(text, type) {
 
     const box =
-      document.getElementById(
-        "message"
-      );
+      document.getElementById("message");
 
     box.className =
-      "message " +
-      type;
+      "message " + type;
 
-    box.textContent =
-      text;
+    box.textContent = text;
 
-    clearTimeout(
-      window.messageTimer
-    );
+    clearTimeout(window.messageTimer);
 
     window.messageTimer =
-      setTimeout(
-        () => {
+      setTimeout(() => {
 
-          box.className =
-            "message";
+        box.className = "message";
+        box.textContent = "";
 
-          box.textContent =
-            "";
-
-        },
-        7000
-      );
+      }, 7000);
   }
 
-  function formatDate(
-    value
-  ) {
+  function formatDate(value) {
 
     if (!value) {
       return "—";
     }
 
-    const d =
-      new Date(value);
+    const d = new Date(value);
 
-    if (
-      Number.isNaN(
-        d.getTime()
-      )
-    ) {
+    if (Number.isNaN(d.getTime())) {
       return "—";
     }
 
@@ -3865,29 +2029,20 @@
     );
   }
 
-  function toDateTimeLocal(
-    value
-  ) {
+  function toDateTimeLocal(value) {
 
     if (!value) {
       return "";
     }
 
-    const d =
-      new Date(value);
+    const d = new Date(value);
 
-    if (
-      Number.isNaN(
-        d.getTime()
-      )
-    ) {
+    if (Number.isNaN(d.getTime())) {
       return "";
     }
 
     const pad =
-      n =>
-        String(n)
-          .padStart(2, "0");
+      n => String(n).padStart(2, "0");
 
     return `${
       d.getFullYear()
@@ -3902,45 +2057,24 @@
     }`;
   }
 
-  function formatStatus(
-    status
-  ) {
+  function formatStatus(status) {
 
-    return String(
-      status || ""
-    )
-      .replaceAll(
-        "_",
-        " "
-      )
+    return String(status || "")
+      .replaceAll("_", " ")
       .replace(
         /\b\w/g,
-        x =>
-          x.toUpperCase()
+        x => x.toUpperCase()
       );
   }
 
-  function formatType(
-    type
-  ) {
+  function formatType(type) {
 
     const map = {
-
-      quiz:
-        "Quiz",
-
-      video:
-        "Video",
-
-      giveaway:
-        "Giveaway",
-
-      challenge:
-        "Challenge",
-
-      application:
-        "Application"
-
+      quiz: "Quiz",
+      video: "Video",
+      giveaway: "Giveaway",
+      challenge: "Challenge",
+      application: "Application"
     };
 
     return (
@@ -3949,27 +2083,14 @@
     );
   }
 
-  function formatEntryMethod(
-    method
-  ) {
+  function formatEntryMethod(method) {
 
     const map = {
-
-      quiz:
-        "Quiz",
-
-      url:
-        "URL",
-
-      simple:
-        "Simple Entry",
-
-      evidence:
-        "Evidence",
-
-      application:
-        "Application"
-
+      quiz: "Quiz",
+      url: "URL",
+      simple: "Simple Entry",
+      evidence: "Evidence",
+      application: "Application"
     };
 
     return (
@@ -3978,139 +2099,29 @@
     );
   }
 
-  function formatPrizeType(
-    type
-  ) {
+  function truncate(value, max) {
 
-    const map = {
+    const text = String(value || "");
 
-      cash:
-        "Cash",
-
-      school_fees:
-        "School Fees",
-
-      physical_item:
-        "Physical Item",
-
-      gift:
-        "Gift",
-
-      other:
-        "Other"
-
-    };
-
-    return (
-      map[type] ||
-      formatStatus(type)
-    );
-  }
-
-  function formatMoney(
-    value
-  ) {
-
-    return Number(
-      value || 0
-    ).toLocaleString(
-      "en-NG",
-      {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 2
-      }
-    );
-  }
-
-  function formatDuration(
-    seconds
-  ) {
-
-    const total =
-      Math.max(
-        0,
-        Number(seconds) || 0
-      );
-
-    const hours =
-      Math.floor(
-        total / 3600
-      );
-
-    const minutes =
-      Math.floor(
-        (total % 3600) /
-        60
-      );
-
-    const secs =
-      total % 60;
-
-    if (hours > 0) {
-
-      return `${hours}h ${
-        String(minutes).padStart(
-          2,
-          "0"
-        )
-      }m ${
-        String(secs).padStart(
-          2,
-          "0"
-        )
-      }s`;
-
+    if (text.length <= max) {
+      return text;
     }
 
-    return `${
-      String(minutes).padStart(
-        2,
-        "0"
-      )
-    }:${
-      String(secs).padStart(
-        2,
-        "0"
-      )
-    }`;
+    return text.slice(0, max) + "…";
   }
 
-  function escapeHtml(
-    value
-  ) {
+  function escapeHtml(value) {
 
-    return String(
-      value ?? ""
-    )
-      .replaceAll(
-        "&",
-        "&amp;"
-      )
-      .replaceAll(
-        "<",
-        "&lt;"
-      )
-      .replaceAll(
-        ">",
-        "&gt;"
-      )
-      .replaceAll(
-        '"',
-        "&quot;"
-      )
-      .replaceAll(
-        "'",
-        "&#039;"
-      );
+    return String(value ?? "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
   }
 
-  function escapeAttr(
-    value
-  ) {
-
-    return escapeHtml(
-      value
-    );
+  function escapeAttr(value) {
+    return escapeHtml(value);
   }
 </script>
 

@@ -1,21 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Marketplace Admin | EarnGig</title>
 
   <link rel="stylesheet" href="styles.css">
 
   <style>
-
     body {
       background:
         radial-gradient(
@@ -72,8 +64,7 @@
 
     .stats {
       display: grid;
-      grid-template-columns:
-        repeat(5, minmax(0, 1fr));
+      grid-template-columns: repeat(5, minmax(0, 1fr));
       gap: 12px;
       margin-bottom: 18px;
     }
@@ -187,11 +178,15 @@
       color: #cbd5e1;
     }
 
+    .status.changes_required {
+      background: rgba(59,130,246,.12);
+      color: #93c5fd;
+    }
+
     .application-grid,
     .product-info-grid {
       display: grid;
-      grid-template-columns:
-        repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 10px;
       margin-top: 15px;
     }
@@ -242,8 +237,7 @@
 
     .product-images {
       display: grid;
-      grid-template-columns:
-        repeat(5, minmax(0, 1fr));
+      grid-template-columns: repeat(5, minmax(0, 1fr));
       gap: 8px;
       margin-top: 15px;
     }
@@ -264,10 +258,9 @@
       display: block;
     }
 
-    .primary-badge {
+    .primary-badge,
+    .branding-badge {
       position: absolute;
-      left: 5px;
-      bottom: 5px;
       background: rgba(0,0,0,.78);
       color: #fff;
       padding: 4px 6px;
@@ -276,16 +269,16 @@
       font-weight: 900;
     }
 
+    .primary-badge {
+      left: 5px;
+      bottom: 5px;
+    }
+
     .branding-badge {
-      position: absolute;
       right: 5px;
       top: 5px;
       background: rgba(124,58,237,.92);
-      color: #fff;
-      padding: 4px 6px;
-      border-radius: 5px;
       font-size: 7px;
-      font-weight: 900;
     }
 
     .actions {
@@ -305,21 +298,10 @@
       cursor: pointer;
     }
 
-    .approve {
-      background: #16a34a;
-    }
-
-    .reject {
-      background: #dc2626;
-    }
-
-    .request {
-      background: #2563eb;
-    }
-
-    .neutral {
-      background: #30385e;
-    }
+    .approve { background: #16a34a; }
+    .reject { background: #dc2626; }
+    .request { background: #2563eb; }
+    .neutral { background: #30385e; }
 
     .admin-note {
       width: 100%;
@@ -356,21 +338,16 @@
     }
 
     @media (max-width: 850px) {
-
       .stats {
-        grid-template-columns:
-          repeat(2, minmax(0, 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
       .product-images {
-        grid-template-columns:
-          repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(3, minmax(0, 1fr));
       }
-
     }
 
     @media (max-width: 600px) {
-
       .marketplace-page {
         padding: 18px 0 50px;
       }
@@ -381,8 +358,7 @@
       }
 
       .product-images {
-        grid-template-columns:
-          repeat(2, minmax(0, 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
       .card-top {
@@ -392,463 +368,243 @@
       .stats {
         grid-template-columns: 1fr 1fr;
       }
-
     }
-
   </style>
-
 </head>
-
 
 <body>
 
-
 <header>
-
   <div class="container nav">
-
-    <a
-      class="logo"
-      href="admin-dashboard.html"
-    >
-
-      <span class="logo-mark">
-        E
-      </span>
-
+    <a class="logo" href="admin-dashboard.html">
+      <span class="logo-mark">E</span>
       Earn<span>Gig</span>
-
     </a>
 
-
-    <a
-      class="btn outline"
-      href="admin-dashboard.html"
-    >
+    <a class="btn outline" href="admin-dashboard.html">
       Admin Dashboard
     </a>
-
   </div>
-
 </header>
 
-
 <main class="dashboard-page marketplace-page">
-
   <div class="container">
 
-
     <div class="page-heading">
+      <span class="eyebrow">ADMIN CONTROL CENTER</span>
 
-      <span class="eyebrow">
-        ADMIN CONTROL CENTER
-      </span>
-
-      <h1>
-        Marketplace
-      </h1>
+      <h1>Marketplace</h1>
 
       <p>
         Review vendors, stores and marketplace products
         before they become available to buyers.
       </p>
-
     </div>
 
-
-    <!-- TABS -->
-
     <div class="tabs">
-
-      <button
-        class="tab active"
-        data-tab="applications"
-      >
+      <button class="tab active" data-tab="applications">
         Vendor Applications
       </button>
 
-      <button
-        class="tab"
-        data-tab="products"
-      >
+      <button class="tab" data-tab="products">
         Products
       </button>
-
     </div>
 
-
     <!-- APPLICATION SECTION -->
-
-    <section
-      id="applications-section"
-    >
+    <section id="applications-section">
 
       <div class="stats">
 
         <div class="stat">
-          <div class="stat-label">
-            Pending
-          </div>
-          <div
-            id="pending-count"
-            class="stat-value"
-          >
-            0
-          </div>
+          <div class="stat-label">Pending</div>
+          <div id="pending-count" class="stat-value">0</div>
         </div>
 
         <div class="stat">
-          <div class="stat-label">
-            Approved
-          </div>
-          <div
-            id="approved-count"
-            class="stat-value"
-          >
-            0
-          </div>
+          <div class="stat-label">Approved</div>
+          <div id="approved-count" class="stat-value">0</div>
         </div>
 
         <div class="stat">
-          <div class="stat-label">
-            More Info
-          </div>
-          <div
-            id="more-info-count"
-            class="stat-value"
-          >
-            0
-          </div>
+          <div class="stat-label">More Info</div>
+          <div id="more-info-count" class="stat-value">0</div>
         </div>
 
         <div class="stat">
-          <div class="stat-label">
-            Rejected
-          </div>
-          <div
-            id="rejected-count"
-            class="stat-value"
-          >
-            0
-          </div>
+          <div class="stat-label">Rejected</div>
+          <div id="rejected-count" class="stat-value">0</div>
         </div>
 
         <div class="stat">
-          <div class="stat-label">
-            Withdrawn
-          </div>
-          <div
-            id="withdrawn-count"
-            class="stat-value"
-          >
-            0
-          </div>
+          <div class="stat-label">Withdrawn</div>
+          <div id="withdrawn-count" class="stat-value">0</div>
         </div>
 
       </div>
 
-
       <div class="tabs">
 
-        <button
-          class="tab application-filter active"
-          data-status="pending"
-        >
+        <button class="tab application-filter active" data-status="pending">
           Pending
         </button>
 
-        <button
-          class="tab application-filter"
-          data-status="approved"
-        >
+        <button class="tab application-filter" data-status="approved">
           Approved
         </button>
 
-        <button
-          class="tab application-filter"
-          data-status="more_information_required"
-        >
+        <button class="tab application-filter" data-status="more_information_required">
           More Information
         </button>
 
-        <button
-          class="tab application-filter"
-          data-status="rejected"
-        >
+        <button class="tab application-filter" data-status="rejected">
           Rejected
         </button>
 
-        <button
-          class="tab application-filter"
-          data-status="withdrawn"
-        >
+        <button class="tab application-filter" data-status="withdrawn">
           Withdrawn
         </button>
 
-        <button
-          class="tab application-filter"
-          data-status="all"
-        >
+        <button class="tab application-filter" data-status="all">
           All
         </button>
 
       </div>
 
-
-      <div
-        id="application-loading"
-        class="loading"
-      >
+      <div id="application-loading" class="loading">
         Loading vendor applications...
       </div>
 
-
-      <div
-        id="application-list"
-        class="application-list hidden"
-      ></div>
+      <div id="application-list" class="application-list hidden"></div>
 
     </section>
 
-
     <!-- PRODUCT SECTION -->
-
-    <section
-      id="products-section"
-      class="hidden"
-    >
+    <section id="products-section" class="hidden">
 
       <div class="stats">
 
         <div class="stat">
-          <div class="stat-label">
-            Pending Review
-          </div>
-
-          <div
-            id="product-pending-count"
-            class="stat-value"
-          >
-            0
-          </div>
+          <div class="stat-label">Pending Review</div>
+          <div id="product-pending-count" class="stat-value">0</div>
         </div>
 
-
         <div class="stat">
-          <div class="stat-label">
-            Approved
-          </div>
-
-          <div
-            id="product-approved-count"
-            class="stat-value"
-          >
-            0
-          </div>
+          <div class="stat-label">Approved</div>
+          <div id="product-approved-count" class="stat-value">0</div>
         </div>
 
-
         <div class="stat">
-          <div class="stat-label">
-            Changes Required
-          </div>
-
-          <div
-            id="product-changes-count"
-            class="stat-value"
-          >
-            0
-          </div>
+          <div class="stat-label">Changes Required</div>
+          <div id="product-changes-count" class="stat-value">0</div>
         </div>
 
-
         <div class="stat">
-          <div class="stat-label">
-            Rejected
-          </div>
-
-          <div
-            id="product-rejected-count"
-            class="stat-value"
-          >
-            0
-          </div>
+          <div class="stat-label">Rejected</div>
+          <div id="product-rejected-count" class="stat-value">0</div>
         </div>
 
-
         <div class="stat">
-          <div class="stat-label">
-            Total
-          </div>
-
-          <div
-            id="product-total-count"
-            class="stat-value"
-          >
-            0
-          </div>
+          <div class="stat-label">Total</div>
+          <div id="product-total-count" class="stat-value">0</div>
         </div>
 
       </div>
 
-
       <div class="tabs">
 
-        <button
-          class="tab product-filter active"
-          data-status="pending"
-        >
+        <button class="tab product-filter active" data-status="pending">
           Pending
         </button>
 
-        <button
-          class="tab product-filter"
-          data-status="approved"
-        >
+        <button class="tab product-filter" data-status="approved">
           Approved
         </button>
 
-        <button
-          class="tab product-filter"
-          data-status="changes_required"
-        >
+        <button class="tab product-filter" data-status="changes_required">
           Changes Required
         </button>
 
-        <button
-          class="tab product-filter"
-          data-status="rejected"
-        >
+        <button class="tab product-filter" data-status="rejected">
           Rejected
         </button>
 
-        <button
-          class="tab product-filter"
-          data-status="all"
-        >
+        <button class="tab product-filter" data-status="all">
           All
         </button>
 
       </div>
 
-
       <div class="search-box">
-
         <input
           type="search"
           id="product-search"
           placeholder="Search product, store or vendor..."
         >
-
       </div>
 
-
-      <div
-        id="product-loading"
-        class="loading"
-      >
+      <div id="product-loading" class="loading">
         Loading marketplace products...
       </div>
 
-
-      <div
-        id="product-list"
-        class="product-list hidden"
-      ></div>
+      <div id="product-list" class="product-list hidden"></div>
 
     </section>
 
   </div>
-
 </main>
 
-
 <footer>
-
   <div class="container copy">
     © 2026 EarnGig. All rights reserved.
   </div>
-
 </footer>
-
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase.js"></script>
 
-
 <script>
-
 let currentAdmin = null;
-
 let applications = [];
-
 let products = [];
-
-let applicationStatus =
-  "pending";
-
-let productStatus =
-  "pending";
-
+let applicationStatus = "pending";
+let productStatus = "pending";
 
 /* ==========================================================
    HELPERS
 ========================================================== */
 
 function escapeHtml(value) {
-
   return String(value ?? "")
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
-
 }
-
 
 function formatMoney(value) {
-
   return "₦" +
-    Number(value || 0)
-      .toLocaleString(
-        "en-NG",
-        {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2
-        }
-      );
-
+    Number(value || 0).toLocaleString("en-NG", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
 }
-
 
 function formatDate(value) {
+  if (!value) return "—";
 
-  if (!value) {
+  const date = new Date(value);
+
+  if (Number.isNaN(date.getTime())) {
     return "—";
   }
 
-  const date =
-    new Date(value);
-
-  if (
-    Number.isNaN(
-      date.getTime()
-    )
-  ) {
-    return "—";
-  }
-
-  return date.toLocaleString(
-    "en-NG",
-    {
-      dateStyle: "medium",
-      timeStyle: "short"
-    }
-  );
-
+  return date.toLocaleString("en-NG", {
+    dateStyle: "medium",
+    timeStyle: "short"
+  });
 }
-
 
 /* ==========================================================
    ADMIN ACCESS
@@ -857,68 +613,75 @@ function formatDate(value) {
 async function checkAdminAccess() {
 
   const {
-    data: {
-      user
-    },
+    data: { user },
     error
-  } =
-    await supabaseClient.auth.getUser();
-
+  } = await supabaseClient.auth.getUser();
 
   if (error || !user) {
-
-    window.location.href =
-      "login.html";
-
+    window.location.href = "login.html";
     return false;
-
   }
 
+  console.log("Marketplace admin auth user:", user.id);
 
   const {
     data: profile,
     error: profileError
-  } =
-    await supabaseClient
-      .from("profiles")
-      .select(`
-        id,
-        name,
-        account_status,
-        is_admin
-      `)
-      .eq("id", user.id)
-      .maybeSingle();
+  } = await supabaseClient
+    .from("profiles")
+    .select(`
+      id,
+      full_name,
+      account_status,
+      is_admin
+    `)
+    .eq("id", user.id)
+    .maybeSingle();
 
+  if (profileError) {
+
+    console.error(
+      "Marketplace admin profile error:",
+      profileError
+    );
+
+    alert(
+      "Unable to verify your administrator profile.\n\n" +
+      profileError.message
+    );
+
+    return false;
+  }
+
+  if (!profile) {
+
+    alert(
+      "No EarnGig profile was found for the currently logged-in account."
+    );
+
+    return false;
+  }
+
+  console.log("Marketplace admin profile:", profile);
 
   if (
-    profileError ||
-    !profile ||
     profile.is_admin !== true ||
-    String(
-      profile.account_status || ""
-    ).toLowerCase() !== "active"
+    String(profile.account_status || "").toLowerCase() !== "active"
   ) {
 
     alert(
       "You do not have permission to access Marketplace Administration."
     );
 
-    window.location.href =
-      "admin-dashboard.html";
+    window.location.href = "admin-dashboard.html";
 
     return false;
-
   }
 
-
-  currentAdmin =
-    user;
+  currentAdmin = user;
 
   return true;
-
 }
-
 
 /* ==========================================================
    APPLICATION COUNTS
@@ -934,73 +697,37 @@ async function loadApplicationCounts() {
     "withdrawn"
   ];
 
+  const elementMap = {
+    pending: "pending-count",
+    approved: "approved-count",
+    more_information_required: "more-info-count",
+    rejected: "rejected-count",
+    withdrawn: "withdrawn-count"
+  };
 
-  for (
-    const status of statuses
-  ) {
+  for (const status of statuses) {
 
     const {
       count,
       error
-    } =
-      await supabaseClient
-        .from(
-          "marketplace_vendor_applications"
-        )
-        .select(
-          "id",
-          {
-            count: "exact",
-            head: true
-          }
-        )
-        .eq(
-          "status",
-          status
-        );
-
+    } = await supabaseClient
+      .from("marketplace_vendor_applications")
+      .select("id", {
+        count: "exact",
+        head: true
+      })
+      .eq("status", status);
 
     if (error) {
-
-      console.error(
-        "Application count error:",
-        error
-      );
-
+      console.error("Application count error:", error);
       continue;
-
     }
-
-
-    const elementMap = {
-
-      pending:
-        "pending-count",
-
-      approved:
-        "approved-count",
-
-      more_information_required:
-        "more-info-count",
-
-      rejected:
-        "rejected-count",
-
-      withdrawn:
-        "withdrawn-count"
-
-    };
-
 
     document.getElementById(
       elementMap[status]
-    ).textContent =
-      count || 0;
-
+    ).textContent = count || 0;
   }
-
 }
-
 
 /* ==========================================================
    LOAD APPLICATIONS
@@ -1009,65 +736,34 @@ async function loadApplicationCounts() {
 async function loadApplications() {
 
   const loading =
-    document.getElementById(
-      "application-loading"
-    );
-
+    document.getElementById("application-loading");
 
   const list =
-    document.getElementById(
-      "application-list"
+    document.getElementById("application-list");
+
+  loading.classList.remove("hidden");
+  list.classList.add("hidden");
+
+  let query = supabaseClient
+    .from("marketplace_vendor_applications")
+    .select("*")
+    .order("created_at", {
+      ascending: false
+    });
+
+  if (applicationStatus !== "all") {
+    query = query.eq(
+      "status",
+      applicationStatus
     );
-
-
-  loading.classList.remove(
-    "hidden"
-  );
-
-  list.classList.add(
-    "hidden"
-  );
-
-
-  let query =
-    supabaseClient
-      .from(
-        "marketplace_vendor_applications"
-      )
-      .select("*")
-      .order(
-        "created_at",
-        {
-          ascending: false
-        }
-      );
-
-
-  if (
-    applicationStatus !==
-    "all"
-  ) {
-
-    query =
-      query.eq(
-        "status",
-        applicationStatus
-      );
-
   }
-
 
   const {
     data,
     error
-  } =
-    await query;
+  } = await query;
 
-
-  loading.classList.add(
-    "hidden"
-  );
-
+  loading.classList.add("hidden");
 
   if (error) {
 
@@ -1084,23 +780,15 @@ async function loadApplications() {
       </div>
     `;
 
-    list.classList.remove(
-      "hidden"
-    );
+    list.classList.remove("hidden");
 
     return;
-
   }
 
-
-  applications =
-    data || [];
-
+  applications = data || [];
 
   renderApplications();
-
 }
-
 
 /* ==========================================================
    RENDER APPLICATIONS
@@ -1109,10 +797,7 @@ async function loadApplications() {
 function renderApplications() {
 
   const list =
-    document.getElementById(
-      "application-list"
-    );
-
+    document.getElementById("application-list");
 
   if (!applications.length) {
 
@@ -1122,247 +807,185 @@ function renderApplications() {
       </div>
     `;
 
-    list.classList.remove(
-      "hidden"
-    );
+    list.classList.remove("hidden");
 
     return;
-
   }
 
+  list.innerHTML = applications.map(
+    function(application) {
 
-  list.innerHTML =
-    applications
-      .map(
-        function(application) {
+      return `
+        <article
+          class="application-card"
+          data-application-id="${escapeHtml(application.id)}"
+        >
 
-          return `
+          <div class="card-top">
 
-            <article
-              class="application-card"
-              data-application-id="${escapeHtml(application.id)}"
-            >
+            <div>
 
-              <div class="card-top">
+              <div class="card-title">
+                ${escapeHtml(application.store_name)}
+              </div>
 
-                <div>
+              <div class="card-subtitle">
+                ${escapeHtml(application.full_name)}
+                ·
+                ${escapeHtml(application.email)}
+              </div>
 
-                  <div class="card-title">
-                    ${escapeHtml(application.store_name)}
-                  </div>
+            </div>
 
-                  <div class="card-subtitle">
-                    ${escapeHtml(application.full_name)}
-                    ·
-                    ${escapeHtml(application.email)}
-                  </div>
+            <span class="status ${escapeHtml(application.status)}">
+              ${escapeHtml(
+                application.status
+                  .replaceAll("_", " ")
+                  .toUpperCase()
+              )}
+            </span>
 
-                </div>
+          </div>
 
-                <span
-                  class="status ${escapeHtml(application.status)}"
+          <div class="application-grid">
+
+            <div class="info-box">
+              <div class="info-label">Phone</div>
+              <div class="info-value">
+                ${escapeHtml(application.phone_number)}
+              </div>
+            </div>
+
+            <div class="info-box">
+              <div class="info-label">Business Phone</div>
+              <div class="info-value">
+                ${escapeHtml(application.business_phone)}
+              </div>
+            </div>
+
+            <div class="info-box">
+              <div class="info-label">Business Location</div>
+              <div class="info-value">
+                ${escapeHtml(application.business_location)}
+              </div>
+            </div>
+
+            <div class="info-box">
+              <div class="info-label">Business Address</div>
+              <div class="info-value">
+                ${escapeHtml(application.business_address)}
+              </div>
+            </div>
+
+            <div class="info-box">
+              <div class="info-label">State / LGA</div>
+              <div class="info-value">
+                ${escapeHtml(application.state)}
+                /
+                ${escapeHtml(application.lga)}
+              </div>
+            </div>
+
+            <div class="info-box">
+              <div class="info-label">Submitted</div>
+              <div class="info-value">
+                ${escapeHtml(
+                  formatDate(application.created_at)
+                )}
+              </div>
+            </div>
+
+          </div>
+
+          ${
+            application.personal_photo_url
+              ? `
+                <img
+                  class="application-photo"
+                  src="${escapeHtml(application.personal_photo_url)}"
+                  alt="Applicant"
                 >
-                  ${escapeHtml(
-                    application.status
-                      .replaceAll("_", " ")
-                      .toUpperCase()
-                  )}
-                </span>
+              `
+              : ""
+          }
 
-              </div>
+          ${
+            application.store_logo_url
+              ? `
+                <img
+                  class="store-logo"
+                  src="${escapeHtml(application.store_logo_url)}"
+                  alt="Store logo"
+                >
+              `
+              : ""
+          }
 
+          <textarea
+            class="admin-note"
+            data-note-for="${escapeHtml(application.id)}"
+            placeholder="Admin note..."
+          >${escapeHtml(application.admin_note || "")}</textarea>
 
-              <div class="application-grid">
+          <div class="actions">
 
-                <div class="info-box">
+            ${
+              application.status !== "approved"
+                ? `
+                  <button
+                    class="approve"
+                    onclick="updateApplicationStatus(
+                      '${application.id}',
+                      'approved'
+                    )"
+                  >
+                    Approve
+                  </button>
+                `
+                : ""
+            }
 
-                  <div class="info-label">
-                    Phone
-                  </div>
+            ${
+              application.status !== "rejected"
+                ? `
+                  <button
+                    class="reject"
+                    onclick="updateApplicationStatus(
+                      '${application.id}',
+                      'rejected'
+                    )"
+                  >
+                    Reject
+                  </button>
+                `
+                : ""
+            }
 
-                  <div class="info-value">
-                    ${escapeHtml(application.phone_number)}
-                  </div>
+            ${
+              application.status !== "more_information_required"
+                ? `
+                  <button
+                    class="request"
+                    onclick="updateApplicationStatus(
+                      '${application.id}',
+                      'more_information_required'
+                    )"
+                  >
+                    Request More Information
+                  </button>
+                `
+                : ""
+            }
 
-                </div>
+          </div>
 
+        </article>
+      `;
+    }
+  ).join("");
 
-                <div class="info-box">
-
-                  <div class="info-label">
-                    Business Phone
-                  </div>
-
-                  <div class="info-value">
-                    ${escapeHtml(application.business_phone)}
-                  </div>
-
-                </div>
-
-
-                <div class="info-box">
-
-                  <div class="info-label">
-                    Business Location
-                  </div>
-
-                  <div class="info-value">
-                    ${escapeHtml(application.business_location)}
-                  </div>
-
-                </div>
-
-
-                <div class="info-box">
-
-                  <div class="info-label">
-                    Business Address
-                  </div>
-
-                  <div class="info-value">
-                    ${escapeHtml(application.business_address)}
-                  </div>
-
-                </div>
-
-
-                <div class="info-box">
-
-                  <div class="info-label">
-                    State / LGA
-                  </div>
-
-                  <div class="info-value">
-                    ${escapeHtml(application.state)}
-                    /
-                    ${escapeHtml(application.lga)}
-                  </div>
-
-                </div>
-
-
-                <div class="info-box">
-
-                  <div class="info-label">
-                    Submitted
-                  </div>
-
-                  <div class="info-value">
-                    ${escapeHtml(
-                      formatDate(
-                        application.created_at
-                      )
-                    )}
-                  </div>
-
-                </div>
-
-              </div>
-
-
-              ${
-                application.personal_photo_url
-                  ? `
-                    <img
-                      class="application-photo"
-                      src="${escapeHtml(application.personal_photo_url)}"
-                      alt="Applicant"
-                    >
-                  `
-                  : ""
-              }
-
-
-              ${
-                application.store_logo_url
-                  ? `
-                    <img
-                      class="store-logo"
-                      src="${escapeHtml(application.store_logo_url)}"
-                      alt="Store logo"
-                    >
-                  `
-                  : ""
-              }
-
-
-              <textarea
-                class="admin-note"
-                data-note-for="${escapeHtml(application.id)}"
-                placeholder="Admin note..."
-              >${escapeHtml(application.admin_note || "")}</textarea>
-
-
-              <div class="actions">
-
-                ${
-                  application.status !== "approved"
-                    ? `
-                      <button
-                        class="approve"
-                        onclick="updateApplicationStatus(
-                          '${application.id}',
-                          'approved'
-                        )"
-                      >
-                        Approve
-                      </button>
-                    `
-                    : ""
-                }
-
-
-                ${
-                  application.status !== "rejected"
-                    ? `
-                      <button
-                        class="reject"
-                        onclick="updateApplicationStatus(
-                          '${application.id}',
-                          'rejected'
-                        )"
-                      >
-                        Reject
-                      </button>
-                    `
-                    : ""
-                }
-
-
-                ${
-                  application.status !==
-                    "more_information_required"
-                    ? `
-                      <button
-                        class="request"
-                        onclick="updateApplicationStatus(
-                          '${application.id}',
-                          'more_information_required'
-                        )"
-                      >
-                        Request More Information
-                      </button>
-                    `
-                    : ""
-                }
-
-              </div>
-
-            </article>
-
-          `;
-
-        }
-      )
-      .join("");
-
-
-  list.classList.remove(
-    "hidden"
-  );
-
+  list.classList.remove("hidden");
 }
-
 
 /* ==========================================================
    UPDATE APPLICATION STATUS
@@ -1378,43 +1001,23 @@ async function updateApplicationStatus(
       `[data-note-for="${applicationId}"]`
     );
 
-
   const adminNote =
     noteElement
       ? noteElement.value.trim()
       : "";
 
-
   const {
     error
-  } =
-    await supabaseClient
-      .from(
-        "marketplace_vendor_applications"
-      )
-      .update({
-
-        status:
-          newStatus,
-
-        admin_note:
-          adminNote,
-
-        reviewed_by:
-          currentAdmin.id,
-
-        reviewed_at:
-          new Date().toISOString(),
-
-        updated_at:
-          new Date().toISOString()
-
-      })
-      .eq(
-        "id",
-        applicationId
-      );
-
+  } = await supabaseClient
+    .from("marketplace_vendor_applications")
+    .update({
+      status: newStatus,
+      admin_note: adminNote,
+      reviewed_by: currentAdmin.id,
+      reviewed_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    })
+    .eq("id", applicationId);
 
   if (error) {
 
@@ -1424,16 +1027,11 @@ async function updateApplicationStatus(
     );
 
     return;
-
   }
 
-
   await loadApplicationCounts();
-
   await loadApplications();
-
 }
-
 
 /* ==========================================================
    PRODUCT COUNTS
@@ -1448,92 +1046,49 @@ async function loadProductCounts() {
     "rejected"
   ];
 
+  const map = {
+    pending: "product-pending-count",
+    approved: "product-approved-count",
+    changes_required: "product-changes-count",
+    rejected: "product-rejected-count"
+  };
 
-  for (
-    const status of statuses
-  ) {
+  for (const status of statuses) {
 
     const {
       count,
       error
-    } =
-      await supabaseClient
-        .from(
-          "marketplace_products"
-        )
-        .select(
-          "id",
-          {
-            count: "exact",
-            head: true
-          }
-        )
-        .eq(
-          "status",
-          status
-        );
-
+    } = await supabaseClient
+      .from("marketplace_products")
+      .select("id", {
+        count: "exact",
+        head: true
+      })
+      .eq("status", status);
 
     if (error) {
-
-      console.error(
-        "Product count error:",
-        error
-      );
-
+      console.error("Product count error:", error);
       continue;
-
     }
-
-
-    const map = {
-
-      pending:
-        "product-pending-count",
-
-      approved:
-        "product-approved-count",
-
-      changes_required:
-        "product-changes-count",
-
-      rejected:
-        "product-rejected-count"
-
-    };
-
 
     document.getElementById(
       map[status]
-    ).textContent =
-      count || 0;
-
+    ).textContent = count || 0;
   }
-
 
   const {
     count: total
-  } =
-    await supabaseClient
-      .from(
-        "marketplace_products"
-      )
-      .select(
-        "id",
-        {
-          count: "exact",
-          head: true
-        }
-      );
-
+  } = await supabaseClient
+    .from("marketplace_products")
+    .select("id", {
+      count: "exact",
+      head: true
+    });
 
   document.getElementById(
     "product-total-count"
-  ).textContent =
-    total || 0;
-
+  ).textContent = total || 0;
 }
-
 
 /* ==========================================================
    LOAD PRODUCTS
@@ -1542,77 +1097,45 @@ async function loadProductCounts() {
 async function loadProducts() {
 
   const loading =
-    document.getElementById(
-      "product-loading"
-    );
-
+    document.getElementById("product-loading");
 
   const list =
-    document.getElementById(
-      "product-list"
+    document.getElementById("product-list");
+
+  loading.classList.remove("hidden");
+  list.classList.add("hidden");
+
+  let query = supabaseClient
+    .from("marketplace_products")
+    .select(`
+      id,
+      store_id,
+      vendor_id,
+      title,
+      category,
+      description,
+      price,
+      stock_quantity,
+      delivery_type,
+      status,
+      created_at,
+      updated_at
+    `)
+    .order("created_at", {
+      ascending: false
+    });
+
+  if (productStatus !== "all") {
+    query = query.eq(
+      "status",
+      productStatus
     );
-
-
-  loading.classList.remove(
-    "hidden"
-  );
-
-  list.classList.add(
-    "hidden"
-  );
-
-
-  /*
-   * Load products first.
-   */
-
-  let query =
-    supabaseClient
-      .from(
-        "marketplace_products"
-      )
-      .select(`
-        id,
-        store_id,
-        vendor_id,
-        title,
-        category,
-        description,
-        price,
-        stock_quantity,
-        delivery_type,
-        status,
-        created_at,
-        updated_at
-      `)
-      .order(
-        "created_at",
-        {
-          ascending: false
-        }
-      );
-
-
-  if (
-    productStatus !==
-    "all"
-  ) {
-
-    query =
-      query.eq(
-        "status",
-        productStatus
-      );
-
   }
-
 
   const {
     data: productData,
     error: productError
-  } =
-    await query;
-
+  } = await query;
 
   if (productError) {
 
@@ -1621,9 +1144,7 @@ async function loadProducts() {
       productError
     );
 
-    loading.classList.add(
-      "hidden"
-    );
+    loading.classList.add("hidden");
 
     list.innerHTML = `
       <div class="empty">
@@ -1633,173 +1154,117 @@ async function loadProducts() {
       </div>
     `;
 
-    list.classList.remove(
-      "hidden"
-    );
+    list.classList.remove("hidden");
 
     return;
-
   }
-
 
   const rawProducts =
     productData || [];
 
-
-  /*
-   * Load stores.
-   */
-
-  const storeIds =
-    [
-      ...new Set(
-        rawProducts
-          .map(
-            product =>
-              product.store_id
-          )
-          .filter(Boolean)
-      )
-    ];
-
+  const storeIds = [
+    ...new Set(
+      rawProducts
+        .map(product => product.store_id)
+        .filter(Boolean)
+    )
+  ];
 
   let stores = [];
-
 
   if (storeIds.length) {
 
     const {
       data,
       error
-    } =
-      await supabaseClient
-        .from(
-          "marketplace_stores"
-        )
-        .select(`
-          id,
-          store_name,
-          store_slug,
-          store_logo_url,
-          status,
-          business_state,
-          business_lga,
-          business_city,
-          business_area
-        `)
-        .in(
-          "id",
-          storeIds
-        );
-
+    } = await supabaseClient
+      .from("marketplace_stores")
+      .select(`
+        id,
+        store_name,
+        store_slug,
+        store_logo_url,
+        status,
+        business_state,
+        business_lga,
+        business_city,
+        business_area
+      `)
+      .in("id", storeIds);
 
     if (!error) {
-
-      stores =
-        data || [];
-
+      stores = data || [];
+    } else {
+      console.error(
+        "Store loading error:",
+        error
+      );
     }
-
   }
 
-
-  /*
-   * Load product images.
-   */
-
   const productIds =
-    rawProducts
-      .map(
-        product =>
-          product.id
-      );
-
+    rawProducts.map(
+      product => product.id
+    );
 
   let images = [];
-
 
   if (productIds.length) {
 
     const {
       data,
       error
-    } =
-      await supabaseClient
-        .from(
-          "marketplace_product_images"
-        )
-        .select(`
-          id,
-          product_id,
-          image_url,
-          is_primary,
-          sort_order,
-          watermark_applied,
-          watermark_text
-        `)
-        .in(
-          "product_id",
-          productIds
-        )
-        .order(
-          "sort_order",
-          {
-            ascending: true
-          }
-        );
-
+    } = await supabaseClient
+      .from("marketplace_product_images")
+      .select(`
+        id,
+        product_id,
+        image_url,
+        is_primary,
+        sort_order,
+        watermark_applied,
+        watermark_text
+      `)
+      .in("product_id", productIds)
+      .order("sort_order", {
+        ascending: true
+      });
 
     if (!error) {
-
-      images =
-        data || [];
-
+      images = data || [];
+    } else {
+      console.error(
+        "Product image loading error:",
+        error
+      );
     }
-
   }
 
+  products = rawProducts.map(
+    function(product) {
 
-  /*
-   * Build complete records.
-   */
+      return {
+        ...product,
 
-  products =
-    rawProducts.map(
-      function(product) {
+        store:
+          stores.find(
+            store =>
+              store.id === product.store_id
+          ) || null,
 
-        return {
-
-          ...product,
-
-          store:
-            stores.find(
-              store =>
-                store.id ===
-                product.store_id
-            ) || null,
-
-          images:
-            images.filter(
-              image =>
-                image.product_id ===
-                product.id
-            )
-
-        };
-
-      }
-    );
-
-
-  loading.classList.add(
-    "hidden"
+        images:
+          images.filter(
+            image =>
+              image.product_id === product.id
+          )
+      };
+    }
   );
 
+  loading.classList.add("hidden");
 
   renderProducts();
-
 }
-
 
 /* ==========================================================
    RENDER PRODUCTS
@@ -1808,66 +1273,40 @@ async function loadProducts() {
 function renderProducts() {
 
   const list =
-    document.getElementById(
-      "product-list"
-    );
-
+    document.getElementById("product-list");
 
   const search =
-    document.getElementById(
-      "product-search"
-    )
+    document.getElementById("product-search")
       .value
       .trim()
       .toLowerCase();
 
-
-  let filtered =
-    products;
-
+  let filtered = products;
 
   if (search) {
 
-    filtered =
-      products.filter(
-        function(product) {
+    filtered = products.filter(
+      function(product) {
 
-          const storeName =
-            product.store?.store_name ||
-            "";
+        const storeName =
+          product.store?.store_name || "";
 
-
-          return (
-
-            String(
-              product.title || ""
-            )
-              .toLowerCase()
-              .includes(search)
-
-            ||
-
-            String(
-              product.category || ""
-            )
-              .toLowerCase()
-              .includes(search)
-
-            ||
-
-            String(
-              storeName
-            )
-              .toLowerCase()
-              .includes(search)
-
-          );
-
-        }
-      );
-
+        return (
+          String(product.title || "")
+            .toLowerCase()
+            .includes(search)
+          ||
+          String(product.category || "")
+            .toLowerCase()
+            .includes(search)
+          ||
+          String(storeName)
+            .toLowerCase()
+            .includes(search)
+        );
+      }
+    );
   }
-
 
   if (!filtered.length) {
 
@@ -1877,329 +1316,243 @@ function renderProducts() {
       </div>
     `;
 
-    list.classList.remove(
-      "hidden"
-    );
+    list.classList.remove("hidden");
 
     return;
-
   }
 
+  list.innerHTML = filtered.map(
+    function(product) {
 
-  list.innerHTML =
-    filtered
-      .map(
-        function(product) {
+      const store =
+        product.store || {};
 
-          const store =
-            product.store || {};
+      const images =
+        product.images || [];
 
+      const locationParts = [
+        store.business_city,
+        store.business_lga,
+        store.business_state
+      ].filter(Boolean);
 
-          const images =
-            product.images || [];
+      return `
+        <article class="product-card">
 
+          <div class="card-top">
 
-          const locationParts = [
-            store.business_city,
-            store.business_lga,
-            store.business_state
-          ]
-            .filter(Boolean);
+            <div>
 
+              <div class="card-title">
+                ${escapeHtml(product.title)}
+              </div>
 
-          return `
+              <div class="card-subtitle">
+                ${escapeHtml(
+                  store.store_name ||
+                  "Unknown Store"
+                )}
+                ·
+                ${escapeHtml(product.category)}
+              </div>
 
-            <article
-              class="product-card"
+            </div>
+
+            <span
+              class="status ${escapeHtml(product.status)}"
             >
+              ${escapeHtml(
+                product.status
+                  .replaceAll("_", " ")
+                  .toUpperCase()
+              )}
+            </span>
 
-              <div class="card-top">
+          </div>
 
-                <div>
+          <div class="product-images">
 
-                  <div class="card-title">
-                    ${escapeHtml(product.title)}
-                  </div>
+            ${
+              images.length
+                ? images.map(
+                    function(image) {
 
-                  <div class="card-subtitle">
+                      return `
+                        <div class="product-image">
 
-                    ${escapeHtml(
-                      store.store_name ||
-                      "Unknown Store"
-                    )}
+                          <img
+                            src="${escapeHtml(image.image_url)}"
+                            alt="${escapeHtml(product.title)}"
+                          >
 
-                    ·
-
-                    ${escapeHtml(
-                      product.category
-                    )}
-
-                  </div>
-
-                </div>
-
-
-                <span
-                  class="status ${escapeHtml(product.status)}"
-                >
-                  ${escapeHtml(
-                    product.status
-                      .replaceAll("_", " ")
-                      .toUpperCase()
-                  )}
-                </span>
-
-              </div>
-
-
-              <div class="product-images">
-
-                ${
-                  images.length
-                    ? images
-                        .map(
-                          function(image) {
-
-                            return `
-
-                              <div
-                                class="product-image"
-                              >
-
-                                <img
-                                  src="${escapeHtml(image.image_url)}"
-                                  alt="${escapeHtml(product.title)}"
-                                >
-
-                                ${
-                                  image.is_primary
-                                    ? `
-                                      <span class="primary-badge">
-                                        PRIMARY
-                                      </span>
-                                    `
-                                    : ""
-                                }
-
-
-                                ${
-                                  image.watermark_applied
-                                    ? `
-                                      <span class="branding-badge">
-                                        BRANDED
-                                      </span>
-                                    `
-                                    : `
-                                      <span
-                                        class="branding-badge"
-                                        style="background:#dc2626;"
-                                      >
-                                        NOT BRANDED
-                                      </span>
-                                    `
-                                }
-
-                              </div>
-
-                            `;
-
+                          ${
+                            image.is_primary
+                              ? `
+                                <span class="primary-badge">
+                                  PRIMARY
+                                </span>
+                              `
+                              : ""
                           }
-                        )
-                        .join("")
-                    : `
-                      <div class="empty">
-                        No product images.
-                      </div>
-                    `
-                }
 
-              </div>
+                          ${
+                            image.watermark_applied
+                              ? `
+                                <span class="branding-badge">
+                                  BRANDED
+                                </span>
+                              `
+                              : `
+                                <span
+                                  class="branding-badge"
+                                  style="background:#dc2626;"
+                                >
+                                  NOT BRANDED
+                                </span>
+                              `
+                          }
 
-
-              <div class="product-info-grid">
-
-                <div class="info-box">
-
-                  <div class="info-label">
-                    Price
-                  </div>
-
-                  <div class="info-value">
-                    ${escapeHtml(
-                      formatMoney(
-                        product.price
-                      )
-                    )}
-                  </div>
-
-                </div>
-
-
-                <div class="info-box">
-
-                  <div class="info-label">
-                    Stock
-                  </div>
-
-                  <div class="info-value">
-                    ${escapeHtml(
-                      product.stock_quantity
-                    )}
-                  </div>
-
-                </div>
-
-
-                <div class="info-box">
-
-                  <div class="info-label">
-                    Store
-                  </div>
-
-                  <div class="info-value">
-                    ${escapeHtml(
-                      store.store_name ||
-                      "—"
-                    )}
-                  </div>
-
-                </div>
-
-
-                <div class="info-box">
-
-                  <div class="info-label">
-                    Location
-                  </div>
-
-                  <div class="info-value">
-                    ${escapeHtml(
-                      locationParts.join(", ") ||
-                      "Not provided"
-                    )}
-                  </div>
-
-                </div>
-
-
-                <div class="info-box">
-
-                  <div class="info-label">
-                    Submitted
-                  </div>
-
-                  <div class="info-value">
-                    ${escapeHtml(
-                      formatDate(
-                        product.created_at
-                      )
-                    )}
-                  </div>
-
-                </div>
-
-
-                <div class="info-box">
-
-                  <div class="info-label">
-                    Branding
-                  </div>
-
-                  <div class="info-value">
-
-                    ${
-                      images.length &&
-                      images.every(
-                        image =>
-                          image.watermark_applied === true
-                      )
-                        ? "All images branded"
-                        : "Branding review required"
+                        </div>
+                      `;
                     }
-
+                  ).join("")
+                : `
+                  <div class="empty">
+                    No product images.
                   </div>
+                `
+            }
 
-                </div>
+          </div>
 
+          <div class="product-info-grid">
+
+            <div class="info-box">
+              <div class="info-label">Price</div>
+              <div class="info-value">
+                ${escapeHtml(
+                  formatMoney(product.price)
+                )}
               </div>
+            </div>
 
-
-              <textarea
-                class="admin-note"
-                data-product-note="${escapeHtml(product.id)}"
-                placeholder="Admin note for seller..."
-              ></textarea>
-
-
-              <div class="actions">
-
-                ${
-                  product.status !== "approved"
-                    ? `
-                      <button
-                        class="approve"
-                        onclick="updateProductStatus(
-                          '${product.id}',
-                          'approved'
-                        )"
-                      >
-                        Approve Product
-                      </button>
-                    `
-                    : ""
-                }
-
-
-                ${
-                  product.status !== "rejected"
-                    ? `
-                      <button
-                        class="reject"
-                        onclick="updateProductStatus(
-                          '${product.id}',
-                          'rejected'
-                        )"
-                      >
-                        Reject
-                      </button>
-                    `
-                    : ""
-                }
-
-
-                ${
-                  product.status !== "changes_required"
-                    ? `
-                      <button
-                        class="request"
-                        onclick="updateProductStatus(
-                          '${product.id}',
-                          'changes_required'
-                        )"
-                      >
-                        Request Changes
-                      </button>
-                    `
-                    : ""
-                }
-
+            <div class="info-box">
+              <div class="info-label">Stock</div>
+              <div class="info-value">
+                ${escapeHtml(product.stock_quantity)}
               </div>
+            </div>
 
-            </article>
+            <div class="info-box">
+              <div class="info-label">Store</div>
+              <div class="info-value">
+                ${escapeHtml(
+                  store.store_name || "—"
+                )}
+              </div>
+            </div>
 
-          `;
+            <div class="info-box">
+              <div class="info-label">Location</div>
+              <div class="info-value">
+                ${escapeHtml(
+                  locationParts.join(", ") ||
+                  "Not provided"
+                )}
+              </div>
+            </div>
 
-        }
-      )
-      .join("");
+            <div class="info-box">
+              <div class="info-label">Submitted</div>
+              <div class="info-value">
+                ${escapeHtml(
+                  formatDate(product.created_at)
+                )}
+              </div>
+            </div>
 
+            <div class="info-box">
+              <div class="info-label">Branding</div>
+              <div class="info-value">
+                ${
+                  images.length &&
+                  images.every(
+                    image =>
+                      image.watermark_applied === true
+                  )
+                    ? "All images branded"
+                    : "Branding review required"
+                }
+              </div>
+            </div>
 
-  list.classList.remove(
-    "hidden"
-  );
+          </div>
 
+          <textarea
+            class="admin-note"
+            data-product-note="${escapeHtml(product.id)}"
+            placeholder="Admin note for seller..."
+          ></textarea>
+
+          <div class="actions">
+
+            ${
+              product.status !== "approved"
+                ? `
+                  <button
+                    class="approve"
+                    onclick="updateProductStatus(
+                      '${product.id}',
+                      'approved'
+                    )"
+                  >
+                    Approve Product
+                  </button>
+                `
+                : ""
+            }
+
+            ${
+              product.status !== "rejected"
+                ? `
+                  <button
+                    class="reject"
+                    onclick="updateProductStatus(
+                      '${product.id}',
+                      'rejected'
+                    )"
+                  >
+                    Reject
+                  </button>
+                `
+                : ""
+            }
+
+            ${
+              product.status !== "changes_required"
+                ? `
+                  <button
+                    class="request"
+                    onclick="updateProductStatus(
+                      '${product.id}',
+                      'changes_required'
+                    )"
+                  >
+                    Request Changes
+                  </button>
+                `
+                : ""
+            }
+
+          </div>
+
+        </article>
+      `;
+    }
+  ).join("");
+
+  list.classList.remove("hidden");
 }
-
 
 /* ==========================================================
    UPDATE PRODUCT STATUS
@@ -2215,29 +1568,18 @@ async function updateProductStatus(
       `[data-product-note="${productId}"]`
     );
 
-
   const note =
     noteElement
       ? noteElement.value.trim()
       : "";
 
-
-  /*
-   * Never allow an unbranded product
-   * to be approved.
-   */
-
-  if (
-    newStatus ===
-    "approved"
-  ) {
+  if (newStatus === "approved") {
 
     const product =
       products.find(
         item =>
           item.id === productId
       );
-
 
     if (!product) {
 
@@ -2246,13 +1588,10 @@ async function updateProductStatus(
       );
 
       return;
-
     }
-
 
     const images =
       product.images || [];
-
 
     if (
       !images.length ||
@@ -2267,33 +1606,18 @@ async function updateProductStatus(
       );
 
       return;
-
     }
-
   }
-
 
   const {
     error
-  } =
-    await supabaseClient
-      .from(
-        "marketplace_products"
-      )
-      .update({
-
-        status:
-          newStatus,
-
-        updated_at:
-          new Date().toISOString()
-
-      })
-      .eq(
-        "id",
-        productId
-      );
-
+  } = await supabaseClient
+    .from("marketplace_products")
+    .update({
+      status: newStatus,
+      updated_at: new Date().toISOString()
+    })
+    .eq("id", productId);
 
   if (error) {
 
@@ -2303,48 +1627,25 @@ async function updateProductStatus(
     );
 
     return;
-
   }
 
-
-  /*
-   * If an admin note was supplied,
-   * store it using the product description
-   * only if no dedicated note column exists.
-   *
-   * We intentionally do not overwrite the
-   * seller's description.
-   *
-   * Notes will be added to the dedicated
-   * admin review system in the next database
-   * step.
-   */
-
   if (note) {
-
     console.log(
       "Admin product note:",
       note
     );
-
   }
 
-
   await loadProductCounts();
-
   await loadProducts();
-
 }
-
 
 /* ==========================================================
    TAB SWITCHING
 ========================================================== */
 
 document
-  .querySelectorAll(
-    ".tab[data-tab]"
-  )
+  .querySelectorAll(".tab[data-tab]")
   .forEach(
     function(button) {
 
@@ -2353,100 +1654,55 @@ document
         async function() {
 
           document
-            .querySelectorAll(
-              ".tab[data-tab]"
-            )
+            .querySelectorAll(".tab[data-tab]")
             .forEach(
               item =>
-                item.classList.remove(
-                  "active"
-                )
+                item.classList.remove("active")
             );
 
-
-          button.classList.add(
-            "active"
-          );
-
+          button.classList.add("active");
 
           const tab =
             button.dataset.tab;
 
-
-          if (
-            tab ===
-            "applications"
-          ) {
+          if (tab === "applications") {
 
             document
-              .getElementById(
-                "applications-section"
-              )
-              .classList.remove(
-                "hidden"
-              );
-
+              .getElementById("applications-section")
+              .classList.remove("hidden");
 
             document
-              .getElementById(
-                "products-section"
-              )
-              .classList.add(
-                "hidden"
-              );
-
+              .getElementById("products-section")
+              .classList.add("hidden");
 
             await loadApplicationCounts();
-
             await loadApplications();
-
           }
 
-
-          if (
-            tab ===
-            "products"
-          ) {
+          if (tab === "products") {
 
             document
-              .getElementById(
-                "applications-section"
-              )
-              .classList.add(
-                "hidden"
-              );
-
+              .getElementById("applications-section")
+              .classList.add("hidden");
 
             document
-              .getElementById(
-                "products-section"
-              )
-              .classList.remove(
-                "hidden"
-              );
-
+              .getElementById("products-section")
+              .classList.remove("hidden");
 
             await loadProductCounts();
-
             await loadProducts();
-
           }
-
         }
       );
-
     }
   );
-
 
 /* ==========================================================
    APPLICATION FILTERS
 ========================================================== */
 
 document
-  .querySelectorAll(
-    ".application-filter"
-  )
+  .querySelectorAll(".application-filter")
   .forEach(
     function(button) {
 
@@ -2455,43 +1711,29 @@ document
         async function() {
 
           document
-            .querySelectorAll(
-              ".application-filter"
-            )
+            .querySelectorAll(".application-filter")
             .forEach(
               item =>
-                item.classList.remove(
-                  "active"
-                )
+                item.classList.remove("active")
             );
 
-
-          button.classList.add(
-            "active"
-          );
-
+          button.classList.add("active");
 
           applicationStatus =
             button.dataset.status;
 
-
           await loadApplications();
-
         }
       );
-
     }
   );
-
 
 /* ==========================================================
    PRODUCT FILTERS
 ========================================================== */
 
 document
-  .querySelectorAll(
-    ".product-filter"
-  )
+  .querySelectorAll(".product-filter")
   .forEach(
     function(button) {
 
@@ -2500,52 +1742,35 @@ document
         async function() {
 
           document
-            .querySelectorAll(
-              ".product-filter"
-            )
+            .querySelectorAll(".product-filter")
             .forEach(
               item =>
-                item.classList.remove(
-                  "active"
-                )
+                item.classList.remove("active")
             );
 
-
-          button.classList.add(
-            "active"
-          );
-
+          button.classList.add("active");
 
           productStatus =
             button.dataset.status;
 
-
           await loadProducts();
-
         }
       );
-
     }
   );
-
 
 /* ==========================================================
    PRODUCT SEARCH
 ========================================================== */
 
 document
-  .getElementById(
-    "product-search"
-  )
+  .getElementById("product-search")
   .addEventListener(
     "input",
     function() {
-
       renderProducts();
-
     }
   );
-
 
 /* ==========================================================
    START
@@ -2556,22 +1781,15 @@ document
   const allowed =
     await checkAdminAccess();
 
-
   if (!allowed) {
-
     return;
-
   }
 
-
   await loadApplicationCounts();
-
   await loadApplications();
 
 })();
-
 </script>
 
 </body>
-
 </html>

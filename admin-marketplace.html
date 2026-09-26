@@ -3,370 +3,429 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Marketplace Admin | EarnGig</title>
+  <title>Marketplace Administration</title>
 
-  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase.js"></script>
 
   <style>
-    body {
-      background:
-        radial-gradient(
-          circle at top right,
-          rgba(92, 60, 180, 0.12),
-          transparent 35%
-        ),
-        #070b2b;
+    :root{
+      --bg:#07101d;
+      --panel:#0d1828;
+      --panel2:#111f32;
+      --border:#22334a;
+      --text:#edf4fb;
+      --muted:#8fa1b5;
+      --accent:#38bdf8;
+      --accent-soft:rgba(56,189,248,.12);
+      --green:#34d399;
+      --yellow:#fbbf24;
+      --red:#fb7185;
+      --white:#fff;
     }
 
-    .marketplace-page {
-      padding: 25px 0 70px;
+    *{
+      box-sizing:border-box;
     }
 
-    .page-heading {
-      margin-bottom: 20px;
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
     }
 
-    .page-heading h1 {
-      margin: 6px 0;
+    a{
+      color:inherit;
+      text-decoration:none;
     }
 
-    .page-heading p {
-      color: #929bb8;
-      line-height: 1.6;
-      margin: 0;
+    button,
+    input,
+    select{
+      font:inherit;
     }
 
-    .tabs {
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      padding-bottom: 8px;
-      margin-bottom: 18px;
+    .page{
+      width:min(1120px,100%);
+      margin:auto;
+      padding:18px;
     }
 
-    .tab {
-      border: 1px solid #303666;
-      background: #101638;
-      color: #aeb6ce;
-      border-radius: 10px;
-      padding: 10px 13px;
-      font-size: 11px;
-      font-weight: 800;
-      cursor: pointer;
-      white-space: nowrap;
+    /* HEADER */
+
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      margin-bottom:18px;
     }
 
-    .tab.active {
-      background: #6d4aff;
-      border-color: #6d4aff;
-      color: #fff;
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
     }
 
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-      gap: 12px;
-      margin-bottom: 18px;
+    .brand-mark{
+      width:34px;
+      height:34px;
+      border-radius:9px;
+      background:var(--accent-soft);
+      border:1px solid rgba(56,189,248,.25);
+      display:grid;
+      place-items:center;
+      color:var(--accent);
+      font-weight:800;
     }
 
-    .stat {
-      background: #101638;
-      border: 1px solid #272e53;
-      border-radius: 15px;
-      padding: 15px;
+    .brand-title{
+      font-size:16px;
+      font-weight:750;
+      line-height:1.1;
     }
 
-    .stat-label {
-      color: #858eaa;
-      font-size: 10px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: .04em;
+    .brand-sub{
+      color:var(--muted);
+      font-size:11px;
+      margin-top:3px;
     }
 
-    .stat-value {
-      color: #fff;
-      font-size: 24px;
-      font-weight: 900;
-      margin-top: 5px;
+    .back-btn{
+      border:1px solid var(--border);
+      background:transparent;
+      color:var(--muted);
+      padding:8px 11px;
+      border-radius:8px;
+      cursor:pointer;
     }
 
-    .search-box {
-      background: #101638;
-      border: 1px solid #272e53;
-      border-radius: 15px;
-      padding: 14px;
-      margin-bottom: 15px;
+    .back-btn:hover{
+      color:var(--text);
+      border-color:#36506d;
     }
 
-    .search-box input {
-      width: 100%;
-      box-sizing: border-box;
-      background: #090d31;
-      border: 1px solid #303666;
-      border-radius: 10px;
-      color: #fff;
-      padding: 12px;
-      outline: none;
+    /* PAGE TITLE */
+
+    .heading{
+      margin-bottom:16px;
     }
 
-    .application-list,
-    .product-list {
-      display: grid;
-      gap: 14px;
+    .heading h1{
+      margin:0;
+      font-size:24px;
+      letter-spacing:-.4px;
     }
 
-    .application-card,
-    .product-card {
-      background: #101638;
-      border: 1px solid #272e53;
-      border-radius: 17px;
-      padding: 18px;
+    .heading p{
+      margin:5px 0 0;
+      color:var(--muted);
+      font-size:13px;
     }
 
-    .card-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 15px;
+    /* SMALL STATS */
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(5,minmax(0,1fr));
+      gap:8px;
+      margin-bottom:16px;
     }
 
-    .card-title {
-      color: #fff;
-      font-size: 16px;
-      font-weight: 900;
-      margin-bottom: 5px;
+    .stat{
+      min-width:0;
+      background:var(--panel);
+      border:1px solid var(--border);
+      border-radius:9px;
+      padding:10px 11px;
     }
 
-    .card-subtitle {
-      color: #858eaa;
-      font-size: 11px;
-      line-height: 1.6;
+    .stat-label{
+      color:var(--muted);
+      font-size:9px;
+      text-transform:uppercase;
+      letter-spacing:.7px;
+      font-weight:700;
     }
 
-    .status {
-      border-radius: 999px;
-      padding: 5px 9px;
-      font-size: 9px;
-      font-weight: 900;
-      white-space: nowrap;
+    .stat-value{
+      margin-top:4px;
+      font-size:18px;
+      font-weight:800;
     }
 
-    .status.pending,
-    .status.pending_review {
-      background: rgba(234,179,8,.12);
-      color: #fde047;
+    .stat.pending .stat-value{
+      color:var(--yellow);
     }
 
-    .status.approved {
-      background: rgba(34,197,94,.12);
-      color: #86efac;
+    .stat.approved .stat-value{
+      color:var(--green);
     }
 
-    .status.rejected {
-      background: rgba(239,68,68,.12);
-      color: #fca5a5;
+    /* TOOLBAR */
+
+    .toolbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-bottom:12px;
     }
 
-    .status.more_information_required {
-      background: rgba(59,130,246,.12);
-      color: #93c5fd;
+    .tabs{
+      display:flex;
+      gap:5px;
+      flex-wrap:wrap;
     }
 
-    .status.withdrawn {
-      background: rgba(148,163,184,.12);
-      color: #cbd5e1;
+    .tab{
+      border:1px solid var(--border);
+      background:var(--panel);
+      color:var(--muted);
+      border-radius:7px;
+      padding:7px 10px;
+      font-size:11px;
+      cursor:pointer;
     }
 
-    .status.changes_required {
-      background: rgba(59,130,246,.12);
-      color: #93c5fd;
+    .tab.active{
+      background:var(--accent-soft);
+      border-color:rgba(56,189,248,.4);
+      color:var(--accent);
     }
 
-    .application-grid,
-    .product-info-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-      margin-top: 15px;
+    .search{
+      width:220px;
+      max-width:100%;
+      background:var(--panel);
+      border:1px solid var(--border);
+      color:var(--text);
+      border-radius:7px;
+      padding:8px 10px;
+      outline:none;
+      font-size:12px;
     }
 
-    .info-box {
-      background: #090d31;
-      border: 1px solid #272e53;
-      border-radius: 10px;
-      padding: 11px;
+    .search:focus{
+      border-color:var(--accent);
     }
 
-    .info-label {
-      color: #69738f;
-      font-size: 9px;
-      text-transform: uppercase;
-      font-weight: 900;
-      margin-bottom: 4px;
+    /* APPLICATION GRID */
+
+    .applications{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:9px;
     }
 
-    .info-value {
-      color: #d7dcef;
-      font-size: 12px;
-      line-height: 1.5;
-      word-break: break-word;
+    .application-card{
+      background:var(--panel);
+      border:1px solid var(--border);
+      border-radius:10px;
+      padding:12px;
+      min-width:0;
     }
 
-    .application-photo {
-      width: 90px;
-      height: 90px;
-      object-fit: cover;
-      border-radius: 12px;
-      border: 1px solid #30385e;
-      background: #090d31;
-      margin-top: 15px;
+    .application-card:hover{
+      border-color:#36506d;
     }
 
-    .store-logo {
-      width: 70px;
-      height: 70px;
-      object-fit: contain;
-      border-radius: 12px;
-      border: 1px solid #30385e;
-      background: #090d31;
-      padding: 5px;
-      box-sizing: border-box;
-      margin-top: 15px;
+    .card-top{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
     }
 
-    .product-images {
-      display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-      gap: 8px;
-      margin-top: 15px;
+    .vendor-info{
+      min-width:0;
     }
 
-    .product-image {
-      position: relative;
-      aspect-ratio: 1 / 1;
-      overflow: hidden;
-      border-radius: 10px;
-      border: 1px solid #30385e;
-      background: #090d31;
+    .store-name{
+      font-size:14px;
+      font-weight:750;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
     }
 
-    .product-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
+    .vendor-name{
+      color:var(--muted);
+      font-size:11px;
+      margin-top:3px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
     }
 
-    .primary-badge,
-    .branding-badge {
-      position: absolute;
-      background: rgba(0,0,0,.78);
-      color: #fff;
-      padding: 4px 6px;
-      border-radius: 5px;
-      font-size: 8px;
-      font-weight: 900;
+    .status{
+      flex:none;
+      display:inline-flex;
+      align-items:center;
+      border-radius:999px;
+      padding:4px 7px;
+      font-size:9px;
+      font-weight:800;
+      text-transform:uppercase;
+      letter-spacing:.3px;
     }
 
-    .primary-badge {
-      left: 5px;
-      bottom: 5px;
+    .status.pending{
+      color:#fbbf24;
+      background:rgba(251,191,36,.10);
     }
 
-    .branding-badge {
-      right: 5px;
-      top: 5px;
-      background: rgba(124,58,237,.92);
-      font-size: 7px;
+    .status.approved{
+      color:#34d399;
+      background:rgba(52,211,153,.10);
     }
 
-    .actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 16px;
+    .status.more_information_required{
+      color:#38bdf8;
+      background:rgba(56,189,248,.10);
     }
 
-    .actions button {
-      border: 0;
-      border-radius: 9px;
-      padding: 10px 13px;
-      color: #fff;
-      font-size: 11px;
-      font-weight: 800;
-      cursor: pointer;
+    .status.rejected{
+      color:#fb7185;
+      background:rgba(251,113,133,.10);
     }
 
-    .approve { background: #16a34a; }
-    .reject { background: #dc2626; }
-    .request { background: #2563eb; }
-    .neutral { background: #30385e; }
-
-    .admin-note {
-      width: 100%;
-      box-sizing: border-box;
-      min-height: 85px;
-      margin-top: 13px;
-      background: #090d31;
-      color: #fff;
-      border: 1px solid #303666;
-      border-radius: 10px;
-      padding: 11px;
-      resize: vertical;
-      outline: none;
+    .status.withdrawn{
+      color:#94a3b8;
+      background:rgba(148,163,184,.10);
     }
 
-    .empty {
-      text-align: center;
-      padding: 45px 20px;
-      background: #101638;
-      border: 1px solid #272e53;
-      border-radius: 17px;
-      color: #858eaa;
-      font-size: 12px;
+    .card-details{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:7px;
+      margin-top:11px;
     }
 
-    .loading {
-      text-align: center;
-      padding: 45px 20px;
-      color: #929bb8;
+    .detail{
+      background:#091423;
+      border:1px solid #1b2a3e;
+      border-radius:7px;
+      padding:7px 8px;
+      min-width:0;
     }
 
-    .hidden {
-      display: none !important;
+    .detail-label{
+      color:#708399;
+      font-size:8px;
+      text-transform:uppercase;
+      letter-spacing:.5px;
     }
 
-    @media (max-width: 850px) {
-      .stats {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+    .detail-value{
+      margin-top:3px;
+      font-size:11px;
+      color:#dbe7f2;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .card-bottom{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:8px;
+      margin-top:10px;
+    }
+
+    .date{
+      color:#6f8196;
+      font-size:9px;
+    }
+
+    .view-btn{
+      border:1px solid rgba(56,189,248,.35);
+      background:var(--accent-soft);
+      color:var(--accent);
+      border-radius:7px;
+      padding:7px 10px;
+      font-size:10px;
+      font-weight:700;
+      cursor:pointer;
+    }
+
+    .view-btn:hover{
+      background:rgba(56,189,248,.18);
+    }
+
+    .empty{
+      border:1px dashed var(--border);
+      border-radius:9px;
+      padding:28px 15px;
+      text-align:center;
+      color:var(--muted);
+      font-size:12px;
+      grid-column:1/-1;
+    }
+
+    .loading{
+      color:var(--muted);
+      font-size:12px;
+      padding:20px 0;
+    }
+
+    .error{
+      background:rgba(251,113,133,.08);
+      border:1px solid rgba(251,113,133,.25);
+      color:#fecdd3;
+      border-radius:8px;
+      padding:10px;
+      font-size:11px;
+    }
+
+    /* MOBILE */
+
+    @media(max-width:760px){
+      .page{
+        padding:13px;
       }
 
-      .product-images {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-    }
-
-    @media (max-width: 600px) {
-      .marketplace-page {
-        padding: 18px 0 50px;
+      .topbar{
+        margin-bottom:15px;
       }
 
-      .application-grid,
-      .product-info-grid {
-        grid-template-columns: 1fr;
+      .heading h1{
+        font-size:20px;
       }
 
-      .product-images {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+      .stats{
+        grid-template-columns:repeat(2,1fr);
       }
 
-      .card-top {
-        flex-direction: column;
+      .stats .stat:last-child{
+        grid-column:span 2;
       }
 
-      .stats {
-        grid-template-columns: 1fr 1fr;
+      .applications{
+        grid-template-columns:1fr;
+      }
+
+      .search{
+        width:100%;
+      }
+
+      .toolbar{
+        align-items:stretch;
+      }
+
+      .tabs{
+        width:100%;
+        overflow-x:auto;
+        flex-wrap:nowrap;
+        padding-bottom:2px;
+      }
+
+      .tab{
+        flex:none;
       }
     }
   </style>
@@ -374,1421 +433,390 @@
 
 <body>
 
-<header>
-  <div class="container nav">
-    <a class="logo" href="admin-dashboard.html">
-      <span class="logo-mark">E</span>
-      Earn<span>Gig</span>
-    </a>
+<div class="page">
 
-    <a class="btn outline" href="admin-dashboard.html">
-      Admin Dashboard
-    </a>
-  </div>
-</header>
-
-<main class="dashboard-page marketplace-page">
-  <div class="container">
-
-    <div class="page-heading">
-      <span class="eyebrow">ADMIN CONTROL CENTER</span>
-
-      <h1>Marketplace</h1>
-
-      <p>
-        Review vendors, stores and marketplace products
-        before they become available to buyers.
-      </p>
+  <div class="topbar">
+    <div class="brand">
+      <div class="brand-mark">E</div>
+      <div>
+        <div class="brand-title">EarnGig Admin</div>
+        <div class="brand-sub">Marketplace control</div>
+      </div>
     </div>
+
+    <button class="back-btn" onclick="location.href='admin-dashboard.html'">
+      ← Dashboard
+    </button>
+  </div>
+
+  <div class="heading">
+    <h1>Marketplace</h1>
+    <p>Review vendor applications and marketplace products.</p>
+  </div>
+
+  <div class="stats">
+    <div class="stat pending">
+      <div class="stat-label">Pending</div>
+      <div class="stat-value" id="pendingCount">0</div>
+    </div>
+
+    <div class="stat approved">
+      <div class="stat-label">Approved</div>
+      <div class="stat-value" id="approvedCount">0</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-label">More info</div>
+      <div class="stat-value" id="moreInfoCount">0</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-label">Rejected</div>
+      <div class="stat-value" id="rejectedCount">0</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-label">Total</div>
+      <div class="stat-value" id="totalCount">0</div>
+    </div>
+  </div>
+
+  <div class="toolbar">
 
     <div class="tabs">
-      <button class="tab active" data-tab="applications">
-        Vendor Applications
-      </button>
-
-      <button class="tab" data-tab="products">
-        Products
-      </button>
+      <button class="tab active" data-status="pending">Pending</button>
+      <button class="tab" data-status="approved">Approved</button>
+      <button class="tab" data-status="more_information_required">More Info</button>
+      <button class="tab" data-status="rejected">Rejected</button>
+      <button class="tab" data-status="withdrawn">Withdrawn</button>
+      <button class="tab" data-status="all">All</button>
     </div>
 
-    <!-- APPLICATION SECTION -->
-    <section id="applications-section">
-
-      <div class="stats">
-
-        <div class="stat">
-          <div class="stat-label">Pending</div>
-          <div id="pending-count" class="stat-value">0</div>
-        </div>
-
-        <div class="stat">
-          <div class="stat-label">Approved</div>
-          <div id="approved-count" class="stat-value">0</div>
-        </div>
-
-        <div class="stat">
-          <div class="stat-label">More Info</div>
-          <div id="more-info-count" class="stat-value">0</div>
-        </div>
-
-        <div class="stat">
-          <div class="stat-label">Rejected</div>
-          <div id="rejected-count" class="stat-value">0</div>
-        </div>
-
-        <div class="stat">
-          <div class="stat-label">Withdrawn</div>
-          <div id="withdrawn-count" class="stat-value">0</div>
-        </div>
-
-      </div>
-
-      <div class="tabs">
-
-        <button class="tab application-filter active" data-status="pending">
-          Pending
-        </button>
-
-        <button class="tab application-filter" data-status="approved">
-          Approved
-        </button>
-
-        <button class="tab application-filter" data-status="more_information_required">
-          More Information
-        </button>
-
-        <button class="tab application-filter" data-status="rejected">
-          Rejected
-        </button>
-
-        <button class="tab application-filter" data-status="withdrawn">
-          Withdrawn
-        </button>
-
-        <button class="tab application-filter" data-status="all">
-          All
-        </button>
-
-      </div>
-
-      <div id="application-loading" class="loading">
-        Loading vendor applications...
-      </div>
-
-      <div id="application-list" class="application-list hidden"></div>
-
-    </section>
-
-    <!-- PRODUCT SECTION -->
-    <section id="products-section" class="hidden">
-
-      <div class="stats">
-
-        <div class="stat">
-          <div class="stat-label">Pending Review</div>
-          <div id="product-pending-count" class="stat-value">0</div>
-        </div>
-
-        <div class="stat">
-          <div class="stat-label">Approved</div>
-          <div id="product-approved-count" class="stat-value">0</div>
-        </div>
-
-        <div class="stat">
-          <div class="stat-label">Changes Required</div>
-          <div id="product-changes-count" class="stat-value">0</div>
-        </div>
-
-        <div class="stat">
-          <div class="stat-label">Rejected</div>
-          <div id="product-rejected-count" class="stat-value">0</div>
-        </div>
-
-        <div class="stat">
-          <div class="stat-label">Total</div>
-          <div id="product-total-count" class="stat-value">0</div>
-        </div>
-
-      </div>
-
-      <div class="tabs">
-
-        <button class="tab product-filter active" data-status="pending">
-          Pending
-        </button>
-
-        <button class="tab product-filter" data-status="approved">
-          Approved
-        </button>
-
-        <button class="tab product-filter" data-status="changes_required">
-          Changes Required
-        </button>
-
-        <button class="tab product-filter" data-status="rejected">
-          Rejected
-        </button>
-
-        <button class="tab product-filter" data-status="all">
-          All
-        </button>
-
-      </div>
-
-      <div class="search-box">
-        <input
-          type="search"
-          id="product-search"
-          placeholder="Search product, store or vendor..."
-        >
-      </div>
-
-      <div id="product-loading" class="loading">
-        Loading marketplace products...
-      </div>
-
-      <div id="product-list" class="product-list hidden"></div>
-
-    </section>
+    <input
+      id="searchInput"
+      class="search"
+      type="search"
+      placeholder="Search vendor or store..."
+    >
 
   </div>
-</main>
 
-<footer>
-  <div class="container copy">
-    © 2026 EarnGig. All rights reserved.
+  <div id="message"></div>
+  <div id="applications" class="applications">
+    <div class="loading">Loading applications...</div>
   </div>
-</footer>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="supabase.js"></script>
+</div>
 
 <script>
-let currentAdmin = null;
-let applications = [];
-let products = [];
-let applicationStatus = "pending";
-let productStatus = "pending";
+  let allApplications = [];
+  let currentStatus = "pending";
 
-/* ==========================================================
-   HELPERS
-========================================================== */
+  function escapeHtml(value){
+    return String(value ?? "")
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
 
-function escapeHtml(value) {
-  return String(value ?? "")
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-}
+  function formatDate(value){
+    if(!value) return "—";
 
-function formatMoney(value) {
-  return "₦" +
-    Number(value || 0).toLocaleString("en-NG", {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2
+    const date = new Date(value);
+
+    if(Number.isNaN(date.getTime())){
+      return "—";
+    }
+
+    return date.toLocaleDateString("en-NG",{
+      day:"numeric",
+      month:"short",
+      year:"numeric"
     });
-}
-
-function formatDate(value) {
-  if (!value) return "—";
-
-  const date = new Date(value);
-
-  if (Number.isNaN(date.getTime())) {
-    return "—";
   }
 
-  return date.toLocaleString("en-NG", {
-    dateStyle: "medium",
-    timeStyle: "short"
-  });
-}
+  function statusLabel(status){
+    const labels = {
+      pending:"Pending",
+      approved:"Approved",
+      more_information_required:"More Info",
+      rejected:"Rejected",
+      withdrawn:"Withdrawn"
+    };
 
-/* ==========================================================
-   ADMIN ACCESS
-========================================================== */
-
-async function checkAdminAccess() {
-
-  const {
-    data: { user },
-    error
-  } = await supabaseClient.auth.getUser();
-
-  if (error || !user) {
-    window.location.href = "login.html";
-    return false;
+    return labels[status] || status || "Unknown";
   }
 
-  console.log("Marketplace admin auth user:", user.id);
+  function updateStats(){
+    const count = status =>
+      allApplications.filter(a => a.status === status).length;
 
-  const {
-    data: profile,
-    error: profileError
-  } = await supabaseClient
-    .from("profiles")
-    .select(`
-      id,
-      full_name,
-      account_status,
-      is_admin
-    `)
-    .eq("id", user.id)
-    .maybeSingle();
+    document.getElementById("pendingCount").textContent =
+      count("pending");
 
-  if (profileError) {
+    document.getElementById("approvedCount").textContent =
+      count("approved");
 
-    console.error(
-      "Marketplace admin profile error:",
-      profileError
-    );
+    document.getElementById("moreInfoCount").textContent =
+      count("more_information_required");
 
-    alert(
-      "Unable to verify your administrator profile.\n\n" +
-      profileError.message
-    );
+    document.getElementById("rejectedCount").textContent =
+      count("rejected");
 
-    return false;
+    document.getElementById("totalCount").textContent =
+      allApplications.length;
   }
 
-  if (!profile) {
+  function renderApplications(){
 
-    alert(
-      "No EarnGig profile was found for the currently logged-in account."
-    );
-
-    return false;
-  }
-
-  console.log("Marketplace admin profile:", profile);
-
-  if (
-    profile.is_admin !== true ||
-    String(profile.account_status || "").toLowerCase() !== "active"
-  ) {
-
-    alert(
-      "You do not have permission to access Marketplace Administration."
-    );
-
-    window.location.href = "admin-dashboard.html";
-
-    return false;
-  }
-
-  currentAdmin = user;
-
-  return true;
-}
-
-/* ==========================================================
-   APPLICATION COUNTS
-========================================================== */
-
-async function loadApplicationCounts() {
-
-  const statuses = [
-    "pending",
-    "approved",
-    "more_information_required",
-    "rejected",
-    "withdrawn"
-  ];
-
-  const elementMap = {
-    pending: "pending-count",
-    approved: "approved-count",
-    more_information_required: "more-info-count",
-    rejected: "rejected-count",
-    withdrawn: "withdrawn-count"
-  };
-
-  for (const status of statuses) {
-
-    const {
-      count,
-      error
-    } = await supabaseClient
-      .from("marketplace_vendor_applications")
-      .select("id", {
-        count: "exact",
-        head: true
-      })
-      .eq("status", status);
-
-    if (error) {
-      console.error("Application count error:", error);
-      continue;
-    }
-
-    document.getElementById(
-      elementMap[status]
-    ).textContent = count || 0;
-  }
-}
-
-/* ==========================================================
-   LOAD APPLICATIONS
-========================================================== */
-
-async function loadApplications() {
-
-  const loading =
-    document.getElementById("application-loading");
-
-  const list =
-    document.getElementById("application-list");
-
-  loading.classList.remove("hidden");
-  list.classList.add("hidden");
-
-  let query = supabaseClient
-    .from("marketplace_vendor_applications")
-    .select("*")
-    .order("created_at", {
-      ascending: false
-    });
-
-  if (applicationStatus !== "all") {
-    query = query.eq(
-      "status",
-      applicationStatus
-    );
-  }
-
-  const {
-    data,
-    error
-  } = await query;
-
-  loading.classList.add("hidden");
-
-  if (error) {
-
-    console.error(
-      "Application load error:",
-      error
-    );
-
-    list.innerHTML = `
-      <div class="empty">
-        Unable to load vendor applications.
-        <br><br>
-        ${escapeHtml(error.message)}
-      </div>
-    `;
-
-    list.classList.remove("hidden");
-
-    return;
-  }
-
-  applications = data || [];
-
-  renderApplications();
-}
-
-/* ==========================================================
-   RENDER APPLICATIONS
-========================================================== */
-
-function renderApplications() {
-
-  const list =
-    document.getElementById("application-list");
-
-  if (!applications.length) {
-
-    list.innerHTML = `
-      <div class="empty">
-        No vendor applications found in this section.
-      </div>
-    `;
-
-    list.classList.remove("hidden");
-
-    return;
-  }
-
-  list.innerHTML = applications.map(
-    function(application) {
-
-      return `
-        <article
-          class="application-card"
-          data-application-id="${escapeHtml(application.id)}"
-        >
-
-          <div class="card-top">
-
-            <div>
-
-              <div class="card-title">
-                ${escapeHtml(application.store_name)}
-              </div>
-
-              <div class="card-subtitle">
-                ${escapeHtml(application.full_name)}
-                ·
-                ${escapeHtml(application.email)}
-              </div>
-
-            </div>
-
-            <span class="status ${escapeHtml(application.status)}">
-              ${escapeHtml(
-                application.status
-                  .replaceAll("_", " ")
-                  .toUpperCase()
-              )}
-            </span>
-
-          </div>
-
-          <div class="application-grid">
-
-            <div class="info-box">
-              <div class="info-label">Phone</div>
-              <div class="info-value">
-                ${escapeHtml(application.phone_number)}
-              </div>
-            </div>
-
-            <div class="info-box">
-              <div class="info-label">Business Phone</div>
-              <div class="info-value">
-                ${escapeHtml(application.business_phone)}
-              </div>
-            </div>
-
-            <div class="info-box">
-              <div class="info-label">Business Location</div>
-              <div class="info-value">
-                ${escapeHtml(application.business_location)}
-              </div>
-            </div>
-
-            <div class="info-box">
-              <div class="info-label">Business Address</div>
-              <div class="info-value">
-                ${escapeHtml(application.business_address)}
-              </div>
-            </div>
-
-            <div class="info-box">
-              <div class="info-label">State / LGA</div>
-              <div class="info-value">
-                ${escapeHtml(application.state)}
-                /
-                ${escapeHtml(application.lga)}
-              </div>
-            </div>
-
-            <div class="info-box">
-              <div class="info-label">Submitted</div>
-              <div class="info-value">
-                ${escapeHtml(
-                  formatDate(application.created_at)
-                )}
-              </div>
-            </div>
-
-          </div>
-
-          ${
-            application.personal_photo_url
-              ? `
-                <img
-                  class="application-photo"
-                  src="${escapeHtml(application.personal_photo_url)}"
-                  alt="Applicant"
-                >
-              `
-              : ""
-          }
-
-          ${
-            application.store_logo_url
-              ? `
-                <img
-                  class="store-logo"
-                  src="${escapeHtml(application.store_logo_url)}"
-                  alt="Store logo"
-                >
-              `
-              : ""
-          }
-
-          <textarea
-            class="admin-note"
-            data-note-for="${escapeHtml(application.id)}"
-            placeholder="Admin note..."
-          >${escapeHtml(application.admin_note || "")}</textarea>
-
-          <div class="actions">
-
-            ${
-              application.status !== "approved"
-                ? `
-                  <button
-                    class="approve"
-                    onclick="updateApplicationStatus(
-                      '${application.id}',
-                      'approved'
-                    )"
-                  >
-                    Approve
-                  </button>
-                `
-                : ""
-            }
-
-            ${
-              application.status !== "rejected"
-                ? `
-                  <button
-                    class="reject"
-                    onclick="updateApplicationStatus(
-                      '${application.id}',
-                      'rejected'
-                    )"
-                  >
-                    Reject
-                  </button>
-                `
-                : ""
-            }
-
-            ${
-              application.status !== "more_information_required"
-                ? `
-                  <button
-                    class="request"
-                    onclick="updateApplicationStatus(
-                      '${application.id}',
-                      'more_information_required'
-                    )"
-                  >
-                    Request More Information
-                  </button>
-                `
-                : ""
-            }
-
-          </div>
-
-        </article>
-      `;
-    }
-  ).join("");
-
-  list.classList.remove("hidden");
-}
-
-/* ==========================================================
-   UPDATE APPLICATION STATUS
-========================================================== */
-
-async function updateApplicationStatus(
-  applicationId,
-  newStatus
-) {
-
-  const noteElement =
-    document.querySelector(
-      `[data-note-for="${applicationId}"]`
-    );
-
-  const adminNote =
-    noteElement
-      ? noteElement.value.trim()
-      : "";
-
-  const {
-    error
-  } = await supabaseClient
-    .from("marketplace_vendor_applications")
-    .update({
-      status: newStatus,
-      admin_note: adminNote,
-      reviewed_by: currentAdmin.id,
-      reviewed_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
-    })
-    .eq("id", applicationId);
-
-  if (error) {
-
-    alert(
-      "Unable to update application:\n\n" +
-      error.message
-    );
-
-    return;
-  }
-
-  await loadApplicationCounts();
-  await loadApplications();
-}
-
-/* ==========================================================
-   PRODUCT COUNTS
-========================================================== */
-
-async function loadProductCounts() {
-
-  const statuses = [
-    "pending",
-    "approved",
-    "changes_required",
-    "rejected"
-  ];
-
-  const map = {
-    pending: "product-pending-count",
-    approved: "product-approved-count",
-    changes_required: "product-changes-count",
-    rejected: "product-rejected-count"
-  };
-
-  for (const status of statuses) {
-
-    const {
-      count,
-      error
-    } = await supabaseClient
-      .from("marketplace_products")
-      .select("id", {
-        count: "exact",
-        head: true
-      })
-      .eq("status", status);
-
-    if (error) {
-      console.error("Product count error:", error);
-      continue;
-    }
-
-    document.getElementById(
-      map[status]
-    ).textContent = count || 0;
-  }
-
-  const {
-    count: total
-  } = await supabaseClient
-    .from("marketplace_products")
-    .select("id", {
-      count: "exact",
-      head: true
-    });
-
-  document.getElementById(
-    "product-total-count"
-  ).textContent = total || 0;
-}
-
-/* ==========================================================
-   LOAD PRODUCTS
-========================================================== */
-
-async function loadProducts() {
-
-  const loading =
-    document.getElementById("product-loading");
-
-  const list =
-    document.getElementById("product-list");
-
-  loading.classList.remove("hidden");
-  list.classList.add("hidden");
-
-  let query = supabaseClient
-    .from("marketplace_products")
-    .select(`
-      id,
-      store_id,
-      vendor_id,
-      title,
-      category,
-      description,
-      price,
-      stock_quantity,
-      delivery_type,
-      status,
-      created_at,
-      updated_at
-    `)
-    .order("created_at", {
-      ascending: false
-    });
-
-  if (productStatus !== "all") {
-    query = query.eq(
-      "status",
-      productStatus
-    );
-  }
-
-  const {
-    data: productData,
-    error: productError
-  } = await query;
-
-  if (productError) {
-
-    console.error(
-      "Product loading error:",
-      productError
-    );
-
-    loading.classList.add("hidden");
-
-    list.innerHTML = `
-      <div class="empty">
-        Unable to load marketplace products.
-        <br><br>
-        ${escapeHtml(productError.message)}
-      </div>
-    `;
-
-    list.classList.remove("hidden");
-
-    return;
-  }
-
-  const rawProducts =
-    productData || [];
-
-  const storeIds = [
-    ...new Set(
-      rawProducts
-        .map(product => product.store_id)
-        .filter(Boolean)
-    )
-  ];
-
-  let stores = [];
-
-  if (storeIds.length) {
-
-    const {
-      data,
-      error
-    } = await supabaseClient
-      .from("marketplace_stores")
-      .select(`
-        id,
-        store_name,
-        store_slug,
-        store_logo_url,
-        status,
-        business_state,
-        business_lga,
-        business_city,
-        business_area
-      `)
-      .in("id", storeIds);
-
-    if (!error) {
-      stores = data || [];
-    } else {
-      console.error(
-        "Store loading error:",
-        error
-      );
-    }
-  }
-
-  const productIds =
-    rawProducts.map(
-      product => product.id
-    );
-
-  let images = [];
-
-  if (productIds.length) {
-
-    const {
-      data,
-      error
-    } = await supabaseClient
-      .from("marketplace_product_images")
-      .select(`
-        id,
-        product_id,
-        image_url,
-        is_primary,
-        sort_order,
-        watermark_applied,
-        watermark_text
-      `)
-      .in("product_id", productIds)
-      .order("sort_order", {
-        ascending: true
-      });
-
-    if (!error) {
-      images = data || [];
-    } else {
-      console.error(
-        "Product image loading error:",
-        error
-      );
-    }
-  }
-
-  products = rawProducts.map(
-    function(product) {
-
-      return {
-        ...product,
-
-        store:
-          stores.find(
-            store =>
-              store.id === product.store_id
-          ) || null,
-
-        images:
-          images.filter(
-            image =>
-              image.product_id === product.id
-          )
-      };
-    }
-  );
-
-  loading.classList.add("hidden");
-
-  renderProducts();
-}
-
-/* ==========================================================
-   RENDER PRODUCTS
-========================================================== */
-
-function renderProducts() {
-
-  const list =
-    document.getElementById("product-list");
-
-  const search =
-    document.getElementById("product-search")
+    const container = document.getElementById("applications");
+    const search = document.getElementById("searchInput")
       .value
       .trim()
       .toLowerCase();
 
-  let filtered = products;
+    let rows = [...allApplications];
 
-  if (search) {
+    if(currentStatus !== "all"){
+      rows = rows.filter(row => row.status === currentStatus);
+    }
 
-    filtered = products.filter(
-      function(product) {
+    if(search){
+      rows = rows.filter(row => {
 
-        const storeName =
-          product.store?.store_name || "";
+        const text = [
+          row.store_name,
+          row.full_name,
+          row.email,
+          row.phone_number,
+          row.business_location,
+          row.state,
+          row.lga
+        ]
+        .join(" ")
+        .toLowerCase();
 
-        return (
-          String(product.title || "")
-            .toLowerCase()
-            .includes(search)
-          ||
-          String(product.category || "")
-            .toLowerCase()
-            .includes(search)
-          ||
-          String(storeName)
-            .toLowerCase()
-            .includes(search)
-        );
-      }
-    );
-  }
+        return text.includes(search);
+      });
+    }
 
-  if (!filtered.length) {
+    if(!rows.length){
+      container.innerHTML = `
+        <div class="empty">
+          No vendor applications found.
+        </div>
+      `;
+      return;
+    }
 
-    list.innerHTML = `
-      <div class="empty">
-        No marketplace products found.
-      </div>
-    `;
+    container.innerHTML = rows.map(row => {
 
-    list.classList.remove("hidden");
-
-    return;
-  }
-
-  list.innerHTML = filtered.map(
-    function(product) {
-
-      const store =
-        product.store || {};
-
-      const images =
-        product.images || [];
-
-      const locationParts = [
-        store.business_city,
-        store.business_lga,
-        store.business_state
-      ].filter(Boolean);
+      const status = row.status || "pending";
 
       return `
-        <article class="product-card">
+        <div class="application-card">
 
           <div class="card-top">
 
-            <div>
-
-              <div class="card-title">
-                ${escapeHtml(product.title)}
+            <div class="vendor-info">
+              <div class="store-name">
+                ${escapeHtml(row.store_name || "Unnamed Store")}
               </div>
 
-              <div class="card-subtitle">
-                ${escapeHtml(
-                  store.store_name ||
-                  "Unknown Store"
-                )}
-                ·
-                ${escapeHtml(product.category)}
+              <div class="vendor-name">
+                ${escapeHtml(row.full_name || "Unknown vendor")}
+                ${row.email ? " · " + escapeHtml(row.email) : ""}
               </div>
-
             </div>
 
-            <span
-              class="status ${escapeHtml(product.status)}"
-            >
-              ${escapeHtml(
-                product.status
-                  .replaceAll("_", " ")
-                  .toUpperCase()
-              )}
+            <span class="status ${escapeHtml(status)}">
+              ${escapeHtml(statusLabel(status))}
             </span>
 
           </div>
 
-          <div class="product-images">
+          <div class="card-details">
 
-            ${
-              images.length
-                ? images.map(
-                    function(image) {
-
-                      return `
-                        <div class="product-image">
-
-                          <img
-                            src="${escapeHtml(image.image_url)}"
-                            alt="${escapeHtml(product.title)}"
-                          >
-
-                          ${
-                            image.is_primary
-                              ? `
-                                <span class="primary-badge">
-                                  PRIMARY
-                                </span>
-                              `
-                              : ""
-                          }
-
-                          ${
-                            image.watermark_applied
-                              ? `
-                                <span class="branding-badge">
-                                  BRANDED
-                                </span>
-                              `
-                              : `
-                                <span
-                                  class="branding-badge"
-                                  style="background:#dc2626;"
-                                >
-                                  NOT BRANDED
-                                </span>
-                              `
-                          }
-
-                        </div>
-                      `;
-                    }
-                  ).join("")
-                : `
-                  <div class="empty">
-                    No product images.
-                  </div>
-                `
-            }
-
-          </div>
-
-          <div class="product-info-grid">
-
-            <div class="info-box">
-              <div class="info-label">Price</div>
-              <div class="info-value">
-                ${escapeHtml(
-                  formatMoney(product.price)
-                )}
+            <div class="detail">
+              <div class="detail-label">Phone</div>
+              <div class="detail-value">
+                ${escapeHtml(row.phone_number || "—")}
               </div>
             </div>
 
-            <div class="info-box">
-              <div class="info-label">Stock</div>
-              <div class="info-value">
-                ${escapeHtml(product.stock_quantity)}
+            <div class="detail">
+              <div class="detail-label">State</div>
+              <div class="detail-value">
+                ${escapeHtml(row.state || "—")}
               </div>
             </div>
 
-            <div class="info-box">
-              <div class="info-label">Store</div>
-              <div class="info-value">
-                ${escapeHtml(
-                  store.store_name || "—"
-                )}
+            <div class="detail">
+              <div class="detail-label">LGA</div>
+              <div class="detail-value">
+                ${escapeHtml(row.lga || "—")}
               </div>
             </div>
 
-            <div class="info-box">
-              <div class="info-label">Location</div>
-              <div class="info-value">
-                ${escapeHtml(
-                  locationParts.join(", ") ||
-                  "Not provided"
-                )}
-              </div>
-            </div>
-
-            <div class="info-box">
-              <div class="info-label">Submitted</div>
-              <div class="info-value">
-                ${escapeHtml(
-                  formatDate(product.created_at)
-                )}
-              </div>
-            </div>
-
-            <div class="info-box">
-              <div class="info-label">Branding</div>
-              <div class="info-value">
-                ${
-                  images.length &&
-                  images.every(
-                    image =>
-                      image.watermark_applied === true
-                  )
-                    ? "All images branded"
-                    : "Branding review required"
-                }
+            <div class="detail">
+              <div class="detail-label">Business Location</div>
+              <div class="detail-value">
+                ${escapeHtml(row.business_location || "—")}
               </div>
             </div>
 
           </div>
 
-          <textarea
-            class="admin-note"
-            data-product-note="${escapeHtml(product.id)}"
-            placeholder="Admin note for seller..."
-          ></textarea>
+          <div class="card-bottom">
 
-          <div class="actions">
+            <div class="date">
+              Submitted ${escapeHtml(formatDate(row.created_at))}
+            </div>
 
-            ${
-              product.status !== "approved"
-                ? `
-                  <button
-                    class="approve"
-                    onclick="updateProductStatus(
-                      '${product.id}',
-                      'approved'
-                    )"
-                  >
-                    Approve Product
-                  </button>
-                `
-                : ""
-            }
-
-            ${
-              product.status !== "rejected"
-                ? `
-                  <button
-                    class="reject"
-                    onclick="updateProductStatus(
-                      '${product.id}',
-                      'rejected'
-                    )"
-                  >
-                    Reject
-                  </button>
-                `
-                : ""
-            }
-
-            ${
-              product.status !== "changes_required"
-                ? `
-                  <button
-                    class="request"
-                    onclick="updateProductStatus(
-                      '${product.id}',
-                      'changes_required'
-                    )"
-                  >
-                    Request Changes
-                  </button>
-                `
-                : ""
-            }
+            <button
+              class="view-btn"
+              onclick="openApplication('${row.id}')"
+            >
+              View application →
+            </button>
 
           </div>
 
-        </article>
+        </div>
       `;
-    }
-  ).join("");
 
-  list.classList.remove("hidden");
-}
+    }).join("");
+  }
 
-/* ==========================================================
-   UPDATE PRODUCT STATUS
-========================================================== */
+  function openApplication(id){
+    window.location.href =
+      "marketplace-vendor-review.html?id=" +
+      encodeURIComponent(id);
+  }
 
-async function updateProductStatus(
-  productId,
-  newStatus
-) {
+  async function loadApplications(){
 
-  const noteElement =
-    document.querySelector(
-      `[data-product-note="${productId}"]`
-    );
+    const container = document.getElementById("applications");
+    const message = document.getElementById("message");
 
-  const note =
-    noteElement
-      ? noteElement.value.trim()
-      : "";
+    message.innerHTML = "";
 
-  if (newStatus === "approved") {
+    const {
+      data: { user },
+      error: authError
+    } = await supabaseClient.auth.getUser();
 
-    const product =
-      products.find(
-        item =>
-          item.id === productId
-      );
-
-    if (!product) {
-
-      alert(
-        "Product could not be found."
-      );
-
+    if(authError || !user){
+      window.location.href = "login.html";
       return;
     }
 
-    const images =
-      product.images || [];
+    const { data: profile, error: profileError } =
+      await supabaseClient
+        .from("profiles")
+        .select("id,full_name,account_status,is_admin")
+        .eq("id",user.id)
+        .single();
 
-    if (
-      !images.length ||
-      !images.every(
-        image =>
-          image.watermark_applied === true
-      )
-    ) {
-
-      alert(
-        "This product cannot be approved because one or more product images are not branded."
-      );
-
+    if(profileError || !profile){
+      message.innerHTML = `
+        <div class="error">
+          Unable to verify administrator profile.
+        </div>
+      `;
+      container.innerHTML = "";
       return;
     }
+
+    if(
+      profile.is_admin !== true ||
+      String(profile.account_status || "").toLowerCase() !== "active"
+    ){
+      message.innerHTML = `
+        <div class="error">
+          Administrator access required.
+        </div>
+      `;
+      container.innerHTML = "";
+      return;
+    }
+
+    const { data, error } = await supabaseClient
+      .from("marketplace_vendor_applications")
+      .select(`
+        id,
+        user_id,
+        full_name,
+        phone_number,
+        email,
+        personal_photo_url,
+        residential_address,
+        state,
+        lga,
+        store_name,
+        business_description,
+        business_location,
+        business_address,
+        business_phone,
+        store_logo_url,
+        tiktok_url,
+        instagram_url,
+        facebook_url,
+        whatsapp_url,
+        website_url,
+        additional_information,
+        status,
+        admin_note,
+        reviewed_by,
+        reviewed_at,
+        created_at,
+        updated_at
+      `)
+      .order("created_at",{ascending:false});
+
+    if(error){
+      console.error(error);
+
+      message.innerHTML = `
+        <div class="error">
+          Could not load marketplace applications.
+          ${escapeHtml(error.message || "")}
+        </div>
+      `;
+
+      container.innerHTML = "";
+      return;
+    }
+
+    allApplications = data || [];
+
+    updateStats();
+    renderApplications();
   }
 
-  const {
-    error
-  } = await supabaseClient
-    .from("marketplace_products")
-    .update({
-      status: newStatus,
-      updated_at: new Date().toISOString()
-    })
-    .eq("id", productId);
+  document.querySelectorAll(".tab").forEach(tab => {
 
-  if (error) {
+    tab.addEventListener("click",() => {
 
-    alert(
-      "Unable to update product:\n\n" +
-      error.message
-    );
-
-    return;
-  }
-
-  if (note) {
-    console.log(
-      "Admin product note:",
-      note
-    );
-  }
-
-  await loadProductCounts();
-  await loadProducts();
-}
-
-/* ==========================================================
-   TAB SWITCHING
-========================================================== */
-
-document
-  .querySelectorAll(".tab[data-tab]")
-  .forEach(
-    function(button) {
-
-      button.addEventListener(
-        "click",
-        async function() {
-
-          document
-            .querySelectorAll(".tab[data-tab]")
-            .forEach(
-              item =>
-                item.classList.remove("active")
-            );
-
-          button.classList.add("active");
-
-          const tab =
-            button.dataset.tab;
-
-          if (tab === "applications") {
-
-            document
-              .getElementById("applications-section")
-              .classList.remove("hidden");
-
-            document
-              .getElementById("products-section")
-              .classList.add("hidden");
-
-            await loadApplicationCounts();
-            await loadApplications();
-          }
-
-          if (tab === "products") {
-
-            document
-              .getElementById("applications-section")
-              .classList.add("hidden");
-
-            document
-              .getElementById("products-section")
-              .classList.remove("hidden");
-
-            await loadProductCounts();
-            await loadProducts();
-          }
-        }
+      document.querySelectorAll(".tab").forEach(t =>
+        t.classList.remove("active")
       );
-    }
-  );
 
-/* ==========================================================
-   APPLICATION FILTERS
-========================================================== */
+      tab.classList.add("active");
 
-document
-  .querySelectorAll(".application-filter")
-  .forEach(
-    function(button) {
+      currentStatus = tab.dataset.status;
 
-      button.addEventListener(
-        "click",
-        async function() {
+      renderApplications();
+    });
 
-          document
-            .querySelectorAll(".application-filter")
-            .forEach(
-              item =>
-                item.classList.remove("active")
-            );
+  });
 
-          button.classList.add("active");
+  document.getElementById("searchInput")
+    .addEventListener("input",renderApplications);
 
-          applicationStatus =
-            button.dataset.status;
-
-          await loadApplications();
-        }
-      );
-    }
-  );
-
-/* ==========================================================
-   PRODUCT FILTERS
-========================================================== */
-
-document
-  .querySelectorAll(".product-filter")
-  .forEach(
-    function(button) {
-
-      button.addEventListener(
-        "click",
-        async function() {
-
-          document
-            .querySelectorAll(".product-filter")
-            .forEach(
-              item =>
-                item.classList.remove("active")
-            );
-
-          button.classList.add("active");
-
-          productStatus =
-            button.dataset.status;
-
-          await loadProducts();
-        }
-      );
-    }
-  );
-
-/* ==========================================================
-   PRODUCT SEARCH
-========================================================== */
-
-document
-  .getElementById("product-search")
-  .addEventListener(
-    "input",
-    function() {
-      renderProducts();
-    }
-  );
-
-/* ==========================================================
-   START
-========================================================== */
-
-(async function() {
-
-  const allowed =
-    await checkAdminAccess();
-
-  if (!allowed) {
-    return;
-  }
-
-  await loadApplicationCounts();
-  await loadApplications();
-
-})();
+  loadApplications();
 </script>
 
 </body>

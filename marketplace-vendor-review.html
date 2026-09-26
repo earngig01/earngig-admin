@@ -49,8 +49,6 @@
       padding:15px;
     }
 
-    /* HEADER */
-
     .topbar{
       display:flex;
       align-items:center;
@@ -78,8 +76,6 @@
       font-size:10px;
     }
 
-    /* TITLE */
-
     .title-block{
       margin-bottom:14px;
     }
@@ -95,8 +91,6 @@
       color:var(--muted);
       font-size:12px;
     }
-
-    /* MAIN SUMMARY */
 
     .summary{
       display:flex;
@@ -159,8 +153,6 @@
       background:rgba(148,163,184,.1);
     }
 
-    /* SECTIONS */
-
     .section{
       background:var(--panel);
       border:1px solid var(--border);
@@ -220,7 +212,7 @@
       color:#607288;
     }
 
-    /* IMAGES */
+    /* IMAGE AREA */
 
     .media-grid{
       display:grid;
@@ -242,29 +234,37 @@
       margin-bottom:6px;
     }
 
-    .media-card img{
-      display:block;
+    .image-wrap{
       width:100%;
       height:125px;
-      object-fit:cover;
       border-radius:6px;
+      overflow:hidden;
       background:#07101d;
-    }
-
-    .media-fallback{
-      height:125px;
-      border-radius:6px;
-      background:#07101d;
-      border:1px dashed #263950;
+      border:1px solid #263950;
       display:grid;
       place-items:center;
+    }
+
+    .image-wrap img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+
+    .image-loading{
       color:#607288;
       font-size:10px;
       text-align:center;
       padding:8px;
     }
 
-    /* LINKS */
+    .image-error{
+      color:#607288;
+      font-size:10px;
+      text-align:center;
+      padding:8px;
+    }
 
     .links{
       display:flex;
@@ -282,8 +282,6 @@
       font-size:10px;
       word-break:break-all;
     }
-
-    /* REVIEW */
 
     .review-box{
       background:var(--panel);
@@ -407,8 +405,7 @@
         grid-template-columns:1fr 1fr;
       }
 
-      .media-card img,
-      .media-fallback{
+      .image-wrap{
         height:110px;
       }
 
@@ -449,6 +446,31 @@
   let application = null;
   let currentAdmin = null;
 
+  /*
+    IMPORTANT
+
+    The application stores paths such as:
+
+      vendor-photos/USER_ID/FILE
+      logos/USER_ID/FILE
+
+    rather than complete browser URLs.
+
+    The code below first checks whether the database value is
+    already a complete URL.
+
+    If it is a storage path, it tries the private/public
+    marketplace evidence bucket used by the vendor system.
+  */
+
+  const STORAGE_BUCKET_CANDIDATES = [
+    "marketplace-vendor-evidence",
+    "vendor-evidence",
+    "marketplace-vendor-uploads",
+    "vendor-uploads",
+    "vendor-documents"
+  ];
+
   function escapeHtml(value){
     return String(value ?? "")
       .replaceAll("&","&amp;")
@@ -459,7 +481,12 @@
   }
 
   function valueOrDash(value){
-    if(value === null || value === undefined || String(value).trim() === ""){
+
+    if(
+      value === null ||
+      value === undefined ||
+      String(value).trim() === ""
+    ){
       return `<span class="empty">Not provided</span>`;
     }
 
@@ -467,6 +494,7 @@
   }
 
   function formatDate(value){
+
     if(!value) return "—";
 
     const d = new Date(value);
@@ -485,6 +513,7 @@
   }
 
   function statusLabel(status){
+
     const labels = {
       pending:"Pending",
       approved:"Approved",
@@ -496,35 +525,206 @@
     return labels[status] || status || "Unknown";
   }
 
-  function imageHtml(url,label){
+  /*
+    Convert a stored image value into a usable URL.
 
-    if(!url){
-      return `
-        <div class="media-card">
-          <div class="media-label">${escapeHtml(label)}</div>
-          <div class="media-fallback">
-            No image provided
-          </div>
+    If the value is already:
+      https://...
+      http://...
+      data:...
+
+    we use it directly.
+
+    Otherwise we try Supabase Storage signed URLs.
+  */
+
+  async function resolveStorageImage(value){
+
+    if(!value){
+      return null;
+    }
+
+    const raw = String(value).trim();
+
+    if(!raw){
+      return null;
+    }
+
+    if(
+      raw.startsWith("http://") ||
+      raw.startsWith("https://") ||
+      raw.startsWith("data:")
+    ){
+      return raw;
+    }
+
+    /*
+      Some systems accidentally store:
+
+        bucket-name/path/to/file
+
+      Remove the bucket prefix when it matches
+      one of our known buckets.
+    */
+
+    let path = raw;
+
+    for(const bucket of STORAGE_BUCKET_CANDIDATES){
+
+      if(path.startsWith(bucket + "/")){
+        path = path.substring(bucket.length + 1);
+        break;
+      }
+    }
+
+    /*
+      Try signed URLs.
+
+      This works for private buckets and also works
+      for public buckets when the bucket accepts the request.
+    */
+
+    for(const bucket of STORAGE_BUCKET_CANDIDATES){
+
+      try{
+
+        const { data, error } =
+          await supabaseClient
+            .storage
+            .from(bucket)
+            .createSignedUrl(path,60 * 60);
+
+        if(!error && data?.signedUrl){
+          return data.signedUrl;
+        }
+
+      }catch(error){
+
+        console.warn(
+          "Storage bucket attempt failed:",
+          bucket,
+          error
+        );
+
+      }
+
+    }
+
+    /*
+      Final fallback:
+      try public URL for the same candidates.
+    */
+
+    for(const bucket of STORAGE_BUCKET_CANDIDATES){
+
+      try{
+
+        const { data } =
+          supabaseClient
+            .storage
+            .from(bucket)
+            .getPublicUrl(path);
+
+        if(data?.publicUrl){
+          return data.publicUrl;
+        }
+
+      }catch(error){
+
+        console.warn(
+          "Public URL attempt failed:",
+          bucket,
+          error
+        );
+
+      }
+
+    }
+
+    return null;
+  }
+
+  async function loadImageInto(elementId,value){
+
+    const element = document.getElementById(elementId);
+
+    if(!element){
+      return;
+    }
+
+    if(!value){
+
+      element.innerHTML = `
+        <div class="image-error">
+          No image provided
         </div>
       `;
+
+      return;
     }
+
+    element.innerHTML = `
+      <div class="image-loading">
+        Loading image...
+      </div>
+    `;
+
+    const url = await resolveStorageImage(value);
+
+    if(!url){
+
+      element.innerHTML = `
+        <div class="image-error">
+          Image could not be resolved.
+        </div>
+      `;
+
+      return;
+    }
+
+    const img = new Image();
+
+    img.onload = () => {
+
+      element.innerHTML = "";
+
+      img.alt = "Vendor verification image";
+
+      element.appendChild(img);
+
+    };
+
+    img.onerror = () => {
+
+      element.innerHTML = `
+        <div class="image-error">
+          Image could not be loaded.
+        </div>
+      `;
+
+    };
+
+    img.src = url;
+  }
+
+  function imageContainer(id,label){
 
     return `
       <div class="media-card">
-        <div class="media-label">${escapeHtml(label)}</div>
 
-        <img
-          src="${escapeHtml(url)}"
-          alt="${escapeHtml(label)}"
-          onerror="this.style.display='none';this.nextElementSibling.style.display='grid';"
-        >
+        <div class="media-label">
+          ${escapeHtml(label)}
+        </div>
 
         <div
-          class="media-fallback"
-          style="display:none"
+          id="${escapeHtml(id)}"
+          class="image-wrap"
         >
-          Image could not be loaded.
+          <div class="image-loading">
+            Loading image...
+          </div>
         </div>
+
       </div>
     `;
   }
@@ -560,13 +760,21 @@
     document.getElementById("content").innerHTML = `
 
       <div class="title-block">
-        <h1>Vendor Application Review</h1>
-        <p>Review the submitted business information before making a decision.</p>
+
+        <h1>
+          Vendor Application Review
+        </h1>
+
+        <p>
+          Review the submitted business information before making a decision.
+        </p>
+
       </div>
 
       <div class="summary">
 
         <div class="summary-main">
+
           <div class="store-name">
             ${valueOrDash(a.store_name)}
           </div>
@@ -575,6 +783,7 @@
             ${valueOrDash(a.full_name)}
             ${a.email ? " · " + escapeHtml(a.email) : ""}
           </div>
+
         </div>
 
         <span class="status ${escapeHtml(a.status || "pending")}">
@@ -593,37 +802,51 @@
 
           <div class="field">
             <div class="label">Full name</div>
-            <div class="value">${valueOrDash(a.full_name)}</div>
+            <div class="value">
+              ${valueOrDash(a.full_name)}
+            </div>
           </div>
 
           <div class="field">
             <div class="label">Email</div>
-            <div class="value">${valueOrDash(a.email)}</div>
+            <div class="value">
+              ${valueOrDash(a.email)}
+            </div>
           </div>
 
           <div class="field">
             <div class="label">Phone</div>
-            <div class="value">${valueOrDash(a.phone_number)}</div>
+            <div class="value">
+              ${valueOrDash(a.phone_number)}
+            </div>
           </div>
 
           <div class="field">
             <div class="label">State</div>
-            <div class="value">${valueOrDash(a.state)}</div>
+            <div class="value">
+              ${valueOrDash(a.state)}
+            </div>
           </div>
 
           <div class="field">
             <div class="label">LGA</div>
-            <div class="value">${valueOrDash(a.lga)}</div>
+            <div class="value">
+              ${valueOrDash(a.lga)}
+            </div>
           </div>
 
           <div class="field">
             <div class="label">Submitted</div>
-            <div class="value">${escapeHtml(formatDate(a.created_at))}</div>
+            <div class="value">
+              ${escapeHtml(formatDate(a.created_at))}
+            </div>
           </div>
 
           <div class="field full">
             <div class="label">Residential address</div>
-            <div class="value">${valueOrDash(a.residential_address)}</div>
+            <div class="value">
+              ${valueOrDash(a.residential_address)}
+            </div>
           </div>
 
         </div>
@@ -640,17 +863,23 @@
 
           <div class="field">
             <div class="label">Store name</div>
-            <div class="value">${valueOrDash(a.store_name)}</div>
+            <div class="value">
+              ${valueOrDash(a.store_name)}
+            </div>
           </div>
 
           <div class="field">
             <div class="label">Business phone</div>
-            <div class="value">${valueOrDash(a.business_phone)}</div>
+            <div class="value">
+              ${valueOrDash(a.business_phone)}
+            </div>
           </div>
 
           <div class="field">
             <div class="label">Business location</div>
-            <div class="value">${valueOrDash(a.business_location)}</div>
+            <div class="value">
+              ${valueOrDash(a.business_location)}
+            </div>
           </div>
 
           <div class="field">
@@ -663,12 +892,16 @@
 
           <div class="field full">
             <div class="label">Business address</div>
-            <div class="value">${valueOrDash(a.business_address)}</div>
+            <div class="value">
+              ${valueOrDash(a.business_address)}
+            </div>
           </div>
 
           <div class="field full">
             <div class="label">Business description</div>
-            <div class="value">${valueOrDash(a.business_description)}</div>
+            <div class="value">
+              ${valueOrDash(a.business_description)}
+            </div>
           </div>
 
         </div>
@@ -682,18 +915,19 @@
         </div>
 
         <div class="section-subtitle">
-          Personal photo is for administrator verification. Store logo is used for the marketplace store.
+          Personal photo is private verification evidence.
+          Store logo is used for the marketplace store.
         </div>
 
         <div class="media-grid">
 
-          ${imageHtml(
-            a.personal_photo_url,
+          ${imageContainer(
+            "personalPhoto",
             "Personal photo"
           )}
 
-          ${imageHtml(
-            a.store_logo_url,
+          ${imageContainer(
+            "storeLogo",
             "Store logo"
           )}
 
@@ -721,7 +955,11 @@
             !a.facebook_url &&
             !a.whatsapp_url &&
             !a.website_url
-              ? `<span class="value empty">No links provided</span>`
+              ? `
+                <span class="value empty">
+                  No links provided
+                </span>
+              `
               : ""
           }
 
@@ -736,9 +974,11 @@
         </div>
 
         <div class="field">
+
           <div class="value">
             ${valueOrDash(a.additional_information)}
           </div>
+
         </div>
 
       </div>
@@ -789,7 +1029,10 @@
         a.reviewed_at
         ? `
           <div class="section">
-            <div class="section-title">Review history</div>
+
+            <div class="section-title">
+              Review history
+            </div>
 
             <div class="grid">
 
@@ -808,12 +1051,27 @@
               </div>
 
             </div>
+
           </div>
         `
         : ""
       }
 
     `;
+
+    /*
+      Load the images AFTER the page has been rendered.
+    */
+
+    loadImageInto(
+      "personalPhoto",
+      a.personal_photo_url
+    );
+
+    loadImageInto(
+      "storeLogo",
+      a.store_logo_url
+    );
   }
 
   async function verifyAdmin(){
@@ -824,16 +1082,20 @@
     } = await supabaseClient.auth.getUser();
 
     if(error || !user){
+
       window.location.href = "login.html";
+
       return false;
     }
 
-    const { data: profile, error: profileError } =
-      await supabaseClient
-        .from("profiles")
-        .select("id,full_name,account_status,is_admin")
-        .eq("id",user.id)
-        .single();
+    const {
+      data: profile,
+      error: profileError
+    } = await supabaseClient
+      .from("profiles")
+      .select("id,full_name,account_status,is_admin")
+      .eq("id",user.id)
+      .single();
 
     if(
       profileError ||
@@ -841,7 +1103,9 @@
       profile.is_admin !== true ||
       String(profile.account_status || "").toLowerCase() !== "active"
     ){
+
       document.getElementById("content").innerHTML = "";
+
       document.getElementById("message").innerHTML = `
         <div class="error">
           Administrator access required.
@@ -873,9 +1137,14 @@
 
     const ok = await verifyAdmin();
 
-    if(!ok) return;
+    if(!ok){
+      return;
+    }
 
-    const { data, error } = await supabaseClient
+    const {
+      data,
+      error
+    } = await supabaseClient
       .from("marketplace_vendor_applications")
       .select(`
         id,
@@ -936,13 +1205,16 @@
       return;
     }
 
-    const noteElement = document.getElementById("adminNote");
+    const noteElement =
+      document.getElementById("adminNote");
 
-    const note = noteElement
-      ? noteElement.value.trim()
-      : "";
+    const note =
+      noteElement
+        ? noteElement.value.trim()
+        : "";
 
-    const buttons = document.querySelectorAll(".action");
+    const buttons =
+      document.querySelectorAll(".action");
 
     buttons.forEach(button => {
       button.disabled = true;
@@ -954,7 +1226,10 @@
       </div>
     `;
 
-    const { data, error } = await supabaseClient
+    const {
+      data,
+      error
+    } = await supabaseClient
       .from("marketplace_vendor_applications")
       .update({
         status:newStatus,

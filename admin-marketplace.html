@@ -1,0 +1,1637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Marketplace - EarnGig Admin</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #070b2b;
+      color: #ffffff;
+    }
+
+    header {
+      background: #0c1240;
+      border-bottom: 1px solid #292f67;
+      padding: 17px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .brand {
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    .brand span {
+      color: #6d5dfc;
+    }
+
+    .back-btn {
+      background: transparent;
+      color: #ffffff;
+      border: 1px solid #41487e;
+      border-radius: 10px;
+      padding: 10px 14px;
+      cursor: pointer;
+    }
+
+    main {
+      max-width: 1200px;
+      margin: auto;
+      padding: 25px 18px 50px;
+    }
+
+    h1 {
+      margin: 0 0 7px;
+      font-size: 28px;
+    }
+
+    .subtitle {
+      color: #9da5d4;
+      margin-bottom: 25px;
+      line-height: 1.5;
+    }
+
+    /* STATS */
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 13px;
+      margin-bottom: 24px;
+    }
+
+    .stat {
+      background: #111746;
+      border: 1px solid #292f67;
+      border-radius: 15px;
+      padding: 17px;
+    }
+
+    .stat-label {
+      color: #969ecb;
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    .stat-value {
+      font-size: 26px;
+      font-weight: 800;
+    }
+
+    /* TABS */
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      margin-bottom: 18px;
+      padding-bottom: 3px;
+    }
+
+    .tab {
+      white-space: nowrap;
+      background: #101640;
+      color: #bfc5e4;
+      border: 1px solid #363d78;
+      border-radius: 10px;
+      padding: 10px 14px;
+      cursor: pointer;
+    }
+
+    .tab.active {
+      background: #6757f5;
+      color: #ffffff;
+      border-color: #6757f5;
+    }
+
+    /* PANEL */
+
+    .panel {
+      background: #0f143b;
+      border: 1px solid #292f67;
+      border-radius: 17px;
+      overflow: hidden;
+    }
+
+    .panel-head {
+      padding: 17px;
+      border-bottom: 1px solid #292f67;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .panel-head h2 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .refresh-btn {
+      background: #171d4b;
+      border: 1px solid #454c84;
+      color: #ffffff;
+      padding: 9px 13px;
+      border-radius: 9px;
+      cursor: pointer;
+    }
+
+    /* APPLICATIONS */
+
+    .application {
+      padding: 18px;
+      background: #111746;
+      border-bottom: 1px solid #252b5a;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .application:last-child {
+      border-bottom: 0;
+    }
+
+    .application:hover {
+      background: #151b4e;
+    }
+
+    .app-name {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .app-store {
+      color: #b8bee1;
+      margin-bottom: 8px;
+    }
+
+    .app-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      color: #858dbb;
+      font-size: 12px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 5px 9px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .badge.pending {
+      background: #493a13;
+      color: #ffd66b;
+    }
+
+    .badge.approved {
+      background: #123d2d;
+      color: #6ee7b7;
+    }
+
+    .badge.rejected {
+      background: #431b28;
+      color: #ff8da6;
+    }
+
+    .badge.more_information_required {
+      background: #342450;
+      color: #c9a7ff;
+    }
+
+    .badge.withdrawn {
+      background: #252a48;
+      color: #aeb5d5;
+    }
+
+    .view-btn {
+      background: #6757f5;
+      border: 0;
+      color: #ffffff;
+      border-radius: 10px;
+      padding: 11px 15px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .empty {
+      padding: 45px 20px;
+      text-align: center;
+      color: #858dbb;
+    }
+
+    .loading {
+      padding: 40px 20px;
+      text-align: center;
+      color: #9da5d4;
+    }
+
+    .error {
+      margin: 15px;
+      padding: 14px;
+      background: #421d2a;
+      border: 1px solid #73334a;
+      color: #ff9db1;
+      border-radius: 10px;
+      line-height: 1.5;
+    }
+
+    /* MODAL */
+
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(0, 0, 0, .80);
+      padding: 15px;
+      overflow-y: auto;
+    }
+
+    .modal.show {
+      display: block;
+    }
+
+    .modal-box {
+      max-width: 900px;
+      margin: 25px auto;
+      background: #0e143b;
+      border: 1px solid #343b76;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .modal-header {
+      padding: 18px 20px;
+      border-bottom: 1px solid #292f67;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .modal-header h2 {
+      margin: 0;
+      font-size: 21px;
+    }
+
+    .close-btn {
+      width: 38px;
+      height: 38px;
+      border: 0;
+      border-radius: 50%;
+      background: #202653;
+      color: #ffffff;
+      font-size: 21px;
+      cursor: pointer;
+    }
+
+    .modal-body {
+      padding: 20px;
+    }
+
+    .app-status-box {
+      margin-bottom: 18px;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .detail {
+      background: #111746;
+      border: 1px solid #292f67;
+      border-radius: 12px;
+      padding: 13px;
+    }
+
+    .detail.full {
+      grid-column: 1 / -1;
+    }
+
+    .detail-label {
+      color: #858dbb;
+      font-size: 11px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .detail-value {
+      color: #ffffff;
+      line-height: 1.5;
+      word-break: break-word;
+    }
+
+    .photo-box {
+      background: #080c2c;
+      border-radius: 12px;
+      padding: 12px;
+    }
+
+    .personal-photo {
+      display: block;
+      width: 100%;
+      max-height: 380px;
+      object-fit: contain;
+      border-radius: 10px;
+    }
+
+    .open-image {
+      display: inline-block;
+      margin-top: 9px;
+      color: #9d91ff;
+      text-decoration: none;
+    }
+
+    .note-box {
+      margin-top: 18px;
+    }
+
+    .note-box label {
+      display: block;
+      color: #aab1d8;
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 90px;
+      resize: vertical;
+      background: #090e31;
+      border: 1px solid #363d78;
+      color: #ffffff;
+      border-radius: 10px;
+      padding: 12px;
+      outline: none;
+      font-family: inherit;
+    }
+
+    textarea:focus {
+      border-color: #6757f5;
+    }
+
+    .actions {
+      padding: 17px 20px;
+      border-top: 1px solid #292f67;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+    }
+
+    .action-btn {
+      border: 0;
+      border-radius: 10px;
+      padding: 12px 17px;
+      color: #ffffff;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .approve-btn {
+      background: #16845b;
+    }
+
+    .info-btn {
+      background: #7650c7;
+    }
+
+    .reject-btn {
+      background: #a33c58;
+    }
+
+    .cancel-btn {
+      background: #252b58;
+    }
+
+    .action-btn:disabled {
+      opacity: .55;
+      cursor: not-allowed;
+    }
+
+    @media (max-width: 800px) {
+
+      .stats {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .application {
+        grid-template-columns: 1fr;
+      }
+
+      .detail-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .detail.full {
+        grid-column: auto;
+      }
+    }
+
+    @media (max-width: 500px) {
+
+      header {
+        padding: 14px;
+      }
+
+      .brand {
+        font-size: 19px;
+      }
+
+      main {
+        padding: 20px 12px 40px;
+      }
+
+      .stats {
+        gap: 8px;
+      }
+
+      .stat {
+        padding: 13px;
+      }
+
+      .stat-value {
+        font-size: 22px;
+      }
+
+      .modal {
+        padding: 7px;
+      }
+
+      .modal-box {
+        margin: 8px auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+
+  <div class="brand">
+    Earn<span>Gig</span> Admin
+  </div>
+
+  <button
+    class="back-btn"
+    onclick="location.href='admin-dashboard.html'"
+  >
+    ← Dashboard
+  </button>
+
+</header>
+
+
+<main>
+
+  <h1>Marketplace</h1>
+
+  <div class="subtitle">
+    Review vendor applications before marketplace store activation.
+  </div>
+
+
+  <!-- STATS -->
+
+  <div class="stats">
+
+    <div class="stat">
+      <div class="stat-label">Pending</div>
+      <div class="stat-value" id="pendingCount">0</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-label">Approved</div>
+      <div class="stat-value" id="approvedCount">0</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-label">More Information</div>
+      <div class="stat-value" id="informationCount">0</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-label">Rejected</div>
+      <div class="stat-value" id="rejectedCount">0</div>
+    </div>
+
+  </div>
+
+
+  <!-- TABS -->
+
+  <div class="tabs">
+
+    <button
+      class="tab active"
+      data-status="pending"
+    >
+      Pending
+    </button>
+
+    <button
+      class="tab"
+      data-status="approved"
+    >
+      Approved
+    </button>
+
+    <button
+      class="tab"
+      data-status="more_information_required"
+    >
+      More Information
+    </button>
+
+    <button
+      class="tab"
+      data-status="rejected"
+    >
+      Rejected
+    </button>
+
+    <button
+      class="tab"
+      data-status="withdrawn"
+    >
+      Withdrawn
+    </button>
+
+    <button
+      class="tab"
+      data-status="all"
+    >
+      All
+    </button>
+
+  </div>
+
+
+  <!-- APPLICATION PANEL -->
+
+  <section class="panel">
+
+    <div class="panel-head">
+
+      <h2 id="sectionTitle">
+        Pending Vendor Applications
+      </h2>
+
+      <button
+        class="refresh-btn"
+        id="refreshBtn"
+      >
+        ↻ Refresh
+      </button>
+
+    </div>
+
+    <div id="content">
+
+      <div class="loading">
+        Loading vendor applications...
+      </div>
+
+    </div>
+
+  </section>
+
+</main>
+
+
+<!-- APPLICATION MODAL -->
+
+<div
+  class="modal"
+  id="applicationModal"
+>
+
+  <div class="modal-box">
+
+    <div class="modal-header">
+
+      <h2>Vendor Application</h2>
+
+      <button
+        class="close-btn"
+        id="closeModal"
+      >
+        ×
+      </button>
+
+    </div>
+
+
+    <div class="modal-body">
+
+      <div
+        class="app-status-box"
+        id="modalStatus"
+      ></div>
+
+      <div
+        id="applicationDetails"
+      ></div>
+
+
+      <div class="note-box">
+
+        <label for="adminNote">
+          Admin Note
+        </label>
+
+        <textarea
+          id="adminNote"
+          placeholder="Add a note for this vendor..."
+        ></textarea>
+
+      </div>
+
+    </div>
+
+
+    <div class="actions">
+
+      <button
+        class="action-btn approve-btn"
+        id="approveBtn"
+      >
+        ✓ Approve
+      </button>
+
+      <button
+        class="action-btn info-btn"
+        id="infoBtn"
+      >
+        ↻ More Information Required
+      </button>
+
+      <button
+        class="action-btn reject-btn"
+        id="rejectBtn"
+      >
+        ✕ Reject
+      </button>
+
+      <button
+        class="action-btn cancel-btn"
+        id="cancelBtn"
+      >
+        Close
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+  /* =========================================================
+     SUPABASE
+  ========================================================= */
+
+  const SUPABASE_URL =
+    "https://ytvtdelwefykeqwztcyo.supabase.co";
+
+  const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_CLTeqgEB6JSQ7Kqq6rQARw_RV31Ccg3";
+
+  const supabaseClient =
+    window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY
+    );
+
+
+  /* =========================================================
+     STATE
+  ========================================================= */
+
+  let applications = [];
+  let currentApplication = null;
+  let currentStatus = "pending";
+
+
+  /* =========================================================
+     HELPERS
+  ========================================================= */
+
+  function escapeHtml(value) {
+
+    if (
+      value === null ||
+      value === undefined
+    ) {
+      return "";
+    }
+
+    return String(value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
+
+  function formatDate(value) {
+
+    if (!value) {
+      return "—";
+    }
+
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) {
+      return String(value);
+    }
+
+    return date.toLocaleString();
+  }
+
+
+  function statusLabel(status) {
+
+    const labels = {
+      pending: "Pending",
+      approved: "Approved",
+      rejected: "Rejected",
+      more_information_required: "More Information Required",
+      withdrawn: "Withdrawn"
+    };
+
+    return labels[status] || status;
+  }
+
+
+  function statusBadge(status) {
+
+    return `
+      <span class="badge ${escapeHtml(status)}">
+        ${escapeHtml(statusLabel(status))}
+      </span>
+    `;
+  }
+
+
+  /* =========================================================
+     AUTH
+  ========================================================= */
+
+  async function checkAdmin() {
+
+    const {
+      data: { user },
+      error
+    } = await supabaseClient.auth.getUser();
+
+    if (error || !user) {
+
+      location.href = "index.html";
+
+      return false;
+    }
+
+
+    const {
+      data: profile,
+      error: profileError
+    } = await supabaseClient
+      .from("profiles")
+      .select("id, is_admin, account_status")
+      .eq("id", user.id)
+      .maybeSingle();
+
+
+    if (
+      profileError ||
+      !profile ||
+      profile.is_admin !== true ||
+      profile.account_status !== "active"
+    ) {
+
+      alert("Administrator access required.");
+
+      location.href = "admin-dashboard.html";
+
+      return false;
+    }
+
+
+    return true;
+  }
+
+
+  /* =========================================================
+     LOAD APPLICATIONS
+  ========================================================= */
+
+  async function loadApplications() {
+
+    const content =
+      document.getElementById("content");
+
+    content.innerHTML = `
+      <div class="loading">
+        Loading vendor applications...
+      </div>
+    `;
+
+
+    const {
+      data,
+      error
+    } = await supabaseClient
+      .from("marketplace_vendor_applications")
+      .select(`
+        id,
+        user_id,
+        full_name,
+        phone_number,
+        email,
+        personal_photo_url,
+        residential_address,
+        state,
+        lga,
+        store_name,
+        business_description,
+        business_location,
+        business_address,
+        business_phone,
+        store_logo_url,
+        tiktok_url,
+        instagram_url,
+        facebook_url,
+        whatsapp_url,
+        website_url,
+        additional_information,
+        status,
+        admin_note,
+        reviewed_by,
+        reviewed_at,
+        created_at,
+        updated_at
+      `)
+      .order("created_at", {
+        ascending: false
+      });
+
+
+    if (error) {
+
+      console.error(error);
+
+      content.innerHTML = `
+        <div class="error">
+          <strong>
+            Could not load marketplace applications.
+          </strong>
+
+          <br><br>
+
+          ${escapeHtml(error.message)}
+        </div>
+      `;
+
+      return;
+    }
+
+
+    applications = data || [];
+
+    updateStats();
+
+    renderApplications();
+  }
+
+
+  /* =========================================================
+     STATS
+  ========================================================= */
+
+  function updateStats() {
+
+    const counts = {
+      pending: 0,
+      approved: 0,
+      more_information_required: 0,
+      rejected: 0
+    };
+
+
+    applications.forEach(application => {
+
+      if (
+        Object.prototype.hasOwnProperty.call(
+          counts,
+          application.status
+        )
+      ) {
+        counts[application.status]++;
+      }
+
+    });
+
+
+    document.getElementById("pendingCount")
+      .textContent = counts.pending;
+
+    document.getElementById("approvedCount")
+      .textContent = counts.approved;
+
+    document.getElementById("informationCount")
+      .textContent =
+        counts.more_information_required;
+
+    document.getElementById("rejectedCount")
+      .textContent = counts.rejected;
+  }
+
+
+  /* =========================================================
+     RENDER
+  ========================================================= */
+
+  function renderApplications() {
+
+    const content =
+      document.getElementById("content");
+
+
+    let filtered = applications;
+
+
+    if (currentStatus !== "all") {
+
+      filtered =
+        applications.filter(
+          application =>
+            application.status === currentStatus
+        );
+
+    }
+
+
+    if (!filtered.length) {
+
+      content.innerHTML = `
+        <div class="empty">
+          No vendor applications found here.
+        </div>
+      `;
+
+      return;
+    }
+
+
+    content.innerHTML = filtered
+      .map(application => {
+
+        return `
+          <div class="application">
+
+            <div>
+
+              <div class="app-name">
+                ${escapeHtml(application.full_name)}
+              </div>
+
+              <div class="app-store">
+                ${escapeHtml(application.store_name)}
+              </div>
+
+              <div class="app-meta">
+
+                <span>
+                  ${escapeHtml(application.email || "No email")}
+                </span>
+
+                <span>
+                  ${escapeHtml(application.phone_number)}
+                </span>
+
+                <span>
+                  ${escapeHtml(formatDate(application.created_at))}
+                </span>
+
+                ${statusBadge(application.status)}
+
+              </div>
+
+            </div>
+
+
+            <button
+              class="view-btn"
+              onclick="openApplication('${application.id}')"
+            >
+              View Application
+            </button>
+
+          </div>
+        `;
+
+      })
+      .join("");
+  }
+
+
+  /* =========================================================
+     OPEN APPLICATION
+  ========================================================= */
+
+  function openApplication(id) {
+
+    const application =
+      applications.find(
+        item => item.id === id
+      );
+
+
+    if (!application) {
+      return;
+    }
+
+
+    currentApplication = application;
+
+
+    document.getElementById("modalStatus")
+      .innerHTML =
+        statusBadge(application.status);
+
+
+    document.getElementById("adminNote")
+      .value =
+        application.admin_note || "";
+
+
+    let html = `
+      <div class="detail-grid">
+
+        <div class="detail">
+          <div class="detail-label">
+            Full Name
+          </div>
+          <div class="detail-value">
+            ${escapeHtml(application.full_name)}
+          </div>
+        </div>
+
+        <div class="detail">
+          <div class="detail-label">
+            Phone Number
+          </div>
+          <div class="detail-value">
+            ${escapeHtml(application.phone_number)}
+          </div>
+        </div>
+
+        <div class="detail">
+          <div class="detail-label">
+            Email
+          </div>
+          <div class="detail-value">
+            ${escapeHtml(application.email || "—")}
+          </div>
+        </div>
+
+        <div class="detail">
+          <div class="detail-label">
+            Store Name
+          </div>
+          <div class="detail-value">
+            ${escapeHtml(application.store_name)}
+          </div>
+        </div>
+
+        <div class="detail full">
+          <div class="detail-label">
+            Personal Photo
+          </div>
+
+          <div class="detail-value">
+
+            ${
+              application.personal_photo_url
+
+              ? `
+                <div class="photo-box">
+
+                  <img
+                    src="${escapeHtml(application.personal_photo_url)}"
+                    class="personal-photo"
+                    alt="Vendor personal photo"
+                    onerror="this.style.display='none'"
+                  >
+
+                  <a
+                    class="open-image"
+                    href="${escapeHtml(application.personal_photo_url)}"
+                    target="_blank"
+                  >
+                    Open personal photo
+                  </a>
+
+                </div>
+              `
+
+              : "No personal photo supplied"
+            }
+
+          </div>
+        </div>
+
+        <div class="detail">
+          <div class="detail-label">
+            Residential Address
+          </div>
+          <div class="detail-value">
+            ${escapeHtml(application.residential_address || "—")}
+          </div>
+        </div>
+
+        <div class="detail">
+          <div class="detail-label">
+            State
+          </div>
+          <div class="detail-value">
+            ${escapeHtml(application.state || "—")}
+          </div>
+        </div>
+
+        <div class="detail">
+          <div class="detail-label">
+            LGA
+          </div>
+          <div class="detail-value">
+            ${escapeHtml(application.lga || "—")}
+          </div>
+        </div>
+
+        <div class="detail">
+          <div class="detail-label">
+            Business Phone
+          </div>
+          <div class="detail-value">
+            ${escapeHtml(application.business_phone || "—")}
+          </div>
+        </div>
+
+        <div class="detail full">
+          <div class="detail-label">
+            Business Description
+          </div>
+          <div class="detail-value">
+            ${escapeHtml(application.business_description || "—")}
+          </div>
+        </div>
+
+        <div class="detail">
+          <div class="detail-label">
+            Business Location
+          </div>
+          <div class="detail-value">
+            ${escapeHtml(application.business_location || "—")}
+          </div>
+        </div>
+
+        <div class="detail">
+          <div class="detail-label">
+            Business Address
+          </div>
+          <div class="detail-value">
+            ${escapeHtml(application.business_address || "—")}
+          </div>
+        </div>
+
+        <div class="detail">
+          <div class="detail-label">
+            TikTok
+          </div>
+          <div class="detail-value">
+            ${escapeHtml(application.tiktok_url || "—")}
+          </div>
+        </div>
+
+        <div class="detail">
+          <div class="detail-label">
+            Instagram
+          </div>
+          <div class="detail-value">
+            ${escapeHtml(application.instagram_url || "—")}
+          </div>
+        </div>
+
+        <div class="detail">
+          <div class="detail-label">
+            Facebook
+          </div>
+          <div class="detail-value">
+            ${escapeHtml(application.facebook_url || "—")}
+          </div>
+        </div>
+
+        <div class="detail">
+          <div class="detail-label">
+            WhatsApp
+          </div>
+          <div class="detail-value">
+            ${escapeHtml(application.whatsapp_url || "—")}
+          </div>
+        </div>
+
+        <div class="detail">
+          <div class="detail-label">
+            Website
+          </div>
+          <div class="detail-value">
+            ${escapeHtml(application.website_url || "—")}
+          </div>
+        </div>
+
+        <div class="detail full">
+          <div class="detail-label">
+            Additional Information
+          </div>
+          <div class="detail-value">
+            ${escapeHtml(application.additional_information || "—")}
+          </div>
+        </div>
+
+        <div class="detail">
+          <div class="detail-label">
+            Submitted
+          </div>
+          <div class="detail-value">
+            ${escapeHtml(formatDate(application.created_at))}
+          </div>
+        </div>
+
+        <div class="detail">
+          <div class="detail-label">
+            Last Reviewed
+          </div>
+          <div class="detail-value">
+            ${escapeHtml(formatDate(application.reviewed_at))}
+          </div>
+        </div>
+
+      </div>
+    `;
+
+
+    document.getElementById("applicationDetails")
+      .innerHTML = html;
+
+
+    document
+      .getElementById("applicationModal")
+      .classList.add("show");
+  }
+
+
+  /* =========================================================
+     CLOSE
+  ========================================================= */
+
+  function closeModal() {
+
+    document
+      .getElementById("applicationModal")
+      .classList.remove("show");
+
+    currentApplication = null;
+  }
+
+
+  /* =========================================================
+     REVIEW APPLICATION
+  ========================================================= */
+
+  async function reviewApplication(newStatus) {
+
+    if (!currentApplication) {
+      return;
+    }
+
+
+    const note =
+      document
+        .getElementById("adminNote")
+        .value
+        .trim();
+
+
+    const {
+      data: {
+        user
+      }
+    } =
+      await supabaseClient.auth.getUser();
+
+
+    if (!user) {
+
+      alert("Your admin session has expired.");
+
+      location.href = "index.html";
+
+      return;
+    }
+
+
+    let button;
+
+    if (newStatus === "approved") {
+      button =
+        document.getElementById("approveBtn");
+    }
+
+    if (
+      newStatus ===
+      "more_information_required"
+    ) {
+      button =
+        document.getElementById("infoBtn");
+    }
+
+    if (newStatus === "rejected") {
+      button =
+        document.getElementById("rejectBtn");
+    }
+
+
+    const originalText =
+      button.textContent;
+
+
+    button.disabled = true;
+    button.textContent = "Saving...";
+
+
+    const {
+      error
+    } = await supabaseClient
+      .from("marketplace_vendor_applications")
+      .update({
+
+        status: newStatus,
+
+        admin_note:
+          note || null,
+
+        reviewed_by:
+          user.id,
+
+        reviewed_at:
+          new Date().toISOString(),
+
+        updated_at:
+          new Date().toISOString()
+
+      })
+      .eq(
+        "id",
+        currentApplication.id
+      );
+
+
+    button.disabled = false;
+    button.textContent = originalText;
+
+
+    if (error) {
+
+      console.error(error);
+
+      alert(
+        "Could not update application.\n\n" +
+        error.message
+      );
+
+      return;
+    }
+
+
+    closeModal();
+
+    await loadApplications();
+
+
+    if (newStatus === "approved") {
+
+      alert(
+        "Vendor application approved.\n\n" +
+        "The vendor can now proceed to the marketplace subscription."
+      );
+
+      return;
+    }
+
+
+    if (
+      newStatus ===
+      "more_information_required"
+    ) {
+
+      alert(
+        "More information has been requested from the vendor."
+      );
+
+      return;
+    }
+
+
+    alert(
+      "Vendor application rejected."
+    );
+  }
+
+
+  /* =========================================================
+     TABS
+  ========================================================= */
+
+  document
+    .querySelectorAll(".tab")
+    .forEach(tab => {
+
+      tab.addEventListener(
+        "click",
+        () => {
+
+          document
+            .querySelectorAll(".tab")
+            .forEach(item =>
+              item.classList.remove("active")
+            );
+
+
+          tab.classList.add("active");
+
+
+          currentStatus =
+            tab.dataset.status;
+
+
+          const titles = {
+
+            pending:
+              "Pending Vendor Applications",
+
+            approved:
+              "Approved Vendors",
+
+            more_information_required:
+              "Applications Requiring More Information",
+
+            rejected:
+              "Rejected Applications",
+
+            withdrawn:
+              "Withdrawn Applications",
+
+            all:
+              "All Vendor Applications"
+
+          };
+
+
+          document.getElementById("sectionTitle")
+            .textContent =
+              titles[currentStatus] ||
+              "Vendor Applications";
+
+
+          renderApplications();
+
+        }
+      );
+
+    });
+
+
+  /* =========================================================
+     BUTTON EVENTS
+  ========================================================= */
+
+  document
+    .getElementById("refreshBtn")
+    .addEventListener(
+      "click",
+      loadApplications
+    );
+
+
+  document
+    .getElementById("closeModal")
+    .addEventListener(
+      "click",
+      closeModal
+    );
+
+
+  document
+    .getElementById("cancelBtn")
+    .addEventListener(
+      "click",
+      closeModal
+    );
+
+
+  document
+    .getElementById("approveBtn")
+    .addEventListener(
+      "click",
+      () =>
+        reviewApplication("approved")
+    );
+
+
+  document
+    .getElementById("infoBtn")
+    .addEventListener(
+      "click",
+      () =>
+        reviewApplication(
+          "more_information_required"
+        )
+    );
+
+
+  document
+    .getElementById("rejectBtn")
+    .addEventListener(
+      "click",
+      () =>
+        reviewApplication("rejected")
+    );
+
+
+  document
+    .getElementById("applicationModal")
+    .addEventListener(
+      "click",
+      event => {
+
+        if (
+          event.target.id ===
+          "applicationModal"
+        ) {
+          closeModal();
+        }
+
+      }
+    );
+
+
+  /* =========================================================
+     START
+  ========================================================= */
+
+  (async function init() {
+
+    const isAdmin =
+      await checkAdmin();
+
+    if (!isAdmin) {
+      return;
+    }
+
+    await loadApplications();
+
+  })();
+
+</script>
+
+</body>
+</html>

@@ -29,24 +29,24 @@
     .page {
       width: min(980px, 100%);
       margin: 0 auto;
-      padding: 18px 14px 50px;
+      padding: 16px 12px 50px;
     }
 
     .topbar {
       display: flex;
       align-items: center;
       gap: 10px;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
 
     .back {
       border: 1px solid #263852;
       background: #0d1a2b;
       color: #dce8f7;
-      border-radius: 9px;
-      padding: 8px 12px;
+      border-radius: 8px;
+      padding: 8px 11px;
       cursor: pointer;
-      font-size: 13px;
+      font-size: 12px;
     }
 
     .title-wrap {
@@ -56,68 +56,66 @@
 
     .title {
       margin: 0;
-      font-size: 21px;
-      color: #ffffff;
+      font-size: 19px;
+      color: #fff;
     }
 
     .subtitle {
-      margin: 4px 0 0;
-      color: #8fa1b8;
-      font-size: 12px;
+      margin: 3px 0 0;
+      color: #8193a9;
+      font-size: 11px;
     }
 
     .status {
-      display: inline-flex;
-      align-items: center;
-      padding: 5px 9px;
+      padding: 5px 8px;
       border-radius: 999px;
-      font-size: 11px;
-      font-weight: 700;
-      background: #3a2d12;
+      background: #382d12;
       color: #f4cc68;
+      font-size: 10px;
+      font-weight: 700;
       white-space: nowrap;
     }
 
     .card {
       background: #0b1829;
       border: 1px solid #20334c;
-      border-radius: 12px;
-      margin-bottom: 12px;
+      border-radius: 11px;
+      margin-bottom: 11px;
       overflow: hidden;
     }
 
     .card-head {
-      padding: 12px 14px;
+      padding: 11px 13px;
       border-bottom: 1px solid #1d3048;
     }
 
     .card-head h2 {
       margin: 0;
-      font-size: 14px;
+      font-size: 13px;
       color: #f2f6fb;
     }
 
     .card-head p {
       margin: 4px 0 0;
-      color: #8093aa;
-      font-size: 11px;
+      color: #7e91a8;
+      font-size: 10px;
     }
 
     .card-body {
-      padding: 12px 14px;
+      padding: 11px 13px;
     }
 
     .grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 9px;
+      gap: 8px;
     }
 
     .field {
       background: #091524;
       border: 1px solid #1c2e44;
-      border-radius: 9px;
-      padding: 9px 10px;
+      border-radius: 8px;
+      padding: 8px 9px;
       min-width: 0;
     }
 
@@ -129,13 +127,13 @@
       color: #71849b;
       text-transform: uppercase;
       letter-spacing: .05em;
-      font-size: 9px;
+      font-size: 8px;
       margin-bottom: 4px;
     }
 
     .value {
       color: #e4ebf5;
-      font-size: 12px;
+      font-size: 11px;
       line-height: 1.45;
       overflow-wrap: anywhere;
     }
@@ -144,27 +142,25 @@
       color: #687b91;
     }
 
-    /* IMAGES */
-
     .image-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
+      gap: 9px;
     }
 
     .image-box {
       background: #081321;
       border: 1px solid #1e3249;
-      border-radius: 10px;
+      border-radius: 9px;
       padding: 8px;
     }
 
     .image-label {
       color: #71849b;
       text-transform: uppercase;
-      font-size: 9px;
+      font-size: 8px;
       letter-spacing: .05em;
-      margin-bottom: 7px;
+      margin-bottom: 6px;
     }
 
     .image-button {
@@ -180,10 +176,6 @@
       position: relative;
     }
 
-    .image-button:hover {
-      border-color: #7c5cff;
-    }
-
     .image-button img {
       width: 100%;
       height: 100%;
@@ -193,6 +185,7 @@
     }
 
     .image-empty {
+      width: 100%;
       height: 100%;
       display: flex;
       align-items: center;
@@ -207,21 +200,21 @@
       position: absolute;
       right: 7px;
       bottom: 7px;
-      background: rgba(0, 0, 0, .72);
+      background: rgba(0,0,0,.78);
       color: #fff;
       border-radius: 6px;
       padding: 5px 7px;
-      font-size: 10px;
+      font-size: 9px;
       pointer-events: none;
     }
 
-    /* FULL SCREEN IMAGE VIEWER */
+    /* FULLSCREEN IMAGE */
 
     .viewer {
       position: fixed;
       inset: 0;
-      z-index: 9999;
-      background: rgba(2, 7, 14, .96);
+      z-index: 99999;
+      background: rgba(1, 6, 13, .97);
       display: none;
       align-items: center;
       justify-content: center;
@@ -233,45 +226,42 @@
     }
 
     .viewer img {
-      max-width: 96vw;
-      max-height: 90vh;
+      max-width: 95vw;
+      max-height: 88vh;
       width: auto;
       height: auto;
       object-fit: contain;
       border-radius: 8px;
-      box-shadow: 0 15px 60px rgba(0,0,0,.6);
     }
 
     .viewer-close {
       position: fixed;
-      top: 15px;
-      right: 15px;
+      top: 14px;
+      right: 14px;
       width: 42px;
       height: 42px;
-      border: 1px solid #41536b;
+      border: 1px solid #42546b;
       background: #101d2e;
-      color: #ffffff;
+      color: #fff;
       border-radius: 50%;
-      font-size: 24px;
+      font-size: 23px;
       cursor: pointer;
-      z-index: 10000;
+      z-index: 100001;
     }
 
     .viewer-title {
       position: fixed;
       top: 20px;
-      left: 18px;
+      left: 17px;
       color: #dce6f2;
       font-size: 12px;
-      z-index: 10000;
+      z-index: 100001;
     }
-
-    /* LINKS */
 
     .links {
       display: flex;
       flex-wrap: wrap;
-      gap: 7px;
+      gap: 6px;
     }
 
     .link {
@@ -282,41 +272,35 @@
       border: 1px solid #263b55;
       color: #aebeff;
       text-decoration: none;
-      font-size: 11px;
+      font-size: 10px;
     }
-
-    /* REVIEW */
 
     textarea {
       width: 100%;
-      min-height: 90px;
+      min-height: 85px;
       resize: vertical;
       border: 1px solid #263b55;
       background: #071321;
       color: #edf3fb;
-      border-radius: 9px;
-      padding: 10px;
+      border-radius: 8px;
+      padding: 9px;
       outline: none;
       font-family: inherit;
-      font-size: 12px;
-    }
-
-    textarea:focus {
-      border-color: #7256ff;
+      font-size: 11px;
     }
 
     .actions {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 10px;
+      gap: 7px;
+      margin-top: 9px;
     }
 
-    button.action {
+    .action {
       border: 0;
-      border-radius: 8px;
-      padding: 9px 13px;
-      font-size: 12px;
+      border-radius: 7px;
+      padding: 8px 11px;
+      font-size: 11px;
       font-weight: 700;
       cursor: pointer;
     }
@@ -342,9 +326,8 @@
     }
 
     .message {
-      margin-top: 9px;
-      font-size: 12px;
-      line-height: 1.4;
+      margin-top: 8px;
+      font-size: 11px;
     }
 
     .success {
@@ -359,12 +342,12 @@
       padding: 30px;
       text-align: center;
       color: #8093aa;
-      font-size: 13px;
+      font-size: 12px;
     }
 
     @media (max-width: 620px) {
       .page {
-        padding: 12px 10px 35px;
+        padding: 10px 9px 35px;
       }
 
       .grid {
@@ -384,7 +367,7 @@
       }
 
       .title {
-        font-size: 18px;
+        font-size: 17px;
       }
     }
   </style>
@@ -395,31 +378,44 @@
 <div class="page">
 
   <div class="topbar">
-    <button class="back" onclick="goBack()">← Back</button>
+
+    <button class="back" onclick="goBack()">
+      ← Back
+    </button>
 
     <div class="title-wrap">
-      <h1 class="title" id="pageTitle">Vendor Review</h1>
-      <p class="subtitle" id="pageSubtitle">Marketplace application</p>
+      <h1 class="title" id="pageTitle">
+        Vendor Review
+      </h1>
+
+      <p class="subtitle" id="pageSubtitle">
+        Marketplace application
+      </p>
     </div>
 
-    <span class="status" id="statusBadge">Loading</span>
+    <span class="status" id="statusBadge">
+      Loading
+    </span>
+
   </div>
 
   <div id="loading" class="card">
-    <div class="loading">Loading application...</div>
+    <div class="loading">
+      Loading application...
+    </div>
   </div>
 
   <div id="content" style="display:none;">
 
-    <!-- APPLICATION -->
-
     <section class="card">
+
       <div class="card-head">
         <h2>Applicant</h2>
         <p>Personal and contact information</p>
       </div>
 
       <div class="card-body">
+
         <div class="grid">
 
           <div class="field">
@@ -448,18 +444,20 @@
           </div>
 
         </div>
+
       </div>
+
     </section>
 
-    <!-- BUSINESS -->
-
     <section class="card">
+
       <div class="card-head">
         <h2>Business Information</h2>
         <p>Information supplied by the vendor</p>
       </div>
 
       <div class="card-body">
+
         <div class="grid">
 
           <div class="field">
@@ -488,30 +486,44 @@
           </div>
 
         </div>
+
       </div>
+
     </section>
 
-    <!-- IMAGES -->
+    <!-- VERIFICATION IMAGES -->
 
     <section class="card">
+
       <div class="card-head">
         <h2>Verification Images</h2>
-        <p>Personal photo is private verification evidence. Store logo is used for the marketplace store.</p>
+
+        <p>
+          Personal photo is private verification evidence.
+          Store logo is used for the marketplace store.
+        </p>
       </div>
 
       <div class="card-body">
+
         <div class="image-grid">
 
           <div class="image-box">
-            <div class="image-label">Personal Photo</div>
+
+            <div class="image-label">
+              Personal Photo
+            </div>
 
             <button
               type="button"
               class="image-button"
-              id="personalPhotoButton"
               onclick="openViewer('personal')"
             >
-              <div class="image-empty" id="personalPhotoEmpty">
+
+              <div
+                class="image-empty"
+                id="personalPhotoEmpty"
+              >
                 Loading image...
               </div>
 
@@ -521,20 +533,30 @@
                 style="display:none;"
               >
 
-              <span class="zoom-hint">Tap to view</span>
+              <span class="zoom-hint">
+                Tap to view
+              </span>
+
             </button>
+
           </div>
 
           <div class="image-box">
-            <div class="image-label">Store Logo</div>
+
+            <div class="image-label">
+              Store Logo
+            </div>
 
             <button
               type="button"
               class="image-button"
-              id="storeLogoButton"
               onclick="openViewer('logo')"
             >
-              <div class="image-empty" id="storeLogoEmpty">
+
+              <div
+                class="image-empty"
+                id="storeLogoEmpty"
+              >
                 Loading image...
               </div>
 
@@ -544,46 +566,64 @@
                 style="display:none;"
               >
 
-              <span class="zoom-hint">Tap to view</span>
+              <span class="zoom-hint">
+                Tap to view
+              </span>
+
             </button>
+
           </div>
 
         </div>
+
       </div>
+
     </section>
 
-    <!-- LINKS -->
-
     <section class="card">
+
       <div class="card-head">
         <h2>Social & Business Links</h2>
       </div>
 
       <div class="card-body">
         <div class="links" id="links">
-          <span class="muted">No links provided</span>
+          <span class="muted">
+            No links provided
+          </span>
         </div>
       </div>
+
     </section>
 
-    <!-- ADDITIONAL -->
-
     <section class="card">
+
       <div class="card-head">
         <h2>Additional Information</h2>
       </div>
 
       <div class="card-body">
-        <div class="value" id="additionalInformation">Not provided</div>
+
+        <div
+          class="value"
+          id="additionalInformation"
+        >
+          Not provided
+        </div>
+
       </div>
+
     </section>
 
-    <!-- REVIEW -->
-
     <section class="card">
+
       <div class="card-head">
         <h2>Admin Review</h2>
-        <p>Add a note when approving, rejecting, or requesting more information.</p>
+
+        <p>
+          Add a note when approving, rejecting,
+          or requesting more information.
+        </p>
       </div>
 
       <div class="card-body">
@@ -621,15 +661,20 @@
 
         </div>
 
-        <div id="message" class="message"></div>
+        <div
+          id="message"
+          class="message"
+        ></div>
 
       </div>
+
     </section>
 
   </div>
+
 </div>
 
-<!-- FULL SCREEN IMAGE VIEWER -->
+<!-- FULLSCREEN VIEWER -->
 
 <div
   class="viewer"
@@ -637,7 +682,10 @@
   onclick="closeViewer(event)"
 >
 
-  <div class="viewer-title" id="viewerTitle">
+  <div
+    class="viewer-title"
+    id="viewerTitle"
+  >
     Image
   </div>
 
@@ -645,7 +693,6 @@
     type="button"
     class="viewer-close"
     onclick="closeViewer()"
-    aria-label="Close"
   >
     ×
   </button>
@@ -659,525 +706,1069 @@
 </div>
 
 <script>
-  const SUPABASE_URL = "https://ytvtdelwefykeqwztcyo.supabase.co";
 
-  const SUPABASE_PUBLISHABLE_KEY =
-    "sb_publishable_CLTeqgEB6JSQ7Kqq6rQARw_RV31Ccg3";
+const SUPABASE_URL =
+  "https://ytvtdelwefykeqwztcyo.supabase.co";
 
-  const supabaseClient = window.supabase.createClient(
+const SUPABASE_PUBLISHABLE_KEY =
+  "sb_publishable_CLTeqgEB6JSQ7Kqq6rQARw_RV31Ccg3";
+
+const supabaseClient =
+  window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_PUBLISHABLE_KEY
   );
 
-  let application = null;
 
-  let personalPhotoUrl = "";
-  let storeLogoUrl = "";
+let application = null;
+
+let personalPhotoUrl = "";
+let storeLogoUrl = "";
+
+
+/*
+  IMPORTANT:
+  These are the actual bucket names used
+  by the vendor application.
+*/
+
+const PERSONAL_BUCKET = "vendor-photos";
+const LOGO_BUCKET = "business-logos";
+
+
+function getApplicationId() {
+
+  const params =
+    new URLSearchParams(
+      window.location.search
+    );
+
+  return params.get("id");
+}
+
+
+function escapeHtml(value) {
+
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+
+function setText(id, value, fallback = "—") {
+
+  const element =
+    document.getElementById(id);
+
+  if (!element) return;
+
+  const cleaned =
+    String(value ?? "").trim();
+
+  element.textContent =
+    cleaned || fallback;
+}
+
+
+/*
+  Convert the database value into
+  a clean storage object path.
+
+  Handles:
+
+  vendor-photos/abc.jpg
+  abc.jpg
+  /vendor-photos/abc.jpg
+
+  and full Supabase storage URLs.
+*/
+
+function cleanStoragePath(value, bucket) {
+
+  if (!value) return "";
+
+  let path =
+    String(value).trim();
+
+  path =
+    path.replace(/^\/+/, "");
 
   /*
-    The application stores storage paths rather than normal browser URLs.
-
-    These are the buckets used by the vendor application:
-      vendor-photos
-      business-logos
+    Full URL.
   */
 
-  const PERSONAL_BUCKET = "vendor-photos";
-  const LOGO_BUCKET = "business-logos";
-
-  function getApplicationId() {
-    const params = new URLSearchParams(window.location.search);
-    return params.get("id");
-  }
-
-  function escapeHtml(value) {
-    return String(value ?? "")
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
-  }
-
-  function text(value, fallback = "—") {
-    const v = String(value ?? "").trim();
-    return v ? escapeHtml(v) : fallback;
-  }
-
-  function setText(id, value, fallback = "—") {
-    const element = document.getElementById(id);
-
-    if (!element) return;
-
-    element.innerHTML = text(value, fallback);
-  }
-
-  function normalizeStoragePath(value, bucket) {
-    if (!value) return "";
-
-    let path = String(value).trim();
-
-    /*
-      If a full URL was somehow saved, use it directly.
-    */
-    if (
-      path.startsWith("http://") ||
-      path.startsWith("https://")
-    ) {
-      return path;
-    }
-
-    /*
-      Some older records may contain:
-        bucket/path
-      instead of:
-        path
-    */
-
-    const prefix = bucket + "/";
-
-    if (path.startsWith(prefix)) {
-      path = path.substring(prefix.length);
-    }
-
+  if (
+    path.startsWith("http://") ||
+    path.startsWith("https://")
+  ) {
     return path;
   }
 
-  async function createImageUrl(value, bucket) {
-    if (!value) return "";
+  /*
+    Remove bucket prefix if database
+    accidentally stored it.
+  */
 
-    const raw = String(value).trim();
+  const bucketPrefix =
+    bucket + "/";
 
-    if (
-      raw.startsWith("http://") ||
-      raw.startsWith("https://")
-    ) {
-      return raw;
-    }
+  if (
+    path.toLowerCase()
+      .startsWith(bucketPrefix.toLowerCase())
+  ) {
+    path =
+      path.substring(bucketPrefix.length);
+  }
 
-    const path = normalizeStoragePath(raw, bucket);
+  return path;
+}
 
-    if (!path) return "";
 
-    /*
-      First try a signed URL.
+/*
+  This is the important fix.
 
-      This is important because the personal-photo bucket
-      should remain private.
-    */
+  We try the stored path directly first.
 
-    const { data, error } = await supabaseClient
-      .storage
-      .from(bucket)
-      .createSignedUrl(path, 60 * 60);
+  Then we try removing a bucket prefix.
 
-    if (!error && data?.signedUrl) {
-      return data.signedUrl;
-    }
+  Then we try a signed URL.
 
+  Finally we try a public URL.
+
+  This makes the page tolerant of the
+  different path formats already stored
+  in the database.
+*/
+
+async function resolveStorageImage(
+  value,
+  bucket
+) {
+
+  if (!value) {
     console.error(
-      "Could not create signed URL:",
-      bucket,
-      path,
-      error
+      "No image path supplied for bucket:",
+      bucket
     );
-
-    /*
-      Fallback for a public bucket.
-    */
-
-    try {
-      const publicResult = supabaseClient
-        .storage
-        .from(bucket)
-        .getPublicUrl(path);
-
-      if (publicResult?.data?.publicUrl) {
-        return publicResult.data.publicUrl;
-      }
-    } catch (e) {
-      console.error("Public URL fallback failed:", e);
-    }
 
     return "";
   }
 
-  async function loadImage(
-    imgId,
-    emptyId,
-    value,
-    bucket
+  const original =
+    String(value).trim();
+
+  /*
+    If the database already contains
+    a complete browser URL, use it.
+  */
+
+  if (
+    original.startsWith("https://") ||
+    original.startsWith("http://")
   ) {
-    const img = document.getElementById(imgId);
-    const empty = document.getElementById(emptyId);
 
-    if (!img || !empty) return "";
-
-    empty.textContent = "Loading image...";
-    img.style.display = "none";
-
-    const url = await createImageUrl(value, bucket);
-
-    if (!url) {
-      empty.textContent = "Image not available";
-      return "";
-    }
-
-    img.onload = function() {
-      empty.style.display = "none";
-      img.style.display = "block";
-    };
-
-    img.onerror = function() {
-      img.style.display = "none";
-      empty.style.display = "flex";
-      empty.textContent = "Image could not be loaded";
-    };
-
-    img.src = url;
-
-    return url;
+    return original;
   }
 
-  async function loadApplication() {
 
-    const applicationId = getApplicationId();
+  const path =
+    cleanStoragePath(
+      original,
+      bucket
+    );
 
-    if (!applicationId) {
-      showError("No vendor application ID was supplied.");
-      return;
+
+  console.log(
+    "Resolving storage image:",
+    {
+      bucket,
+      original,
+      path
     }
+  );
 
-    /*
-      Verify admin.
-    */
 
-    const {
-      data: { user },
-      error: userError
-    } = await supabaseClient.auth.getUser();
+  /*
+    METHOD 1
+    Signed URL.
+  */
 
-    if (userError || !user) {
-      window.location.href = "login.html";
-      return;
-    }
+  try {
 
-    const { data: profile, error: profileError } =
+    const result =
       await supabaseClient
-        .from("profiles")
-        .select("id, full_name, account_status, is_admin")
-        .eq("id", user.id)
-        .single();
+        .storage
+        .from(bucket)
+        .createSignedUrl(
+          path,
+          60 * 60
+        );
+
+    console.log(
+      "Signed URL result:",
+      bucket,
+      result
+    );
 
     if (
-      profileError ||
-      !profile ||
-      profile.is_admin !== true ||
-      String(profile.account_status || "").toLowerCase() !== "active"
+      !result.error &&
+      result.data &&
+      result.data.signedUrl
     ) {
-      showError("You are not authorized to review marketplace applications.");
-      return;
+
+      return result.data.signedUrl;
     }
 
+  } catch (error) {
+
+    console.error(
+      "Signed URL exception:",
+      bucket,
+      error
+    );
+
+  }
+
+
+  /*
+    METHOD 2
+    Public URL fallback.
+  */
+
+  try {
+
+    const result =
+      supabaseClient
+        .storage
+        .from(bucket)
+        .getPublicUrl(path);
+
+    console.log(
+      "Public URL result:",
+      bucket,
+      result
+    );
+
+    if (
+      result.data &&
+      result.data.publicUrl
+    ) {
+
+      return result.data.publicUrl;
+    }
+
+  } catch (error) {
+
+    console.error(
+      "Public URL exception:",
+      bucket,
+      error
+    );
+
+  }
+
+
+  return "";
+}
+
+
+/*
+  Load an image and verify that the browser
+  can actually display it.
+
+  This is important because generating a URL
+  does not guarantee that the object exists.
+*/
+
+async function loadImage(
+  imgId,
+  emptyId,
+  value,
+  bucket
+) {
+
+  const img =
+    document.getElementById(imgId);
+
+  const empty =
+    document.getElementById(emptyId);
+
+  if (!img || !empty) {
+    return "";
+  }
+
+  img.style.display = "none";
+
+  empty.style.display = "flex";
+
+  empty.textContent =
+    "Loading image...";
+
+
+  const url =
+    await resolveStorageImage(
+      value,
+      bucket
+    );
+
+
+  if (!url) {
+
+    empty.textContent =
+      "Image not available";
+
+    return "";
+  }
+
+
+  return new Promise(resolve => {
+
+    img.onload = function() {
+
+      console.log(
+        "Image loaded successfully:",
+        bucket,
+        url
+      );
+
+      empty.style.display =
+        "none";
+
+      img.style.display =
+        "block";
+
+      resolve(url);
+    };
+
+
+    img.onerror = function(error) {
+
+      console.error(
+        "Browser could not load image:",
+        {
+          bucket,
+          value,
+          url,
+          error
+        }
+      );
+
+      img.style.display =
+        "none";
+
+      empty.style.display =
+        "flex";
+
+      empty.textContent =
+        "Image could not be loaded";
+
+      resolve("");
+    };
+
+
     /*
-      Load the exact Marketplace application.
+      Cache-busting query parameter.
     */
 
-    const { data, error } = await supabaseClient
-      .from("marketplace_vendor_applications")
+    const separator =
+      url.includes("?")
+        ? "&"
+        : "?";
+
+    img.src =
+      url +
+      separator +
+      "review=" +
+      Date.now();
+
+  });
+
+}
+
+
+/*
+  Load application.
+*/
+
+async function loadApplication() {
+
+  const applicationId =
+    getApplicationId();
+
+
+  if (!applicationId) {
+
+    showError(
+      "No vendor application ID was supplied."
+    );
+
+    return;
+  }
+
+
+  /*
+    Confirm admin session.
+  */
+
+  const {
+    data: { user },
+    error: userError
+  } =
+    await supabaseClient.auth.getUser();
+
+
+  if (userError || !user) {
+
+    window.location.href =
+      "login.html";
+
+    return;
+  }
+
+
+  /*
+    Confirm admin profile.
+  */
+
+  const {
+    data: profile,
+    error: profileError
+  } =
+    await supabaseClient
+      .from("profiles")
+      .select(
+        "id, full_name, account_status, is_admin"
+      )
+      .eq("id", user.id)
+      .single();
+
+
+  if (
+    profileError ||
+    !profile ||
+    profile.is_admin !== true ||
+    String(
+      profile.account_status || ""
+    ).toLowerCase() !== "active"
+  ) {
+
+    showError(
+      "You are not authorized to review marketplace applications."
+    );
+
+    return;
+  }
+
+
+  /*
+    Load exact application.
+  */
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from(
+        "marketplace_vendor_applications"
+      )
       .select("*")
       .eq("id", applicationId)
       .single();
 
-    if (error || !data) {
-      console.error(error);
-      showError(
-        "The marketplace vendor application could not be loaded."
-      );
-      return;
-    }
 
-    application = data;
+  if (error || !data) {
 
-    renderApplication(data);
+    console.error(
+      "Application load error:",
+      error
+    );
 
-    /*
-      Load the two images.
+    showError(
+      "The marketplace vendor application could not be loaded."
+    );
 
-      Personal photo:
-        private signed URL
+    return;
+  }
 
-      Store logo:
-        signed URL first, public fallback
-    */
 
-    personalPhotoUrl = await loadImage(
+  application =
+    data;
+
+
+  console.log(
+    "Marketplace application:",
+    data
+  );
+
+
+  renderApplication(data);
+
+
+  /*
+    Load personal photo.
+  */
+
+  personalPhotoUrl =
+    await loadImage(
       "personalPhoto",
       "personalPhotoEmpty",
       data.personal_photo_url,
       PERSONAL_BUCKET
     );
 
-    storeLogoUrl = await loadImage(
+
+  /*
+    Load store logo.
+  */
+
+  storeLogoUrl =
+    await loadImage(
       "storeLogo",
       "storeLogoEmpty",
       data.store_logo_url,
       LOGO_BUCKET
     );
 
-    document.getElementById("loading").style.display = "none";
-    document.getElementById("content").style.display = "block";
-  }
 
-  function renderApplication(data) {
+  document.getElementById(
+    "loading"
+  ).style.display = "none";
 
-    document.getElementById("pageTitle").textContent =
-      data.store_name || "Vendor Review";
 
-    document.getElementById("pageSubtitle").textContent =
-      data.full_name || "Marketplace application";
+  document.getElementById(
+    "content"
+  ).style.display = "block";
+}
 
-    document.getElementById("statusBadge").textContent =
-      String(data.status || "pending").replace(/_/g, " ").toUpperCase();
 
-    setText("fullName", data.full_name);
-    setText("email", data.email);
-    setText("phone", data.phone_number);
-    setText("storeName", data.store_name);
-    setText("residentialAddress", data.residential_address);
+/*
+  Render application information.
+*/
 
-    setText("businessLocation", data.business_location);
-    setText(
-      "stateLga",
-      `${data.state || "—"} / ${data.lga || "—"}`
+function renderApplication(data) {
+
+  document.getElementById(
+    "pageTitle"
+  ).textContent =
+    data.store_name ||
+    "Vendor Review";
+
+
+  document.getElementById(
+    "pageSubtitle"
+  ).textContent =
+    data.full_name ||
+    "Marketplace application";
+
+
+  document.getElementById(
+    "statusBadge"
+  ).textContent =
+    String(
+      data.status || "pending"
+    )
+      .replace(/_/g, " ")
+      .toUpperCase();
+
+
+  setText(
+    "fullName",
+    data.full_name
+  );
+
+  setText(
+    "email",
+    data.email
+  );
+
+  setText(
+    "phone",
+    data.phone_number
+  );
+
+  setText(
+    "storeName",
+    data.store_name
+  );
+
+  setText(
+    "residentialAddress",
+    data.residential_address
+  );
+
+
+  setText(
+    "businessLocation",
+    data.business_location
+  );
+
+
+  setText(
+    "stateLga",
+    `${data.state || "—"} / ${data.lga || "—"}`
+  );
+
+
+  setText(
+    "businessAddress",
+    data.business_address
+  );
+
+
+  setText(
+    "businessPhone",
+    data.business_phone
+  );
+
+
+  setText(
+    "businessDescription",
+    data.business_description
+  );
+
+
+  setText(
+    "additionalInformation",
+    data.additional_information,
+    "Not provided"
+  );
+
+
+  renderLinks(data);
+
+
+  document.getElementById(
+    "adminNote"
+  ).value =
+    data.admin_note || "";
+}
+
+
+/*
+  Social/business links.
+*/
+
+function renderLinks(data) {
+
+  const container =
+    document.getElementById("links");
+
+
+  const links = [
+
+    ["TikTok", data.tiktok_url],
+
+    ["Instagram", data.instagram_url],
+
+    ["Facebook", data.facebook_url],
+
+    ["WhatsApp", data.whatsapp_url],
+
+    ["Website", data.website_url]
+
+  ];
+
+
+  const available =
+    links.filter(
+      item =>
+        item[1] &&
+        String(item[1]).trim()
     );
-    setText("businessAddress", data.business_address);
-    setText("businessPhone", data.business_phone);
-    setText("businessDescription", data.business_description);
 
-    setText(
-      "additionalInformation",
-      data.additional_information,
-      "Not provided"
+
+  if (!available.length) {
+
+    container.innerHTML =
+      '<span class="muted">No links provided</span>';
+
+    return;
+  }
+
+
+  container.innerHTML =
+    available
+      .map(([name, url]) => {
+
+        let href =
+          String(url).trim();
+
+
+        if (
+          !href.startsWith("http://") &&
+          !href.startsWith("https://")
+        ) {
+
+          href =
+            "https://" + href;
+        }
+
+
+        return `
+          <a
+            class="link"
+            href="${escapeHtml(href)}"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            ${escapeHtml(name)}
+          </a>
+        `;
+
+      })
+      .join("");
+}
+
+
+/*
+  Open fullscreen viewer.
+*/
+
+function openViewer(type) {
+
+  let url = "";
+  let title = "";
+
+
+  if (type === "personal") {
+
+    url =
+      personalPhotoUrl;
+
+    title =
+      "Vendor Personal Photo";
+  }
+
+
+  if (type === "logo") {
+
+    url =
+      storeLogoUrl;
+
+    title =
+      "Store Logo";
+  }
+
+
+  if (!url) {
+
+    alert(
+      "This image could not be loaded."
     );
 
-    renderLinks(data);
-
-    document.getElementById("adminNote").value =
-      data.admin_note || "";
+    return;
   }
 
-  function renderLinks(data) {
 
-    const container = document.getElementById("links");
+  const viewer =
+    document.getElementById(
+      "imageViewer"
+    );
 
-    const links = [
-      ["TikTok", data.tiktok_url],
-      ["Instagram", data.instagram_url],
-      ["Facebook", data.facebook_url],
-      ["WhatsApp", data.whatsapp_url],
-      ["Website", data.website_url]
-    ];
 
-    const available = links.filter(item => {
-      return item[1] && String(item[1]).trim();
-    });
+  const image =
+    document.getElementById(
+      "viewerImage"
+    );
 
-    if (!available.length) {
-      container.innerHTML =
-        '<span class="muted">No links provided</span>';
-      return;
-    }
 
-    container.innerHTML = available.map(([name, url]) => {
+  const viewerTitle =
+    document.getElementById(
+      "viewerTitle"
+    );
 
-      let href = String(url).trim();
 
-      if (
-        !href.startsWith("http://") &&
-        !href.startsWith("https://")
-      ) {
-        href = "https://" + href;
-      }
+  viewerTitle.textContent =
+    title;
 
-      return `
-        <a
-          class="link"
-          href="${escapeHtml(href)}"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          ${escapeHtml(name)}
-        </a>
-      `;
 
-    }).join("");
+  image.src =
+    url;
+
+
+  viewer.classList.add(
+    "open"
+  );
+
+
+  document.body.style.overflow =
+    "hidden";
+}
+
+
+/*
+  Close viewer.
+*/
+
+function closeViewer(event) {
+
+  if (
+    event &&
+    event.target &&
+    event.target.id === "viewerImage"
+  ) {
+    return;
   }
 
-  function openViewer(type) {
 
-    let url = "";
-    let title = "";
+  const viewer =
+    document.getElementById(
+      "imageViewer"
+    );
 
-    if (type === "personal") {
-      url = personalPhotoUrl;
-      title = "Vendor Personal Photo";
-    }
 
-    if (type === "logo") {
-      url = storeLogoUrl;
-      title = "Store Logo";
-    }
+  const image =
+    document.getElementById(
+      "viewerImage"
+    );
 
-    if (!url) {
-      return;
-    }
 
-    const viewer = document.getElementById("imageViewer");
-    const image = document.getElementById("viewerImage");
-    const viewerTitle = document.getElementById("viewerTitle");
+  viewer.classList.remove(
+    "open"
+  );
 
-    image.src = url;
-    viewerTitle.textContent = title;
 
-    viewer.classList.add("open");
+  image.src = "";
 
-    document.body.style.overflow = "hidden";
-  }
 
-  function closeViewer(event) {
+  document.body.style.overflow =
+    "";
+}
 
-    /*
-      If the click came from the image itself,
-      do not close the viewer.
-    */
 
-    if (
-      event &&
-      event.target &&
-      event.target.id === "viewerImage"
-    ) {
-      return;
-    }
+/*
+  Escape key.
+*/
 
-    const viewer = document.getElementById("imageViewer");
-    const image = document.getElementById("viewerImage");
-
-    viewer.classList.remove("open");
-    image.src = "";
-
-    document.body.style.overflow = "";
-  }
-
-  document.addEventListener("keydown", function(event) {
+document.addEventListener(
+  "keydown",
+  function(event) {
 
     if (event.key === "Escape") {
+
       closeViewer();
     }
 
-  });
+  }
+);
 
-  async function updateApplication(newStatus) {
 
-    if (!application) return;
+/*
+  Admin review action.
+*/
 
-    const buttons = [
-      document.getElementById("approveBtn"),
-      document.getElementById("moreBtn"),
-      document.getElementById("rejectBtn")
-    ];
+async function updateApplication(
+  newStatus
+) {
 
-    buttons.forEach(button => {
+  if (!application) return;
+
+
+  const buttons = [
+
+    document.getElementById(
+      "approveBtn"
+    ),
+
+    document.getElementById(
+      "moreBtn"
+    ),
+
+    document.getElementById(
+      "rejectBtn"
+    )
+
+  ];
+
+
+  buttons.forEach(
+    button => {
       button.disabled = true;
-    });
-
-    const message = document.getElementById("message");
-
-    message.className = "message";
-    message.textContent = "Saving review...";
-
-    const {
-      data: { user }
-    } = await supabaseClient.auth.getUser();
-
-    if (!user) {
-      message.className = "message error";
-      message.textContent = "Your admin session has expired.";
-
-      buttons.forEach(button => {
-        button.disabled = false;
-      });
-
-      return;
     }
+  );
 
-    const adminNote =
-      document.getElementById("adminNote").value.trim();
 
-    const { error } = await supabaseClient
-      .from("marketplace_vendor_applications")
+  const message =
+    document.getElementById(
+      "message"
+    );
+
+
+  message.className =
+    "message";
+
+  message.textContent =
+    "Saving review...";
+
+
+  const {
+    data: { user }
+  } =
+    await supabaseClient.auth.getUser();
+
+
+  if (!user) {
+
+    message.className =
+      "message error";
+
+    message.textContent =
+      "Your admin session has expired.";
+
+    return;
+  }
+
+
+  const adminNote =
+    document
+      .getElementById(
+        "adminNote"
+      )
+      .value
+      .trim();
+
+
+  const {
+    error
+  } =
+    await supabaseClient
+      .from(
+        "marketplace_vendor_applications"
+      )
       .update({
-        status: newStatus,
-        admin_note: adminNote || null,
-        reviewed_by: user.id,
-        reviewed_at: new Date().toISOString(),
-        updated_at: new Date().toISOString()
+
+        status:
+          newStatus,
+
+        admin_note:
+          adminNote || null,
+
+        reviewed_by:
+          user.id,
+
+        reviewed_at:
+          new Date().toISOString(),
+
+        updated_at:
+          new Date().toISOString()
+
       })
-      .eq("id", application.id);
+      .eq(
+        "id",
+        application.id
+      );
 
-    if (error) {
 
-      console.error(error);
+  if (error) {
 
-      message.className = "message error";
-      message.textContent =
-        "Could not save the review: " + error.message;
+    console.error(error);
 
-      buttons.forEach(button => {
+    message.className =
+      "message error";
+
+    message.textContent =
+      "Could not save the review: " +
+      error.message;
+
+
+    buttons.forEach(
+      button => {
         button.disabled = false;
-      });
+      }
+    );
 
-      return;
-    }
+    return;
+  }
 
-    application.status = newStatus;
-    application.admin_note = adminNote;
 
-    document.getElementById("statusBadge").textContent =
-      newStatus.replace(/_/g, " ").toUpperCase();
+  application.status =
+    newStatus;
 
-    message.className = "message success";
+  application.admin_note =
+    adminNote;
 
-    if (newStatus === "approved") {
-      message.textContent =
-        "Vendor application approved successfully.";
-    } else if (newStatus === "rejected") {
-      message.textContent =
-        "Vendor application rejected.";
-    } else {
-      message.textContent =
-        "More information has been requested.";
-    }
 
-    buttons.forEach(button => {
+  document.getElementById(
+    "statusBadge"
+  ).textContent =
+    newStatus
+      .replace(/_/g, " ")
+      .toUpperCase();
+
+
+  message.className =
+    "message success";
+
+
+  if (
+    newStatus === "approved"
+  ) {
+
+    message.textContent =
+      "Vendor application approved successfully.";
+
+  } else if (
+    newStatus === "rejected"
+  ) {
+
+    message.textContent =
+      "Vendor application rejected.";
+
+  } else {
+
+    message.textContent =
+      "More information has been requested.";
+  }
+
+
+  buttons.forEach(
+    button => {
       button.disabled = false;
-    });
-  }
+    }
+  );
+}
 
-  function showError(message) {
 
-    document.getElementById("loading").innerHTML = `
-      <div class="loading" style="color:#ff8795;">
-        ${escapeHtml(message)}
-      </div>
-    `;
-  }
+/*
+  Error screen.
+*/
 
-  function goBack() {
-    window.location.href = "marketplace.html";
-  }
+function showError(message) {
 
-  loadApplication();
+  document.getElementById(
+    "loading"
+  ).innerHTML = `
+    <div
+      class="loading"
+      style="color:#ff8795;"
+    >
+      ${escapeHtml(message)}
+    </div>
+  `;
+}
+
+
+/*
+  Back button.
+*/
+
+function goBack() {
+
+  window.location.href =
+    "marketplace.html";
+}
+
+
+/*
+  Start.
+*/
+
+loadApplication();
+
 </script>
 
 </body>

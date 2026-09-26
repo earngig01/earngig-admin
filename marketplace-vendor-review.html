@@ -4,491 +4,387 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Vendor Review | EarnGig Admin</title>
+  <title>Marketplace Vendor Review</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="supabase.js"></script>
 
   <style>
-    :root{
-      --bg:#07101d;
-      --panel:#0d1a2b;
-      --panel2:#101f33;
-      --border:#22344d;
-      --text:#edf3fb;
-      --muted:#8fa1b7;
-      --accent:#8b5cf6;
-      --green:#22c55e;
-      --red:#ef4444;
-      --blue:#38bdf8;
-      --yellow:#f59e0b;
+    * {
+      box-sizing: border-box;
     }
 
-    *{
-      box-sizing:border-box;
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      background: #07111f;
+      color: #e8eef8;
+      font-family: Arial, Helvetica, sans-serif;
     }
 
-    body{
-      margin:0;
-      background:var(--bg);
-      color:var(--text);
-      font-family:Inter,Arial,sans-serif;
-      font-size:14px;
-      line-height:1.45;
+    body {
+      min-height: 100vh;
     }
 
-    button,
-    input,
-    textarea{
-      font:inherit;
+    .page {
+      width: min(980px, 100%);
+      margin: 0 auto;
+      padding: 18px 14px 50px;
     }
 
-    a{
-      color:#b9a4ff;
-      text-decoration:none;
+    .topbar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
     }
 
-    .page{
-      width:min(100%,920px);
-      margin:0 auto;
-      padding:16px 12px 40px;
+    .back {
+      border: 1px solid #263852;
+      background: #0d1a2b;
+      color: #dce8f7;
+      border-radius: 9px;
+      padding: 8px 12px;
+      cursor: pointer;
+      font-size: 13px;
     }
 
-    /* HEADER */
-
-    .topbar{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      margin-bottom:14px;
+    .title-wrap {
+      flex: 1;
+      min-width: 0;
     }
 
-    .back-btn{
-      border:1px solid var(--border);
-      background:#0b1727;
-      color:var(--text);
-      border-radius:8px;
-      padding:8px 11px;
-      cursor:pointer;
-      white-space:nowrap;
+    .title {
+      margin: 0;
+      font-size: 21px;
+      color: #ffffff;
     }
 
-    .back-btn:hover{
-      border-color:#405676;
+    .subtitle {
+      margin: 4px 0 0;
+      color: #8fa1b8;
+      font-size: 12px;
     }
 
-    .title-area{
-      min-width:0;
+    .status {
+      display: inline-flex;
+      align-items: center;
+      padding: 5px 9px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      background: #3a2d12;
+      color: #f4cc68;
+      white-space: nowrap;
     }
 
-    .title-area h1{
-      margin:0;
-      font-size:20px;
-      line-height:1.15;
+    .card {
+      background: #0b1829;
+      border: 1px solid #20334c;
+      border-radius: 12px;
+      margin-bottom: 12px;
+      overflow: hidden;
     }
 
-    .title-area p{
-      margin:3px 0 0;
-      color:var(--muted);
-      font-size:11px;
+    .card-head {
+      padding: 12px 14px;
+      border-bottom: 1px solid #1d3048;
     }
 
-    /* GENERAL */
-
-    .loading,
-    .error{
-      border:1px solid var(--border);
-      background:var(--panel);
-      border-radius:11px;
-      padding:18px;
+    .card-head h2 {
+      margin: 0;
+      font-size: 14px;
+      color: #f2f6fb;
     }
 
-    .error{
-      color:#fecaca;
-      border-color:#5a2730;
+    .card-head p {
+      margin: 4px 0 0;
+      color: #8093aa;
+      font-size: 11px;
     }
 
-    .section{
-      margin-top:11px;
-      border:1px solid var(--border);
-      border-radius:11px;
-      background:var(--panel);
-      overflow:hidden;
+    .card-body {
+      padding: 12px 14px;
     }
 
-    .section-head{
-      padding:10px 12px;
-      border-bottom:1px solid var(--border);
-      background:#0a1625;
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 9px;
     }
 
-    .section-head h2{
-      margin:0;
-      font-size:13px;
+    .field {
+      background: #091524;
+      border: 1px solid #1c2e44;
+      border-radius: 9px;
+      padding: 9px 10px;
+      min-width: 0;
     }
 
-    .section-head p{
-      margin:2px 0 0;
-      color:var(--muted);
-      font-size:10px;
+    .field.full {
+      grid-column: 1 / -1;
     }
 
-    .section-body{
-      padding:11px;
+    .label {
+      color: #71849b;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      font-size: 9px;
+      margin-bottom: 4px;
     }
 
-    /* SUMMARY */
-
-    .vendor-summary{
-      display:flex;
-      align-items:center;
-      gap:11px;
+    .value {
+      color: #e4ebf5;
+      font-size: 12px;
+      line-height: 1.45;
+      overflow-wrap: anywhere;
     }
 
-    .logo-small{
-      width:52px;
-      height:52px;
-      flex:0 0 52px;
-      border:1px solid var(--border);
-      border-radius:9px;
-      padding:4px;
-      background:#06101b;
-      object-fit:contain;
-    }
-
-    .vendor-summary h2{
-      margin:0;
-      font-size:17px;
-    }
-
-    .vendor-summary p{
-      margin:2px 0 0;
-      color:var(--muted);
-      font-size:11px;
-      word-break:break-word;
-    }
-
-    .status{
-      display:inline-flex;
-      margin-top:6px;
-      padding:3px 7px;
-      border-radius:999px;
-      font-size:9px;
-      font-weight:700;
-      text-transform:uppercase;
-      letter-spacing:.4px;
-    }
-
-    .status.pending{
-      color:#fcd34d;
-      background:rgba(245,158,11,.12);
-    }
-
-    .status.approved{
-      color:#86efac;
-      background:rgba(34,197,94,.12);
-    }
-
-    .status.rejected{
-      color:#fca5a5;
-      background:rgba(239,68,68,.12);
-    }
-
-    .status.more{
-      color:#7dd3fc;
-      background:rgba(56,189,248,.12);
-    }
-
-    .status.withdrawn{
-      color:#cbd5e1;
-      background:rgba(148,163,184,.12);
-    }
-
-    /* INFO */
-
-    .info-grid{
-      display:grid;
-      grid-template-columns:repeat(2,minmax(0,1fr));
-      gap:7px;
-    }
-
-    .info{
-      min-width:0;
-      border:1px solid var(--border);
-      border-radius:8px;
-      background:#091624;
-      padding:9px;
-    }
-
-    .info.full{
-      grid-column:1/-1;
-    }
-
-    .label{
-      color:#71839a;
-      font-size:8px;
-      text-transform:uppercase;
-      letter-spacing:.55px;
-      margin-bottom:3px;
-    }
-
-    .value{
-      color:#e7eef7;
-      font-size:11px;
-      word-break:break-word;
-    }
-
-    .empty{
-      color:#64778d;
+    .muted {
+      color: #687b91;
     }
 
     /* IMAGES */
 
-    .image-grid{
-      display:grid;
-      grid-template-columns:repeat(2,minmax(0,1fr));
-      gap:9px;
+    .image-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
     }
 
-    .image-card{
-      border:1px solid var(--border);
-      border-radius:9px;
-      background:#091522;
-      overflow:hidden;
+    .image-box {
+      background: #081321;
+      border: 1px solid #1e3249;
+      border-radius: 10px;
+      padding: 8px;
     }
 
-    .image-label{
-      padding:7px 8px;
-      color:#8193a8;
-      font-size:8px;
-      text-transform:uppercase;
-      letter-spacing:.55px;
+    .image-label {
+      color: #71849b;
+      text-transform: uppercase;
+      font-size: 9px;
+      letter-spacing: .05em;
+      margin-bottom: 7px;
     }
 
-    .image-button{
-      display:block;
-      width:100%;
-      height:190px;
-      padding:0;
-      border:0;
-      background:#06101b;
-      cursor:pointer;
-      position:relative;
-      overflow:hidden;
+    .image-button {
+      display: block;
+      width: 100%;
+      height: 190px;
+      padding: 0;
+      border: 1px solid #263d58;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #06101d;
+      cursor: pointer;
+      position: relative;
     }
 
-    .image-button img{
-      width:100%;
-      height:100%;
-      display:block;
-      object-fit:contain;
-      background:#06101b;
+    .image-button:hover {
+      border-color: #7c5cff;
     }
 
-    .image-button:hover::after{
-      content:"Tap to view";
-      position:absolute;
-      right:7px;
-      bottom:7px;
-      padding:4px 7px;
-      border-radius:5px;
-      background:rgba(0,0,0,.75);
-      color:#fff;
-      font-size:9px;
+    .image-button img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: contain;
+      background: #06101d;
     }
 
-    .image-placeholder{
-      height:190px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      color:#53667d;
-      font-size:10px;
+    .image-empty {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #62758b;
+      font-size: 11px;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .zoom-hint {
+      position: absolute;
+      right: 7px;
+      bottom: 7px;
+      background: rgba(0, 0, 0, .72);
+      color: #fff;
+      border-radius: 6px;
+      padding: 5px 7px;
+      font-size: 10px;
+      pointer-events: none;
+    }
+
+    /* FULL SCREEN IMAGE VIEWER */
+
+    .viewer {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(2, 7, 14, .96);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .viewer.open {
+      display: flex;
+    }
+
+    .viewer img {
+      max-width: 96vw;
+      max-height: 90vh;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 15px 60px rgba(0,0,0,.6);
+    }
+
+    .viewer-close {
+      position: fixed;
+      top: 15px;
+      right: 15px;
+      width: 42px;
+      height: 42px;
+      border: 1px solid #41536b;
+      background: #101d2e;
+      color: #ffffff;
+      border-radius: 50%;
+      font-size: 24px;
+      cursor: pointer;
+      z-index: 10000;
+    }
+
+    .viewer-title {
+      position: fixed;
+      top: 20px;
+      left: 18px;
+      color: #dce6f2;
+      font-size: 12px;
+      z-index: 10000;
     }
 
     /* LINKS */
 
-    .links{
-      display:flex;
-      flex-wrap:wrap;
-      gap:6px;
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
     }
 
-    .link-chip{
-      padding:6px 8px;
-      border:1px solid var(--border);
-      border-radius:7px;
-      background:#091624;
-      color:#bdaeff;
-      font-size:10px;
+    .link {
+      display: inline-block;
+      padding: 7px 9px;
+      border-radius: 7px;
+      background: #101f33;
+      border: 1px solid #263b55;
+      color: #aebeff;
+      text-decoration: none;
+      font-size: 11px;
     }
 
     /* REVIEW */
 
-    .review-box textarea{
-      width:100%;
-      min-height:82px;
-      resize:vertical;
-      padding:9px;
-      border:1px solid var(--border);
-      border-radius:8px;
-      outline:none;
-      background:#081422;
-      color:var(--text);
-      font-size:11px;
+    textarea {
+      width: 100%;
+      min-height: 90px;
+      resize: vertical;
+      border: 1px solid #263b55;
+      background: #071321;
+      color: #edf3fb;
+      border-radius: 9px;
+      padding: 10px;
+      outline: none;
+      font-family: inherit;
+      font-size: 12px;
     }
 
-    .review-box textarea:focus{
-      border-color:var(--accent);
+    textarea:focus {
+      border-color: #7256ff;
     }
 
-    .review-actions{
-      display:flex;
-      flex-wrap:wrap;
-      gap:7px;
-      margin-top:8px;
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
     }
 
-    .action{
-      border:0;
-      border-radius:7px;
-      padding:8px 11px;
-      color:#fff;
-      cursor:pointer;
-      font-size:11px;
-      font-weight:600;
+    button.action {
+      border: 0;
+      border-radius: 8px;
+      padding: 9px 13px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
     }
 
-    .action:disabled{
-      opacity:.5;
-      cursor:not-allowed;
+    .approve {
+      background: #247a54;
+      color: white;
     }
 
-    .approve{
-      background:#16803a;
+    .more {
+      background: #73551a;
+      color: white;
     }
 
-    .more-info{
-      background:#245c82;
+    .reject {
+      background: #8b3040;
+      color: white;
     }
 
-    .reject{
-      background:#a52f3b;
+    button:disabled {
+      opacity: .5;
+      cursor: not-allowed;
     }
 
-    .message{
-      margin-top:8px;
-      padding:8px 9px;
-      border-radius:7px;
-      font-size:10px;
-      display:none;
+    .message {
+      margin-top: 9px;
+      font-size: 12px;
+      line-height: 1.4;
     }
 
-    .message.success{
-      display:block;
-      background:rgba(34,197,94,.1);
-      border:1px solid rgba(34,197,94,.25);
-      color:#86efac;
+    .success {
+      color: #67d39b;
     }
 
-    .message.error{
-      display:block;
-      background:rgba(239,68,68,.1);
-      border:1px solid rgba(239,68,68,.25);
-      color:#fca5a5;
+    .error {
+      color: #ff8795;
     }
 
-    /* IMAGE VIEWER */
-
-    .image-modal{
-      position:fixed;
-      inset:0;
-      z-index:9999;
-      display:none;
-      align-items:center;
-      justify-content:center;
-      padding:15px;
-      background:rgba(0,0,0,.94);
+    .loading {
+      padding: 30px;
+      text-align: center;
+      color: #8093aa;
+      font-size: 13px;
     }
 
-    .image-modal.open{
-      display:flex;
-    }
-
-    .modal-image{
-      max-width:100%;
-      max-height:calc(100vh - 55px);
-      width:auto;
-      height:auto;
-      object-fit:contain;
-      border-radius:7px;
-      box-shadow:0 10px 45px rgba(0,0,0,.7);
-    }
-
-    .modal-close{
-      position:fixed;
-      top:12px;
-      right:12px;
-      width:40px;
-      height:40px;
-      border:1px solid rgba(255,255,255,.2);
-      border-radius:50%;
-      background:rgba(8,15,25,.95);
-      color:#fff;
-      font-size:24px;
-      line-height:1;
-      cursor:pointer;
-      z-index:10001;
-    }
-
-    .modal-title{
-      position:fixed;
-      left:50%;
-      bottom:10px;
-      transform:translateX(-50%);
-      max-width:90%;
-      padding:5px 9px;
-      border-radius:6px;
-      background:rgba(0,0,0,.7);
-      color:#dbe5f0;
-      font-size:10px;
-      text-align:center;
-    }
-
-    @media(max-width:620px){
-
-      .page{
-        padding:12px 9px 30px;
+    @media (max-width: 620px) {
+      .page {
+        padding: 12px 10px 35px;
       }
 
-      .title-area h1{
-        font-size:18px;
+      .grid {
+        grid-template-columns: 1fr;
       }
 
-      .info-grid{
-        grid-template-columns:1fr;
+      .field.full {
+        grid-column: auto;
       }
 
-      .info.full{
-        grid-column:auto;
+      .image-grid {
+        grid-template-columns: 1fr;
       }
 
-      .image-grid{
-        grid-template-columns:1fr;
+      .image-button {
+        height: 230px;
       }
 
-      .image-button,
-      .image-placeholder{
-        height:225px;
-      }
-
-      .review-actions{
-        display:grid;
-        grid-template-columns:1fr;
-      }
-
-      .action{
-        width:100%;
+      .title {
+        font-size: 18px;
       }
     }
   </style>
@@ -499,1326 +395,789 @@
 <div class="page">
 
   <div class="topbar">
-    <button class="back-btn" onclick="goBack()">← Back</button>
+    <button class="back" onclick="goBack()">← Back</button>
 
-    <div class="title-area">
-      <h1>Vendor Review</h1>
-      <p>Marketplace administration</p>
+    <div class="title-wrap">
+      <h1 class="title" id="pageTitle">Vendor Review</h1>
+      <p class="subtitle" id="pageSubtitle">Marketplace application</p>
     </div>
+
+    <span class="status" id="statusBadge">Loading</span>
   </div>
 
-  <div id="loading" class="loading">
-    Loading vendor application...
+  <div id="loading" class="card">
+    <div class="loading">Loading application...</div>
   </div>
 
-  <div id="errorBox" class="error" style="display:none;"></div>
+  <div id="content" style="display:none;">
 
-  <main id="content" style="display:none;">
+    <!-- APPLICATION -->
 
-    <!-- SUMMARY -->
-
-    <section class="section">
-      <div class="section-body">
-
-        <div class="vendor-summary">
-
-          <img
-            id="summaryLogo"
-            class="logo-small"
-            style="display:none;"
-            alt="Store logo"
-          >
-
-          <div>
-            <h2 id="storeName">Vendor</h2>
-            <p id="vendorMeta"></p>
-            <span id="statusBadge" class="status pending">
-              Pending
-            </span>
-          </div>
-
-        </div>
-
-      </div>
-    </section>
-
-
-    <!-- APPLICANT -->
-
-    <section class="section">
-
-      <div class="section-head">
-        <h2>Applicant information</h2>
-        <p>Identity and contact information</p>
+    <section class="card">
+      <div class="card-head">
+        <h2>Applicant</h2>
+        <p>Personal and contact information</p>
       </div>
 
-      <div class="section-body">
+      <div class="card-body">
+        <div class="grid">
 
-        <div class="info-grid">
-
-          <div class="info">
+          <div class="field">
             <div class="label">Full name</div>
-            <div class="value" id="fullName"></div>
+            <div class="value" id="fullName">—</div>
           </div>
 
-          <div class="info">
+          <div class="field">
             <div class="label">Email</div>
-            <div class="value" id="email"></div>
+            <div class="value" id="email">—</div>
           </div>
 
-          <div class="info">
+          <div class="field">
             <div class="label">Phone</div>
-            <div class="value" id="phone"></div>
+            <div class="value" id="phone">—</div>
           </div>
 
-          <div class="info">
-            <div class="label">State</div>
-            <div class="value" id="state"></div>
+          <div class="field">
+            <div class="label">Store name</div>
+            <div class="value" id="storeName">—</div>
           </div>
 
-          <div class="info">
-            <div class="label">LGA</div>
-            <div class="value" id="lga"></div>
-          </div>
-
-          <div class="info full">
+          <div class="field full">
             <div class="label">Residential address</div>
-            <div class="value" id="residentialAddress"></div>
+            <div class="value" id="residentialAddress">—</div>
           </div>
 
         </div>
-
       </div>
     </section>
-
 
     <!-- BUSINESS -->
 
-    <section class="section">
-
-      <div class="section-head">
-        <h2>Business information</h2>
-        <p>Information supplied for the proposed marketplace store</p>
+    <section class="card">
+      <div class="card-head">
+        <h2>Business Information</h2>
+        <p>Information supplied by the vendor</p>
       </div>
 
-      <div class="section-body">
+      <div class="card-body">
+        <div class="grid">
 
-        <div class="info-grid">
-
-          <div class="info">
-            <div class="label">Store name</div>
-            <div class="value" id="businessStoreName"></div>
-          </div>
-
-          <div class="info">
-            <div class="label">Business phone</div>
-            <div class="value" id="businessPhone"></div>
-          </div>
-
-          <div class="info">
+          <div class="field">
             <div class="label">Business location</div>
-            <div class="value" id="businessLocation"></div>
+            <div class="value" id="businessLocation">—</div>
           </div>
 
-          <div class="info">
+          <div class="field">
+            <div class="label">State / LGA</div>
+            <div class="value" id="stateLga">—</div>
+          </div>
+
+          <div class="field full">
             <div class="label">Business address</div>
-            <div class="value" id="businessAddress"></div>
+            <div class="value" id="businessAddress">—</div>
           </div>
 
-          <div class="info full">
+          <div class="field">
+            <div class="label">Business phone</div>
+            <div class="value" id="businessPhone">—</div>
+          </div>
+
+          <div class="field">
             <div class="label">Business description</div>
-            <div class="value" id="businessDescription"></div>
+            <div class="value" id="businessDescription">—</div>
           </div>
 
         </div>
-
       </div>
     </section>
-
 
     <!-- IMAGES -->
 
-    <section class="section">
-
-      <div class="section-head">
-        <h2>Verification images</h2>
-        <p>
-          Personal photo is private verification evidence.
-          Store logo is used for the marketplace store.
-        </p>
+    <section class="card">
+      <div class="card-head">
+        <h2>Verification Images</h2>
+        <p>Personal photo is private verification evidence. Store logo is used for the marketplace store.</p>
       </div>
 
-      <div class="section-body">
-
+      <div class="card-body">
         <div class="image-grid">
 
-          <div class="image-card">
-
-            <div class="image-label">
-              Personal photo
-            </div>
+          <div class="image-box">
+            <div class="image-label">Personal Photo</div>
 
             <button
               type="button"
-              id="personalPhotoButton"
               class="image-button"
-              style="display:none;"
+              id="personalPhotoButton"
+              onclick="openViewer('personal')"
             >
+              <div class="image-empty" id="personalPhotoEmpty">
+                Loading image...
+              </div>
+
               <img
                 id="personalPhoto"
-                alt="Applicant personal photo"
+                alt="Vendor personal photo"
+                style="display:none;"
               >
+
+              <span class="zoom-hint">Tap to view</span>
             </button>
-
-            <div
-              id="personalPhotoEmpty"
-              class="image-placeholder"
-            >
-              Image not available
-            </div>
-
           </div>
 
-
-          <div class="image-card">
-
-            <div class="image-label">
-              Store logo
-            </div>
+          <div class="image-box">
+            <div class="image-label">Store Logo</div>
 
             <button
               type="button"
-              id="storeLogoButton"
               class="image-button"
-              style="display:none;"
+              id="storeLogoButton"
+              onclick="openViewer('logo')"
             >
+              <div class="image-empty" id="storeLogoEmpty">
+                Loading image...
+              </div>
+
               <img
                 id="storeLogo"
                 alt="Store logo"
+                style="display:none;"
               >
+
+              <span class="zoom-hint">Tap to view</span>
             </button>
-
-            <div
-              id="storeLogoEmpty"
-              class="image-placeholder"
-            >
-              Image not available
-            </div>
-
           </div>
 
         </div>
-
       </div>
     </section>
-
 
     <!-- LINKS -->
 
-    <section class="section">
-
-      <div class="section-head">
-        <h2>Social & business links</h2>
+    <section class="card">
+      <div class="card-head">
+        <h2>Social & Business Links</h2>
       </div>
 
-      <div class="section-body">
-        <div id="socialLinks" class="links"></div>
+      <div class="card-body">
+        <div class="links" id="links">
+          <span class="muted">No links provided</span>
+        </div>
       </div>
-
     </section>
-
 
     <!-- ADDITIONAL -->
 
-    <section class="section">
-
-      <div class="section-head">
-        <h2>Additional information</h2>
+    <section class="card">
+      <div class="card-head">
+        <h2>Additional Information</h2>
       </div>
 
-      <div class="section-body">
-
-        <div class="info">
-          <div
-            class="value"
-            id="additionalInformation"
-          ></div>
-        </div>
-
+      <div class="card-body">
+        <div class="value" id="additionalInformation">Not provided</div>
       </div>
-
     </section>
-
 
     <!-- REVIEW -->
 
-    <section class="section">
-
-      <div class="section-head">
-        <h2>Admin review</h2>
-        <p>
-          Add a note when approving, rejecting,
-          or requesting more information.
-        </p>
+    <section class="card">
+      <div class="card-head">
+        <h2>Admin Review</h2>
+        <p>Add a note when approving, rejecting, or requesting more information.</p>
       </div>
 
-      <div class="section-body review-box">
+      <div class="card-body">
 
         <textarea
           id="adminNote"
           placeholder="Write an admin note..."
         ></textarea>
 
-        <div class="review-actions">
+        <div class="actions">
 
           <button
-            id="approveBtn"
             class="action approve"
+            id="approveBtn"
             onclick="updateApplication('approved')"
           >
-            Approve Vendor
+            Approve
           </button>
 
           <button
-            id="moreInfoBtn"
-            class="action more-info"
+            class="action more"
+            id="moreBtn"
             onclick="updateApplication('more_information_required')"
           >
-            Request More Information
+            Request More Info
           </button>
 
           <button
-            id="rejectBtn"
             class="action reject"
+            id="rejectBtn"
             onclick="updateApplication('rejected')"
           >
-            Reject Application
+            Reject
           </button>
 
         </div>
 
-        <div
-          id="message"
-          class="message"
-        ></div>
+        <div id="message" class="message"></div>
 
       </div>
-
     </section>
 
-  </main>
-
+  </div>
 </div>
-
 
 <!-- FULL SCREEN IMAGE VIEWER -->
 
 <div
-  id="imageModal"
-  class="image-modal"
-  onclick="closeImageViewer(event)"
+  class="viewer"
+  id="imageViewer"
+  onclick="closeViewer(event)"
 >
+
+  <div class="viewer-title" id="viewerTitle">
+    Image
+  </div>
 
   <button
     type="button"
-    class="modal-close"
-    onclick="closeImageViewer(event)"
-    aria-label="Close image"
+    class="viewer-close"
+    onclick="closeViewer()"
+    aria-label="Close"
   >
     ×
   </button>
 
   <img
-    id="modalImage"
-    class="modal-image"
+    id="viewerImage"
+    src=""
     alt="Full size image"
   >
 
-  <div
-    id="modalTitle"
-    class="modal-title"
-  ></div>
-
 </div>
 
-
 <script>
+  const SUPABASE_URL = "https://ytvtdelwefykeqwztcyo.supabase.co";
+
+  const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_CLTeqgEB6JSQ7Kqq6rQARw_RV31Ccg3";
+
+  const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
+
   let application = null;
-  let currentAdmin = null;
 
+  let personalPhotoUrl = "";
+  let storeLogoUrl = "";
 
-  /* ==============================
-     HELPERS
-  ============================== */
+  /*
+    The application stores storage paths rather than normal browser URLs.
 
-  function escapeHtml(value){
-    return String(value ?? "")
-      .replace(/&/g,"&amp;")
-      .replace(/</g,"&lt;")
-      .replace(/>/g,"&gt;")
-      .replace(/"/g,"&quot;")
-      .replace(/'/g,"&#039;");
-  }
+    These are the buckets used by the vendor application:
+      vendor-photos
+      business-logos
+  */
 
+  const PERSONAL_BUCKET = "vendor-photos";
+  const LOGO_BUCKET = "business-logos";
 
-  function displayValue(value){
-
-    if(
-      value === null ||
-      value === undefined ||
-      String(value).trim() === ""
-    ){
-      return '<span class="empty">Not provided</span>';
-    }
-
-    return escapeHtml(value);
-  }
-
-
-  function getApplicationId(){
-
-    const params =
-      new URLSearchParams(window.location.search);
-
+  function getApplicationId() {
+    const params = new URLSearchParams(window.location.search);
     return params.get("id");
   }
 
+  function escapeHtml(value) {
+    return String(value ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
 
-  function goBack(){
+  function text(value, fallback = "—") {
+    const v = String(value ?? "").trim();
+    return v ? escapeHtml(v) : fallback;
+  }
 
-    if(document.referrer){
-      history.back();
-    }else{
-      window.location.href =
-        "marketplace.html";
+  function setText(id, value, fallback = "—") {
+    const element = document.getElementById(id);
+
+    if (!element) return;
+
+    element.innerHTML = text(value, fallback);
+  }
+
+  function normalizeStoragePath(value, bucket) {
+    if (!value) return "";
+
+    let path = String(value).trim();
+
+    /*
+      If a full URL was somehow saved, use it directly.
+    */
+    if (
+      path.startsWith("http://") ||
+      path.startsWith("https://")
+    ) {
+      return path;
     }
+
+    /*
+      Some older records may contain:
+        bucket/path
+      instead of:
+        path
+    */
+
+    const prefix = bucket + "/";
+
+    if (path.startsWith(prefix)) {
+      path = path.substring(prefix.length);
+    }
+
+    return path;
   }
 
+  async function createImageUrl(value, bucket) {
+    if (!value) return "";
 
-  function setMessage(text,type){
+    const raw = String(value).trim();
 
-    const box =
-      document.getElementById("message");
+    if (
+      raw.startsWith("http://") ||
+      raw.startsWith("https://")
+    ) {
+      return raw;
+    }
 
-    box.textContent = text;
+    const path = normalizeStoragePath(raw, bucket);
 
-    box.className =
-      "message " + type;
+    if (!path) return "";
+
+    /*
+      First try a signed URL.
+
+      This is important because the personal-photo bucket
+      should remain private.
+    */
+
+    const { data, error } = await supabaseClient
+      .storage
+      .from(bucket)
+      .createSignedUrl(path, 60 * 60);
+
+    if (!error && data?.signedUrl) {
+      return data.signedUrl;
+    }
+
+    console.error(
+      "Could not create signed URL:",
+      bucket,
+      path,
+      error
+    );
+
+    /*
+      Fallback for a public bucket.
+    */
+
+    try {
+      const publicResult = supabaseClient
+        .storage
+        .from(bucket)
+        .getPublicUrl(path);
+
+      if (publicResult?.data?.publicUrl) {
+        return publicResult.data.publicUrl;
+      }
+    } catch (e) {
+      console.error("Public URL fallback failed:", e);
+    }
+
+    return "";
   }
 
+  async function loadImage(
+    imgId,
+    emptyId,
+    value,
+    bucket
+  ) {
+    const img = document.getElementById(imgId);
+    const empty = document.getElementById(emptyId);
 
-  function setButtonsDisabled(disabled){
+    if (!img || !empty) return "";
 
-    document
-      .querySelectorAll(".action")
-      .forEach(button => {
-        button.disabled = disabled;
-      });
+    empty.textContent = "Loading image...";
+    img.style.display = "none";
+
+    const url = await createImageUrl(value, bucket);
+
+    if (!url) {
+      empty.textContent = "Image not available";
+      return "";
+    }
+
+    img.onload = function() {
+      empty.style.display = "none";
+      img.style.display = "block";
+    };
+
+    img.onerror = function() {
+      img.style.display = "none";
+      empty.style.display = "flex";
+      empty.textContent = "Image could not be loaded";
+    };
+
+    img.src = url;
+
+    return url;
   }
 
+  async function loadApplication() {
 
-  /* ==============================
-     ADMIN AUTH
-  ============================== */
+    const applicationId = getApplicationId();
 
-  async function verifyAdmin(){
+    if (!applicationId) {
+      showError("No vendor application ID was supplied.");
+      return;
+    }
+
+    /*
+      Verify admin.
+    */
 
     const {
       data: { user },
-      error
+      error: userError
     } = await supabaseClient.auth.getUser();
 
-    if(error || !user){
-      throw new Error(
-        "You must be logged in as an administrator."
-      );
+    if (userError || !user) {
+      window.location.href = "login.html";
+      return;
     }
 
+    const { data: profile, error: profileError } =
+      await supabaseClient
+        .from("profiles")
+        .select("id, full_name, account_status, is_admin")
+        .eq("id", user.id)
+        .single();
 
-    const {
-      data: profile,
-      error: profileError
-    } = await supabaseClient
-      .from("profiles")
-      .select(
-        "id, full_name, account_status, is_admin"
-      )
-      .eq("id",user.id)
-      .single();
-
-
-    if(profileError){
-      throw new Error(
-        profileError.message
-      );
-    }
-
-
-    if(
+    if (
+      profileError ||
+      !profile ||
       profile.is_admin !== true ||
-      String(
-        profile.account_status || ""
-      ).toLowerCase() !== "active"
-    ){
-      throw new Error(
-        "Administrator access is required."
-      );
+      String(profile.account_status || "").toLowerCase() !== "active"
+    ) {
+      showError("You are not authorized to review marketplace applications.");
+      return;
     }
 
+    /*
+      Load the exact Marketplace application.
+    */
 
-    currentAdmin = profile;
-  }
-
-
-  /* ==============================
-     LOAD APPLICATION
-  ============================== */
-
-  async function loadApplication(){
-
-    const id =
-      getApplicationId();
-
-    if(!id){
-      throw new Error(
-        "No vendor application ID was supplied."
-      );
-    }
-
-
-    const {
-      data,
-      error
-    } = await supabaseClient
+    const { data, error } = await supabaseClient
       .from("marketplace_vendor_applications")
       .select("*")
-      .eq("id",id)
+      .eq("id", applicationId)
       .single();
 
-
-    if(error){
-      throw new Error(
-        error.message
+    if (error || !data) {
+      console.error(error);
+      showError(
+        "The marketplace vendor application could not be loaded."
       );
+      return;
     }
-
-
-    if(!data){
-      throw new Error(
-        "Vendor application was not found."
-      );
-    }
-
 
     application = data;
 
     renderApplication(data);
 
-    await loadImages(data);
+    /*
+      Load the two images.
+
+      Personal photo:
+        private signed URL
+
+      Store logo:
+        signed URL first, public fallback
+    */
+
+    personalPhotoUrl = await loadImage(
+      "personalPhoto",
+      "personalPhotoEmpty",
+      data.personal_photo_url,
+      PERSONAL_BUCKET
+    );
+
+    storeLogoUrl = await loadImage(
+      "storeLogo",
+      "storeLogoEmpty",
+      data.store_logo_url,
+      LOGO_BUCKET
+    );
+
+    document.getElementById("loading").style.display = "none";
+    document.getElementById("content").style.display = "block";
   }
 
+  function renderApplication(data) {
 
-  /* ==============================
-     RENDER APPLICATION
-  ============================== */
+    document.getElementById("pageTitle").textContent =
+      data.store_name || "Vendor Review";
 
-  function renderApplication(data){
+    document.getElementById("pageSubtitle").textContent =
+      data.full_name || "Marketplace application";
 
-    document.getElementById(
-      "storeName"
-    ).textContent =
-      data.store_name ||
-      "Vendor Application";
+    document.getElementById("statusBadge").textContent =
+      String(data.status || "pending").replace(/_/g, " ").toUpperCase();
 
+    setText("fullName", data.full_name);
+    setText("email", data.email);
+    setText("phone", data.phone_number);
+    setText("storeName", data.store_name);
+    setText("residentialAddress", data.residential_address);
 
-    document.getElementById(
-      "vendorMeta"
-    ).textContent =
-      [
-        data.full_name,
-        data.email
-      ]
-      .filter(Boolean)
-      .join(" • ");
+    setText("businessLocation", data.business_location);
+    setText(
+      "stateLga",
+      `${data.state || "—"} / ${data.lga || "—"}`
+    );
+    setText("businessAddress", data.business_address);
+    setText("businessPhone", data.business_phone);
+    setText("businessDescription", data.business_description);
 
-
-    document.getElementById(
-      "statusBadge"
-    ).textContent =
-      formatStatus(data.status);
-
-
-    document.getElementById(
-      "statusBadge"
-    ).className =
-      "status " +
-      getStatusClass(data.status);
-
-
-    document.getElementById(
-      "fullName"
-    ).innerHTML =
-      displayValue(data.full_name);
-
-
-    document.getElementById(
-      "email"
-    ).innerHTML =
-      displayValue(data.email);
-
-
-    document.getElementById(
-      "phone"
-    ).innerHTML =
-      displayValue(data.phone_number);
-
-
-    document.getElementById(
-      "residentialAddress"
-    ).innerHTML =
-      displayValue(
-        data.residential_address
-      );
-
-
-    document.getElementById(
-      "state"
-    ).innerHTML =
-      displayValue(data.state);
-
-
-    document.getElementById(
-      "lga"
-    ).innerHTML =
-      displayValue(data.lga);
-
-
-    document.getElementById(
-      "businessStoreName"
-    ).innerHTML =
-      displayValue(data.store_name);
-
-
-    document.getElementById(
-      "businessPhone"
-    ).innerHTML =
-      displayValue(data.business_phone);
-
-
-    document.getElementById(
-      "businessLocation"
-    ).innerHTML =
-      displayValue(
-        data.business_location
-      );
-
-
-    document.getElementById(
-      "businessAddress"
-    ).innerHTML =
-      displayValue(
-        data.business_address
-      );
-
-
-    document.getElementById(
-      "businessDescription"
-    ).innerHTML =
-      displayValue(
-        data.business_description
-      );
-
-
-    document.getElementById(
-      "additionalInformation"
-    ).innerHTML =
-      displayValue(
-        data.additional_information
-      );
-
-
-    document.getElementById(
-      "adminNote"
-    ).value =
-      data.admin_note || "";
-
+    setText(
+      "additionalInformation",
+      data.additional_information,
+      "Not provided"
+    );
 
     renderLinks(data);
 
-
-    if(data.status !== "pending"){
-
-      document.getElementById(
-        "approveBtn"
-      ).style.display = "none";
-    }
-
-
-    document.getElementById(
-      "content"
-    ).style.display = "block";
+    document.getElementById("adminNote").value =
+      data.admin_note || "";
   }
 
+  function renderLinks(data) {
 
-  function formatStatus(status){
-
-    const map = {
-      pending:"Pending",
-      approved:"Approved",
-      rejected:"Rejected",
-      more_information_required:
-        "More Information",
-      withdrawn:"Withdrawn"
-    };
-
-    return (
-      map[status] ||
-      status ||
-      "Unknown"
-    );
-  }
-
-
-  function getStatusClass(status){
-
-    if(status === "approved"){
-      return "approved";
-    }
-
-    if(status === "rejected"){
-      return "rejected";
-    }
-
-    if(
-      status ===
-      "more_information_required"
-    ){
-      return "more";
-    }
-
-    if(status === "withdrawn"){
-      return "withdrawn";
-    }
-
-    return "pending";
-  }
-
-
-  /* ==============================
-     LINKS
-  ============================== */
-
-  function renderLinks(data){
-
-    const container =
-      document.getElementById(
-        "socialLinks"
-      );
-
+    const container = document.getElementById("links");
 
     const links = [
-      ["TikTok",data.tiktok_url],
-      ["Instagram",data.instagram_url],
-      ["Facebook",data.facebook_url],
-      ["WhatsApp",data.whatsapp_url],
-      ["Website",data.website_url]
+      ["TikTok", data.tiktok_url],
+      ["Instagram", data.instagram_url],
+      ["Facebook", data.facebook_url],
+      ["WhatsApp", data.whatsapp_url],
+      ["Website", data.website_url]
     ];
 
+    const available = links.filter(item => {
+      return item[1] && String(item[1]).trim();
+    });
 
-    const available =
-      links.filter(item => item[1]);
-
-
-    if(!available.length){
-
+    if (!available.length) {
       container.innerHTML =
-        '<span class="empty">No links provided</span>';
-
+        '<span class="muted">No links provided</span>';
       return;
     }
 
+    container.innerHTML = available.map(([name, url]) => {
 
-    container.innerHTML =
-      available.map(
-        ([name,url]) => {
+      let href = String(url).trim();
 
-          let safeUrl =
-            String(url).trim();
-
-
-          if(
-            !safeUrl.startsWith("http://") &&
-            !safeUrl.startsWith("https://")
-          ){
-            safeUrl =
-              "https://" + safeUrl;
-          }
-
-
-          return `
-            <a
-              class="link-chip"
-              href="${escapeHtml(safeUrl)}"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              ${escapeHtml(name)}
-            </a>
-          `;
-        }
-      ).join("");
-  }
-
-
-  /* ==============================
-     STORAGE IMAGES
-  ============================== */
-
-  async function loadImages(data){
-
-    /*
-      Personal photo is private.
-      We create a temporary signed URL.
-    */
-
-    if(data.personal_photo_url){
-
-      const personalUrl =
-        await createSignedStorageUrl(
-          "vendor-photos",
-          data.personal_photo_url,
-          3600
-        );
-
-
-      if(personalUrl){
-
-        const img =
-          document.getElementById(
-            "personalPhoto"
-          );
-
-
-        img.src = personalUrl;
-
-
-        document.getElementById(
-          "personalPhotoButton"
-        ).style.display =
-          "block";
-
-
-        document.getElementById(
-          "personalPhotoEmpty"
-        ).style.display =
-          "none";
-
-
-        document.getElementById(
-          "personalPhotoButton"
-        ).onclick = function(){
-
-          openImageViewer(
-            personalUrl,
-            "Applicant personal photo"
-          );
-
-        };
+      if (
+        !href.startsWith("http://") &&
+        !href.startsWith("https://")
+      ) {
+        href = "https://" + href;
       }
-    }
 
+      return `
+        <a
+          class="link"
+          href="${escapeHtml(href)}"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          ${escapeHtml(name)}
+        </a>
+      `;
 
-    /*
-      Store logo.
-    */
-
-    if(data.store_logo_url){
-
-      const logoUrl =
-        await createSignedStorageUrl(
-          "business-logos",
-          data.store_logo_url,
-          3600
-        );
-
-
-      if(logoUrl){
-
-        const img =
-          document.getElementById(
-            "storeLogo"
-          );
-
-
-        img.src = logoUrl;
-
-
-        document.getElementById(
-          "storeLogoButton"
-        ).style.display =
-          "block";
-
-
-        document.getElementById(
-          "storeLogoEmpty"
-        ).style.display =
-          "none";
-
-
-        document.getElementById(
-          "summaryLogo"
-        ).src = logoUrl;
-
-
-        document.getElementById(
-          "summaryLogo"
-        ).style.display =
-          "block";
-
-
-        document.getElementById(
-          "storeLogoButton"
-        ).onclick = function(){
-
-          openImageViewer(
-            logoUrl,
-            "Store logo"
-          );
-
-        };
-      }
-    }
+    }).join("");
   }
 
+  function openViewer(type) {
 
-  async function createSignedStorageUrl(
-    bucket,
-    path,
-    expiresIn
-  ){
+    let url = "";
+    let title = "";
 
-    if(!path){
-      return null;
+    if (type === "personal") {
+      url = personalPhotoUrl;
+      title = "Vendor Personal Photo";
     }
 
-
-    let cleanPath =
-      String(path).trim();
-
-
-    /*
-      If database already contains
-      a complete URL, use it.
-    */
-
-    if(
-      cleanPath.startsWith("http://") ||
-      cleanPath.startsWith("https://")
-    ){
-      return cleanPath;
+    if (type === "logo") {
+      url = storeLogoUrl;
+      title = "Store Logo";
     }
 
-
-    /*
-      Remove bucket prefix if it
-      was saved into the database.
-    */
-
-    const prefix =
-      bucket + "/";
-
-
-    if(cleanPath.startsWith(prefix)){
-
-      cleanPath =
-        cleanPath.substring(
-          prefix.length
-        );
-    }
-
-
-    const {
-      data,
-      error
-    } = await supabaseClient.storage
-      .from(bucket)
-      .createSignedUrl(
-        cleanPath,
-        expiresIn
-      );
-
-
-    if(error){
-
-      console.error(
-        "Could not create signed URL:",
-        bucket,
-        cleanPath,
-        error
-      );
-
-      return null;
-    }
-
-
-    return data?.signedUrl || null;
-  }
-
-
-  /* ==============================
-     FULL SCREEN IMAGE VIEWER
-  ============================== */
-
-  function openImageViewer(
-    url,
-    title
-  ){
-
-    if(!url){
+    if (!url) {
       return;
     }
 
-
-    const modal =
-      document.getElementById(
-        "imageModal"
-      );
-
-
-    const image =
-      document.getElementById(
-        "modalImage"
-      );
-
-
-    const titleBox =
-      document.getElementById(
-        "modalTitle"
-      );
-
+    const viewer = document.getElementById("imageViewer");
+    const image = document.getElementById("viewerImage");
+    const viewerTitle = document.getElementById("viewerTitle");
 
     image.src = url;
+    viewerTitle.textContent = title;
 
-    titleBox.textContent =
-      title || "Image";
+    viewer.classList.add("open");
 
-
-    modal.classList.add("open");
-
-    document.body.style.overflow =
-      "hidden";
+    document.body.style.overflow = "hidden";
   }
 
+  function closeViewer(event) {
 
-  function closeImageViewer(event){
+    /*
+      If the click came from the image itself,
+      do not close the viewer.
+    */
 
-    if(event){
-
-      event.stopPropagation();
-
-
-      /*
-        Clicking the actual image
-        should not close the viewer.
-      */
-
-      if(
-        event.target &&
-        event.target.id ===
-          "modalImage"
-      ){
-        return;
-      }
+    if (
+      event &&
+      event.target &&
+      event.target.id === "viewerImage"
+    ) {
+      return;
     }
 
+    const viewer = document.getElementById("imageViewer");
+    const image = document.getElementById("viewerImage");
 
-    const modal =
-      document.getElementById(
-        "imageModal"
-      );
+    viewer.classList.remove("open");
+    image.src = "";
 
-
-    modal.classList.remove("open");
-
-
-    document.getElementById(
-      "modalImage"
-    ).src = "";
-
-
-    document.body.style.overflow =
-      "";
+    document.body.style.overflow = "";
   }
 
+  document.addEventListener("keydown", function(event) {
 
-  document.addEventListener(
-    "keydown",
-    function(event){
-
-      if(event.key === "Escape"){
-        closeImageViewer();
-      }
-
-    }
-  );
-
-
-  /* ==============================
-     UPDATE APPLICATION
-  ============================== */
-
-  async function updateApplication(
-    newStatus
-  ){
-
-    if(!application){
-      return;
+    if (event.key === "Escape") {
+      closeViewer();
     }
 
+  });
 
-    const note =
-      document.getElementById(
-        "adminNote"
-      )
-      .value
-      .trim();
+  async function updateApplication(newStatus) {
 
+    if (!application) return;
 
-    if(
-      newStatus === "rejected" &&
-      !note
-    ){
+    const buttons = [
+      document.getElementById("approveBtn"),
+      document.getElementById("moreBtn"),
+      document.getElementById("rejectBtn")
+    ];
 
-      setMessage(
-        "Please add an admin note explaining the rejection.",
-        "error"
-      );
+    buttons.forEach(button => {
+      button.disabled = true;
+    });
+
+    const message = document.getElementById("message");
+
+    message.className = "message";
+    message.textContent = "Saving review...";
+
+    const {
+      data: { user }
+    } = await supabaseClient.auth.getUser();
+
+    if (!user) {
+      message.className = "message error";
+      message.textContent = "Your admin session has expired.";
+
+      buttons.forEach(button => {
+        button.disabled = false;
+      });
 
       return;
     }
 
+    const adminNote =
+      document.getElementById("adminNote").value.trim();
 
-    if(
-      newStatus ===
-        "more_information_required" &&
-      !note
-    ){
+    const { error } = await supabaseClient
+      .from("marketplace_vendor_applications")
+      .update({
+        status: newStatus,
+        admin_note: adminNote || null,
+        reviewed_by: user.id,
+        reviewed_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      })
+      .eq("id", application.id);
 
-      setMessage(
-        "Please explain what information is required.",
-        "error"
-      );
-
-      return;
-    }
-
-
-    const confirmText = {
-
-      approved:
-        "Approve this vendor application?",
-
-      rejected:
-        "Reject this vendor application?",
-
-      more_information_required:
-        "Request more information from this vendor?"
-    };
-
-
-    if(
-      !window.confirm(
-        confirmText[newStatus]
-      )
-    ){
-      return;
-    }
-
-
-    setButtonsDisabled(true);
-
-
-    setMessage(
-      "Saving review...",
-      "success"
-    );
-
-
-    try{
-
-      const {
-        error
-      } = await supabaseClient
-        .from(
-          "marketplace_vendor_applications"
-        )
-        .update({
-
-          status:newStatus,
-
-          admin_note:
-            note || null,
-
-          reviewed_by:
-            currentAdmin.id,
-
-          reviewed_at:
-            new Date().toISOString(),
-
-          updated_at:
-            new Date().toISOString()
-
-        })
-        .eq(
-          "id",
-          application.id
-        );
-
-
-      if(error){
-        throw error;
-      }
-
-
-      application.status =
-        newStatus;
-
-      application.admin_note =
-        note;
-
-
-      document.getElementById(
-        "statusBadge"
-      ).textContent =
-        formatStatus(newStatus);
-
-
-      document.getElementById(
-        "statusBadge"
-      ).className =
-        "status " +
-        getStatusClass(newStatus);
-
-
-      if(
-        newStatus === "approved"
-      ){
-
-        setMessage(
-          "Vendor approved successfully.",
-          "success"
-        );
-
-
-        document.getElementById(
-          "approveBtn"
-        ).style.display =
-          "none";
-
-      }
-
-      else if(
-        newStatus === "rejected"
-      ){
-
-        setMessage(
-          "Vendor application rejected.",
-          "success"
-        );
-
-
-        document.getElementById(
-          "rejectBtn"
-        ).style.display =
-          "none";
-
-      }
-
-      else{
-
-        setMessage(
-          "More information has been requested.",
-          "success"
-        );
-
-
-        document.getElementById(
-          "moreInfoBtn"
-        ).style.display =
-          "none";
-      }
-
-
-    }catch(error){
+    if (error) {
 
       console.error(error);
 
+      message.className = "message error";
+      message.textContent =
+        "Could not save the review: " + error.message;
 
-      setMessage(
-        "Could not save the review: " +
-        (
-          error.message ||
-          "Unknown error"
-        ),
-        "error"
-      );
+      buttons.forEach(button => {
+        button.disabled = false;
+      });
 
-
-    }finally{
-
-      setButtonsDisabled(false);
+      return;
     }
+
+    application.status = newStatus;
+    application.admin_note = adminNote;
+
+    document.getElementById("statusBadge").textContent =
+      newStatus.replace(/_/g, " ").toUpperCase();
+
+    message.className = "message success";
+
+    if (newStatus === "approved") {
+      message.textContent =
+        "Vendor application approved successfully.";
+    } else if (newStatus === "rejected") {
+      message.textContent =
+        "Vendor application rejected.";
+    } else {
+      message.textContent =
+        "More information has been requested.";
+    }
+
+    buttons.forEach(button => {
+      button.disabled = false;
+    });
   }
 
+  function showError(message) {
 
-  /* ==============================
-     START
-  ============================== */
-
-  async function start(){
-
-    try{
-
-      await verifyAdmin();
-
-      await loadApplication();
-
-
-      document.getElementById(
-        "loading"
-      ).style.display =
-        "none";
-
-
-    }catch(error){
-
-      console.error(error);
-
-
-      document.getElementById(
-        "loading"
-      ).style.display =
-        "none";
-
-
-      const box =
-        document.getElementById(
-          "errorBox"
-        );
-
-
-      box.textContent =
-        error.message ||
-        "Could not load application.";
-
-
-      box.style.display =
-        "block";
-    }
+    document.getElementById("loading").innerHTML = `
+      <div class="loading" style="color:#ff8795;">
+        ${escapeHtml(message)}
+      </div>
+    `;
   }
 
+  function goBack() {
+    window.location.href = "marketplace.html";
+  }
 
-  start();
+  loadApplication();
 </script>
 
 </body>

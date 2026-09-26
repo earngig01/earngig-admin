@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Marketplace Vendor Review</title>
+  <title>Vendor Review</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -29,24 +29,25 @@
     .page {
       width: min(980px, 100%);
       margin: 0 auto;
-      padding: 16px 12px 50px;
+      padding: 14px 10px 45px;
     }
 
     .topbar {
       display: flex;
       align-items: center;
-      gap: 10px;
-      margin-bottom: 14px;
+      gap: 9px;
+      margin-bottom: 12px;
     }
 
-    .back {
-      border: 1px solid #263852;
+    .back-btn {
+      flex: 0 0 auto;
+      border: 1px solid #263b55;
       background: #0d1a2b;
-      color: #dce8f7;
+      color: #e7eef8;
       border-radius: 8px;
       padding: 8px 11px;
+      font-size: 11px;
       cursor: pointer;
-      font-size: 12px;
     }
 
     .title-wrap {
@@ -56,53 +57,57 @@
 
     .title {
       margin: 0;
-      font-size: 19px;
       color: #fff;
+      font-size: 18px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .subtitle {
       margin: 3px 0 0;
-      color: #8193a9;
-      font-size: 11px;
+      color: #8093aa;
+      font-size: 10px;
     }
 
     .status {
-      padding: 5px 8px;
+      flex: 0 0 auto;
       border-radius: 999px;
+      padding: 5px 8px;
       background: #382d12;
       color: #f4cc68;
-      font-size: 10px;
+      font-size: 9px;
       font-weight: 700;
-      white-space: nowrap;
     }
 
     .card {
       background: #0b1829;
-      border: 1px solid #20334c;
+      border: 1px solid #20344d;
       border-radius: 11px;
-      margin-bottom: 11px;
+      margin-bottom: 10px;
       overflow: hidden;
     }
 
     .card-head {
-      padding: 11px 13px;
-      border-bottom: 1px solid #1d3048;
+      padding: 11px 12px;
+      border-bottom: 1px solid #1c3048;
     }
 
     .card-head h2 {
       margin: 0;
       font-size: 13px;
-      color: #f2f6fb;
+      color: #f0f5fb;
     }
 
     .card-head p {
       margin: 4px 0 0;
-      color: #7e91a8;
+      color: #7c90a7;
       font-size: 10px;
+      line-height: 1.4;
     }
 
     .card-body {
-      padding: 11px 13px;
+      padding: 11px 12px;
     }
 
     .grid {
@@ -112,11 +117,11 @@
     }
 
     .field {
+      min-width: 0;
       background: #091524;
-      border: 1px solid #1c2e44;
+      border: 1px solid #1b2f46;
       border-radius: 8px;
       padding: 8px 9px;
-      min-width: 0;
     }
 
     .field.full {
@@ -124,7 +129,7 @@
     }
 
     .label {
-      color: #71849b;
+      color: #70849b;
       text-transform: uppercase;
       letter-spacing: .05em;
       font-size: 8px;
@@ -132,15 +137,17 @@
     }
 
     .value {
-      color: #e4ebf5;
+      color: #e3ebf5;
       font-size: 11px;
       line-height: 1.45;
       overflow-wrap: anywhere;
     }
 
     .muted {
-      color: #687b91;
+      color: #667b92;
     }
+
+    /* IMAGES */
 
     .image-grid {
       display: grid;
@@ -149,31 +156,32 @@
     }
 
     .image-box {
+      min-width: 0;
       background: #081321;
-      border: 1px solid #1e3249;
+      border: 1px solid #1d3249;
       border-radius: 9px;
       padding: 8px;
     }
 
     .image-label {
-      color: #71849b;
+      color: #70849b;
       text-transform: uppercase;
-      font-size: 8px;
       letter-spacing: .05em;
+      font-size: 8px;
       margin-bottom: 6px;
     }
 
     .image-button {
-      display: block;
+      position: relative;
       width: 100%;
-      height: 190px;
+      height: 220px;
       padding: 0;
-      border: 1px solid #263d58;
+      border: 1px solid #29415d;
       border-radius: 8px;
       overflow: hidden;
       background: #06101d;
       cursor: pointer;
-      position: relative;
+      display: block;
     }
 
     .image-button img {
@@ -185,40 +193,40 @@
     }
 
     .image-empty {
-      width: 100%;
-      height: 100%;
+      position: absolute;
+      inset: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #62758b;
-      font-size: 11px;
-      padding: 10px;
       text-align: center;
+      padding: 15px;
+      color: #687c92;
+      font-size: 11px;
     }
 
     .zoom-hint {
       position: absolute;
       right: 7px;
       bottom: 7px;
+      padding: 5px 7px;
+      border-radius: 6px;
       background: rgba(0,0,0,.78);
       color: #fff;
-      border-radius: 6px;
-      padding: 5px 7px;
       font-size: 9px;
       pointer-events: none;
     }
 
-    /* FULLSCREEN IMAGE */
+    /* FULLSCREEN IMAGE VIEWER */
 
     .viewer {
       position: fixed;
       inset: 0;
       z-index: 99999;
-      background: rgba(1, 6, 13, .97);
+      background: rgba(1, 6, 13, .98);
       display: none;
       align-items: center;
       justify-content: center;
-      padding: 20px;
+      padding: 55px 15px 25px;
     }
 
     .viewer.open {
@@ -226,7 +234,7 @@
     }
 
     .viewer img {
-      max-width: 95vw;
+      max-width: 96vw;
       max-height: 88vh;
       width: auto;
       height: auto;
@@ -234,29 +242,32 @@
       border-radius: 8px;
     }
 
+    .viewer-title {
+      position: fixed;
+      top: 18px;
+      left: 17px;
+      color: #e0e9f4;
+      font-size: 12px;
+      z-index: 100001;
+    }
+
     .viewer-close {
       position: fixed;
-      top: 14px;
-      right: 14px;
+      top: 12px;
+      right: 13px;
       width: 42px;
       height: 42px;
-      border: 1px solid #42546b;
+      border-radius: 50%;
+      border: 1px solid #40536b;
       background: #101d2e;
       color: #fff;
-      border-radius: 50%;
-      font-size: 23px;
+      font-size: 24px;
+      line-height: 1;
       cursor: pointer;
       z-index: 100001;
     }
 
-    .viewer-title {
-      position: fixed;
-      top: 20px;
-      left: 17px;
-      color: #dce6f2;
-      font-size: 12px;
-      z-index: 100001;
-    }
+    /* LINKS */
 
     .links {
       display: flex;
@@ -268,21 +279,23 @@
       display: inline-block;
       padding: 7px 9px;
       border-radius: 7px;
-      background: #101f33;
       border: 1px solid #263b55;
-      color: #aebeff;
+      background: #101f33;
+      color: #b4c2ff;
       text-decoration: none;
       font-size: 10px;
     }
+
+    /* ADMIN REVIEW */
 
     textarea {
       width: 100%;
       min-height: 85px;
       resize: vertical;
       border: 1px solid #263b55;
+      border-radius: 8px;
       background: #071321;
       color: #edf3fb;
-      border-radius: 8px;
       padding: 9px;
       outline: none;
       font-family: inherit;
@@ -307,17 +320,17 @@
 
     .approve {
       background: #247a54;
-      color: white;
+      color: #fff;
     }
 
     .more {
       background: #73551a;
-      color: white;
+      color: #fff;
     }
 
     .reject {
       background: #8b3040;
-      color: white;
+      color: #fff;
     }
 
     button:disabled {
@@ -346,8 +359,9 @@
     }
 
     @media (max-width: 620px) {
+
       .page {
-        padding: 10px 9px 35px;
+        padding: 9px 8px 35px;
       }
 
       .grid {
@@ -363,11 +377,15 @@
       }
 
       .image-button {
-        height: 230px;
+        height: 245px;
       }
 
       .title {
-        font-size: 17px;
+        font-size: 16px;
+      }
+
+      .status {
+        display: none;
       }
     }
   </style>
@@ -379,39 +397,69 @@
 
   <div class="topbar">
 
-    <button class="back" onclick="goBack()">
+    <button
+      type="button"
+      class="back-btn"
+      onclick="goBack()"
+    >
       ← Back
     </button>
 
     <div class="title-wrap">
-      <h1 class="title" id="pageTitle">
+
+      <h1
+        class="title"
+        id="pageTitle"
+      >
         Vendor Review
       </h1>
 
-      <p class="subtitle" id="pageSubtitle">
+      <p
+        class="subtitle"
+        id="pageSubtitle"
+      >
         Marketplace application
       </p>
+
     </div>
 
-    <span class="status" id="statusBadge">
+    <span
+      class="status"
+      id="statusBadge"
+    >
       Loading
     </span>
 
   </div>
 
-  <div id="loading" class="card">
+
+  <div
+    id="loading"
+    class="card"
+  >
     <div class="loading">
       Loading application...
     </div>
   </div>
 
-  <div id="content" style="display:none;">
+
+  <div
+    id="content"
+    style="display:none;"
+  >
+
+    <!-- APPLICANT -->
 
     <section class="card">
 
       <div class="card-head">
+
         <h2>Applicant</h2>
-        <p>Personal and contact information</p>
+
+        <p>
+          Personal and contact information
+        </p>
+
       </div>
 
       <div class="card-body">
@@ -419,28 +467,46 @@
         <div class="grid">
 
           <div class="field">
-            <div class="label">Full name</div>
-            <div class="value" id="fullName">—</div>
+            <div class="label">Full Name</div>
+            <div
+              class="value"
+              id="fullName"
+            >—</div>
           </div>
 
           <div class="field">
             <div class="label">Email</div>
-            <div class="value" id="email">—</div>
+            <div
+              class="value"
+              id="email"
+            >—</div>
           </div>
 
           <div class="field">
             <div class="label">Phone</div>
-            <div class="value" id="phone">—</div>
+            <div
+              class="value"
+              id="phone"
+            >—</div>
           </div>
 
           <div class="field">
-            <div class="label">Store name</div>
-            <div class="value" id="storeName">—</div>
+            <div class="label">Store Name</div>
+            <div
+              class="value"
+              id="storeName"
+            >—</div>
           </div>
 
           <div class="field full">
-            <div class="label">Residential address</div>
-            <div class="value" id="residentialAddress">—</div>
+            <div class="label">
+              Residential Address
+            </div>
+
+            <div
+              class="value"
+              id="residentialAddress"
+            >—</div>
           </div>
 
         </div>
@@ -449,11 +515,19 @@
 
     </section>
 
+
+    <!-- BUSINESS -->
+
     <section class="card">
 
       <div class="card-head">
+
         <h2>Business Information</h2>
-        <p>Information supplied by the vendor</p>
+
+        <p>
+          Information supplied by the vendor
+        </p>
+
       </div>
 
       <div class="card-body">
@@ -461,28 +535,64 @@
         <div class="grid">
 
           <div class="field">
-            <div class="label">Business location</div>
-            <div class="value" id="businessLocation">—</div>
+            <div class="label">
+              Business Location
+            </div>
+
+            <div
+              class="value"
+              id="businessLocation"
+            >—</div>
           </div>
 
           <div class="field">
-            <div class="label">State / LGA</div>
-            <div class="value" id="stateLga">—</div>
+            <div class="label">
+              State / LGA
+            </div>
+
+            <div
+              class="value"
+              id="stateLga"
+            >—</div>
           </div>
 
           <div class="field full">
-            <div class="label">Business address</div>
-            <div class="value" id="businessAddress">—</div>
+
+            <div class="label">
+              Business Address
+            </div>
+
+            <div
+              class="value"
+              id="businessAddress"
+            >—</div>
+
           </div>
 
           <div class="field">
-            <div class="label">Business phone</div>
-            <div class="value" id="businessPhone">—</div>
+
+            <div class="label">
+              Business Phone
+            </div>
+
+            <div
+              class="value"
+              id="businessPhone"
+            >—</div>
+
           </div>
 
           <div class="field">
-            <div class="label">Business description</div>
-            <div class="value" id="businessDescription">—</div>
+
+            <div class="label">
+              Business Description
+            </div>
+
+            <div
+              class="value"
+              id="businessDescription"
+            >—</div>
+
           </div>
 
         </div>
@@ -490,23 +600,31 @@
       </div>
 
     </section>
+
 
     <!-- VERIFICATION IMAGES -->
 
     <section class="card">
 
       <div class="card-head">
-        <h2>Verification Images</h2>
+
+        <h2>
+          Verification Images
+        </h2>
 
         <p>
           Personal photo is private verification evidence.
           Store logo is used for the marketplace store.
         </p>
+
       </div>
 
       <div class="card-body">
 
         <div class="image-grid">
+
+
+          <!-- PERSONAL PHOTO -->
 
           <div class="image-box">
 
@@ -521,8 +639,8 @@
             >
 
               <div
-                class="image-empty"
                 id="personalPhotoEmpty"
+                class="image-empty"
               >
                 Loading image...
               </div>
@@ -541,6 +659,9 @@
 
           </div>
 
+
+          <!-- STORE LOGO -->
+
           <div class="image-box">
 
             <div class="image-label">
@@ -554,8 +675,8 @@
             >
 
               <div
-                class="image-empty"
                 id="storeLogoEmpty"
+                class="image-empty"
               >
                 Loading image...
               </div>
@@ -574,11 +695,15 @@
 
           </div>
 
+
         </div>
 
       </div>
 
     </section>
+
+
+    <!-- LINKS -->
 
     <section class="card">
 
@@ -587,14 +712,22 @@
       </div>
 
       <div class="card-body">
-        <div class="links" id="links">
+
+        <div
+          class="links"
+          id="links"
+        >
           <span class="muted">
             No links provided
           </span>
         </div>
+
       </div>
 
     </section>
+
+
+    <!-- ADDITIONAL -->
 
     <section class="card">
 
@@ -615,15 +748,20 @@
 
     </section>
 
+
+    <!-- REVIEW -->
+
     <section class="card">
 
       <div class="card-head">
+
         <h2>Admin Review</h2>
 
         <p>
-          Add a note when approving, rejecting,
-          or requesting more information.
+          Add a note when approving,
+          rejecting, or requesting more information.
         </p>
+
       </div>
 
       <div class="card-body">
@@ -636,6 +774,7 @@
         <div class="actions">
 
           <button
+            type="button"
             class="action approve"
             id="approveBtn"
             onclick="updateApplication('approved')"
@@ -644,6 +783,7 @@
           </button>
 
           <button
+            type="button"
             class="action more"
             id="moreBtn"
             onclick="updateApplication('more_information_required')"
@@ -652,6 +792,7 @@
           </button>
 
           <button
+            type="button"
             class="action reject"
             id="rejectBtn"
             onclick="updateApplication('rejected')"
@@ -674,12 +815,13 @@
 
 </div>
 
-<!-- FULLSCREEN VIEWER -->
+
+<!-- FULLSCREEN IMAGE VIEWER -->
 
 <div
   class="viewer"
   id="imageViewer"
-  onclick="closeViewer(event)"
+  onclick="viewerBackgroundClick(event)"
 >
 
   <div
@@ -705,6 +847,7 @@
 
 </div>
 
+
 <script>
 
 const SUPABASE_URL =
@@ -720,21 +863,23 @@ const supabaseClient =
   );
 
 
+const PERSONAL_BUCKET =
+  "vendor-photos";
+
+const LOGO_BUCKET =
+  "business-logos";
+
+
 let application = null;
 
 let personalPhotoUrl = "";
+
 let storeLogoUrl = "";
 
 
-/*
-  IMPORTANT:
-  These are the actual bucket names used
-  by the vendor application.
-*/
-
-const PERSONAL_BUCKET = "vendor-photos";
-const LOGO_BUCKET = "business-logos";
-
+/* --------------------------------
+   APPLICATION ID
+-------------------------------- */
 
 function getApplicationId() {
 
@@ -747,6 +892,10 @@ function getApplicationId() {
 }
 
 
+/* --------------------------------
+   ESCAPE HTML
+-------------------------------- */
+
 function escapeHtml(value) {
 
   return String(value ?? "")
@@ -758,37 +907,41 @@ function escapeHtml(value) {
 }
 
 
-function setText(id, value, fallback = "—") {
+/* --------------------------------
+   TEXT
+-------------------------------- */
+
+function setText(
+  id,
+  value,
+  fallback = "—"
+) {
 
   const element =
     document.getElementById(id);
 
   if (!element) return;
 
-  const cleaned =
+  const text =
     String(value ?? "").trim();
 
   element.textContent =
-    cleaned || fallback;
+    text || fallback;
 }
 
 
-/*
-  Convert the database value into
-  a clean storage object path.
+/* --------------------------------
+   STORAGE PATH CLEANING
+-------------------------------- */
 
-  Handles:
+function cleanStoragePath(
+  value,
+  bucket
+) {
 
-  vendor-photos/abc.jpg
-  abc.jpg
-  /vendor-photos/abc.jpg
-
-  and full Supabase storage URLs.
-*/
-
-function cleanStoragePath(value, bucket) {
-
-  if (!value) return "";
+  if (!value) {
+    return "";
+  }
 
   let path =
     String(value).trim();
@@ -796,302 +949,315 @@ function cleanStoragePath(value, bucket) {
   path =
     path.replace(/^\/+/, "");
 
+
   /*
-    Full URL.
+    If the database somehow contains
+    the complete Supabase URL, keep it.
   */
 
   if (
-    path.startsWith("http://") ||
-    path.startsWith("https://")
+    path.startsWith("https://") ||
+    path.startsWith("http://")
   ) {
+
     return path;
   }
 
+
   /*
-    Remove bucket prefix if database
-    accidentally stored it.
+    Remove bucket prefix if present.
   */
 
-  const bucketPrefix =
+  const prefix =
     bucket + "/";
 
   if (
-    path.toLowerCase()
-      .startsWith(bucketPrefix.toLowerCase())
+    path
+      .toLowerCase()
+      .startsWith(
+        prefix.toLowerCase()
+      )
   ) {
+
     path =
-      path.substring(bucketPrefix.length);
+      path.substring(
+        prefix.length
+      );
   }
+
 
   return path;
 }
 
 
-/*
-  This is the important fix.
+/* --------------------------------
+   CREATE SIGNED URL
+-------------------------------- */
 
-  We try the stored path directly first.
-
-  Then we try removing a bucket prefix.
-
-  Then we try a signed URL.
-
-  Finally we try a public URL.
-
-  This makes the page tolerant of the
-  different path formats already stored
-  in the database.
-*/
-
-async function resolveStorageImage(
-  value,
+async function getImageUrl(
+  storedValue,
   bucket
 ) {
 
-  if (!value) {
-    console.error(
-      "No image path supplied for bucket:",
-      bucket
-    );
-
+  if (!storedValue) {
     return "";
   }
 
-  const original =
-    String(value).trim();
+
+  const value =
+    String(storedValue).trim();
+
 
   /*
-    If the database already contains
-    a complete browser URL, use it.
+    Already a complete URL.
   */
 
   if (
-    original.startsWith("https://") ||
-    original.startsWith("http://")
+    value.startsWith("https://") ||
+    value.startsWith("http://")
   ) {
 
-    return original;
+    return value;
   }
 
 
   const path =
     cleanStoragePath(
-      original,
+      value,
       bucket
     );
 
 
   console.log(
-    "Resolving storage image:",
+    "Creating signed image URL:",
     {
       bucket,
-      original,
       path
     }
   );
 
 
   /*
-    METHOD 1
-    Signed URL.
+    PRIVATE STORAGE:
+    createSignedUrl is the primary method.
   */
 
-  try {
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .storage
+      .from(bucket)
+      .createSignedUrl(
+        path,
+        3600
+      );
 
-    const result =
-      await supabaseClient
-        .storage
-        .from(bucket)
-        .createSignedUrl(
-          path,
-          60 * 60
-        );
 
-    console.log(
-      "Signed URL result:",
-      bucket,
-      result
-    );
-
-    if (
-      !result.error &&
-      result.data &&
-      result.data.signedUrl
-    ) {
-
-      return result.data.signedUrl;
-    }
-
-  } catch (error) {
+  if (error) {
 
     console.error(
-      "Signed URL exception:",
-      bucket,
-      error
+      "createSignedUrl failed:",
+      {
+        bucket,
+        path,
+        error
+      }
     );
 
+    return "";
   }
+
+
+  if (
+    !data ||
+    !data.signedUrl
+  ) {
+
+    console.error(
+      "No signed URL returned:",
+      {
+        bucket,
+        path,
+        data
+      }
+    );
+
+    return "";
+  }
+
+
+  console.log(
+    "Signed URL created successfully:",
+    bucket,
+    path
+  );
 
 
   /*
-    METHOD 2
-    Public URL fallback.
+    IMPORTANT:
+    DO NOT append anything to this URL.
+    The signed URL is used exactly as returned.
   */
 
-  try {
-
-    const result =
-      supabaseClient
-        .storage
-        .from(bucket)
-        .getPublicUrl(path);
-
-    console.log(
-      "Public URL result:",
-      bucket,
-      result
-    );
-
-    if (
-      result.data &&
-      result.data.publicUrl
-    ) {
-
-      return result.data.publicUrl;
-    }
-
-  } catch (error) {
-
-    console.error(
-      "Public URL exception:",
-      bucket,
-      error
-    );
-
-  }
-
-
-  return "";
+  return data.signedUrl;
 }
 
 
-/*
-  Load an image and verify that the browser
-  can actually display it.
-
-  This is important because generating a URL
-  does not guarantee that the object exists.
-*/
+/* --------------------------------
+   LOAD IMAGE
+-------------------------------- */
 
 async function loadImage(
-  imgId,
+  imageId,
   emptyId,
-  value,
+  storedValue,
   bucket
 ) {
 
   const img =
-    document.getElementById(imgId);
+    document.getElementById(
+      imageId
+    );
 
   const empty =
-    document.getElementById(emptyId);
+    document.getElementById(
+      emptyId
+    );
+
 
   if (!img || !empty) {
     return "";
   }
 
-  img.style.display = "none";
 
-  empty.style.display = "flex";
+  img.style.display =
+    "none";
+
+  empty.style.display =
+    "flex";
 
   empty.textContent =
     "Loading image...";
 
 
-  const url =
-    await resolveStorageImage(
-      value,
-      bucket
-    );
+  try {
 
-
-  if (!url) {
-
-    empty.textContent =
-      "Image not available";
-
-    return "";
-  }
-
-
-  return new Promise(resolve => {
-
-    img.onload = function() {
-
-      console.log(
-        "Image loaded successfully:",
-        bucket,
-        url
+    const url =
+      await getImageUrl(
+        storedValue,
+        bucket
       );
 
-      empty.style.display =
-        "none";
 
-      img.style.display =
-        "block";
-
-      resolve(url);
-    };
-
-
-    img.onerror = function(error) {
-
-      console.error(
-        "Browser could not load image:",
-        {
-          bucket,
-          value,
-          url,
-          error
-        }
-      );
-
-      img.style.display =
-        "none";
-
-      empty.style.display =
-        "flex";
+    if (!url) {
 
       empty.textContent =
-        "Image could not be loaded";
+        "Image not available";
 
-      resolve("");
-    };
+      return "";
+    }
 
 
     /*
-      Cache-busting query parameter.
+      Test the actual browser image load.
     */
 
-    const separator =
-      url.includes("?")
-        ? "&"
-        : "?";
+    return await new Promise(
+      resolve => {
 
-    img.src =
-      url +
-      separator +
-      "review=" +
-      Date.now();
+        let finished =
+          false;
 
-  });
 
+        const success =
+          () => {
+
+            if (finished) return;
+
+            finished = true;
+
+            img.style.display =
+              "block";
+
+            empty.style.display =
+              "none";
+
+            console.log(
+              "IMAGE LOADED:",
+              bucket,
+              storedValue
+            );
+
+            resolve(url);
+          };
+
+
+        const failure =
+          () => {
+
+            if (finished) return;
+
+            finished = true;
+
+            img.style.display =
+              "none";
+
+            empty.style.display =
+              "flex";
+
+            empty.textContent =
+              "Image could not be loaded";
+
+            console.error(
+              "IMAGE FAILED:",
+              {
+                bucket,
+                storedValue,
+                url
+              }
+            );
+
+            resolve("");
+          };
+
+
+        img.onload =
+          success;
+
+        img.onerror =
+          failure;
+
+
+        /*
+          Use the signed URL EXACTLY.
+        */
+
+        img.src =
+          url;
+
+      }
+    );
+
+  } catch (error) {
+
+    console.error(
+      "Image loading exception:",
+      error
+    );
+
+    empty.textContent =
+      "Image could not be loaded";
+
+    return "";
+  }
 }
 
 
-/*
-  Load application.
-*/
+/* --------------------------------
+   LOAD APPLICATION
+-------------------------------- */
 
 async function loadApplication() {
 
@@ -1102,7 +1268,7 @@ async function loadApplication() {
   if (!applicationId) {
 
     showError(
-      "No vendor application ID was supplied."
+      "No application ID was supplied."
     );
 
     return;
@@ -1110,17 +1276,24 @@ async function loadApplication() {
 
 
   /*
-    Confirm admin session.
+    Get logged-in user.
   */
 
   const {
-    data: { user },
+    data: {
+      user
+    },
     error: userError
   } =
-    await supabaseClient.auth.getUser();
+    await supabaseClient
+      .auth
+      .getUser();
 
 
-  if (userError || !user) {
+  if (
+    userError ||
+    !user
+  ) {
 
     window.location.href =
       "login.html";
@@ -1130,7 +1303,7 @@ async function loadApplication() {
 
 
   /*
-    Confirm admin profile.
+    Verify administrator.
   */
 
   const {
@@ -1142,7 +1315,10 @@ async function loadApplication() {
       .select(
         "id, full_name, account_status, is_admin"
       )
-      .eq("id", user.id)
+      .eq(
+        "id",
+        user.id
+      )
       .single();
 
 
@@ -1164,7 +1340,7 @@ async function loadApplication() {
 
 
   /*
-    Load exact application.
+    Get the exact application.
   */
 
   const {
@@ -1176,19 +1352,25 @@ async function loadApplication() {
         "marketplace_vendor_applications"
       )
       .select("*")
-      .eq("id", applicationId)
+      .eq(
+        "id",
+        applicationId
+      )
       .single();
 
 
-  if (error || !data) {
+  if (
+    error ||
+    !data
+  ) {
 
     console.error(
-      "Application load error:",
+      "Application error:",
       error
     );
 
     showError(
-      "The marketplace vendor application could not be loaded."
+      "The vendor application could not be loaded."
     );
 
     return;
@@ -1200,7 +1382,7 @@ async function loadApplication() {
 
 
   console.log(
-    "Marketplace application:",
+    "APPLICATION DATA:",
     data
   );
 
@@ -1209,7 +1391,7 @@ async function loadApplication() {
 
 
   /*
-    Load personal photo.
+    Personal photo.
   */
 
   personalPhotoUrl =
@@ -1222,7 +1404,7 @@ async function loadApplication() {
 
 
   /*
-    Load store logo.
+    Store logo.
   */
 
   storeLogoUrl =
@@ -1236,18 +1418,20 @@ async function loadApplication() {
 
   document.getElementById(
     "loading"
-  ).style.display = "none";
+  ).style.display =
+    "none";
 
 
   document.getElementById(
     "content"
-  ).style.display = "block";
+  ).style.display =
+    "block";
 }
 
 
-/*
-  Render application information.
-*/
+/* --------------------------------
+   RENDER APPLICATION
+-------------------------------- */
 
 function renderApplication(data) {
 
@@ -1300,36 +1484,30 @@ function renderApplication(data) {
     data.residential_address
   );
 
-
   setText(
     "businessLocation",
     data.business_location
   );
-
 
   setText(
     "stateLga",
     `${data.state || "—"} / ${data.lga || "—"}`
   );
 
-
   setText(
     "businessAddress",
     data.business_address
   );
-
 
   setText(
     "businessPhone",
     data.business_phone
   );
 
-
   setText(
     "businessDescription",
     data.business_description
   );
-
 
   setText(
     "additionalInformation",
@@ -1338,24 +1516,26 @@ function renderApplication(data) {
   );
 
 
-  renderLinks(data);
-
-
   document.getElementById(
     "adminNote"
   ).value =
     data.admin_note || "";
+
+
+  renderLinks(data);
 }
 
 
-/*
-  Social/business links.
-*/
+/* --------------------------------
+   LINKS
+-------------------------------- */
 
 function renderLinks(data) {
 
   const container =
-    document.getElementById("links");
+    document.getElementById(
+      "links"
+    );
 
 
   const links = [
@@ -1392,49 +1572,54 @@ function renderLinks(data) {
 
   container.innerHTML =
     available
-      .map(([name, url]) => {
+      .map(
+        ([name, url]) => {
 
-        let href =
-          String(url).trim();
+          let href =
+            String(url).trim();
 
 
-        if (
-          !href.startsWith("http://") &&
-          !href.startsWith("https://")
-        ) {
+          if (
+            !href.startsWith("http://") &&
+            !href.startsWith("https://")
+          ) {
 
-          href =
-            "https://" + href;
+            href =
+              "https://" + href;
+          }
+
+
+          return `
+            <a
+              class="link"
+              href="${escapeHtml(href)}"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              ${escapeHtml(name)}
+            </a>
+          `;
+
         }
-
-
-        return `
-          <a
-            class="link"
-            href="${escapeHtml(href)}"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            ${escapeHtml(name)}
-          </a>
-        `;
-
-      })
+      )
       .join("");
 }
 
 
-/*
-  Open fullscreen viewer.
-*/
+/* --------------------------------
+   IMAGE VIEWER
+-------------------------------- */
 
 function openViewer(type) {
 
   let url = "";
+
   let title = "";
 
 
-  if (type === "personal") {
+  if (
+    type === "personal"
+  ) {
 
     url =
       personalPhotoUrl;
@@ -1444,7 +1629,9 @@ function openViewer(type) {
   }
 
 
-  if (type === "logo") {
+  if (
+    type === "logo"
+  ) {
 
     url =
       storeLogoUrl;
@@ -1457,7 +1644,7 @@ function openViewer(type) {
   if (!url) {
 
     alert(
-      "This image could not be loaded."
+      "This image is not available yet."
     );
 
     return;
@@ -1469,12 +1656,10 @@ function openViewer(type) {
       "imageViewer"
     );
 
-
   const image =
     document.getElementById(
       "viewerImage"
     );
-
 
   const viewerTitle =
     document.getElementById(
@@ -1485,6 +1670,11 @@ function openViewer(type) {
   viewerTitle.textContent =
     title;
 
+
+  /*
+    Use the exact same URL that
+    successfully loaded the thumbnail.
+  */
 
   image.src =
     url;
@@ -1500,26 +1690,34 @@ function openViewer(type) {
 }
 
 
-/*
-  Close viewer.
-*/
+/* --------------------------------
+   VIEWER BACKGROUND
+-------------------------------- */
 
-function closeViewer(event) {
+function viewerBackgroundClick(
+  event
+) {
 
   if (
-    event &&
-    event.target &&
-    event.target.id === "viewerImage"
+    event.target.id ===
+    "imageViewer"
   ) {
-    return;
-  }
 
+    closeViewer();
+  }
+}
+
+
+/* --------------------------------
+   CLOSE VIEWER
+-------------------------------- */
+
+function closeViewer() {
 
   const viewer =
     document.getElementById(
       "imageViewer"
     );
-
 
   const image =
     document.getElementById(
@@ -1532,7 +1730,8 @@ function closeViewer(event) {
   );
 
 
-  image.src = "";
+  image.src =
+    "";
 
 
   document.body.style.overflow =
@@ -1540,15 +1739,17 @@ function closeViewer(event) {
 }
 
 
-/*
-  Escape key.
-*/
+/* --------------------------------
+   ESCAPE
+-------------------------------- */
 
 document.addEventListener(
   "keydown",
   function(event) {
 
-    if (event.key === "Escape") {
+    if (
+      event.key === "Escape"
+    ) {
 
       closeViewer();
     }
@@ -1557,15 +1758,17 @@ document.addEventListener(
 );
 
 
-/*
-  Admin review action.
-*/
+/* --------------------------------
+   ADMIN UPDATE
+-------------------------------- */
 
 async function updateApplication(
   newStatus
 ) {
 
-  if (!application) return;
+  if (!application) {
+    return;
+  }
 
 
   const buttons = [
@@ -1606,9 +1809,13 @@ async function updateApplication(
 
 
   const {
-    data: { user }
+    data: {
+      user
+    }
   } =
-    await supabaseClient.auth.getUser();
+    await supabaseClient
+      .auth
+      .getUser();
 
 
   if (!user) {
@@ -1665,7 +1872,9 @@ async function updateApplication(
 
   if (error) {
 
-    console.error(error);
+    console.error(
+      error
+    );
 
     message.className =
       "message error";
@@ -1687,6 +1896,7 @@ async function updateApplication(
 
   application.status =
     newStatus;
+
 
   application.admin_note =
     adminNote;
@@ -1733,9 +1943,9 @@ async function updateApplication(
 }
 
 
-/*
-  Error screen.
-*/
+/* --------------------------------
+   ERROR
+-------------------------------- */
 
 function showError(message) {
 
@@ -1752,20 +1962,42 @@ function showError(message) {
 }
 
 
-/*
-  Back button.
-*/
+/* --------------------------------
+   BACK BUTTON
+
+   IMPORTANT:
+   Do NOT send the user to a guessed
+   marketplace.html URL.
+
+   Return to the actual page that
+   opened this review page.
+-------------------------------- */
 
 function goBack() {
 
+  if (
+    window.history.length > 1
+  ) {
+
+    window.history.back();
+
+    return;
+  }
+
+
+  /*
+    Only if there is no browser history,
+    return to the admin dashboard.
+  */
+
   window.location.href =
-    "marketplace.html";
+    "admin-dashboard.html";
 }
 
 
-/*
-  Start.
-*/
+/* --------------------------------
+   START
+-------------------------------- */
 
 loadApplication();
 

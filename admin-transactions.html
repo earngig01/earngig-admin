@@ -14,385 +14,217 @@
     Transactions | EarnGig Admin
   </title>
 
-
-  <!-- =========================================
-       SUPABASE
-  ========================================= -->
-
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
   <script src="supabase.js"></script>
-
 
   <style>
 
-
-    /* =========================================
-       GLOBAL
-    ========================================= */
-
     * {
-
-      box-sizing:
-        border-box;
-
+      box-sizing: border-box;
     }
-
 
     body {
-
-      margin:
-        0;
-
-      font-family:
-        Arial,
-        sans-serif;
-
-      background:
-        #f5f6fa;
-
-      color:
-        #17182f;
-
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f6fa;
+      color: #17182f;
     }
-
 
     button,
     input,
     select {
-
-      font-family:
-        inherit;
-
+      font-family: inherit;
     }
-
 
     button {
-
-      -webkit-tap-highlight-color:
-        transparent;
-
+      -webkit-tap-highlight-color: transparent;
     }
-
 
     /* =========================================
        HEADER
     ========================================= */
 
     header {
-
-      background:
-        #0d1038;
-
-      color:
-        white;
-
+      background: #0d1038;
+      color: white;
     }
-
 
     .nav {
+      max-width: 1250px;
+      margin: auto;
+      padding: 14px 20px;
 
-      max-width:
-        1250px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
 
-      margin:
-        auto;
-
-      padding:
-        18px 20px;
-
-      display:
-        flex;
-
-      align-items:
-        center;
-
-      justify-content:
-        space-between;
-
-      gap:
-        20px;
-
+      gap: 16px;
     }
-
 
     .logo {
-
-      color:
-        white;
-
-      text-decoration:
-        none;
-
-      font-size:
-        25px;
-
-      font-weight:
-        700;
-
+      color: white;
+      text-decoration: none;
+      font-size: 24px;
+      font-weight: 700;
     }
-
 
     .logo span {
-
-      color:
-        #7c5cff;
-
+      color: #7c5cff;
     }
-
 
     .admin-badge {
-
-      font-size:
-        13px;
-
-      color:
-        #c9caff;
-
-      margin-left:
-        auto;
-
+      font-size: 12px;
+      color: #c9caff;
+      margin-left: auto;
     }
 
-
     .dashboard-btn {
-
-      text-decoration:
-        none;
+      text-decoration: none;
 
       border:
         1px solid
         rgba(255,255,255,.35);
 
-      color:
-        white;
+      color: white;
 
-      padding:
-        9px 15px;
+      padding: 8px 13px;
 
-      border-radius:
-        8px;
+      border-radius: 7px;
 
-      font-size:
-        14px;
-
+      font-size: 13px;
     }
-
 
     .dashboard-btn:hover {
-
-      background:
-        rgba(255,255,255,.08);
-
+      background: rgba(255,255,255,.08);
     }
-
 
     /* =========================================
        MAIN
     ========================================= */
 
     main {
-
-      max-width:
-        1250px;
-
-      margin:
-        auto;
-
-      padding:
-        35px 20px 60px;
-
+      max-width: 1250px;
+      margin: auto;
+      padding: 28px 20px 50px;
     }
-
 
     /* =========================================
        PAGE HEADER
     ========================================= */
 
     .page-heading {
-
-      margin-bottom:
-        30px;
-
+      margin-bottom: 20px;
     }
-
 
     .eyebrow {
+      display: inline-block;
 
-      display:
-        inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
 
-      font-size:
-        12px;
+      color: #6d4aff;
 
-      font-weight:
-        700;
-
-      letter-spacing:
-        1px;
-
-      color:
-        #6d4aff;
-
-      margin-bottom:
-        8px;
-
+      margin-bottom: 6px;
     }
-
 
     .page-heading h1 {
-
-      margin:
-        0 0 10px;
-
-      font-size:
-        32px;
-
+      margin: 0 0 6px;
+      font-size: 29px;
     }
-
 
     .page-heading p {
+      margin: 0;
 
-      margin:
-        0;
+      color: #686a7d;
 
-      color:
-        #686a7d;
+      line-height: 1.4;
 
-      line-height:
-        1.5;
-
+      font-size: 14px;
     }
-
 
     /* =========================================
        SECTION TITLE
     ========================================= */
 
     .section-title {
-
-      margin:
-        30px 0 15px;
-
-      font-size:
-        21px;
-
+      margin: 24px 0 11px;
+      font-size: 19px;
     }
-
 
     /* =========================================
        STATISTICS
     ========================================= */
 
     .stats-grid {
-
-      display:
-        grid;
+      display: grid;
 
       grid-template-columns:
-        repeat(
-          auto-fit,
-          minmax(170px, 1fr)
-        );
+        repeat(6, minmax(0, 1fr));
 
-      gap:
-        12px;
-
+      gap: 9px;
     }
 
-
     .stat-card {
-
-      background:
-        white;
+      background: white;
 
       border:
         1px solid #e6e7ee;
 
-      border-radius:
-        11px;
+      border-radius: 10px;
 
-      padding:
-        14px 16px;
+      padding: 12px 14px;
 
       box-shadow:
-        0 4px 12px
-        rgba(0,0,0,.03);
-
+        0 3px 9px
+        rgba(0,0,0,.025);
     }
-
 
     .stat-card small {
+      display: block;
 
-      display:
-        block;
+      color: #77798b;
 
-      color:
-        #77798b;
+      font-size: 11px;
 
-      font-size:
-        12px;
-
-      margin-bottom:
-        6px;
-
+      margin-bottom: 4px;
     }
-
 
     .stat-card strong {
+      display: block;
 
-      display:
-        block;
+      font-size: 18px;
 
-      font-size:
-        20px;
-
-      line-height:
-        1.2;
-
+      line-height: 1.2;
     }
-
 
     .stat-money {
-
-      font-size:
-        18px !important;
-
+      font-size: 15px !important;
     }
-
 
     /* =========================================
        FILTERS
     ========================================= */
 
     .filter-box {
-
-      background:
-        white;
+      background: white;
 
       border:
         1px solid #e6e7ee;
 
-      border-radius:
-        13px;
+      border-radius: 11px;
 
-      padding:
-        18px;
+      padding: 13px;
 
       box-shadow:
-        0 5px 15px
-        rgba(0,0,0,.03);
+        0 3px 10px
+        rgba(0,0,0,.025);
 
-      margin-bottom:
-        20px;
-
+      margin-bottom: 12px;
     }
 
-
     .filter-grid {
-
-      display:
-        grid;
+      display: grid;
 
       grid-template-columns:
         minmax(220px, 2fr)
@@ -400,637 +232,495 @@
         minmax(150px, 1fr)
         auto;
 
-      gap:
-        12px;
+      gap: 8px;
 
-      align-items:
-        center;
-
+      align-items: center;
     }
-
 
     .filter-input,
     .filter-select {
+      width: 100%;
 
-      width:
-        100%;
+      height: 40px;
 
-      height:
-        45px;
-
-      padding:
-        0 13px;
+      padding: 0 11px;
 
       border:
         1px solid #dedfe7;
 
-      border-radius:
-        9px;
+      border-radius: 7px;
 
-      background:
-        white;
+      background: white;
 
-      color:
-        #17182f;
+      color: #17182f;
 
-      outline:
-        none;
+      outline: none;
 
-      font-size:
-        14px;
-
+      font-size: 13px;
     }
-
 
     .filter-input:focus,
     .filter-select:focus {
-
-      border-color:
-        #6d4aff;
-
+      border-color: #6d4aff;
     }
-
 
     .refresh-btn {
+      height: 40px;
 
-      height:
-        45px;
+      border: 0;
 
-      border:
-        0;
+      background: #6d4aff;
 
-      background:
-        #6d4aff;
+      color: white;
 
-      color:
-        white;
+      padding: 0 15px;
 
-      padding:
-        0 18px;
+      border-radius: 7px;
 
-      border-radius:
-        9px;
+      font-size: 12px;
 
-      font-weight:
-        700;
+      font-weight: 700;
 
-      cursor:
-        pointer;
+      cursor: pointer;
 
-      white-space:
-        nowrap;
-
+      white-space: nowrap;
     }
-
 
     .refresh-btn:hover {
-
-      opacity:
-        .9;
-
+      opacity: .9;
     }
-
 
     .refresh-btn:disabled {
-
-      opacity:
-        .6;
-
-      cursor:
-        not-allowed;
-
+      opacity: .6;
+      cursor: not-allowed;
     }
 
+    /* =========================================
+       RESULT BAR
+    ========================================= */
+
+    .result-bar {
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      margin: 0 0 8px;
+
+      color: #686a7d;
+
+      font-size: 12px;
+    }
 
     /* =========================================
        TRANSACTION LIST
     ========================================= */
 
     .transaction-list {
-
-      display:
-        grid;
-
-      gap:
-        13px;
-
+      display: grid;
+      gap: 8px;
     }
 
+    /* =========================================
+       TRANSACTION CARD
+    ========================================= */
 
     .transaction-card {
-
-      background:
-        white;
+      background: white;
 
       border:
-        1px solid #e6e7ee;
+        1px solid #e1e3ea;
 
-      border-radius:
-        12px;
+      border-radius: 9px;
 
-      padding:
-        17px;
+      padding: 10px 12px;
 
       box-shadow:
-        0 4px 12px
-        rgba(0,0,0,.03);
-
+        0 2px 8px
+        rgba(0,0,0,.025);
     }
 
+    .transaction-grid {
+      display: grid;
 
-    .transaction-top {
+      grid-template-columns:
+        155px
+        minmax(200px, 2fr)
+        minmax(125px, 1fr)
+        minmax(125px, 1fr)
+        minmax(125px, 1fr)
+        120px;
 
-      display:
-        flex;
+      gap: 8px;
 
-      justify-content:
-        space-between;
-
-      align-items:
-        flex-start;
-
-      gap:
-        15px;
-
-      margin-bottom:
-        14px;
-
-      flex-wrap:
-        wrap;
-
+      align-items: center;
     }
 
+    /* =========================================
+       TRANSACTION MAIN
+    ========================================= */
 
     .transaction-main {
-
-      min-width:
-        0;
-
+      min-width: 0;
     }
-
 
     .transaction-amount {
+      margin: 5px 0 0;
 
-      margin:
-        7px 0 0;
+      font-size: 18px;
 
-      font-size:
-        23px;
+      line-height: 1.1;
 
+      white-space: nowrap;
     }
-
 
     .transaction-description {
+      margin: 0;
 
-      margin:
-        0;
+      color: #2b2d3b;
 
-      color:
-        #686a7d;
+      font-size: 12px;
 
-      font-size:
-        14px;
+      line-height: 1.35;
 
-      line-height:
-        1.5;
-
-      word-break:
-        break-word;
-
+      word-break: break-word;
     }
 
+    .transaction-type-label {
+      margin-top: 3px;
+
+      color: #77798b;
+
+      font-size: 10px;
+    }
 
     /* =========================================
        BADGES
     ========================================= */
 
     .badge {
+      display: inline-block;
 
-      display:
-        inline-block;
+      padding: 4px 7px;
 
-      padding:
-        6px 10px;
+      border-radius: 15px;
 
-      border-radius:
-        20px;
+      font-size: 9px;
 
-      font-size:
-        11px;
+      font-weight: 700;
 
-      font-weight:
-        700;
+      text-transform: uppercase;
 
-      text-transform:
-        uppercase;
-
+      letter-spacing: .25px;
     }
-
 
     .type-badge {
-
-      background:
-        #f0edff;
-
-      color:
-        #6044d7;
-
+      background: #f0edff;
+      color: #6044d7;
     }
 
+    .type-normal {
+      background: #e0f2fe;
+      color: #0369a1;
+    }
+
+    .type-referral {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .type-create {
+      background: #dcfce7;
+      color: #15803d;
+    }
+
+    .type-competition {
+      background: #ede9fe;
+      color: #6d28d9;
+    }
+
+    .type-withdrawal {
+      background: #fee2e2;
+      color: #b91c1c;
+    }
+
+    .type-membership {
+      background: #e0e7ff;
+      color: #3730a3;
+    }
+
+    .type-platform {
+      background: #f1f1f1;
+      color: #555555;
+    }
 
     .status-completed {
-
-      background:
-        #dcfce7;
-
-      color:
-        #15803d;
-
+      background: #dcfce7;
+      color: #15803d;
     }
-
 
     .status-pending {
-
-      background:
-        #fff4cc;
-
-      color:
-        #9a6700;
-
+      background: #fff4cc;
+      color: #9a6700;
     }
-
 
     .status-failed {
-
-      background:
-        #fee2e2;
-
-      color:
-        #b91c1c;
-
+      background: #fee2e2;
+      color: #b91c1c;
     }
-
 
     .status-rejected {
-
-      background:
-        #fee2e2;
-
-      color:
-        #b91c1c;
-
+      background: #fee2e2;
+      color: #b91c1c;
     }
-
 
     .status-cancelled {
-
-      background:
-        #f1f1f1;
-
-      color:
-        #555555;
-
+      background: #f1f1f1;
+      color: #555555;
     }
-
 
     .status-default {
-
-      background:
-        #e8e9ef;
-
-      color:
-        #55576a;
-
+      background: #e8e9ef;
+      color: #55576a;
     }
-
 
     /* =========================================
        DETAILS
     ========================================= */
 
-    .details-grid {
-
-      display:
-        grid;
-
-      grid-template-columns:
-        repeat(
-          auto-fit,
-          minmax(160px, 1fr)
-        );
-
-      gap:
-        10px;
-
-      margin-top:
-        14px;
-
-    }
-
-
     .detail {
-
-      background:
-        #fafafa;
+      background: #fafafa;
 
       border:
         1px solid #eeeeee;
 
-      border-radius:
-        8px;
+      border-radius: 7px;
 
-      padding:
-        10px 11px;
+      padding: 7px 8px;
 
-      min-width:
-        0;
-
+      min-width: 0;
     }
-
 
     .detail small {
+      display: block;
 
-      display:
-        block;
+      color: #77798b;
 
-      color:
-        #77798b;
+      font-size: 9px;
 
-      font-size:
-        11px;
-
-      margin-bottom:
-        5px;
-
+      margin-bottom: 3px;
     }
-
 
     .detail strong {
+      display: block;
 
-      display:
-        block;
+      font-size: 11px;
 
-      font-size:
-        13px;
+      word-break: break-word;
 
-      word-break:
-        break-word;
-
+      line-height: 1.25;
     }
 
+    .user-link {
+      color: #6044d7;
+
+      text-decoration: none;
+
+      word-break: break-all;
+    }
+
+    .user-link:hover {
+      text-decoration: underline;
+    }
 
     /* =========================================
        LOADING
     ========================================= */
 
     .loading {
+      text-align: center;
 
-      text-align:
-        center;
+      padding: 25px 15px;
 
-      padding:
-        35px 20px;
-
-      background:
-        white;
+      background: white;
 
       border:
         1px solid #e6e7ee;
 
-      border-radius:
-        12px;
+      border-radius: 10px;
 
-      color:
-        #686a7d;
+      color: #686a7d;
 
+      font-size: 13px;
     }
-
 
     /* =========================================
        EMPTY
     ========================================= */
 
     .empty-state {
+      text-align: center;
 
-      text-align:
-        center;
+      padding: 35px 20px;
 
-      padding:
-        45px 20px;
-
-      background:
-        white;
+      background: white;
 
       border:
         1px solid #e6e7ee;
 
-      border-radius:
-        12px;
+      border-radius: 10px;
 
-      color:
-        #686a7d;
-
+      color: #686a7d;
     }
-
 
     .empty-icon {
-
-      font-size:
-        35px;
-
-      margin-bottom:
-        10px;
-
+      font-size: 30px;
+      margin-bottom: 8px;
     }
-
 
     .empty-state h3 {
+      margin: 0 0 6px;
 
-      margin:
-        0 0 8px;
+      color: #17182f;
 
-      color:
-        #17182f;
-
+      font-size: 17px;
     }
-
 
     .empty-state p {
+      margin: 0;
 
-      margin:
-        0;
-
+      font-size: 13px;
     }
-
 
     /* =========================================
        ERROR
     ========================================= */
 
     .error-box {
+      padding: 16px;
 
-      padding:
-        20px;
+      border-radius: 10px;
 
-      border-radius:
-        12px;
-
-      background:
-        #fff5f5;
+      background: #fff5f5;
 
       border:
         1px solid #f0b5b5;
 
-      color:
-        #721c24;
+      color: #721c24;
 
+      font-size: 13px;
     }
-
 
     .error-box p {
+      margin: 7px 0 0;
 
-      margin:
-        10px 0 0;
-
-      word-break:
-        break-word;
-
+      word-break: break-word;
     }
 
-
     /* =========================================
-       RESULT COUNT
+       RESPONSIVE
     ========================================= */
 
-    .result-bar {
+    @media (max-width: 1150px) {
 
-      display:
-        flex;
-
-      justify-content:
-        space-between;
-
-      align-items:
-        center;
-
-      margin:
-        0 0 12px;
-
-      color:
-        #686a7d;
-
-      font-size:
-        13px;
-
-    }
-
-
-    /* =========================================
-       MOBILE
-    ========================================= */
-
-    @media (
-      max-width: 850px
-    ) {
-
-
-      .filter-grid {
-
+      .stats-grid {
         grid-template-columns:
+          repeat(3, 1fr);
+      }
+
+      .transaction-grid {
+        grid-template-columns:
+          150px
+          1.7fr
           1fr
           1fr;
-
       }
 
-
-      .filter-input {
-
-        grid-column:
-          1 / -1;
-
+      .transaction-main {
+        grid-row: span 2;
       }
-
 
     }
 
-
-    @media (
-      max-width: 650px
-    ) {
-
-
-      .nav {
-
-        flex-wrap:
-          wrap;
-
-      }
-
-
-      .admin-badge {
-
-        margin-left:
-          0;
-
-        order:
-          3;
-
-        width:
-          100%;
-
-      }
-
-
-      main {
-
-        padding:
-          25px 15px 45px;
-
-      }
-
-
-      .page-heading h1 {
-
-        font-size:
-          27px;
-
-      }
-
+    @media (max-width: 850px) {
 
       .filter-grid {
-
         grid-template-columns:
-          1fr;
-
+          1fr 1fr;
       }
-
 
       .filter-input {
-
-        grid-column:
-          auto;
-
+        grid-column: 1 / -1;
       }
 
-
-      .transaction-top {
-
-        flex-direction:
-          column;
-
+      .transaction-grid {
+        grid-template-columns:
+          1fr 1fr;
       }
 
-
-      .refresh-btn {
-
-        width:
-          100%;
-
+      .transaction-main {
+        grid-column: span 2;
+        grid-row: auto;
       }
-
 
     }
 
+    @media (max-width: 650px) {
+
+      .nav {
+        flex-wrap: wrap;
+      }
+
+      .admin-badge {
+        margin-left: 0;
+        order: 3;
+        width: 100%;
+      }
+
+      main {
+        padding:
+          22px 12px 40px;
+      }
+
+      .page-heading h1 {
+        font-size: 25px;
+      }
+
+      .stats-grid {
+        grid-template-columns:
+          1fr 1fr;
+      }
+
+      .filter-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .filter-input {
+        grid-column: auto;
+      }
+
+      .refresh-btn {
+        width: 100%;
+      }
+
+      .transaction-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .transaction-main {
+        grid-column: auto;
+      }
+
+    }
+
+    @media (max-width: 420px) {
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+    }
 
   </style>
 
@@ -1040,106 +730,63 @@
 <body>
 
 
-<!-- =========================================
-     HEADER
-========================================= -->
-
 <header>
 
-
-  <div
-    class="nav"
-  >
-
+  <div class="nav">
 
     <a
       href="admin-dashboard.html"
       class="logo"
     >
-
       Earn<span>Gig</span>
-
     </a>
 
-
-    <div
-      class="admin-badge"
-    >
-
+    <div class="admin-badge">
       ADMIN PORTAL
-
     </div>
-
 
     <a
       href="admin-dashboard.html"
       class="dashboard-btn"
     >
-
       ← Admin Dashboard
-
     </a>
 
-
   </div>
-
 
 </header>
 
 
-
-<!-- =========================================
-     MAIN
-========================================= -->
-
 <main>
 
 
-  <!-- PAGE HEADER -->
+  <!-- =========================================
+       PAGE HEADER
+  ========================================= -->
 
-  <section
-    class="page-heading"
-  >
+  <section class="page-heading">
 
-
-    <span
-      class="eyebrow"
-    >
-
+    <span class="eyebrow">
       ADMINISTRATION
-
     </span>
 
-
     <h1>
-
       Transactions
-
     </h1>
 
-
     <p>
-
-      Review all wallet activity and platform
-      financial transactions.
-
+      Review wallet activity and platform financial transactions.
     </p>
-
 
   </section>
 
 
-
-  <!-- =======================================
+  <!-- =========================================
        OVERVIEW
-  ======================================== -->
+  ========================================= -->
 
-  <h2
-    class="section-title"
-  >
-
+  <h2 class="section-title">
     Transaction Overview
-
   </h2>
 
 
@@ -1148,155 +795,81 @@
     id="statsGrid"
   >
 
-
-    <div
-      class="loading"
-    >
-
+    <div class="loading">
       Loading transaction statistics...
-
     </div>
-
 
   </div>
 
 
-
-  <!-- =======================================
+  <!-- =========================================
        ALL TRANSACTIONS
-  ======================================== -->
+  ========================================= -->
 
-  <h2
-    class="section-title"
-  >
-
+  <h2 class="section-title">
     All Transactions
-
   </h2>
 
 
+  <div class="filter-box">
 
-  <!-- FILTERS -->
-
-  <div
-    class="filter-box"
-  >
-
-
-    <div
-      class="filter-grid"
-    >
-
+    <div class="filter-grid">
 
       <input
-
         type="text"
-
         id="searchInput"
-
         class="filter-input"
-
-        placeholder="
-          Search description, reference or user ID...
-        "
-
+        placeholder="Search description, reference or user ID..."
       >
 
-
       <select
-
         id="typeFilter"
-
         class="filter-select"
-
       >
-
         <option value="">
-
           All Types
-
         </option>
-
       </select>
-
-
 
       <select
-
         id="statusFilter"
-
         class="filter-select"
-
       >
-
         <option value="">
-
           All Statuses
-
         </option>
-
       </select>
-
-
 
       <button
-
         type="button"
-
         class="refresh-btn"
-
         id="refreshButton"
-
       >
-
         ↻ Refresh
-
       </button>
-
 
     </div>
 
-
   </div>
 
 
+  <div class="result-bar">
 
-  <!-- RESULT COUNT -->
-
-  <div
-    class="result-bar"
-  >
-
-
-    <span
-      id="resultCount"
-    >
-
+    <span id="resultCount">
       Loading...
-
     </span>
 
-
   </div>
 
-
-
-  <!-- TRANSACTION LIST -->
 
   <div
     class="transaction-list"
     id="transactionList"
   >
 
-
-    <div
-      class="loading"
-    >
-
+    <div class="loading">
       Loading transactions...
-
     </div>
-
 
   </div>
 
@@ -1304,82 +877,50 @@
 </main>
 
 
-
-<!-- =========================================
-     JAVASCRIPT
-========================================= -->
-
 <script>
 
-
 /* =========================================
-   GLOBAL VARIABLES
+   GLOBAL
 ========================================= */
 
+let currentAdmin = null;
 
-let currentAdmin =
-  null;
-
-
-let allTransactions =
-  [];
+let allTransactions = [];
 
 
 /* =========================================
-   REQUEST TIMEOUT
+   TIMEOUT
 ========================================= */
-
 
 function withTimeout(
   promise,
   milliseconds = 15000
 ) {
 
-
   return Promise.race([
-
 
     promise,
 
-
     new Promise(
-
-      function(
-        resolve,
-        reject
-      ) {
-
+      function(resolve, reject) {
 
         setTimeout(
-
           function() {
 
-
             reject(
-
               new Error(
-
                 "The request took too long. Please check your internet connection and Supabase configuration."
-
               )
-
             );
 
-
           },
-
           milliseconds
-
         );
 
-
       }
-
     )
 
-
   ]);
-
 
 }
 
@@ -1388,303 +929,259 @@ function withTimeout(
    ESCAPE HTML
 ========================================= */
 
-
-function escapeHtml(
-  value
-) {
-
+function escapeHtml(value) {
 
   if (
-
     value === null ||
-
     value === undefined
-
   ) {
-
     return "—";
-
   }
-
 
   return String(value)
-
-    .replaceAll(
-      "&",
-      "&amp;"
-    )
-
-    .replaceAll(
-      "<",
-      "&lt;"
-    )
-
-    .replaceAll(
-      ">",
-      "&gt;"
-    )
-
-    .replaceAll(
-      '"',
-      "&quot;"
-    )
-
-    .replaceAll(
-      "'",
-      "&#039;"
-    );
-
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 
 }
 
 
 /* =========================================
-   FORMAT MONEY
+   MONEY
 ========================================= */
 
-
-function formatMoney(
-  amount
-) {
-
-
-  const value =
-    Number(amount || 0);
-
+function formatMoney(amount) {
 
   return new Intl.NumberFormat(
-
     "en-NG",
-
     {
-
-      style:
-        "currency",
-
-      currency:
-        "NGN",
-
-      minimumFractionDigits:
-        0,
-
-      maximumFractionDigits:
-        2
-
+      style: "currency",
+      currency: "NGN",
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 2
     }
-
-  )
-
-  .format(value);
-
+  ).format(
+    Number(amount || 0)
+  );
 
 }
 
 
 /* =========================================
-   FORMAT DATE
+   DATE
 ========================================= */
 
-
-function formatDate(
-  date
-) {
-
+function formatDate(date) {
 
   if (!date) {
-
     return "—";
-
   }
-
 
   const convertedDate =
     new Date(date);
 
-
   if (
-
     Number.isNaN(
       convertedDate.getTime()
     )
-
   ) {
-
     return "—";
-
   }
 
-
-  return convertedDate
-    .toLocaleString(
-
-      "en-NG",
-
-      {
-
-        year:
-          "numeric",
-
-        month:
-          "short",
-
-        day:
-          "numeric",
-
-        hour:
-          "2-digit",
-
-        minute:
-          "2-digit"
-
-      }
-
-    );
-
+  return new Intl.DateTimeFormat(
+    "en-NG",
+    {
+      timeZone: "Africa/Lagos",
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit"
+    }
+  ).format(
+    convertedDate
+  );
 
 }
 
 
 /* =========================================
-   FORMAT TEXT
+   TEXT
 ========================================= */
 
-
-function formatText(
-  value
-) {
-
+function formatText(value) {
 
   if (!value) {
-
     return "—";
-
   }
 
-
   return String(value)
-
-    .replaceAll(
-      "_",
-      " "
-    )
-
+    .replaceAll("_", " ")
     .replace(
-
       /\b\w/g,
-
-      function(
-        character
-      ) {
-
-        return character
-          .toUpperCase();
-
+      function(character) {
+        return character.toUpperCase();
       }
-
     );
-
 
 }
 
 
 /* =========================================
-   GET STATUS CLASS
+   STATUS CLASS
 ========================================= */
 
-
-function getStatusClass(
-  status
-) {
-
+function getStatusClass(status) {
 
   const value =
     String(
       status || ""
-    )
-    .toLowerCase();
+    ).toLowerCase();
 
-
-  if (
-
-    value ===
-    "completed"
-
-  ) {
-
-    return
-      "status-completed";
-
+  if (value === "completed") {
+    return "status-completed";
   }
 
-
-  if (
-
-    value ===
-    "pending"
-
-  ) {
-
-    return
-      "status-pending";
-
+  if (value === "pending") {
+    return "status-pending";
   }
 
-
-  if (
-
-    value ===
-    "failed"
-
-  ) {
-
-    return
-      "status-failed";
-
+  if (value === "failed") {
+    return "status-failed";
   }
 
-
-  if (
-
-    value ===
-    "rejected"
-
-  ) {
-
-    return
-      "status-rejected";
-
+  if (value === "rejected") {
+    return "status-rejected";
   }
 
-
-  if (
-
-    value ===
-    "cancelled"
-
-  ) {
-
-    return
-      "status-cancelled";
-
+  if (value === "cancelled") {
+    return "status-cancelled";
   }
 
-
-  return
-    "status-default";
-
+  return "status-default";
 
 }
 
 
 /* =========================================
-   SHOW PAGE ERROR
+   TRANSACTION CATEGORY
 ========================================= */
 
+function getTransactionCategory(type) {
 
-function showPageError(
-  message
-) {
+  const value =
+    String(
+      type || ""
+    ).toLowerCase();
 
+
+  /* NORMAL MEMBER EARNINGS */
+
+  if (
+    value === "task_reward" ||
+    value === "watch_earn"
+  ) {
+
+    return {
+      label: "Normal Earning",
+      className: "type-normal"
+    };
+
+  }
+
+
+  /* REFERRAL */
+
+  if (
+    value === "referral_bonus"
+  ) {
+
+    return {
+      label: "Referral Bonus",
+      className: "type-referral"
+    };
+
+  }
+
+
+  /* CREATE & EARN */
+
+  if (
+    value === "novel_writer_earnings"
+  ) {
+
+    return {
+      label: "Create & Earn",
+      className: "type-create"
+    };
+
+  }
+
+
+  /* COMPETITION */
+
+  if (
+    value === "competition_prize"
+  ) {
+
+    return {
+      label: "Competition Prize",
+      className: "type-competition"
+    };
+
+  }
+
+
+  /* WITHDRAWALS */
+
+  if (
+    value === "withdrawal" ||
+    value === "withdrawal_fee"
+  ) {
+
+    return {
+      label: "Withdrawal",
+      className: "type-withdrawal"
+    };
+
+  }
+
+
+  /* MEMBERSHIP */
+
+  if (
+    value === "membership_payment" ||
+    value === "membership_upgrade" ||
+    value === "membership_renewal" ||
+    value === "payment" ||
+    value === "payment_fee"
+  ) {
+
+    return {
+      label: "Membership",
+      className: "type-membership"
+    };
+
+  }
+
+
+  /* PLATFORM / OTHER */
+
+  return {
+    label: "Platform",
+    className: "type-platform"
+  };
+
+}
+
+
+/* =========================================
+   PAGE ERROR
+========================================= */
+
+function showPageError(message) {
 
   document.getElementById(
     "statsGrid"
@@ -1692,277 +1189,176 @@ function showPageError(
 
     <div
       class="error-box"
-      style="
-        grid-column:1/-1;
-      "
+      style="grid-column:1/-1;"
     >
 
       <strong>
-
         Unable to load transactions.
-
       </strong>
 
       <p>
-
         ${escapeHtml(message)}
-
       </p>
 
     </div>
 
   `;
-
 
   document.getElementById(
     "transactionList"
   ).innerHTML = `
 
-    <div
-      class="error-box"
-    >
+    <div class="error-box">
 
       <strong>
-
         Transaction data could not be loaded.
-
       </strong>
 
       <p>
-
         ${escapeHtml(message)}
-
       </p>
 
     </div>
 
   `;
-
 
   document.getElementById(
     "resultCount"
   ).textContent =
     "Unable to load transactions";
 
-
 }
 
 
 /* =========================================
-   CHECK SUPABASE
+   SUPABASE CHECK
 ========================================= */
-
 
 function checkSupabaseClient() {
 
-
   if (
-
     typeof supabaseClient ===
     "undefined"
-
   ) {
 
-
     throw new Error(
-
       "supabaseClient was not found. Please check your supabase.js file."
-
     );
 
-
   }
-
 
 }
 
 
 /* =========================================
-   ADMIN SECURITY CHECK
+   ADMIN CHECK
 ========================================= */
-
 
 async function checkAdmin() {
 
-
   try {
-
 
     checkSupabaseClient();
 
-
-
     const result =
-
       await withTimeout(
-
         supabaseClient
-
           .auth
-
           .getUser()
-
       );
-
 
     const user =
       result.data.user;
 
-
     const error =
       result.error;
 
-
-
-    /* NOT LOGGED IN */
-
-
     if (
-
       error ||
-
       !user
-
     ) {
-
 
       window.location.href =
         "index.html";
-
 
       return null;
 
     }
 
 
-
-    /* LOAD PROFILE */
-
-
     const profileResult =
-
       await withTimeout(
 
         supabaseClient
-
-          .from(
-            "profiles"
-          )
-
-          .select(
-            `
-              full_name,
-              is_admin,
-              account_status
-            `
-          )
-
+          .from("profiles")
+          .select(`
+            full_name,
+            is_admin,
+            account_status
+          `)
           .eq(
             "id",
             user.id
           )
-
           .single()
 
       );
 
-
     const profile =
       profileResult.data;
-
 
     const profileError =
       profileResult.error;
 
-
-
-    /* PROFILE ERROR */
-
-
     if (
-
-
       profileError ||
-
       !profile
-
     ) {
 
-
       throw new Error(
-
         profileError
           ? profileError.message
           : "Administrator profile could not be loaded."
-
       );
-
 
     }
 
 
-
-    /* NOT ADMIN */
-
-
     if (
-
-      profile.is_admin !==
-      true
-
+      profile.is_admin !== true
     ) {
-
 
       await supabaseClient
         .auth
         .signOut();
 
-
       alert(
-
         "Access denied. Administrator privileges are required."
-
       );
-
 
       window.location.href =
         "index.html";
-
 
       return null;
 
     }
 
 
-
-    /* INACTIVE ACCOUNT */
-
-
     if (
-
       profile.account_status &&
-
-      profile.account_status !==
-      "active"
-
+      profile.account_status !== "active"
     ) {
-
 
       await supabaseClient
         .auth
         .signOut();
 
-
       alert(
-
         "This administrator account is not active."
-
       );
-
 
       window.location.href =
         "index.html";
-
 
       return null;
 
@@ -1972,44 +1368,28 @@ async function checkAdmin() {
     currentAdmin =
       user;
 
-
     return user;
 
-
   }
-
 
   catch (error) {
 
-
     console.error(
-
       "Admin check error:",
-
       error
-
     );
-
 
     showPageError(
-
       "Admin verification error: " +
-
       (
-
         error.message ||
         "Unknown error"
-
       )
-
     );
-
 
     return null;
 
-
   }
-
 
 }
 
@@ -2018,40 +1398,28 @@ async function checkAdmin() {
    LOAD TRANSACTIONS
 ========================================= */
 
-
 async function loadTransactions() {
 
-
   const transactionList =
-
     document.getElementById(
       "transactionList"
     );
 
-
   const statsGrid =
-
     document.getElementById(
       "statsGrid"
     );
 
-
   const refreshButton =
-
     document.getElementById(
       "refreshButton"
     );
 
 
-
   transactionList.innerHTML = `
 
-    <div
-      class="loading"
-    >
-
+    <div class="loading">
       Loading transactions...
-
     </div>
 
   `;
@@ -2059,12 +1427,8 @@ async function loadTransactions() {
 
   statsGrid.innerHTML = `
 
-    <div
-      class="loading"
-    >
-
+    <div class="loading">
       Loading transaction statistics...
-
     </div>
 
   `;
@@ -2079,58 +1443,37 @@ async function loadTransactions() {
   refreshButton.disabled =
     true;
 
-
   refreshButton.textContent =
     "Loading...";
 
 
   try {
 
-
     checkSupabaseClient();
 
 
-
-    /* =====================================
-       LOAD DIRECTLY FROM TRANSACTIONS TABLE
-
-       NO RPC IS USED HERE
-    ===================================== */
-
-
     const result =
-
       await withTimeout(
 
         supabaseClient
-
-          .from(
-            "transactions"
-          )
-
-          .select(
-            `
-              id,
-              user_id,
-              type,
-              amount,
-              status,
-              description,
-              reference,
-              metadata,
-              balance_after,
-              processed_at,
-              created_at
-            `
-          )
-
+          .from("transactions")
+          .select(`
+            id,
+            user_id,
+            type,
+            amount,
+            status,
+            description,
+            reference,
+            metadata,
+            balance_after,
+            processed_at,
+            created_at
+          `)
           .order(
             "created_at",
             {
-
-              ascending:
-                false
-
+              ascending: false
             }
           )
 
@@ -2140,16 +1483,12 @@ async function loadTransactions() {
     const transactions =
       result.data;
 
-
     const error =
       result.error;
 
 
-
     if (error) {
-
       throw error;
-
     }
 
 
@@ -2159,74 +1498,51 @@ async function loadTransactions() {
 
     updateFilters();
 
-
     updateStatistics();
-
 
     displayTransactions();
 
-
   }
-
 
   catch (error) {
 
-
     console.error(
-
       "Transaction loading error:",
-
       error
-
     );
-
 
     showPageError(
-
       error.message ||
-
       "Unknown error"
-
     );
-
 
   }
 
-
   finally {
-
 
     refreshButton.disabled =
       false;
 
-
     refreshButton.textContent =
       "↻ Refresh";
 
-
   }
-
 
 }
 
 
 /* =========================================
-   UPDATE FILTER OPTIONS
+   UPDATE FILTERS
 ========================================= */
-
 
 function updateFilters() {
 
-
   const typeFilter =
-
     document.getElementById(
       "typeFilter"
     );
 
-
   const statusFilter =
-
     document.getElementById(
       "statusFilter"
     );
@@ -2235,92 +1551,50 @@ function updateFilters() {
   const currentType =
     typeFilter.value;
 
-
   const currentStatus =
     statusFilter.value;
 
 
-
-  /* GET UNIQUE TYPES */
-
-
   const types =
-
     [
-
       ...new Set(
-
         allTransactions
-
           .map(
-
             transaction =>
-
               String(
-                transaction.type ||
-                ""
+                transaction.type || ""
               )
-
           )
-
           .filter(
-
-            value =>
-              value
-
+            value => value
           )
-
       )
-
     ]
-
     .sort();
-
-
-
-  /* GET UNIQUE STATUSES */
 
 
   const statuses =
-
     [
-
       ...new Set(
-
         allTransactions
-
           .map(
-
             transaction =>
-
               String(
-                transaction.status ||
-                ""
+                transaction.status || ""
               )
-
           )
-
           .filter(
-
-            value =>
-              value
-
+            value => value
           )
-
       )
-
     ]
-
     .sort();
-
 
 
   typeFilter.innerHTML = `
 
     <option value="">
-
       All Types
-
     </option>
 
   `
@@ -2328,35 +1602,26 @@ function updateFilters() {
   +
 
   types
-
     .map(
-
       type => `
 
         <option
           value="${escapeHtml(type)}"
         >
-
           ${escapeHtml(
             formatText(type)
           )}
-
         </option>
 
       `
-
     )
-
     .join("");
-
 
 
   statusFilter.innerHTML = `
 
     <option value="">
-
       All Statuses
-
     </option>
 
   `
@@ -2364,45 +1629,32 @@ function updateFilters() {
   +
 
   statuses
-
     .map(
-
       status => `
 
         <option
           value="${escapeHtml(status)}"
         >
-
           ${escapeHtml(
             formatText(status)
           )}
-
         </option>
 
       `
-
     )
-
     .join("");
-
 
 
   typeFilter.value =
     types.includes(currentType)
-
       ? currentType
-
       : "";
-
 
 
   statusFilter.value =
     statuses.includes(currentStatus)
-
       ? currentStatus
-
       : "";
-
 
 }
 
@@ -2411,441 +1663,256 @@ function updateFilters() {
    UPDATE STATISTICS
 ========================================= */
 
-
 function updateStatistics() {
 
 
   const totalTransactions =
-
     allTransactions.length;
 
 
-
-  const totalAmount =
-
-    allTransactions
-
-      .reduce(
-
-        function(
-          total,
-          transaction
-        ) {
+  const credits =
+    allTransactions.filter(
+      transaction =>
+        Number(
+          transaction.amount || 0
+        ) > 0
+    );
 
 
-          return (
-
-            total +
-
-            Number(
-              transaction.amount || 0
-            )
-
-          );
-
-
-        },
-
-        0
-
-      );
-
+  const debits =
+    allTransactions.filter(
+      transaction =>
+        Number(
+          transaction.amount || 0
+        ) < 0
+    );
 
 
   const completed =
-
-    allTransactions
-
-      .filter(
-
-        transaction =>
-
-          String(
-            transaction.status ||
-            ""
-          )
-
-          .toLowerCase()
-
-          ===
-
-          "completed"
-
-      );
-
+    allTransactions.filter(
+      transaction =>
+        String(
+          transaction.status || ""
+        ).toLowerCase() ===
+        "completed"
+    );
 
 
   const pending =
+    allTransactions.filter(
+      transaction =>
+        String(
+          transaction.status || ""
+        ).toLowerCase() ===
+        "pending"
+    );
 
-    allTransactions
 
-      .filter(
+  const referralBonuses =
+    allTransactions.filter(
+      transaction =>
+        transaction.type ===
+        "referral_bonus"
+    );
 
-        transaction =>
 
-          String(
-            transaction.status ||
-            ""
+  const sumAmount = list =>
+    list.reduce(
+      (
+        total,
+        transaction
+      ) =>
+        total +
+        Math.abs(
+          Number(
+            transaction.amount || 0
           )
-
-          .toLowerCase()
-
-          ===
-
-          "pending"
-
-      );
-
-
-
-  const completedAmount =
-
-    completed
-
-      .reduce(
-
-        function(
-          total,
-          transaction
-        ) {
-
-
-          return (
-
-            total +
-
-            Number(
-              transaction.amount || 0
-            )
-
-          );
-
-
-        },
-
-        0
-
-      );
-
-
-
-  const pendingAmount =
-
-    pending
-
-      .reduce(
-
-        function(
-          total,
-          transaction
-        ) {
-
-
-          return (
-
-            total +
-
-            Number(
-              transaction.amount || 0
-            )
-
-          );
-
-
-        },
-
-        0
-
-      );
-
+        ),
+      0
+    );
 
 
   document.getElementById(
     "statsGrid"
   ).innerHTML = `
 
-
-    <div
-      class="stat-card"
-    >
+    <div class="stat-card">
 
       <small>
-
         Total Transactions
-
       </small>
 
       <strong>
-
         ${totalTransactions.toLocaleString()}
-
       </strong>
 
     </div>
 
 
-
-    <div
-      class="stat-card"
-    >
+    <div class="stat-card">
 
       <small>
-
-        Total Amount
-
+        Credits
       </small>
 
-      <strong
-        class="stat-money"
-      >
-
+      <strong class="stat-money">
         ${formatMoney(
-          totalAmount
+          sumAmount(credits)
         )}
-
       </strong>
 
     </div>
 
 
-
-    <div
-      class="stat-card"
-    >
+    <div class="stat-card">
 
       <small>
+        Debits
+      </small>
 
+      <strong class="stat-money">
+        ${formatMoney(
+          sumAmount(debits)
+        )}
+      </strong>
+
+    </div>
+
+
+    <div class="stat-card">
+
+      <small>
         Completed
-
       </small>
 
       <strong>
-
         ${completed.length.toLocaleString()}
-
       </strong>
 
     </div>
 
 
-
-    <div
-      class="stat-card"
-    >
+    <div class="stat-card">
 
       <small>
-
-        Completed Amount
-
-      </small>
-
-      <strong
-        class="stat-money"
-      >
-
-        ${formatMoney(
-          completedAmount
-        )}
-
-      </strong>
-
-    </div>
-
-
-
-    <div
-      class="stat-card"
-    >
-
-      <small>
-
         Pending
-
       </small>
 
       <strong>
-
         ${pending.length.toLocaleString()}
-
       </strong>
 
     </div>
 
 
-
-    <div
-      class="stat-card"
-    >
+    <div class="stat-card">
 
       <small>
-
-        Pending Amount
-
+        Referral Bonuses
       </small>
 
-      <strong
-        class="stat-money"
-      >
-
+      <strong class="stat-money">
         ${formatMoney(
-          pendingAmount
+          sumAmount(
+            referralBonuses
+          )
         )}
-
       </strong>
 
     </div>
-
 
   `;
-
 
 }
 
 
 /* =========================================
-   GET FILTERED TRANSACTIONS
+   FILTERED TRANSACTIONS
 ========================================= */
-
 
 function getFilteredTransactions() {
 
-
   const search =
-
     document
-
       .getElementById(
         "searchInput"
       )
-
       .value
-
       .trim()
-
       .toLowerCase();
 
 
-
   const selectedType =
-
     document
-
       .getElementById(
         "typeFilter"
       )
-
       .value;
-
 
 
   const selectedStatus =
-
     document
-
       .getElementById(
         "statusFilter"
       )
-
       .value;
 
 
+  return allTransactions.filter(
+    function(transaction) {
 
-  return allTransactions
-
-    .filter(
-
-      function(
-        transaction
-      ) {
-
-
-        const transactionType =
-
-          String(
-            transaction.type ||
-            ""
-          );
-
-
-
-        const transactionStatus =
-
-          String(
-            transaction.status ||
-            ""
-          );
-
-
-
-        const searchableText =
-
-          [
-
-            transaction.description,
-
-            transaction.reference,
-
-            transaction.user_id,
-
-            transaction.type,
-
-            transaction.status,
-
-            transaction.amount
-
-          ]
-
-          .join(
-            " "
-          )
-
-          .toLowerCase();
-
-
-
-        const matchesSearch =
-
-          !search ||
-
-          searchableText.includes(
-            search
-          );
-
-
-
-        const matchesType =
-
-          !selectedType ||
-
-          transactionType ===
-          selectedType;
-
-
-
-        const matchesStatus =
-
-          !selectedStatus ||
-
-          transactionStatus ===
-          selectedStatus;
-
-
-
-        return (
-
-          matchesSearch &&
-
-          matchesType &&
-
-          matchesStatus
-
+      const transactionType =
+        String(
+          transaction.type || ""
         );
 
 
-      }
+      const transactionStatus =
+        String(
+          transaction.status || ""
+        );
 
-    );
 
+      const searchableText =
+        [
+          transaction.description,
+          transaction.reference,
+          transaction.user_id,
+          transaction.type,
+          transaction.status,
+          transaction.amount
+        ]
+        .join(" ")
+        .toLowerCase();
+
+
+      const matchesSearch =
+        !search ||
+        searchableText.includes(
+          search
+        );
+
+
+      const matchesType =
+        !selectedType ||
+        transactionType ===
+        selectedType;
+
+
+      const matchesStatus =
+        !selectedStatus ||
+        transactionStatus ===
+        selectedStatus;
+
+
+      return (
+        matchesSearch &&
+        matchesType &&
+        matchesStatus
+      );
+
+    }
+  );
 
 }
 
@@ -2854,21 +1921,16 @@ function getFilteredTransactions() {
    DISPLAY TRANSACTIONS
 ========================================= */
 
-
 function displayTransactions() {
 
-
   const transactionList =
-
     document.getElementById(
       "transactionList"
     );
 
 
   const transactions =
-
     getFilteredTransactions();
-
 
 
   document.getElementById(
@@ -2882,88 +1944,44 @@ function displayTransactions() {
     } found`;
 
 
-
-  /* EMPTY */
-
-
   if (
-
-    transactions.length ===
-    0
-
+    transactions.length === 0
   ) {
-
 
     transactionList.innerHTML = `
 
+      <div class="empty-state">
 
-      <div
-        class="empty-state"
-      >
-
-
-        <div
-          class="empty-icon"
-        >
-
+        <div class="empty-icon">
           📭
-
         </div>
 
-
         <h3>
-
           No transactions found
-
         </h3>
 
-
         <p>
-
-          No transactions match your
-          current search or filters.
-
+          No transactions match your current search or filters.
         </p>
-
 
       </div>
 
-
     `;
 
-
     return;
-
 
   }
 
 
-
-  /* CREATE CARDS */
-
-
   transactionList.innerHTML =
-
     transactions
-
       .map(
-
-        function(
-          transaction
-        ) {
-
-
-          return createTransactionCard(
+        transaction =>
+          createTransactionCard(
             transaction
-          );
-
-
-        }
-
+          )
       )
-
       .join("");
-
 
 }
 
@@ -2972,69 +1990,68 @@ function displayTransactions() {
    CREATE TRANSACTION CARD
 ========================================= */
 
-
 function createTransactionCard(
   transaction
 ) {
 
-
   const status =
-
     String(
-
       transaction.status ||
-
       "unknown"
-
     );
 
 
   const type =
-
     String(
-
       transaction.type ||
-
       "unknown"
-
     );
+
+
+  const category =
+    getTransactionCategory(
+      type
+    );
+
+
+  const userLink =
+    transaction.user_id
+      ? `
+        <a
+          class="user-link"
+          href="admin-user-details.html?id=${encodeURIComponent(
+            transaction.user_id
+          )}"
+        >
+          View User
+        </a>
+      `
+      : "—";
 
 
   return `
 
+    <article class="transaction-card">
 
-    <article
-      class="transaction-card"
-    >
-
-
-      <div
-        class="transaction-top"
-      >
+      <div class="transaction-grid">
 
 
-        <div
-          class="transaction-main"
-        >
+        <!-- TYPE / AMOUNT -->
 
+        <div class="transaction-main">
 
           <span
             class="
               badge
-              type-badge
+              ${category.className}
             "
           >
-
             ${escapeHtml(
-              formatText(type)
+              category.label
             )}
-
           </span>
 
-
-          <h2
-            class="transaction-amount"
-          >
+          <h2 class="transaction-amount">
 
             ${formatMoney(
               transaction.amount
@@ -3042,55 +2059,71 @@ function createTransactionCard(
 
           </h2>
 
+          <div class="transaction-type-label">
+
+            ${escapeHtml(
+              formatText(type)
+            )}
+
+          </div>
 
         </div>
 
 
+        <!-- DESCRIPTION -->
 
-        <span
-          class="
-            badge
-            ${getStatusClass(status)}
-          "
-        >
-
-          ${escapeHtml(
-            formatText(status)
-          )}
-
-        </span>
-
-
-      </div>
-
-
-
-      <p
-        class="transaction-description"
-      >
-
-        ${escapeHtml(
-          transaction.description ||
-          "No description provided."
-        )}
-
-      </p>
-
-
-
-      <div
-        class="details-grid"
-      >
-
-
-        <div
-          class="detail"
-        >
+        <div class="detail">
 
           <small>
+            Description
+          </small>
 
+          <strong class="transaction-description">
+
+            ${escapeHtml(
+              transaction.description ||
+              "No description provided."
+            )}
+
+          </strong>
+
+        </div>
+
+
+        <!-- STATUS -->
+
+        <div class="detail">
+
+          <small>
+            Status
+          </small>
+
+          <strong>
+
+            <span
+              class="
+                badge
+                ${getStatusClass(status)}
+              "
+            >
+
+              ${escapeHtml(
+                formatText(status)
+              )}
+
+            </span>
+
+          </strong>
+
+        </div>
+
+
+        <!-- REFERENCE -->
+
+        <div class="detail">
+
+          <small>
             Reference
-
           </small>
 
           <strong>
@@ -3104,75 +2137,29 @@ function createTransactionCard(
         </div>
 
 
+        <!-- USER -->
 
-        <div
-          class="detail"
-        >
+        <div class="detail">
 
           <small>
-
-            User ID
-
+            User
           </small>
 
           <strong>
 
-            ${escapeHtml(
-              transaction.user_id
-            )}
+            ${userLink}
 
           </strong>
 
         </div>
 
 
+        <!-- DATE -->
 
-        <div
-          class="detail"
-        >
-
-          <small>
-
-            Balance After
-
-          </small>
-
-          <strong>
-
-            ${
-              transaction.balance_after ===
-              null
-
-              ||
-
-              transaction.balance_after ===
-              undefined
-
-                ?
-
-                "—"
-
-                :
-
-                formatMoney(
-                  transaction.balance_after
-                )
-            }
-
-          </strong>
-
-        </div>
-
-
-
-        <div
-          class="detail"
-        >
+        <div class="detail">
 
           <small>
-
             Created
-
           </small>
 
           <strong>
@@ -3186,189 +2173,103 @@ function createTransactionCard(
         </div>
 
 
-
-        <div
-          class="detail"
-        >
-
-          <small>
-
-            Processed
-
-          </small>
-
-          <strong>
-
-            ${formatDate(
-              transaction.processed_at
-            )}
-
-          </strong>
-
-        </div>
-
-
       </div>
-
 
     </article>
 
-
   `;
-
 
 }
 
 
 /* =========================================
-   EVENT LISTENERS
+   EVENTS
 ========================================= */
 
-
 document
-
   .getElementById(
     "searchInput"
   )
-
   .addEventListener(
-
     "input",
-
     function() {
-
-
       displayTransactions();
-
-
     }
-
   );
 
 
-
 document
-
   .getElementById(
     "typeFilter"
   )
-
   .addEventListener(
-
     "change",
-
     function() {
-
-
       displayTransactions();
-
-
     }
-
   );
 
 
-
 document
-
   .getElementById(
     "statusFilter"
   )
-
   .addEventListener(
-
     "change",
-
     function() {
-
-
       displayTransactions();
-
-
     }
-
   );
 
 
-
 document
-
   .getElementById(
     "refreshButton"
   )
-
   .addEventListener(
-
     "click",
-
     async function() {
-
-
       await loadTransactions();
-
-
     }
-
   );
 
 
 /* =========================================
-   START APPLICATION
+   START
 ========================================= */
-
 
 (async function() {
 
-
   try {
 
-
     const admin =
-
       await checkAdmin();
 
 
-
     if (!admin) {
-
       return;
-
     }
-
 
 
     await loadTransactions();
 
-
   }
-
 
   catch (error) {
 
-
     console.error(
-
       "Application startup error:",
-
       error
-
     );
-
 
     showPageError(
-
       error.message ||
-
       "Unknown application error"
-
     );
-
 
   }
 
-
 })();
-
 
 </script>
 

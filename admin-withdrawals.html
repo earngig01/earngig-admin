@@ -12,18 +12,14 @@
 
   <title>Withdrawals | EarnGig Admin</title>
 
-
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
   <script src="supabase.js"></script>
-
 
   <style>
 
     * {
       box-sizing: border-box;
     }
-
 
     body {
       margin: 0;
@@ -32,12 +28,10 @@
       color: #17182f;
     }
 
-
     button,
     select {
       font-family: inherit;
     }
-
 
     /* =========================================
        HEADER
@@ -48,61 +42,47 @@
       color: white;
     }
 
-
     .nav {
       max-width: 1250px;
       margin: auto;
-      padding: 16px 20px;
+      padding: 14px 20px;
 
       display: flex;
       align-items: center;
       justify-content: space-between;
 
-      gap: 20px;
+      gap: 16px;
     }
-
 
     .logo {
       color: white;
       text-decoration: none;
-      font-size: 25px;
+      font-size: 24px;
       font-weight: 700;
     }
-
 
     .logo span {
       color: #7c5cff;
     }
 
-
     .admin-badge {
-      font-size: 13px;
+      font-size: 12px;
       color: #c9caff;
       margin-left: auto;
     }
 
-
     .dashboard-btn {
       text-decoration: none;
-
-      border:
-        1px solid
-        rgba(255,255,255,.35);
-
+      border: 1px solid rgba(255,255,255,.35);
       color: white;
-
-      padding: 9px 15px;
-
-      border-radius: 8px;
-
-      font-size: 14px;
+      padding: 8px 13px;
+      border-radius: 7px;
+      font-size: 13px;
     }
-
 
     .dashboard-btn:hover {
       background: rgba(255,255,255,.08);
     }
-
 
     /* =========================================
        MAIN
@@ -111,191 +91,159 @@
     main {
       max-width: 1250px;
       margin: auto;
-      padding: 32px 20px 60px;
+      padding: 28px 20px 50px;
     }
-
 
     /* =========================================
        PAGE HEADER
     ========================================= */
 
     .page-heading {
-      margin-bottom: 24px;
+      margin-bottom: 20px;
     }
-
 
     .eyebrow {
       display: inline-block;
 
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
       letter-spacing: 1px;
 
       color: #6d4aff;
 
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
-
 
     .page-heading h1 {
-      margin: 0 0 8px;
-      font-size: 32px;
+      margin: 0 0 6px;
+      font-size: 29px;
     }
-
 
     .page-heading p {
       margin: 0;
       color: #686a7d;
-      line-height: 1.5;
+      line-height: 1.4;
+      font-size: 14px;
     }
 
-
     /* =========================================
-       WITHDRAWAL RULES
+       RULES
     ========================================= */
 
     .rules-card {
       background: white;
+      border: 1px solid #e6e7ee;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 22px;
 
-      border:
-        1px solid #e6e7ee;
-
-      border-radius: 14px;
-
-      padding: 20px;
-
-      margin-bottom: 28px;
-
-      box-shadow:
-        0 5px 15px
-        rgba(0,0,0,.03);
+      box-shadow: 0 4px 12px rgba(0,0,0,.03);
     }
-
 
     .rules-header {
       display: flex;
-
       align-items: center;
       justify-content: space-between;
 
-      gap: 15px;
-
+      gap: 12px;
       flex-wrap: wrap;
 
-      margin-bottom: 16px;
+      margin-bottom: 10px;
     }
-
 
     .rules-header h2 {
       margin: 0;
-      font-size: 20px;
+      font-size: 18px;
     }
-
 
     .window-badge {
       display: inline-block;
 
-      padding: 7px 12px;
+      padding: 6px 10px;
 
       border-radius: 20px;
 
-      font-size: 12px;
-
+      font-size: 11px;
       font-weight: 700;
     }
-
 
     .window-open {
       background: #dcfce7;
       color: #15803d;
     }
 
-
     .window-closed {
       background: #fef3c7;
       color: #92400e;
     }
 
-
     .rules-description {
-      margin: 0 0 16px;
+      margin: 0 0 12px;
 
       color: #686a7d;
 
-      font-size: 14px;
-
-      line-height: 1.5;
+      font-size: 13px;
+      line-height: 1.45;
     }
-
 
     .plan-rule-grid {
       display: grid;
 
       grid-template-columns:
         repeat(
-          auto-fit,
-          minmax(170px, 1fr)
+          4,
+          minmax(0, 1fr)
         );
 
-      gap: 12px;
+      gap: 8px;
     }
-
 
     .plan-rule {
       background: #fafafa;
 
-      border:
-        1px solid #eeeeee;
+      border: 1px solid #eeeeee;
 
-      border-radius: 10px;
+      border-radius: 8px;
 
-      padding: 14px;
+      padding: 10px 12px;
     }
-
 
     .plan-rule small {
       display: block;
 
       color: #77798b;
 
-      font-size: 12px;
+      font-size: 11px;
 
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
-
 
     .plan-rule strong {
       display: block;
-
-      font-size: 18px;
+      font-size: 15px;
     }
 
-
     .rules-note {
-      margin-top: 15px;
+      margin-top: 11px;
 
-      padding-top: 14px;
+      padding-top: 10px;
 
-      border-top:
-        1px solid #eeeeee;
+      border-top: 1px solid #eeeeee;
 
       color: #686a7d;
 
-      font-size: 13px;
-
-      line-height: 1.5;
+      font-size: 12px;
+      line-height: 1.4;
     }
-
 
     /* =========================================
        SECTION TITLE
     ========================================= */
 
     .section-title {
-      margin: 30px 0 14px;
-      font-size: 21px;
+      margin: 24px 0 11px;
+      font-size: 19px;
     }
-
 
     /* =========================================
        STATISTICS
@@ -306,54 +254,46 @@
 
       grid-template-columns:
         repeat(
-          auto-fit,
-          minmax(180px, 1fr)
+          4,
+          minmax(0, 1fr)
         );
 
-      gap: 12px;
+      gap: 9px;
     }
-
 
     .stat-card {
       background: white;
 
-      border:
-        1px solid #e6e7ee;
+      border: 1px solid #e6e7ee;
 
-      border-radius: 12px;
+      border-radius: 10px;
 
-      padding: 16px;
+      padding: 12px 14px;
 
-      box-shadow:
-        0 4px 12px
-        rgba(0,0,0,.03);
+      box-shadow: 0 3px 9px rgba(0,0,0,.025);
     }
-
 
     .stat-card small {
       display: block;
 
       color: #77798b;
 
-      font-size: 12px;
+      font-size: 11px;
 
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
-
 
     .stat-card strong {
       display: block;
 
-      font-size: 22px;
+      font-size: 19px;
 
       line-height: 1.2;
     }
 
-
     .stat-money {
-      font-size: 18px !important;
+      font-size: 16px !important;
     }
-
 
     /* =========================================
        CATEGORY CARDS
@@ -364,106 +304,94 @@
 
       grid-template-columns:
         repeat(
-          auto-fit,
-          minmax(230px, 1fr)
+          4,
+          minmax(0, 1fr)
         );
 
-      gap: 15px;
+      gap: 10px;
     }
-
 
     .category-card {
       background: white;
 
-      border:
-        1px solid #e6e7ee;
+      border: 1px solid #e6e7ee;
 
-      border-radius: 14px;
+      border-radius: 11px;
 
-      padding: 20px;
+      padding: 14px;
 
-      box-shadow:
-        0 5px 15px
-        rgba(0,0,0,.04);
+      box-shadow: 0 3px 10px rgba(0,0,0,.025);
     }
-
 
     .category-icon {
-      font-size: 27px;
-      margin-bottom: 12px;
+      font-size: 21px;
+      margin-bottom: 7px;
     }
-
 
     .category-card h2 {
-      margin: 0 0 8px;
-      font-size: 19px;
+      margin: 0 0 5px;
+      font-size: 16px;
     }
-
 
     .category-card p {
       margin: 0;
 
       color: #686a7d;
 
-      font-size: 13px;
+      font-size: 12px;
 
-      line-height: 1.5;
+      line-height: 1.4;
 
-      min-height: 40px;
+      min-height: 34px;
     }
-
 
     .category-info {
-      margin-top: 15px;
+      margin-top: 10px;
 
-      padding-top: 12px;
+      padding-top: 9px;
 
-      border-top:
-        1px solid #eeeeee;
+      border-top: 1px solid #eeeeee;
     }
-
 
     .category-info small {
       color: #77798b;
 
       display: block;
 
-      margin-bottom: 4px;
+      margin-bottom: 3px;
 
-      font-size: 12px;
+      font-size: 11px;
     }
-
 
     .category-info strong {
-      font-size: 18px;
+      font-size: 16px;
     }
-
 
     .category-card button {
       width: 100%;
 
-      margin-top: 16px;
+      margin-top: 11px;
 
-      padding: 11px;
+      padding: 9px;
 
       border: 0;
 
-      border-radius: 8px;
+      border-radius: 7px;
 
       background: #6d4aff;
 
       color: white;
+
+      font-size: 12px;
 
       font-weight: 700;
 
       cursor: pointer;
     }
 
-
     .category-card button:hover {
       opacity: .9;
     }
-
 
     /* =========================================
        LIST HEADER
@@ -476,57 +404,42 @@
 
       justify-content: space-between;
 
-      gap: 15px;
+      gap: 10px;
 
-      margin-bottom: 22px;
+      margin-bottom: 12px;
 
       flex-wrap: wrap;
     }
 
-
-    .back-btn {
-      border: 0;
-
-      background: #17182f;
-
-      color: white;
-
-      padding: 10px 15px;
-
-      border-radius: 8px;
-
-      font-weight: 600;
-
-      cursor: pointer;
-    }
-
-
-    .back-btn:hover {
-      opacity: .9;
-    }
-
-
+    .back-btn,
     .refresh-btn {
       border: 0;
 
-      background: #6d4aff;
-
       color: white;
 
-      padding: 10px 16px;
+      padding: 8px 12px;
 
-      border-radius: 8px;
+      border-radius: 7px;
+
+      font-size: 12px;
 
       font-weight: 700;
 
       cursor: pointer;
     }
 
+    .back-btn {
+      background: #17182f;
+    }
 
+    .refresh-btn {
+      background: #6d4aff;
+    }
+
+    .back-btn:hover,
     .refresh-btn:hover {
       opacity: .9;
     }
-
 
     /* =========================================
        WITHDRAWAL LIST
@@ -534,66 +447,60 @@
 
     .withdrawal-list {
       display: grid;
-      gap: 16px;
+      gap: 8px;
     }
 
+    /*
+      COMPACT WITHDRAWAL CARD
+    */
 
     .withdrawal-card {
       background: white;
 
-      border:
-        1px solid #e1e3ea;
+      border: 1px solid #e1e3ea;
 
-      border-radius: 14px;
+      border-radius: 10px;
 
-      padding: 18px 20px;
+      padding: 10px 12px;
 
-      box-shadow:
-        0 4px 14px
-        rgba(0,0,0,.03);
+      box-shadow: 0 2px 8px rgba(0,0,0,.025);
     }
-
 
     .withdrawal-compact-grid {
       display: grid;
 
       grid-template-columns:
+        130px
+        minmax(120px, 1fr)
+        minmax(150px, 1.3fr)
+        minmax(130px, 1.1fr)
+        85px
+        100px
+        145px;
 
-        minmax(140px, 1.1fr)
-
-        minmax(140px, 1fr)
-
-        minmax(180px, 1.4fr)
-
-        minmax(160px, 1.2fr)
-
-        minmax(110px, .8fr)
-
-        minmax(130px, 1fr)
-
-        minmax(180px, 1.2fr);
-
-      gap: 12px;
+      gap: 8px;
 
       align-items: center;
     }
 
+    /* =========================================
+       AMOUNT
+    ========================================= */
 
     .amount-section {
-      padding: 4px 2px;
+      padding: 2px;
+      min-width: 0;
     }
 
-
     .withdrawal-amount {
-      margin: 8px 0 0;
+      margin: 5px 0 0;
 
-      font-size: 26px;
+      font-size: 20px;
 
       line-height: 1.1;
 
       white-space: nowrap;
     }
-
 
     /* =========================================
        STATUS
@@ -602,43 +509,38 @@
     .status-badge {
       display: inline-block;
 
-      padding: 6px 11px;
+      padding: 4px 8px;
 
-      border-radius: 20px;
+      border-radius: 15px;
 
-      font-size: 11px;
+      font-size: 9px;
 
       font-weight: 700;
 
       text-transform: uppercase;
 
-      letter-spacing: .4px;
+      letter-spacing: .3px;
     }
-
 
     .status-pending {
       background: #fff4cc;
       color: #9a6700;
     }
 
-
     .status-approved {
       background: #dbeafe;
       color: #1d4ed8;
     }
-
 
     .status-processed {
       background: #dcfce7;
       color: #15803d;
     }
 
-
     .status-rejected {
       background: #fee2e2;
       color: #b91c1c;
     }
-
 
     /* =========================================
        DETAILS
@@ -647,14 +549,15 @@
     .compact-detail {
       background: #fafafa;
 
-      border:
-        1px solid #eeeeee;
+      border: 1px solid #eeeeee;
 
-      border-radius: 9px;
+      border-radius: 7px;
 
-      padding: 12px 13px;
+      padding: 8px 9px;
 
-      min-height: 76px;
+      min-width: 0;
+
+      min-height: 55px;
 
       display: flex;
 
@@ -663,31 +566,30 @@
       justify-content: center;
     }
 
-
     .compact-detail small {
       display: block;
 
       color: #77798b;
 
-      font-size: 11px;
+      font-size: 9px;
 
-      margin-bottom: 6px;
+      margin-bottom: 3px;
     }
-
 
     .compact-detail strong {
       display: block;
 
-      font-size: 14px;
+      font-size: 12px;
 
       color: #2b2d3b;
 
       word-break: break-word;
+
+      line-height: 1.25;
     }
 
-
     /* =========================================
-       ACTION
+       ACTIONS
     ========================================= */
 
     .action-section {
@@ -695,18 +597,21 @@
 
       flex-direction: column;
 
-      gap: 8px;
+      gap: 5px;
 
       justify-content: center;
-    }
 
+      min-width: 0;
+    }
 
     .action-btn {
       border: 0;
 
-      padding: 12px 14px;
+      padding: 7px 8px;
 
-      border-radius: 8px;
+      border-radius: 6px;
+
+      font-size: 11px;
 
       font-weight: 700;
 
@@ -717,40 +622,34 @@
       white-space: nowrap;
     }
 
-
     .approve-btn {
       background: #2563eb;
       color: white;
     }
-
 
     .process-btn {
       background: #168b49;
       color: white;
     }
 
-
     .reject-btn {
       background: #dc2626;
       color: white;
     }
 
-
     .action-btn:hover {
       opacity: .88;
     }
 
-
     .requested-date {
       text-align: center;
 
-      font-size: 12px;
+      font-size: 9px;
 
       color: #77798b;
 
-      white-space: nowrap;
+      line-height: 1.25;
     }
-
 
     /* =========================================
        LOADING / EMPTY / ERROR
@@ -759,71 +658,67 @@
     .loading {
       text-align: center;
 
-      padding: 35px 20px;
+      padding: 25px 15px;
 
       background: white;
 
-      border:
-        1px solid #e6e7ee;
+      border: 1px solid #e6e7ee;
 
-      border-radius: 13px;
+      border-radius: 10px;
 
       color: #686a7d;
-    }
 
+      font-size: 13px;
+    }
 
     .empty-state {
       text-align: center;
 
-      padding: 45px 20px;
+      padding: 35px 20px;
 
       background: white;
 
-      border:
-        1px solid #e6e7ee;
+      border: 1px solid #e6e7ee;
 
-      border-radius: 13px;
+      border-radius: 10px;
 
       color: #686a7d;
     }
 
-
     .empty-icon {
-      font-size: 34px;
-      margin-bottom: 10px;
+      font-size: 30px;
+      margin-bottom: 8px;
     }
-
 
     .empty-state h3 {
-      margin: 0 0 8px;
+      margin: 0 0 6px;
       color: #17182f;
+      font-size: 17px;
     }
-
 
     .empty-state p {
       margin: 0;
+      font-size: 13px;
     }
 
-
     .error-box {
-      padding: 20px;
+      padding: 16px;
 
-      border-radius: 12px;
+      border-radius: 10px;
 
       background: #fff5f5;
 
-      border:
-        1px solid #f0b5b5;
+      border: 1px solid #f0b5b5;
 
       color: #721c24;
-    }
 
+      font-size: 13px;
+    }
 
     .error-box p {
-      margin: 8px 0 0;
-      line-height: 1.5;
+      margin: 6px 0 0;
+      line-height: 1.4;
     }
-
 
     /* =========================================
        RESPONSIVE
@@ -831,14 +726,22 @@
 
     @media (max-width: 1150px) {
 
+      .stats-grid {
+        grid-template-columns:
+          repeat(4, 1fr);
+      }
+
+      .category-grid {
+        grid-template-columns:
+          repeat(2, 1fr);
+      }
+
       .withdrawal-compact-grid {
         grid-template-columns:
-
-          minmax(150px, 1fr)
-
-          minmax(150px, 1fr)
-
-          minmax(180px, 1fr);
+          120px
+          1fr
+          1fr
+          1fr;
       }
 
       .amount-section {
@@ -851,8 +754,34 @@
 
     }
 
+    @media (max-width: 800px) {
 
-    @media (max-width: 650px) {
+      .plan-rule-grid {
+        grid-template-columns:
+          repeat(2, 1fr);
+      }
+
+      .stats-grid {
+        grid-template-columns:
+          repeat(2, 1fr);
+      }
+
+      .withdrawal-compact-grid {
+        grid-template-columns:
+          repeat(2, 1fr);
+      }
+
+      .amount-section {
+        grid-column: span 2;
+      }
+
+      .action-section {
+        grid-column: span 2;
+      }
+
+    }
+
+    @media (max-width: 600px) {
 
       .nav {
         flex-wrap: wrap;
@@ -864,35 +793,65 @@
       }
 
       main {
-        padding: 25px 15px 45px;
+        padding: 22px 12px 40px;
       }
 
       .page-heading h1 {
-        font-size: 27px;
+        font-size: 25px;
+      }
+
+      .plan-rule-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .category-grid {
+        grid-template-columns: 1fr;
       }
 
       .withdrawal-card {
-        padding: 15px;
+        padding: 10px;
       }
+
+      .withdrawal-compact-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 7px;
+      }
+
+      .amount-section {
+        grid-column: span 2;
+      }
+
+      .action-section {
+        grid-column: span 2;
+      }
+
+      .compact-detail {
+        min-height: 50px;
+      }
+
+      .requested-date {
+        text-align: left;
+      }
+
+    }
+
+    @media (max-width: 420px) {
 
       .withdrawal-compact-grid {
         grid-template-columns: 1fr;
       }
 
-      .amount-section {
-        padding-bottom: 8px;
-      }
-
-      .compact-detail {
-        min-height: auto;
-      }
-
+      .amount-section,
       .action-section {
-        width: 100%;
+        grid-column: span 1;
       }
 
-      .requested-date {
-        text-align: left;
+      .stats-grid {
+        grid-template-columns: 1fr;
       }
 
     }
@@ -916,11 +875,9 @@
       Earn<span>Gig</span>
     </a>
 
-
     <div class="admin-badge">
       ADMIN PORTAL
     </div>
-
 
     <a
       href="admin-dashboard.html"
@@ -937,9 +894,7 @@
 <main>
 
 
-  <!-- =========================================
-       PAGE HEADER
-  ========================================== -->
+  <!-- PAGE HEADER -->
 
   <section class="page-heading">
 
@@ -958,9 +913,7 @@
   </section>
 
 
-  <!-- =========================================
-       CURRENT WITHDRAWAL RULES
-  ========================================== -->
+  <!-- CURRENT WITHDRAWAL RULES -->
 
   <section class="rules-card">
 
@@ -979,7 +932,6 @@
 
     </div>
 
-
     <p class="rules-description">
 
       Members can submit withdrawal requests only on the
@@ -989,64 +941,29 @@
 
     </p>
 
-
     <div class="plan-rule-grid">
 
-
       <div class="plan-rule">
-
-        <small>
-          Starter
-        </small>
-
-        <strong>
-          ₦3,000 minimum
-        </strong>
-
+        <small>Starter</small>
+        <strong>₦3,000 minimum</strong>
       </div>
 
-
       <div class="plan-rule">
-
-        <small>
-          Standard
-        </small>
-
-        <strong>
-          ₦6,000 minimum
-        </strong>
-
+        <small>Standard</small>
+        <strong>₦6,000 minimum</strong>
       </div>
 
-
       <div class="plan-rule">
-
-        <small>
-          Premium
-        </small>
-
-        <strong>
-          ₦12,000 minimum
-        </strong>
-
+        <small>Premium</small>
+        <strong>₦12,000 minimum</strong>
       </div>
 
-
       <div class="plan-rule">
-
-        <small>
-          Elite
-        </small>
-
-        <strong>
-          ₦24,000 minimum
-        </strong>
-
+        <small>Elite</small>
+        <strong>₦24,000 minimum</strong>
       </div>
-
 
     </div>
-
 
     <div class="rules-note">
 
@@ -1059,17 +976,13 @@
   </section>
 
 
-  <!-- =========================================
-       OVERVIEW
-  ========================================== -->
+  <!-- OVERVIEW -->
 
   <section id="overviewSection">
-
 
     <h2 class="section-title">
       Withdrawal Statistics
     </h2>
-
 
     <div
       class="stats-grid"
@@ -1086,7 +999,6 @@
     <h2 class="section-title">
       Withdrawal Management
     </h2>
-
 
     <div class="category-grid">
 
@@ -1122,7 +1034,7 @@
           type="button"
           onclick="openStatus('pending')"
         >
-          View Pending Withdrawals →
+          View Pending →
         </button>
 
       </div>
@@ -1159,7 +1071,7 @@
           type="button"
           onclick="openStatus('approved')"
         >
-          View Approved Withdrawals →
+          View Approved →
         </button>
 
       </div>
@@ -1196,7 +1108,7 @@
           type="button"
           onclick="openStatus('processed')"
         >
-          View Processed Withdrawals →
+          View Processed →
         </button>
 
       </div>
@@ -1233,7 +1145,7 @@
           type="button"
           onclick="openStatus('rejected')"
         >
-          View Rejected Withdrawals →
+          View Rejected →
         </button>
 
       </div>
@@ -1244,15 +1156,12 @@
   </section>
 
 
-  <!-- =========================================
-       LIST
-  ========================================== -->
+  <!-- LIST -->
 
   <section
     id="listSection"
     style="display:none;"
   >
-
 
     <div class="list-header">
 
@@ -1264,7 +1173,6 @@
         ← All Withdrawals
       </button>
 
-
       <button
         type="button"
         class="refresh-btn"
@@ -1274,7 +1182,6 @@
       </button>
 
     </div>
-
 
     <div
       class="withdrawal-list"
@@ -1288,7 +1195,6 @@
 
 
 <script>
-
 
 /* =========================================
    WITHDRAWAL RULES
@@ -1365,9 +1271,7 @@ function getNigeriaParts() {
       new Date()
     );
 
-
   const result = {};
-
 
   parts.forEach(
     part => {
@@ -1381,7 +1285,6 @@ function getNigeriaParts() {
 
     }
   );
-
 
   return result;
 
@@ -1399,16 +1302,13 @@ function updateWindowBadge() {
       "windowBadge"
     );
 
-
   const nigeria =
     getNigeriaParts();
-
 
   const isOpen =
     WITHDRAWAL_DAYS.includes(
       nigeria.day
     );
-
 
   if (isOpen) {
 
@@ -1464,7 +1364,6 @@ function formatDate(date) {
     return "—";
   }
 
-
   try {
 
     return new Intl.DateTimeFormat(
@@ -1504,7 +1403,6 @@ function escapeHtml(value) {
   ) {
     return "—";
   }
-
 
   return String(value)
     .replaceAll("&", "&amp;")
@@ -1549,10 +1447,8 @@ async function loadWithdrawals() {
 
   updateWindowBadge();
 
-
   const status =
     getCurrentStatus();
-
 
   if (status) {
 
@@ -1571,7 +1467,6 @@ async function loadWithdrawals() {
     `;
 
   }
-
 
   try {
 
@@ -1604,15 +1499,12 @@ async function loadWithdrawals() {
           }
         );
 
-
     if (error) {
       throw error;
     }
 
-
     allWithdrawals =
       withdrawals || [];
-
 
     if (!status) {
 
@@ -1622,13 +1514,11 @@ async function loadWithdrawals() {
 
     }
 
-
     displayStatusWithdrawals(
       status
     );
 
   }
-
 
   catch (error) {
 
@@ -1637,13 +1527,11 @@ async function loadWithdrawals() {
       error
     );
 
-
     const message =
       escapeHtml(
         error.message ||
         "Unknown error"
       );
-
 
     if (status) {
 
@@ -1709,7 +1597,6 @@ function updateStatistics() {
         "pending"
     );
 
-
   const approved =
     allWithdrawals.filter(
       withdrawal =>
@@ -1718,7 +1605,6 @@ function updateStatistics() {
         ).toLowerCase() ===
         "approved"
     );
-
 
   const processed =
     allWithdrawals.filter(
@@ -1729,7 +1615,6 @@ function updateStatistics() {
         "processed"
     );
 
-
   const rejected =
     allWithdrawals.filter(
       withdrawal =>
@@ -1738,7 +1623,6 @@ function updateStatistics() {
         ).toLowerCase() ===
         "rejected"
     );
-
 
   const totalAmount = list =>
 
@@ -1754,143 +1638,82 @@ function updateStatistics() {
       0
     );
 
-
   document.getElementById(
     "statsGrid"
   ).innerHTML = `
 
-
     <div class="stat-card">
-
-      <small>
-        Pending Requests
-      </small>
-
-      <strong>
-        ${pending.length}
-      </strong>
-
+      <small>Pending Requests</small>
+      <strong>${pending.length}</strong>
     </div>
 
-
     <div class="stat-card">
-
-      <small>
-        Pending Amount
-      </small>
-
+      <small>Pending Amount</small>
       <strong class="stat-money">
         ${formatMoney(
           totalAmount(pending)
         )}
       </strong>
-
     </div>
 
-
     <div class="stat-card">
-
-      <small>
-        Approved Requests
-      </small>
-
-      <strong>
-        ${approved.length}
-      </strong>
-
+      <small>Approved Requests</small>
+      <strong>${approved.length}</strong>
     </div>
 
-
     <div class="stat-card">
-
-      <small>
-        Approved Amount
-      </small>
-
+      <small>Approved Amount</small>
       <strong class="stat-money">
         ${formatMoney(
           totalAmount(approved)
         )}
       </strong>
-
     </div>
 
-
     <div class="stat-card">
-
-      <small>
-        Processed Requests
-      </small>
-
-      <strong>
-        ${processed.length}
-      </strong>
-
+      <small>Processed Requests</small>
+      <strong>${processed.length}</strong>
     </div>
 
-
     <div class="stat-card">
-
-      <small>
-        Processed Amount
-      </small>
-
+      <small>Processed Amount</small>
       <strong class="stat-money">
         ${formatMoney(
           totalAmount(processed)
         )}
       </strong>
-
     </div>
 
-
     <div class="stat-card">
-
-      <small>
-        Rejected Requests
-      </small>
-
-      <strong>
-        ${rejected.length}
-      </strong>
-
+      <small>Rejected Requests</small>
+      <strong>${rejected.length}</strong>
     </div>
 
-
     <div class="stat-card">
-
-      <small>
-        Rejected Amount
-      </small>
-
+      <small>Rejected Amount</small>
       <strong class="stat-money">
         ${formatMoney(
           totalAmount(rejected)
         )}
       </strong>
-
     </div>
 
   `;
-
 
   document.getElementById(
     "pendingCount"
   ).textContent =
     pending.length;
 
-
   document.getElementById(
     "approvedCount"
   ).textContent =
     approved.length;
 
-
   document.getElementById(
     "processedCount"
   ).textContent =
     processed.length;
-
 
   document.getElementById(
     "rejectedCount"
@@ -1924,7 +1747,6 @@ function displayStatusWithdrawals(
 
   };
 
-
   const descriptions = {
 
     pending:
@@ -1941,18 +1763,15 @@ function displayStatusWithdrawals(
 
   };
 
-
   document.getElementById(
     "pageTitle"
   ).textContent =
     titles[status];
 
-
   document.getElementById(
     "pageDescription"
   ).textContent =
     descriptions[status];
-
 
   const withdrawals =
     allWithdrawals.filter(
@@ -1962,7 +1781,6 @@ function displayStatusWithdrawals(
         ).toLowerCase() ===
         status
     );
-
 
   if (
     withdrawals.length === 0
@@ -1997,7 +1815,6 @@ function displayStatusWithdrawals(
 
   }
 
-
   document.getElementById(
     "withdrawalList"
   ).innerHTML =
@@ -2027,7 +1844,6 @@ function createWithdrawalCard(
       withdrawal.status || "pending"
     ).toLowerCase();
 
-
   let actions = "";
 
 
@@ -2041,10 +1857,7 @@ function createWithdrawalCard(
 
         <button
           type="button"
-          class="
-            action-btn
-            approve-btn
-          "
+          class="action-btn approve-btn"
           onclick="
             updateWithdrawalStatus(
               '${escapeHtml(withdrawal.id)}',
@@ -2055,13 +1868,9 @@ function createWithdrawalCard(
           ✓ Approve
         </button>
 
-
         <button
           type="button"
-          class="
-            action-btn
-            reject-btn
-          "
+          class="action-btn reject-btn"
           onclick="
             updateWithdrawalStatus(
               '${escapeHtml(withdrawal.id)}',
@@ -2072,14 +1881,10 @@ function createWithdrawalCard(
           ✕ Reject
         </button>
 
-
         <div class="requested-date">
-
-          Requested:
           ${formatDate(
             withdrawal.requested_at
           )}
-
         </div>
 
       </div>
@@ -2087,7 +1892,6 @@ function createWithdrawalCard(
     `;
 
   }
-
 
   else if (
     status === "approved"
@@ -2099,10 +1903,7 @@ function createWithdrawalCard(
 
         <button
           type="button"
-          class="
-            action-btn
-            process-btn
-          "
+          class="action-btn process-btn"
           onclick="
             updateWithdrawalStatus(
               '${escapeHtml(withdrawal.id)}',
@@ -2110,17 +1911,13 @@ function createWithdrawalCard(
             )
           "
         >
-          ✓ Mark as Processed
+          ✓ Mark Processed
         </button>
 
-
         <div class="requested-date">
-
-          Requested:
           ${formatDate(
             withdrawal.requested_at
           )}
-
         </div>
 
       </div>
@@ -2129,7 +1926,6 @@ function createWithdrawalCard(
 
   }
 
-
   else {
 
     actions = `
@@ -2137,12 +1933,9 @@ function createWithdrawalCard(
       <div class="action-section">
 
         <div class="requested-date">
-
-          Requested:
           ${formatDate(
             withdrawal.requested_at
           )}
-
         </div>
 
       </div>
@@ -2156,9 +1949,7 @@ function createWithdrawalCard(
 
     <article class="withdrawal-card">
 
-      <div
-        class="withdrawal-compact-grid"
-      >
+      <div class="withdrawal-compact-grid">
 
 
         <div class="amount-section">
@@ -2172,13 +1963,10 @@ function createWithdrawalCard(
             ${escapeHtml(status)}
           </span>
 
-
           <h2 class="withdrawal-amount">
-
             ${formatMoney(
               withdrawal.amount
             )}
-
           </h2>
 
         </div>
@@ -2187,7 +1975,7 @@ function createWithdrawalCard(
         <div class="compact-detail">
 
           <small>
-            Bank Name
+            Bank
           </small>
 
           <strong>
@@ -2247,7 +2035,7 @@ function createWithdrawalCard(
         <div class="compact-detail">
 
           <small>
-            Net Amount
+            Net
           </small>
 
           <strong>
@@ -2292,7 +2080,6 @@ async function updateWithdrawalStatus(
 
   }
 
-
   else if (
     newStatus === "rejected"
   ) {
@@ -2301,7 +2088,6 @@ async function updateWithdrawalStatus(
       "Are you sure you want to reject this withdrawal?";
 
   }
-
 
   else if (
     newStatus === "processed"
@@ -2352,14 +2138,12 @@ async function updateWithdrawalStatus(
 
   }
 
-
   catch (error) {
 
     console.error(
       "Withdrawal update error:",
       error
     );
-
 
     alert(
       "Unable to update withdrawal: " +
@@ -2382,10 +2166,8 @@ async function updateWithdrawalStatus(
 
   updateWindowBadge();
 
-
   const status =
     getCurrentStatus();
-
 
   if (status) {
 
@@ -2393,7 +2175,6 @@ async function updateWithdrawalStatus(
       "overviewSection"
     ).style.display =
       "none";
-
 
     document.getElementById(
       "listSection"
@@ -2409,14 +2190,12 @@ async function updateWithdrawalStatus(
     ).style.display =
       "block";
 
-
     document.getElementById(
       "listSection"
     ).style.display =
       "none";
 
   }
-
 
   await loadWithdrawals();
 

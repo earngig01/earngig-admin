@@ -14,8 +14,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <script src="supabase.js"></script>
-
     <style>
 
         * {
@@ -55,8 +53,11 @@
             text-decoration: none;
             background: #111827;
             color: white;
+
             padding: 10px 16px;
+
             border-radius: 8px;
+
             font-size: 14px;
         }
 
@@ -66,7 +67,9 @@
 
         .container {
             max-width: 1350px;
+
             margin: 30px auto;
+
             padding: 0 20px;
         }
 
@@ -76,11 +79,18 @@
 
         .error {
             padding: 16px;
+
             background: #fee2e2;
+
             color: #991b1b;
+
             border-radius: 8px;
+
             margin-bottom: 20px;
+
             display: none;
+
+            line-height: 1.5;
         }
 
         /* ================================
@@ -100,21 +110,29 @@
 
         .stat-card {
             background: white;
+
             padding: 20px;
+
             border-radius: 12px;
+
             border: 1px solid #e8e8e8;
         }
 
         .stat-card h3 {
             color: #777;
+
             font-size: 14px;
+
             font-weight: normal;
+
             margin-bottom: 10px;
         }
 
         .stat-card .number {
             font-size: 28px;
+
             font-weight: bold;
+
             color: #111827;
         }
 
@@ -124,7 +142,9 @@
 
         .top-section {
             display: flex;
+
             justify-content: space-between;
+
             align-items: center;
 
             gap: 20px;
@@ -136,6 +156,7 @@
 
         .search-box {
             flex: 1;
+
             min-width: 250px;
         }
 
@@ -155,6 +176,7 @@
 
         .search-box input:focus {
             outline: none;
+
             border-color: #9ca3af;
         }
 
@@ -180,11 +202,13 @@
 
         .table-header h2 {
             font-size: 18px;
+
             margin-bottom: 5px;
         }
 
         .table-header p {
             color: #777;
+
             font-size: 13px;
         }
 
@@ -194,9 +218,10 @@
 
         table {
             width: 100%;
+
             border-collapse: collapse;
 
-            min-width: 950px;
+            min-width: 1000px;
         }
 
         th {
@@ -233,13 +258,17 @@
 
         .user-phone {
             color: #777;
+
             font-size: 12px;
+
             margin-top: 4px;
         }
 
         .user-referral {
             color: #777;
+
             font-size: 12px;
+
             margin-top: 3px;
         }
 
@@ -261,31 +290,37 @@
 
         .active {
             background: #dcfce7;
+
             color: #15803d;
         }
 
         .inactive {
             background: #fee2e2;
+
             color: #b91c1c;
         }
 
         .pending {
             background: #fef3c7;
+
             color: #92400e;
         }
 
         .expired {
             background: #fee2e2;
+
             color: #991b1b;
         }
 
-        .none {
+        .unknown {
             background: #f3f4f6;
-            color: #6b7280;
+
+            color: #555;
         }
 
         .legacy {
             background: #fef3c7;
+
             color: #92400e;
         }
 
@@ -299,7 +334,9 @@
 
         .plan-price {
             color: #777;
+
             font-size: 12px;
+
             margin-top: 3px;
         }
 
@@ -514,7 +551,7 @@
             <input
                 type="text"
                 id="searchInput"
-                placeholder="Search by name, phone or referral code..."
+                placeholder="Search by name, phone, referral code or user ID..."
             >
 
         </div>
@@ -583,7 +620,9 @@
                 </thead>
 
 
-                <tbody id="usersTableBody">
+                <tbody
+                    id="usersTableBody"
+                >
 
                     <tr>
 
@@ -602,6 +641,7 @@
 
         </div>
 
+
     </div>
 
 
@@ -612,18 +652,21 @@
 
 
 /* =========================================
-   SUPABASE
+   SUPABASE CONNECTION
 ========================================= */
 
-const {
-    createClient
-} = supabase;
+const SUPABASE_URL =
+    "https://ytvtdelwefykeqwztcyo.supabase.co";
+
+
+const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_CLTeqgEB6JSQ7Kqq6rQARw_RV31Ccg3";
 
 
 const supabaseClient =
-    createClient(
+    window.supabase.createClient(
         SUPABASE_URL,
-        SUPABASE_ANON_KEY
+        SUPABASE_PUBLISHABLE_KEY
     );
 
 
@@ -635,7 +678,7 @@ let allUsers = [];
 
 
 /* =========================================
-   PLAN NAMES
+   PLAN INFORMATION
 ========================================= */
 
 const PLAN_NAMES = {
@@ -675,7 +718,7 @@ function escapeHtml(value) {
         value === undefined
     ) {
 
-        return "—";
+        return "";
 
     }
 
@@ -722,15 +765,8 @@ function getUserName(user) {
     }
 
     return (
-
         user.full_name ||
-
-        user.username ||
-
-        user.display_name ||
-
         "Unnamed User"
-
     );
 
 }
@@ -738,7 +774,6 @@ function getUserName(user) {
 
 /* =========================================
    FORMAT DATE
-   Nigeria time
 ========================================= */
 
 function formatDate(dateValue) {
@@ -749,38 +784,32 @@ function formatDate(dateValue) {
 
     }
 
-    try {
+    const date =
+        new Date(dateValue);
 
-        const date =
-            new Date(dateValue);
 
-        if (
-            Number.isNaN(
-                date.getTime()
-            )
-        ) {
-
-            return "—";
-
-        }
-
-        return new Intl.DateTimeFormat(
-            "en-NG",
-            {
-                timeZone: "Africa/Lagos",
-                year: "numeric",
-                month: "short",
-                day: "numeric"
-            }
-        ).format(date);
-
-    }
-
-    catch (error) {
+    if (
+        Number.isNaN(
+            date.getTime()
+        )
+    ) {
 
         return "—";
 
     }
+
+    return new Intl.DateTimeFormat(
+        "en-NG",
+        {
+            timeZone: "Africa/Lagos",
+
+            year: "numeric",
+
+            month: "short",
+
+            day: "numeric"
+        }
+    ).format(date);
 
 }
 
@@ -798,8 +827,11 @@ function formatMoney(amount) {
         "en-NG",
         {
             style: "currency",
+
             currency: "NGN",
+
             minimumFractionDigits: 0,
+
             maximumFractionDigits: 2
         }
     ).format(value);
@@ -849,68 +881,142 @@ function hideError() {
 
 async function checkAdmin() {
 
-    const {
-        data: {
-            user
-        },
-        error: authError
-    } = await supabaseClient
-        .auth
-        .getUser();
+    try {
+
+        const {
+            data: {
+                user
+            },
+            error: authError
+        } =
+            await supabaseClient
+                .auth
+                .getUser();
 
 
-    if (
-        authError ||
-        !user
-    ) {
+        if (
+            authError ||
+            !user
+        ) {
 
-        window.location.href =
-            "login.html";
+            window.location.href =
+                "login.html";
 
-        return false;
+            return false;
+
+        }
+
+
+        const {
+            data: profile,
+            error
+        } =
+            await supabaseClient
+
+                .from("profiles")
+
+                .select(
+                    "id, account_status, is_admin"
+                )
+
+                .eq(
+                    "id",
+                    user.id
+                )
+
+                .single();
+
+
+        if (
+            error ||
+            !profile ||
+            profile.is_admin !== true ||
+            profile.account_status !== "active"
+        ) {
+
+            alert(
+                "You do not have permission to access this page."
+            );
+
+            window.location.href =
+                "dashboard.html";
+
+            return false;
+
+        }
+
+
+        return true;
 
     }
 
+    catch (error) {
 
-    const {
-        data: profile,
-        error
-    } = await supabaseClient
-
-        .from("profiles")
-
-        .select(
-            "id, account_status, is_admin"
-        )
-
-        .eq(
-            "id",
-            user.id
-        )
-
-        .single();
-
-
-    if (
-        error ||
-        !profile ||
-        profile.is_admin !== true ||
-        profile.account_status !== "active"
-    ) {
-
-        alert(
-            "You do not have permission to access this page."
+        showError(
+            "Unable to verify admin access: " +
+            (
+                error.message ||
+                "Unknown error"
+            )
         );
 
-        window.location.href =
-            "dashboard.html";
-
         return false;
 
     }
 
+}
 
-    return true;
+
+/* =========================================
+   ACCOUNT STATUS
+========================================= */
+
+function getAccountStatus(user) {
+
+    const status =
+        String(
+            user.account_status ||
+            "inactive"
+        ).toLowerCase();
+
+
+    if (
+        status === "active"
+    ) {
+
+        return {
+
+            label: "Active",
+
+            className: "active"
+
+        };
+
+    }
+
+
+    if (
+        status === "pending"
+    ) {
+
+        return {
+
+            label: "Pending",
+
+            className: "pending"
+
+        };
+
+    }
+
+
+    return {
+
+        label: "Inactive",
+
+        className: "inactive"
+
+    };
 
 }
 
@@ -929,7 +1035,7 @@ function getMembershipStatus(
 
             label: "No Membership",
 
-            className: "none"
+            className: "unknown"
 
         };
 
@@ -1011,23 +1117,17 @@ function getMembershipStatus(
    PLAN DISPLAY
 ========================================= */
 
-function getPlanDisplay(
+function getPlanHtml(
     membership
 ) {
 
-    if (
-        !membership
-    ) {
+    if (!membership) {
 
-        return {
-
-            html: `
-                <span class="badge none">
-                    No Plan
-                </span>
-            `
-
-        };
+        return `
+            <span class="badge unknown">
+                No Plan
+            </span>
+        `;
 
     }
 
@@ -1036,15 +1136,11 @@ function getPlanDisplay(
         !membership.plan_code
     ) {
 
-        return {
-
-            html: `
-                <span class="badge legacy">
-                    Legacy / Unconfigured
-                </span>
-            `
-
-        };
+        return `
+            <span class="badge legacy">
+                Legacy / Unconfigured
+            </span>
+        `;
 
     }
 
@@ -1062,81 +1158,23 @@ function getPlanDisplay(
         ];
 
 
-    return {
+    return `
 
-        html: `
-            <div class="plan-name">
-                ${escapeHtml(plan)}
-            </div>
+        <div class="plan-name">
+            ${escapeHtml(plan)}
+        </div>
 
-            ${
-                price
-                    ? `
-                        <div class="plan-price">
-                            ${formatMoney(price)}
-                        </div>
-                    `
-                    : ""
-            }
-        `
+        ${
+            price
+                ? `
+                    <div class="plan-price">
+                        ${formatMoney(price)}
+                    </div>
+                `
+                : ""
+        }
 
-    };
-
-}
-
-
-/* =========================================
-   ACCOUNT STATUS
-========================================= */
-
-function getAccountStatus(
-    user
-) {
-
-    const status =
-        String(
-            user.account_status ||
-            "inactive"
-        ).toLowerCase();
-
-
-    if (
-        status === "active"
-    ) {
-
-        return {
-
-            label: "Active",
-
-            className: "active"
-
-        };
-
-    }
-
-
-    if (
-        status === "pending"
-    ) {
-
-        return {
-
-            label: "Pending",
-
-            className: "pending"
-
-        };
-
-    }
-
-
-    return {
-
-        label: "Inactive",
-
-        className: "inactive"
-
-    };
+    `;
 
 }
 
@@ -1182,33 +1220,37 @@ async function loadUsers() {
         const {
             data: profiles,
             error: profilesError
-        } = await supabaseClient
+        } =
+            await supabaseClient
 
-            .from("profiles")
+                .from("profiles")
 
-            .select(`
-                id,
-                full_name,
-                phone,
-                referral_code,
-                account_status,
-                is_admin,
-                created_at
-            `)
+                .select(`
+                    id,
+                    full_name,
+                    phone,
+                    referral_code,
+                    account_status,
+                    is_admin,
+                    created_at
+                `)
 
-            .order(
-                "created_at",
-                {
-                    ascending: false
-                }
-            );
+                .order(
+                    "created_at",
+                    {
+                        ascending: false
+                    }
+                );
 
 
         if (
             profilesError
         ) {
 
-            throw profilesError;
+            throw new Error(
+                "Profiles: " +
+                profilesError.message
+            );
 
         }
 
@@ -1220,13 +1262,14 @@ async function loadUsers() {
         const {
             data: wallets,
             error: walletsError
-        } = await supabaseClient
+        } =
+            await supabaseClient
 
-            .from("wallets")
+                .from("wallets")
 
-            .select(
-                "user_id, balance"
-            );
+                .select(
+                    "user_id, balance"
+                );
 
 
         if (
@@ -1248,32 +1291,36 @@ async function loadUsers() {
         const {
             data: memberships,
             error: membershipsError
-        } = await supabaseClient
+        } =
+            await supabaseClient
 
-            .from("memberships")
+                .from("memberships")
 
-            .select(`
-                id,
-                user_id,
-                status,
-                plan_code,
-                current_period_start,
-                current_period_end,
-                payment_count
-            `);
+                .select(`
+                    id,
+                    user_id,
+                    status,
+                    plan_code,
+                    current_period_start,
+                    current_period_end,
+                    payment_count
+                `);
 
 
         if (
             membershipsError
         ) {
 
-            throw membershipsError;
+            throw new Error(
+                "Memberships: " +
+                membershipsError.message
+            );
 
         }
 
 
         /* =====================================
-           CREATE WALLET MAP
+           WALLET MAP
         ===================================== */
 
         const walletMap =
@@ -1301,7 +1348,7 @@ async function loadUsers() {
 
 
         /* =====================================
-           CREATE MEMBERSHIP MAP
+           MEMBERSHIP MAP
         ===================================== */
 
         const membershipMap =
@@ -1313,17 +1360,23 @@ async function loadUsers() {
         ).forEach(
             membership => {
 
-                membershipMap.set(
-                    membership.user_id,
-                    membership
-                );
+                if (
+                    membership.user_id
+                ) {
+
+                    membershipMap.set(
+                        membership.user_id,
+                        membership
+                    );
+
+                }
 
             }
         );
 
 
         /* =====================================
-           COMBINE DATA
+           COMBINE USERS
         ===================================== */
 
         allUsers =
@@ -1353,36 +1406,34 @@ async function loadUsers() {
 
 
         /* =====================================
-           UPDATE STATISTICS
+           STATISTICS
         ===================================== */
 
         updateStatistics();
 
 
         /* =====================================
-           DISPLAY USERS
+           DISPLAY
         ===================================== */
 
         displayUsers(
             allUsers
         );
 
+
     }
 
     catch (error) {
 
         console.error(
-            "Load users error:",
+            "Users loading error:",
             error
         );
 
 
         showError(
-            "Unable to load users: " +
-            (
-                error.message ||
-                "Unknown error"
-            )
+            error.message ||
+            "Unable to load users."
         );
 
 
@@ -1530,37 +1581,6 @@ function displayUsers(
                 );
 
 
-            const userName =
-                getUserName(
-                    user
-                );
-
-
-            const phone =
-                user.phone ||
-                "No phone";
-
-
-            const joined =
-                formatDate(
-                    user.created_at
-                );
-
-
-            const walletBalance =
-                user.wallet
-
-                    ?
-
-                    formatMoney(
-                        user.wallet.balance
-                    )
-
-                    :
-
-                    "No wallet";
-
-
             const accountStatus =
                 getAccountStatus(
                     user
@@ -1573,10 +1593,26 @@ function displayUsers(
                 );
 
 
-            const planDisplay =
-                getPlanDisplay(
-                    user.membership
-                );
+            const walletHtml =
+                user.wallet
+
+                    ?
+
+                    `
+                        <span class="wallet-balance">
+                            ${formatMoney(
+                                user.wallet.balance
+                            )}
+                        </span>
+                    `
+
+                    :
+
+                    `
+                        <span class="no-wallet">
+                            No wallet
+                        </span>
+                    `;
 
 
             row.innerHTML = `
@@ -1584,21 +1620,23 @@ function displayUsers(
                 <td>
 
                     <div class="user-name">
-
                         ${escapeHtml(
-                            userName
+                            getUserName(user)
                         )}
-
                     </div>
 
 
-                    <div class="user-phone">
-
-                        ${escapeHtml(
-                            phone
-                        )}
-
-                    </div>
+                    ${
+                        user.phone
+                            ? `
+                                <div class="user-phone">
+                                    ${escapeHtml(
+                                        user.phone
+                                    )}
+                                </div>
+                            `
+                            : ""
+                    }
 
 
                     ${
@@ -1619,32 +1657,16 @@ function displayUsers(
 
                 <td>
 
-                    ${joined}
+                    ${formatDate(
+                        user.created_at
+                    )}
 
                 </td>
 
 
                 <td>
 
-                    ${
-                        user.wallet
-
-                            ?
-
-                            `
-                                <span class="wallet-balance">
-                                    ${walletBalance}
-                                </span>
-                            `
-
-                            :
-
-                            `
-                                <span class="no-wallet">
-                                    No wallet
-                                </span>
-                            `
-                    }
+                    ${walletHtml}
 
                 </td>
 
@@ -1662,7 +1684,9 @@ function displayUsers(
 
                 <td>
 
-                    ${planDisplay.html}
+                    ${getPlanHtml(
+                        user.membership
+                    )}
 
                 </td>
 
@@ -1681,6 +1705,7 @@ function displayUsers(
                 <td>
 
                     <button
+                        type="button"
                         class="view-btn"
                         data-user-id="${escapeHtml(
                             user.id
@@ -1739,9 +1764,7 @@ function openUser(
 ) {
 
     window.location.href =
-
         "admin-user-details.html?id=" +
-
         encodeURIComponent(
             userId
         );
@@ -1783,8 +1806,9 @@ document
                     user => {
 
                         const name =
-                            getUserName(
-                                user
+                            String(
+                                user.full_name ||
+                                ""
                             )
                             .toLowerCase();
 
@@ -1797,7 +1821,7 @@ document
                             .toLowerCase();
 
 
-                        const referralCode =
+                        const referral =
                             String(
                                 user.referral_code ||
                                 ""
@@ -1805,7 +1829,7 @@ document
                             .toLowerCase();
 
 
-                        const userId =
+                        const id =
                             String(
                                 user.id ||
                                 ""
@@ -1836,13 +1860,13 @@ document
 
                             ||
 
-                            referralCode.includes(
+                            referral.includes(
                                 search
                             )
 
                             ||
 
-                            userId.includes(
+                            id.includes(
                                 search
                             )
 
@@ -1867,7 +1891,7 @@ document
 
 
 /* =========================================
-   START
+   INITIALIZE
 ========================================= */
 
 async function init() {

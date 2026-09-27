@@ -73,6 +73,10 @@
       padding: 22px;
     }
 
+    /* =========================================
+       TASK CARD
+    ========================================= */
+
     .task-card {
       background: #11172d;
       border: 1px solid #282f4d;
@@ -124,6 +128,29 @@
       font-size: 11px;
     }
 
+    /* =========================================
+       EARNING RULE
+    ========================================= */
+
+    .earning-rule {
+      margin-bottom: 14px;
+      background: #0d1328;
+      border: 1px solid #303754;
+      border-radius: 10px;
+      padding: 10px 13px;
+      color: #9fa8c4;
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .earning-rule strong {
+      color: #cbb7ff;
+    }
+
+    /* =========================================
+       STATS
+    ========================================= */
+
     .stats {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -149,6 +176,10 @@
       font-weight: 800;
     }
 
+    /* =========================================
+       FILTERS
+    ========================================= */
+
     .toolbar {
       display: flex;
       gap: 8px;
@@ -166,11 +197,19 @@
       font-size: 12px;
     }
 
+    .filter-btn:hover {
+      background: #171e38;
+    }
+
     .filter-btn.active {
       background: #21184b;
       color: #c9b6ff;
       border-color: #7858db;
     }
+
+    /* =========================================
+       PARTICIPANTS
+    ========================================= */
 
     .participant-list {
       display: flex;
@@ -247,6 +286,10 @@
       font-weight: 700;
     }
 
+    /* =========================================
+       STATUS
+    ========================================= */
+
     .status {
       display: inline-flex;
       width: fit-content;
@@ -288,6 +331,10 @@
       font-size: 11px;
       text-align: right;
     }
+
+    /* =========================================
+       EMPTY / LOADING / ERROR
+    ========================================= */
 
     .empty {
       text-align: center;
@@ -383,618 +430,1251 @@
 
 <body>
 
-  <header class="topbar">
-    <div class="brand">
-      <div class="logo">E</div>
-      <span>EarnGig Admin</span>
+<header class="topbar">
+
+  <div class="brand">
+    <div class="logo">E</div>
+    <span>EarnGig Admin</span>
+  </div>
+
+  <button class="back-btn" onclick="goBack()">
+    ← Tasks
+  </button>
+
+</header>
+
+
+<main class="page">
+
+  <div id="errorBox" class="error"></div>
+
+
+  <!-- TASK -->
+
+  <section id="taskBox">
+    <div class="loading">
+      Loading task...
+    </div>
+  </section>
+
+
+  <!-- DAILY EARNING RULE -->
+
+  <div class="earning-rule">
+
+    <strong>Member earning rule:</strong>
+
+    The reward shown for this task is a normal member earning.
+    When approved and credited, it counts toward the member's
+    plan-based daily earning limit.
+
+    Referral bonuses and Create &amp; Earn earnings are excluded
+    from that limit.
+
+    The limit is enforced server-side when the reward is credited.
+
+  </div>
+
+
+  <!-- STATS -->
+
+  <section class="stats">
+
+    <div class="stat">
+      <div class="stat-label">
+        Participants
+      </div>
+
+      <div
+        class="stat-value"
+        id="participantCount"
+      >
+        0
+      </div>
     </div>
 
-    <button class="back-btn" onclick="goBack()">
-      ← Tasks
-    </button>
-  </header>
 
-  <main class="page">
-
-    <div id="errorBox" class="error"></div>
-
-    <section id="taskBox">
-      <div class="loading">Loading task...</div>
-    </section>
-
-    <section class="stats">
-      <div class="stat">
-        <div class="stat-label">Participants</div>
-        <div class="stat-value" id="participantCount">0</div>
+    <div class="stat">
+      <div class="stat-label">
+        Pending Review
       </div>
 
-      <div class="stat">
-        <div class="stat-label">Pending Review</div>
-        <div class="stat-value" id="pendingCount">0</div>
-      </div>
-
-      <div class="stat">
-        <div class="stat-label">Approved</div>
-        <div class="stat-value" id="approvedCount">0</div>
-      </div>
-
-      <div class="stat">
-        <div class="stat-label">Rejected</div>
-        <div class="stat-value" id="rejectedCount">0</div>
-      </div>
-    </section>
-
-    <div class="toolbar">
-
-      <button
-        class="filter-btn active"
-        data-filter="all"
+      <div
+        class="stat-value"
+        id="pendingCount"
       >
-        All
-      </button>
+        0
+      </div>
+    </div>
 
-      <button
-        class="filter-btn"
-        data-filter="pending"
-      >
-        Pending
-      </button>
 
-      <button
-        class="filter-btn"
-        data-filter="approved"
-      >
+    <div class="stat">
+      <div class="stat-label">
         Approved
-      </button>
+      </div>
 
-      <button
-        class="filter-btn"
-        data-filter="rejected"
+      <div
+        class="stat-value"
+        id="approvedCount"
       >
+        0
+      </div>
+    </div>
+
+
+    <div class="stat">
+      <div class="stat-label">
         Rejected
-      </button>
+      </div>
+
+      <div
+        class="stat-value"
+        id="rejectedCount"
+      >
+        0
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- FILTERS -->
+
+  <div class="toolbar">
+
+    <button
+      class="filter-btn active"
+      data-filter="all"
+    >
+      All
+    </button>
+
+    <button
+      class="filter-btn"
+      data-filter="pending"
+    >
+      Pending
+    </button>
+
+    <button
+      class="filter-btn"
+      data-filter="approved"
+    >
+      Approved
+    </button>
+
+    <button
+      class="filter-btn"
+      data-filter="rejected"
+    >
+      Rejected
+    </button>
+
+  </div>
+
+
+  <!-- PARTICIPANTS -->
+
+  <section id="participantList">
+
+    <div class="loading">
+      Loading participants...
+    </div>
+
+  </section>
+
+</main>
+
+
+<script>
+
+let currentUser = null;
+
+let currentTask = null;
+
+let attempts = [];
+
+let currentFilter = "all";
+
+
+const params =
+  new URLSearchParams(
+    window.location.search
+  );
+
+const taskId =
+  params.get("id");
+
+
+document.addEventListener(
+  "DOMContentLoaded",
+  init
+);
+
+
+/* =========================================
+   INITIALIZE
+========================================= */
+
+async function init() {
+
+  try {
+
+    if (!taskId) {
+      throw new Error(
+        "No task was selected."
+      );
+    }
+
+    await verifyAdmin();
+
+    await loadTask();
+
+    await loadAttempts();
+
+    setupFilters();
+
+  }
+
+  catch (error) {
+
+    console.error(error);
+
+    showError(
+      error.message ||
+      "Unable to load task."
+    );
+
+  }
+
+}
+
+
+/* =========================================
+   VERIFY ADMIN
+========================================= */
+
+async function verifyAdmin() {
+
+  const {
+    data: {
+      user
+    },
+    error
+  } =
+    await supabaseClient
+      .auth
+      .getUser();
+
+
+  if (error) {
+    throw new Error(
+      error.message
+    );
+  }
+
+
+  if (!user) {
+
+    window.location.href =
+      "index.html";
+
+    return;
+
+  }
+
+
+  currentUser =
+    user;
+
+
+  const {
+    data: profile,
+    error: profileError
+  } =
+    await supabaseClient
+      .from("profiles")
+      .select(
+        "id,is_admin,account_status"
+      )
+      .eq(
+        "id",
+        user.id
+      )
+      .maybeSingle();
+
+
+  if (profileError) {
+
+    throw new Error(
+      profileError.message
+    );
+
+  }
+
+
+  if (
+    !profile ||
+    profile.is_admin !== true ||
+    profile.account_status !== "active"
+  ) {
+
+    throw new Error(
+      "Administrator access is required."
+    );
+
+  }
+
+}
+
+
+/* =========================================
+   LOAD TASK
+========================================= */
+
+async function loadTask() {
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("tasks")
+      .select("*")
+      .eq(
+        "id",
+        taskId
+      )
+      .maybeSingle();
+
+
+  if (error) {
+
+    throw new Error(
+      error.message
+    );
+
+  }
+
+
+  if (!data) {
+
+    throw new Error(
+      "Task not found."
+    );
+
+  }
+
+
+  currentTask =
+    data;
+
+
+  renderTask();
+
+}
+
+
+/* =========================================
+   LOAD PARTICIPANTS
+========================================= */
+
+async function loadAttempts() {
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("task_attempts")
+      .select(`
+        id,
+        task_id,
+        user_id,
+        status,
+        reward_amount,
+        reward_status,
+        started_at,
+        completed_at,
+        verified_at,
+        created_at,
+        updated_at,
+        proof_text,
+        proof_url,
+        admin_note
+      `)
+      .eq(
+        "task_id",
+        taskId
+      )
+      .order(
+        "created_at",
+        {
+          ascending: false
+        }
+      );
+
+
+  if (error) {
+
+    throw new Error(
+      error.message
+    );
+
+  }
+
+
+  attempts =
+    data || [];
+
+
+  await attachProfiles();
+
+
+  updateStats();
+
+  renderAttempts();
+
+}
+
+
+/* =========================================
+   LOAD PROFILE NAMES
+========================================= */
+
+async function attachProfiles() {
+
+  const userIds = [
+    ...new Set(
+      attempts
+        .map(
+          item =>
+            item.user_id
+        )
+        .filter(Boolean)
+    )
+  ];
+
+
+  if (!userIds.length) {
+
+    attempts =
+      attempts.map(
+        item => ({
+          ...item,
+          profile: null
+        })
+      );
+
+    return;
+
+  }
+
+
+  /*
+    Only use columns known to exist
+    in the current profiles table.
+  */
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("profiles")
+      .select(
+        "id,full_name,phone,referral_code,account_status"
+      )
+      .in(
+        "id",
+        userIds
+      );
+
+
+  if (error) {
+
+    console.warn(
+      "Could not load participant profiles:",
+      error.message
+    );
+
+
+    attempts =
+      attempts.map(
+        item => ({
+          ...item,
+          profile: null
+        })
+      );
+
+    return;
+
+  }
+
+
+  const profileMap = {};
+
+
+  (data || [])
+    .forEach(
+      profile => {
+
+        profileMap[
+          profile.id
+        ] =
+          profile;
+
+      }
+    );
+
+
+  attempts =
+    attempts.map(
+      item => ({
+
+        ...item,
+
+        profile:
+          profileMap[
+            item.user_id
+          ] || null
+
+      })
+    );
+
+}
+
+
+/* =========================================
+   RENDER TASK
+========================================= */
+
+function renderTask() {
+
+  const reward =
+    Number(
+      currentTask.reward_amount ||
+      0
+    );
+
+
+  const category =
+    currentTask.category ||
+    currentTask.platform ||
+    "General";
+
+
+  const action =
+    currentTask.action_type ||
+    currentTask.task_type ||
+    currentTask.verification_type ||
+    "Task";
+
+
+  const status =
+    currentTask.status ||
+    "unknown";
+
+
+  document.getElementById(
+    "taskBox"
+  ).innerHTML = `
+
+    <div class="task-card">
+
+      <div class="task-top">
+
+        <div>
+
+          <h1 class="task-title">
+
+            ${escapeHtml(
+              currentTask.title ||
+              "Untitled Task"
+            )}
+
+          </h1>
+
+
+          <div class="task-description">
+
+            ${escapeHtml(
+              currentTask.description ||
+              "No description provided."
+            )}
+
+          </div>
+
+        </div>
+
+
+        <div class="reward">
+
+          ₦${formatMoney(
+            reward
+          )}
+
+        </div>
+
+      </div>
+
+
+      <div class="task-meta">
+
+        <span class="meta">
+
+          ${escapeHtml(
+            category
+          )}
+
+        </span>
+
+
+        <span class="meta">
+
+          ${escapeHtml(
+            action
+          )}
+
+        </span>
+
+
+        <span class="meta">
+
+          Max participants:
+
+          ${
+            currentTask.max_participants == null
+              ? "Unlimited"
+              : escapeHtml(
+                  currentTask.max_participants
+                )
+          }
+
+        </span>
+
+
+        <span class="meta">
+
+          Proof:
+
+          ${
+            currentTask.require_proof
+              ? "Required"
+              : "Not required"
+          }
+
+        </span>
+
+
+        <span class="meta">
+
+          Status:
+
+          ${escapeHtml(
+            status
+          )}
+
+        </span>
+
+      </div>
 
     </div>
 
-    <section id="participantList">
-      <div class="loading">
-        Loading participants...
+  `;
+
+}
+
+
+/* =========================================
+   STATS
+========================================= */
+
+function updateStats() {
+
+  document.getElementById(
+    "participantCount"
+  ).textContent =
+    attempts.length;
+
+
+  document.getElementById(
+    "pendingCount"
+  ).textContent =
+    attempts.filter(
+      isPending
+    ).length;
+
+
+  document.getElementById(
+    "approvedCount"
+  ).textContent =
+    attempts.filter(
+      isApproved
+    ).length;
+
+
+  document.getElementById(
+    "rejectedCount"
+  ).textContent =
+    attempts.filter(
+      isRejected
+    ).length;
+
+}
+
+
+/* =========================================
+   RENDER PARTICIPANTS
+========================================= */
+
+function renderAttempts() {
+
+  const container =
+    document.getElementById(
+      "participantList"
+    );
+
+
+  let list =
+    attempts;
+
+
+  if (
+    currentFilter ===
+    "pending"
+  ) {
+
+    list =
+      attempts.filter(
+        isPending
+      );
+
+  }
+
+
+  if (
+    currentFilter ===
+    "approved"
+  ) {
+
+    list =
+      attempts.filter(
+        isApproved
+      );
+
+  }
+
+
+  if (
+    currentFilter ===
+    "rejected"
+  ) {
+
+    list =
+      attempts.filter(
+        isRejected
+      );
+
+  }
+
+
+  if (!list.length) {
+
+    container.innerHTML = `
+
+      <div class="empty">
+
+        No participants found
+        for this filter.
+
       </div>
-    </section>
 
-  </main>
+    `;
 
-  <script>
-    let currentUser = null;
-    let currentTask = null;
-    let attempts = [];
-    let currentFilter = "all";
+    return;
 
-    const params = new URLSearchParams(window.location.search);
-    const taskId = params.get("id");
+  }
 
-    document.addEventListener("DOMContentLoaded", init);
 
-    async function init() {
-      try {
-        if (!taskId) {
-          throw new Error("No task was selected.");
-        }
+  container.innerHTML = `
 
-        await verifyAdmin();
-        await loadTask();
-        await loadAttempts();
+    <div class="participant-list">
 
-      } catch (error) {
-        console.error(error);
-        showError(error.message || "Unable to load task.");
-      }
-    }
 
-    async function verifyAdmin() {
-      const {
-        data: { user },
-        error
-      } = await supabaseClient.auth.getUser();
+      <div
+        class="participant-row participant-header"
+      >
 
-      if (error) {
-        throw new Error(error.message);
-      }
+        <div>
+          Participant
+        </div>
 
-      if (!user) {
-        window.location.href = "index.html";
-        return;
-      }
+        <div>
+          Status
+        </div>
 
-      currentUser = user;
+        <div>
+          Reward
+        </div>
 
-      const { data: profile, error: profileError } =
-        await supabaseClient
-          .from("profiles")
-          .select("id,is_admin,account_status")
-          .eq("id", user.id)
-          .maybeSingle();
+        <div>
+          Submitted
+        </div>
 
-      if (profileError) {
-        throw new Error(profileError.message);
-      }
+        <div>
+          Open
+        </div>
 
-      if (
-        !profile ||
-        profile.is_admin !== true ||
-        profile.account_status !== "active"
-      ) {
-        throw new Error("Administrator access is required.");
-      }
-    }
+      </div>
 
-    async function loadTask() {
-      const { data, error } =
-        await supabaseClient
-          .from("tasks")
-          .select("*")
-          .eq("id", taskId)
-          .maybeSingle();
 
-      if (error) {
-        throw new Error(error.message);
-      }
-
-      if (!data) {
-        throw new Error("Task not found.");
-      }
-
-      currentTask = data;
-
-      renderTask();
-    }
-
-    async function loadAttempts() {
-
-      const { data, error } =
-        await supabaseClient
-          .from("task_attempts")
-          .select(`
-            id,
-            task_id,
-            user_id,
-            status,
-            reward_amount,
-            reward_status,
-            started_at,
-            completed_at,
-            verified_at,
-            created_at,
-            updated_at,
-            proof_text,
-            proof_url,
-            admin_note
-          `)
-          .eq("task_id", taskId)
-          .order("created_at", { ascending: false });
-
-      if (error) {
-        throw new Error(error.message);
-      }
-
-      attempts = data || [];
-
-      await attachProfiles();
-
-      updateStats();
-      renderAttempts();
-    }
-
-    async function attachProfiles() {
-
-      const userIds = [
-        ...new Set(
-          attempts
-            .map(item => item.user_id)
-            .filter(Boolean)
+      ${list
+        .map(
+          renderAttempt
         )
-      ];
+        .join("")}
 
-      if (!userIds.length) {
-        attempts = attempts.map(item => ({
-          ...item,
-          profile: null
-        }));
 
-        return;
-      }
+    </div>
 
-      const { data, error } =
-        await supabaseClient
-          .from("profiles")
-          .select(`
-            id,
-            full_name,
-            username,
-            email
-          `)
-          .in("id", userIds);
+  `;
 
-      if (error) {
-        /*
-          If your profiles table doesn't have one of the optional
-          display columns, we still keep the participant visible.
-        */
-        console.warn(
-          "Could not load profile display information:",
-          error.message
-        );
 
-        attempts = attempts.map(item => ({
-          ...item,
-          profile: null
-        }));
+  container
+    .querySelectorAll(
+      "[data-attempt-id]"
+    )
+    .forEach(
+      row => {
 
-        return;
-      }
-
-      const map = {};
-
-      (data || []).forEach(profile => {
-        map[profile.id] = profile;
-      });
-
-      attempts = attempts.map(item => ({
-        ...item,
-        profile: map[item.user_id] || null
-      }));
-    }
-
-    function renderTask() {
-
-      const reward =
-        Number(currentTask.reward_amount || 0);
-
-      const category =
-        currentTask.category ||
-        currentTask.platform ||
-        "General";
-
-      const action =
-        currentTask.action_type ||
-        currentTask.task_type ||
-        currentTask.verification_type ||
-        "Task";
-
-      const status =
-        currentTask.status || "unknown";
-
-      document.getElementById("taskBox").innerHTML = `
-        <div class="task-card">
-
-          <div class="task-top">
-
-            <div>
-              <h1 class="task-title">
-                ${escapeHtml(
-                  currentTask.title || "Untitled Task"
-                )}
-              </h1>
-
-              <div class="task-description">
-                ${escapeHtml(
-                  currentTask.description || "No description provided."
-                )}
-              </div>
-            </div>
-
-            <div class="reward">
-              ₦${formatMoney(reward)}
-            </div>
-
-          </div>
-
-          <div class="task-meta">
-
-            <span class="meta">
-              ${escapeHtml(category)}
-            </span>
-
-            <span class="meta">
-              ${escapeHtml(action)}
-            </span>
-
-            <span class="meta">
-              Max participants:
-              ${
-                currentTask.max_participants == null
-                  ? "Unlimited"
-                  : escapeHtml(currentTask.max_participants)
-              }
-            </span>
-
-            <span class="meta">
-              Proof:
-              ${
-                currentTask.require_proof
-                  ? "Required"
-                  : "Not required"
-              }
-            </span>
-
-            <span class="meta">
-              Status:
-              ${escapeHtml(status)}
-            </span>
-
-          </div>
-
-        </div>
-      `;
-    }
-
-    function updateStats() {
-
-      document.getElementById("participantCount").textContent =
-        attempts.length;
-
-      document.getElementById("pendingCount").textContent =
-        attempts.filter(isPending).length;
-
-      document.getElementById("approvedCount").textContent =
-        attempts.filter(isApproved).length;
-
-      document.getElementById("rejectedCount").textContent =
-        attempts.filter(isRejected).length;
-    }
-
-    function renderAttempts() {
-
-      const container =
-        document.getElementById("participantList");
-
-      let list = attempts;
-
-      if (currentFilter === "pending") {
-        list = attempts.filter(isPending);
-      }
-
-      if (currentFilter === "approved") {
-        list = attempts.filter(isApproved);
-      }
-
-      if (currentFilter === "rejected") {
-        list = attempts.filter(isRejected);
-      }
-
-      if (!list.length) {
-        container.innerHTML = `
-          <div class="empty">
-            No participants found for this filter.
-          </div>
-        `;
-        return;
-      }
-
-      container.innerHTML = `
-        <div class="participant-list">
-
-          <div class="participant-row participant-header">
-            <div>Participant</div>
-            <div>Status</div>
-            <div>Reward</div>
-            <div>Submitted</div>
-            <div>Open</div>
-          </div>
-
-          ${list.map(renderAttempt).join("")}
-
-        </div>
-      `;
-
-      container
-        .querySelectorAll("[data-attempt-id]")
-        .forEach(row => {
-
-          row.addEventListener("click", () => {
+        row.addEventListener(
+          "click",
+          () => {
 
             const attemptId =
               row.dataset.attemptId;
 
+
+            /*
+              Keep the existing
+              submission-detail route.
+            */
+
             window.location.href =
               "admin-task-submission.html?id=" +
-              encodeURIComponent(attemptId) +
+              encodeURIComponent(
+                attemptId
+              ) +
               "&task_id=" +
-              encodeURIComponent(taskId);
-          });
+              encodeURIComponent(
+                taskId
+              );
 
-        });
-    }
+          }
+        );
 
-    function renderAttempt(attempt) {
-
-      const profile = attempt.profile;
-
-      const name =
-        profile?.full_name ||
-        profile?.username ||
-        profile?.email ||
-        "User";
-
-      const status =
-        String(attempt.status || "unknown")
-          .toLowerCase();
-
-      let statusClass = "other";
-
-      if (
-        status === "pending" ||
-        status === "started" ||
-        status === "submitted"
-      ) {
-        statusClass = "pending";
       }
+    );
 
-      if (
-        status === "approved" ||
-        status === "completed" ||
-        status === "verified"
-      ) {
-        statusClass = "approved";
-      }
+}
 
-      if (
-        status === "rejected" ||
-        status === "failed"
-      ) {
-        statusClass = "rejected";
-      }
 
-      const reward =
-        Number(attempt.reward_amount || 0);
+/* =========================================
+   PARTICIPANT ROW
+========================================= */
 
-      const date =
-        attempt.completed_at ||
-        attempt.created_at;
+function renderAttempt(
+  attempt
+) {
 
-      return `
-        <div
-          class="participant-row"
-          data-attempt-id="${escapeHtml(attempt.id)}"
-        >
+  const profile =
+    attempt.profile;
 
-          <div>
-            <div class="user-name">
-              ${escapeHtml(name)}
-            </div>
 
-            <div class="user-id">
-              ${escapeHtml(
-                attempt.user_id || ""
-              )}
-            </div>
-          </div>
+  const name =
+    profile?.full_name ||
+    "User";
 
-          <div>
-            <span class="status ${statusClass}">
-              ${escapeHtml(status)}
-            </span>
-          </div>
 
-          <div class="cell reward-cell">
-            ₦${formatMoney(reward)}
-          </div>
+  const status =
+    String(
+      attempt.status ||
+      "unknown"
+    ).toLowerCase();
 
-          <div class="cell">
-            ${formatDate(date)}
-          </div>
 
-          <div class="view">
-            View Submission →
-          </div>
+  let statusClass =
+    "other";
+
+
+  if (
+    status === "pending" ||
+    status === "started" ||
+    status === "submitted"
+  ) {
+
+    statusClass =
+      "pending";
+
+  }
+
+
+  if (
+    status === "approved" ||
+    status === "completed" ||
+    status === "verified"
+  ) {
+
+    statusClass =
+      "approved";
+
+  }
+
+
+  if (
+    status === "rejected" ||
+    status === "failed"
+  ) {
+
+    statusClass =
+      "rejected";
+
+  }
+
+
+  const reward =
+    Number(
+      attempt.reward_amount ||
+      0
+    );
+
+
+  const date =
+    attempt.completed_at ||
+    attempt.created_at;
+
+
+  return `
+
+    <div
+      class="participant-row"
+      data-attempt-id="${escapeHtml(
+        attempt.id
+      )}"
+    >
+
+
+      <div>
+
+        <div class="user-name">
+
+          ${escapeHtml(
+            name
+          )}
 
         </div>
-      `;
-    }
 
-    function isPending(item) {
-      const status =
-        String(item.status || "").toLowerCase();
 
-      return (
-        status === "pending" ||
-        status === "started" ||
-        status === "submitted"
-      );
-    }
+        <div class="user-id">
 
-    function isApproved(item) {
-      const status =
-        String(item.status || "").toLowerCase();
+          ${escapeHtml(
+            attempt.user_id ||
+            ""
+          )}
 
-      return (
-        status === "approved" ||
-        status === "completed" ||
-        status === "verified"
-      );
-    }
+        </div>
 
-    function isRejected(item) {
-      return String(item.status || "")
-        .toLowerCase() === "rejected";
-    }
+      </div>
 
-    document
-      .querySelectorAll(".filter-btn")
-      .forEach(button => {
 
-        button.addEventListener("click", () => {
+      <div>
 
-          document
-            .querySelectorAll(".filter-btn")
-            .forEach(btn =>
-              btn.classList.remove("active")
+        <span
+          class="status ${statusClass}"
+        >
+
+          ${escapeHtml(
+            status
+          )}
+
+        </span>
+
+      </div>
+
+
+      <div class="cell reward-cell">
+
+        ₦${formatMoney(
+          reward
+        )}
+
+      </div>
+
+
+      <div class="cell">
+
+        ${formatDate(
+          date
+        )}
+
+      </div>
+
+
+      <div class="view">
+
+        View Submission →
+
+      </div>
+
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================
+   STATUS HELPERS
+========================================= */
+
+function isPending(
+  item
+) {
+
+  const status =
+    String(
+      item.status ||
+      ""
+    ).toLowerCase();
+
+
+  return (
+    status === "pending" ||
+    status === "started" ||
+    status === "submitted"
+  );
+
+}
+
+
+function isApproved(
+  item
+) {
+
+  const status =
+    String(
+      item.status ||
+      ""
+    ).toLowerCase();
+
+
+  return (
+    status === "approved" ||
+    status === "completed" ||
+    status === "verified"
+  );
+
+}
+
+
+function isRejected(
+  item
+) {
+
+  return (
+    String(
+      item.status ||
+      ""
+    ).toLowerCase() ===
+    "rejected"
+  );
+
+}
+
+
+/* =========================================
+   FILTERS
+========================================= */
+
+function setupFilters() {
+
+  document
+    .querySelectorAll(
+      ".filter-btn"
+    )
+    .forEach(
+      button => {
+
+        button.addEventListener(
+          "click",
+          () => {
+
+            document
+              .querySelectorAll(
+                ".filter-btn"
+              )
+              .forEach(
+                btn =>
+                  btn.classList.remove(
+                    "active"
+                  )
+              );
+
+
+            button.classList.add(
+              "active"
             );
 
-          button.classList.add("active");
 
-          currentFilter =
-            button.dataset.filter;
+            currentFilter =
+              button.dataset.filter;
 
-          renderAttempts();
-        });
 
-      });
+            renderAttempts();
 
-    function goBack() {
-      window.location.href = "admin-tasks.html";
-    }
+          }
+        );
 
-    function formatMoney(value) {
-      return Number(value || 0).toLocaleString(
-        "en-NG",
-        {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2
-        }
-      );
-    }
-
-    function formatDate(value) {
-
-      if (!value) {
-        return "—";
       }
+    );
 
-      const date = new Date(value);
+}
 
-      if (Number.isNaN(date.getTime())) {
-        return "—";
-      }
 
-      return date.toLocaleDateString(
-        "en-NG",
-        {
-          day: "2-digit",
-          month: "short",
-          year: "numeric"
-        }
-      );
+/* =========================================
+   NAVIGATION
+========================================= */
+
+function goBack() {
+
+  window.location.href =
+    "admin-tasks.html";
+
+}
+
+
+/* =========================================
+   FORMAT MONEY
+========================================= */
+
+function formatMoney(
+  value
+) {
+
+  return Number(
+    value || 0
+  ).toLocaleString(
+    "en-NG",
+    {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 2
     }
+  );
 
-    function escapeHtml(value) {
-      return String(value ?? "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+}
+
+
+/* =========================================
+   FORMAT DATE
+========================================= */
+
+function formatDate(
+  value
+) {
+
+  if (!value) {
+    return "—";
+  }
+
+
+  const date =
+    new Date(value);
+
+
+  if (
+    Number.isNaN(
+      date.getTime()
+    )
+  ) {
+
+    return "—";
+
+  }
+
+
+  return date.toLocaleDateString(
+    "en-NG",
+    {
+      day: "2-digit",
+      month: "short",
+      year: "numeric"
     }
+  );
 
-    function showError(message) {
+}
 
-      const box =
-        document.getElementById("errorBox");
 
-      box.textContent = message;
-      box.style.display = "block";
-    }
-  </script>
+/* =========================================
+   ESCAPE HTML
+========================================= */
+
+function escapeHtml(
+  value
+) {
+
+  return String(
+    value ?? ""
+  )
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+    .replace(
+      /</g,
+      "&lt;"
+    )
+    .replace(
+      />/g,
+      "&gt;"
+    )
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+    .replace(
+      /'/g,
+      "&#039;"
+    );
+
+}
+
+
+/* =========================================
+   ERROR
+========================================= */
+
+function showError(
+  message
+) {
+
+  const box =
+    document.getElementById(
+      "errorBox"
+    );
+
+
+  box.textContent =
+    message;
+
+
+  box.style.display =
+    "block";
+
+}
+
+</script>
 
 </body>
 </html>

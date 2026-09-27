@@ -1,1749 +1,864 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-  <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <title>
-    Memberships | EarnGig Admin
-  </title>
-
-
-  <!-- SUPABASE -->
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <script src="supabase.js"></script>
-
-
-  <style>
-
-
-    /* =========================================
-       GLOBAL
-    ========================================= */
-
-    * {
-
-      box-sizing:
-        border-box;
-
-    }
-
-
-    body {
-
-      margin:
-        0;
-
-      font-family:
-        Arial,
-        sans-serif;
-
-      background:
-        #f5f6fa;
-
-      color:
-        #17182f;
-
-    }
-
-
-    button {
-
-      font-family:
-        inherit;
-
-    }
-
-
-
-    /* =========================================
-       HEADER
-    ========================================= */
-
-    header {
-
-      background:
-        #0d1038;
-
-      color:
-        white;
-
-    }
-
-
-    .nav {
-
-      max-width:
-        1250px;
-
-      margin:
-        auto;
-
-      padding:
-        18px 20px;
-
-      display:
-        flex;
-
-      align-items:
-        center;
-
-      gap:
-        20px;
-
-    }
-
-
-    .logo {
-
-      color:
-        white;
-
-      text-decoration:
-        none;
-
-      font-size:
-        25px;
-
-      font-weight:
-        700;
-
-    }
-
-
-    .logo span {
-
-      color:
-        #7c5cff;
-
-    }
-
-
-    .admin-badge {
-
-      margin-left:
-        auto;
-
-      font-size:
-        13px;
-
-      color:
-        #c9caff;
-
-    }
-
-
-    .dashboard-btn {
-
-      border:
-        1px solid
-        rgba(255,255,255,.35);
-
-      background:
-        transparent;
-
-      color:
-        white;
-
-      text-decoration:
-        none;
-
-      padding:
-        9px 15px;
-
-      border-radius:
-        8px;
-
-      font-size:
-        14px;
-
-    }
-
-
-    .dashboard-btn:hover {
-
-      background:
-        rgba(255,255,255,.08);
-
-    }
-
-
-
-    /* =========================================
-       MAIN
-    ========================================= */
-
-    main {
-
-      max-width:
-        1250px;
-
-      margin:
-        auto;
-
-      padding:
-        35px 20px 60px;
-
-    }
-
-
-
-    /* =========================================
-       PAGE HEADER
-    ========================================= */
-
-    .page-heading {
-
-      margin-bottom:
-        30px;
-
-    }
-
-
-    .eyebrow {
-
-      display:
-        inline-block;
-
-      font-size:
-        12px;
-
-      font-weight:
-        700;
-
-      letter-spacing:
-        1px;
-
-      color:
-        #6d4aff;
-
-      margin-bottom:
-        8px;
-
-    }
-
-
-    .page-heading h1 {
-
-      margin:
-        0 0 10px;
-
-      font-size:
-        32px;
-
-    }
-
-
-    .page-heading p {
-
-      margin:
-        0;
-
-      color:
-        #686a7d;
-
-      line-height:
-        1.5;
-
-    }
-
-
-
-    /* =========================================
-       SECTION TITLE
-    ========================================= */
-
-    .section-title {
-
-      margin:
-        30px 0 15px;
-
-      font-size:
-        21px;
-
-    }
-
-
-
-    /* =========================================
-       STATISTICS
-    ========================================= */
-
-    .stats-grid {
-
-      display:
-        grid;
-
-      grid-template-columns:
-        repeat(
-          auto-fit,
-          minmax(190px, 1fr)
-        );
-
-      gap:
-        14px;
-
-    }
-
-
-    .stat-card {
-
-      background:
-        white;
-
-      border:
-        1px solid
-        #e6e7ee;
-
-      border-radius:
-        12px;
-
-      padding:
-        17px;
-
-      box-shadow:
-        0 5px 15px
-        rgba(0,0,0,.03);
-
-    }
-
-
-    .stat-card small {
-
-      display:
-        block;
-
-      color:
-        #77798b;
-
-      font-size:
-        12px;
-
-      margin-bottom:
-        7px;
-
-    }
-
-
-    .stat-card strong {
-
-      display:
-        block;
-
-      font-size:
-        23px;
-
-    }
-
-
-
-    /* =========================================
-       MEMBERSHIP LIST
-    ========================================= */
-
-    .membership-list {
-
-      display:
-        grid;
-
-      gap:
-        14px;
-
-    }
-
-
-    .membership-card {
-
-      background:
-        white;
-
-      border:
-        1px solid
-        #e6e7ee;
-
-      border-radius:
-        13px;
-
-      padding:
-        18px;
-
-      box-shadow:
-        0 5px 15px
-        rgba(0,0,0,.03);
-
-    }
-
-
-    .membership-top {
-
-      display:
-        flex;
-
-      justify-content:
-        space-between;
-
-      align-items:
-        flex-start;
-
-      gap:
-        15px;
-
-      flex-wrap:
-        wrap;
-
-      margin-bottom:
-        14px;
-
-    }
-
-
-    .member-name {
-
-      margin:
-        0 0 5px;
-
-      font-size:
-        18px;
-
-    }
-
-
-    .member-id {
-
-      margin:
-        0;
-
-      color:
-        #77798b;
-
-      font-size:
-        12px;
-
-      word-break:
-        break-word;
-
-    }
-
-
-    .details-grid {
-
-      display:
-        grid;
-
-      grid-template-columns:
-        repeat(
-          auto-fit,
-          minmax(180px, 1fr)
-        );
-
-      gap:
-        10px;
-
-    }
-
-
-    .detail {
-
-      background:
-        #fafafa;
-
-      border:
-        1px solid
-        #eeeeee;
-
-      border-radius:
-        8px;
-
-      padding:
-        11px;
-
-    }
-
-
-    .detail small {
-
-      display:
-        block;
-
-      color:
-        #77798b;
-
-      font-size:
-        11px;
-
-      margin-bottom:
-        5px;
-
-    }
-
-
-    .detail strong {
-
-      font-size:
-        14px;
-
-      word-break:
-        break-word;
-
-    }
-
-
-
-    /* =========================================
-       STATUS
-    ========================================= */
-
-    .status-badge {
-
-      display:
-        inline-block;
-
-      padding:
-        6px 10px;
-
-      border-radius:
-        20px;
-
-      font-size:
-        11px;
-
-      font-weight:
-        700;
-
-      text-transform:
-        uppercase;
-
-    }
-
-
-    .status-active {
-
-      background:
-        #dcfce7;
-
-      color:
-        #15803d;
-
-    }
-
-
-    .status-inactive {
-
-      background:
-        #fee2e2;
-
-      color:
-        #b91c1c;
-
-    }
-
-
-    .status-unknown {
-
-      background:
-        #e5e7eb;
-
-      color:
-        #4b5563;
-
-    }
-
-
-
-    /* =========================================
-       LOADING
-    ========================================= */
-
-    .loading {
-
-      text-align:
-        center;
-
-      padding:
-        30px;
-
-      background:
-        white;
-
-      border:
-        1px solid
-        #e6e7ee;
-
-      border-radius:
-        12px;
-
-      color:
-        #686a7d;
-
-    }
-
-
-    .error-box {
-
-      padding:
-        18px;
-
-      background:
-        #fff5f5;
-
-      border:
-        1px solid
-        #f0b5b5;
-
-      border-radius:
-        12px;
-
-      color:
-        #721c24;
-
-    }
-
-
-    .empty-state {
-
-      text-align:
-        center;
-
-      padding:
-        35px 20px;
-
-      background:
-        white;
-
-      border:
-        1px solid
-        #e6e7ee;
-
-      border-radius:
-        12px;
-
-      color:
-        #686a7d;
-
-    }
-
-
-
-    /* =========================================
-       REFRESH
-    ========================================= */
-
-    .refresh-row {
-
-      display:
-        flex;
-
-      justify-content:
-        flex-end;
-
-      margin-bottom:
-        15px;
-
-    }
-
-
-    .refresh-btn {
-
-      border:
-        0;
-
-      background:
-        #6d4aff;
-
-      color:
-        white;
-
-      padding:
-        10px 15px;
-
-      border-radius:
-        8px;
-
-      font-weight:
-        700;
-
-      cursor:
-        pointer;
-
-    }
-
-
-    .refresh-btn:hover {
-
-      opacity:
-        .9;
-
-    }
-
-
-
-    /* =========================================
-       MOBILE
-    ========================================= */
-
-    @media (
-      max-width: 650px
-    ) {
-
-
-      .nav {
-
-        flex-wrap:
-          wrap;
-
-      }
-
-
-      .admin-badge {
-
-        margin-left:
-          0;
-
-        order:
-          3;
-
-        width:
-          100%;
-
-      }
-
-
-      main {
-
-        padding:
-          25px 15px 45px;
-
-      }
-
-
-      .page-heading h1 {
-
-        font-size:
-          27px;
-
-      }
-
-
-    }
-
-
-  </style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Membership Management - EarnGig Admin</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+        .header {
+            background: #111827;
+            color: white;
+            padding: 18px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 22px;
+        }
+
+        .back-btn {
+            text-decoration: none;
+            color: white;
+            background: #374151;
+            padding: 9px 14px;
+            border-radius: 7px;
+            font-size: 14px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        .page-title {
+            margin-bottom: 20px;
+        }
+
+        .page-title h2 {
+            margin: 0 0 6px;
+            font-size: 24px;
+        }
+
+        .page-title p {
+            margin: 0;
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 18px;
+        }
+
+        .stat-label {
+            color: #6b7280;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 25px;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .section {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .section-header {
+            margin-bottom: 16px;
+        }
+
+        .section-header h3 {
+            margin: 0 0 5px;
+            font-size: 18px;
+        }
+
+        .section-header p {
+            margin: 0;
+            color: #6b7280;
+            font-size: 13px;
+        }
+
+        .plans-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+        }
+
+        .plan-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 9px;
+            padding: 15px;
+            background: #fafafa;
+        }
+
+        .plan-name {
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .plan-count {
+            font-size: 22px;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .plan-note {
+            font-size: 12px;
+            color: #6b7280;
+            margin-top: 4px;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 760px;
+        }
+
+        th,
+        td {
+            padding: 13px 12px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 14px;
+        }
+
+        th {
+            background: #f9fafb;
+            color: #4b5563;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 5px 9px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status-expired {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .status-pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-inactive {
+            background: #f3f4f6;
+            color: #4b5563;
+        }
+
+        .status-none {
+            background: #f3f4f6;
+            color: #6b7280;
+        }
+
+        .plan-badge {
+            font-weight: 600;
+        }
+
+        .legacy {
+            color: #92400e;
+        }
+
+        .muted {
+            color: #6b7280;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 35px;
+            color: #6b7280;
+        }
+
+        .error {
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 14px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 30px;
+            color: #6b7280;
+        }
+
+        @media (max-width: 1000px) {
+            .stats-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .plans-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 700px) {
+            .header {
+                padding: 15px;
+            }
+
+            .header h1 {
+                font-size: 18px;
+            }
+
+            .container {
+                padding: 16px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .plans-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stat-value {
+                font-size: 22px;
+            }
+        }
+
+        @media (max-width: 450px) {
+            .stats-grid,
+            .plans-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
-
 
 <body>
 
-
-<!-- =========================================
-     HEADER
-========================================= -->
-
-<header>
-
-  <div class="nav">
-
-
-    <a
-      href="admin-dashboard.html"
-      class="logo"
-    >
-
-      Earn<span>Gig</span>
-
-    </a>
-
-
-    <div class="admin-badge">
-
-      ADMIN PORTAL
-
-    </div>
-
-
-    <a
-      href="admin-dashboard.html"
-      class="dashboard-btn"
-    >
-
-      ← Admin Dashboard
-
-    </a>
-
-
-  </div>
-
-</header>
-
-
-
-<!-- =========================================
-     MAIN
-========================================= -->
-
-<main>
-
-
-  <!-- PAGE HEADER -->
-
-  <section
-    class="page-heading"
-  >
-
-
-    <span
-      class="eyebrow"
-    >
-
-      ADMINISTRATION
-
-    </span>
-
-
-    <h1>
-
-      Membership Management
-
-    </h1>
-
-
-    <p>
-
-      Review member accounts and membership information.
-
-    </p>
-
-
-  </section>
-
-
-
-  <!-- STATISTICS -->
-
-  <h2
-    class="section-title"
-  >
-
-    Membership Overview
-
-  </h2>
-
-
-  <div
-    class="stats-grid"
-    id="statsGrid"
-  >
-
-
-    <div
-      class="loading"
-    >
-
-      Loading membership statistics...
-
-    </div>
-
-
-  </div>
-
-
-
-  <!-- MEMBERS -->
-
-  <h2
-    class="section-title"
-  >
-
-    Members
-
-  </h2>
-
-
-  <div
-    class="refresh-row"
-  >
-
-
-    <button
-      type="button"
-      class="refresh-btn"
-      onclick="loadMemberships()"
-    >
-
-      ↻ Refresh
-
-    </button>
-
-
-  </div>
-
-
-  <div
-    class="membership-list"
-    id="membershipList"
-  >
-
-
-    <div
-      class="loading"
-    >
-
-      Loading members...
-
-    </div>
-
-
-  </div>
-
-
-</main>
-
-
-
-<!-- =========================================
-     JAVASCRIPT
-========================================= -->
-
-<script>
-
-
-/* =========================================
-   ESCAPE HTML
-========================================= */
-
-function escapeHtml(value) {
-
-
-  if (
-
-    value === null ||
-
-    value === undefined
-
-  ) {
-
-    return "—";
-
-  }
-
-
-  return String(value)
-
-    .replaceAll(
-      "&",
-      "&amp;"
-    )
-
-    .replaceAll(
-      "<",
-      "&lt;"
-    )
-
-    .replaceAll(
-      ">",
-      "&gt;"
-    )
-
-    .replaceAll(
-      '"',
-      "&quot;"
-    )
-
-    .replaceAll(
-      "'",
-      "&#039;"
-    );
-
-}
-
-
-
-/* =========================================
-   ADMIN CHECK
-========================================= */
-
-async function checkAdmin() {
-
-
-  try {
-
-
-    const {
-
-      data:
-      {
-        user
-      },
-
-      error
-
-    }
-
-    =
-
-    await supabaseClient
-
-      .auth
-
-      .getUser();
-
-
-    if (
-
-      error ||
-
-      !user
-
-    ) {
-
-
-      window.location.href =
-        "index.html";
-
-
-      return null;
-
-    }
-
-
-
-    const {
-
-      data:
-      profile,
-
-      error:
-      profileError
-
-    }
-
-    =
-
-    await supabaseClient
-
-      .from(
-        "profiles"
-      )
-
-      .select(
-        `
-          is_admin,
-          account_status
-        `
-      )
-
-      .eq(
-        "id",
-        user.id
-      )
-
-      .single();
-
-
-
-    if (
-
-      profileError ||
-
-      !profile ||
-
-      profile.is_admin !== true
-
-    ) {
-
-
-      await supabaseClient
-        .auth
-        .signOut();
-
-
-      alert(
-        "Access denied."
-      );
-
-
-      window.location.href =
-        "index.html";
-
-
-      return null;
-
-    }
-
-
-
-    if (
-
-      profile.account_status &&
-
-      profile.account_status !==
-      "active"
-
-    ) {
-
-
-      await supabaseClient
-        .auth
-        .signOut();
-
-
-      alert(
-        "Administrator account is inactive."
-      );
-
-
-      window.location.href =
-        "index.html";
-
-
-      return null;
-
-    }
-
-
-    return user;
-
-
-  }
-
-
-  catch (error) {
-
-
-    console.error(
-      "Admin check error:",
-      error
-    );
-
-
-    return null;
-
-  }
-
-
-}
-
-
-
-/* =========================================
-   LOAD MEMBERSHIPS
-========================================= */
-
-async function loadMemberships() {
-
-
-  const statsGrid =
-    document.getElementById(
-      "statsGrid"
-    );
-
-
-  const membershipList =
-    document.getElementById(
-      "membershipList"
-    );
-
-
-
-  statsGrid.innerHTML = `
-
-    <div
-      class="loading"
-    >
-
-      Loading membership statistics...
-
-    </div>
-
-  `;
-
-
-
-  membershipList.innerHTML = `
-
-    <div
-      class="loading"
-    >
-
-      Loading members...
-
-    </div>
-
-  `;
-
-
-
-  try {
-
-
-    /*
-      We only request columns that are
-      expected to exist in your profiles
-      table based on your existing admin code.
-    */
-
-
-    const {
-
-      data:
-      members,
-
-      error
-
-    }
-
-    =
-
-    await supabaseClient
-
-      .from(
-        "profiles"
-      )
-
-      .select(
-        `
-          id,
-          full_name,
-          account_status,
-          is_admin
-        `
-      )
-
-      .order(
-        "full_name",
-        {
-          ascending:
-            true
-        }
-      );
-
-
-    if (error) {
-
-      throw error;
-
-    }
-
-
-    const allMembers =
-      members || [];
-
-
-
-    /* =====================================
-       STATISTICS
-    ===================================== */
-
-
-    const activeMembers =
-      allMembers.filter(
-
-        member =>
-
-          String(
-
-            member.account_status ||
-            "active"
-
-          )
-
-          .toLowerCase()
-
-          ===
-
-          "active"
-
-      );
-
-
-    const inactiveMembers =
-      allMembers.filter(
-
-        member =>
-
-          String(
-
-            member.account_status ||
-            ""
-
-          )
-
-          .toLowerCase()
-
-          !==
-
-          "active"
-
-      );
-
-
-    const administrators =
-      allMembers.filter(
-
-        member =>
-
-          member.is_admin === true
-
-      );
-
-
-    statsGrid.innerHTML = `
-
-
-      <div
-        class="stat-card"
-      >
-
-        <small>
-
-          Total Members
-
-        </small>
-
-
-        <strong>
-
-          ${allMembers.length}
-
-        </strong>
-
-      </div>
-
-
-
-      <div
-        class="stat-card"
-      >
-
-        <small>
-
-          Active Members
-
-        </small>
-
-
-        <strong>
-
-          ${activeMembers.length}
-
-        </strong>
-
-      </div>
-
-
-
-      <div
-        class="stat-card"
-      >
-
-        <small>
-
-          Inactive Members
-
-        </small>
-
-
-        <strong>
-
-          ${inactiveMembers.length}
-
-        </strong>
-
-      </div>
-
-
-
-      <div
-        class="stat-card"
-      >
-
-        <small>
-
-          Administrators
-
-        </small>
-
-
-        <strong>
-
-          ${administrators.length}
-
-        </strong>
-
-      </div>
-
-
-    `;
-
-
-
-    /* =====================================
-       EMPTY STATE
-    ===================================== */
-
-
-    if (
-
-      allMembers.length === 0
-
-    ) {
-
-
-      membershipList.innerHTML = `
-
-
-        <div
-          class="empty-state"
-        >
-
-          <h3>
-
-            No members found
-
-          </h3>
-
-
-          <p>
-
-            There are currently no member
-            profiles to display.
-
-          </p>
-
-
+    <header class="header">
+        <h1>EarnGig Admin</h1>
+        <a href="admin-dashboard.html" class="back-btn">← Admin Dashboard</a>
+    </header>
+
+    <main class="container">
+
+        <div class="page-title">
+            <h2>Membership Management</h2>
+            <p>Overview of members, membership status, plans and expiry dates.</p>
         </div>
 
+        <div id="errorBox" class="error"></div>
 
-      `;
+        <!-- Summary -->
+        <section class="stats-grid">
 
+            <div class="stat-card">
+                <div class="stat-label">Total Members</div>
+                <div class="stat-value" id="totalMembers">0</div>
+            </div>
 
-      return;
+            <div class="stat-card">
+                <div class="stat-label">Active Members</div>
+                <div class="stat-value" id="activeMembers">0</div>
+            </div>
 
-    }
+            <div class="stat-card">
+                <div class="stat-label">Inactive Members</div>
+                <div class="stat-value" id="inactiveMembers">0</div>
+            </div>
 
+            <div class="stat-card">
+                <div class="stat-label">Expired Memberships</div>
+                <div class="stat-value" id="expiredMembers">0</div>
+            </div>
 
+            <div class="stat-card">
+                <div class="stat-label">Pending Memberships</div>
+                <div class="stat-value" id="pendingMembers">0</div>
+            </div>
 
-    /* =====================================
-       DISPLAY MEMBERS
-    ===================================== */
+        </section>
 
+        <!-- Plan Distribution -->
+        <section class="section">
 
-    membershipList.innerHTML =
+            <div class="section-header">
+                <h3>Plan Distribution</h3>
+                <p>Current membership plans across the platform.</p>
+            </div>
 
-      allMembers
+            <div class="plans-grid">
 
-      .map(
-
-        member => {
-
-
-          const accountStatus =
-
-            String(
-
-              member.account_status ||
-              "active"
-
-            )
-
-            .toLowerCase();
-
-
-
-          let statusClass =
-
-            "status-unknown";
-
-
-
-          if (
-
-            accountStatus ===
-            "active"
-
-          ) {
-
-
-            statusClass =
-              "status-active";
-
-          }
-
-
-          else {
-
-
-            statusClass =
-              "status-inactive";
-
-          }
-
-
-
-          const memberType =
-
-            member.is_admin === true
-
-              ?
-
-              "Administrator"
-
-              :
-
-              "Member";
-
-
-
-          return `
-
-
-            <article
-              class="membership-card"
-            >
-
-
-              <div
-                class="membership-top"
-              >
-
-
-                <div>
-
-
-                  <h3
-                    class="member-name"
-                  >
-
-                    ${escapeHtml(
-                      member.full_name ||
-                      "Unnamed Member"
-                    )}
-
-                  </h3>
-
-
-                  <p
-                    class="member-id"
-                  >
-
-                    ID:
-                    ${escapeHtml(
-                      member.id
-                    )}
-
-                  </p>
-
-
+                <div class="plan-card">
+                    <div class="plan-name">Starter</div>
+                    <div class="plan-count" id="starterCount">0</div>
+                    <div class="plan-note">₦4,500</div>
                 </div>
 
-
-
-                <span
-                  class="
-                    status-badge
-                    ${statusClass}
-                  "
-                >
-
-                  ${escapeHtml(
-                    accountStatus
-                  )}
-
-                </span>
-
-
-              </div>
-
-
-
-              <div
-                class="details-grid"
-              >
-
-
-                <div
-                  class="detail"
-                >
-
-                  <small>
-
-                    Account Type
-
-                  </small>
-
-
-                  <strong>
-
-                    ${memberType}
-
-                  </strong>
-
+                <div class="plan-card">
+                    <div class="plan-name">Standard</div>
+                    <div class="plan-count" id="standardCount">0</div>
+                    <div class="plan-note">₦9,000</div>
                 </div>
 
-
-
-                <div
-                  class="detail"
-                >
-
-                  <small>
-
-                    Account Status
-
-                  </small>
-
-
-                  <strong>
-
-                    ${escapeHtml(
-                      accountStatus
-                    )}
-
-                  </strong>
-
+                <div class="plan-card">
+                    <div class="plan-name">Premium</div>
+                    <div class="plan-count" id="premiumCount">0</div>
+                    <div class="plan-note">₦18,000</div>
                 </div>
 
+                <div class="plan-card">
+                    <div class="plan-name">Elite</div>
+                    <div class="plan-count" id="eliteCount">0</div>
+                    <div class="plan-note">₦36,000</div>
+                </div>
 
-              </div>
+                <div class="plan-card">
+                    <div class="plan-name legacy">Legacy / Unconfigured</div>
+                    <div class="plan-count" id="legacyCount">0</div>
+                    <div class="plan-note">No plan code</div>
+                </div>
 
+            </div>
 
-            </article>
+        </section>
 
+        <!-- Member List -->
+        <section class="section">
 
-          `;
+            <div class="section-header">
+                <h3>Members</h3>
+                <p>Simple membership overview. Detailed user information remains on the User Details page.</p>
+            </div>
 
+            <div id="loading" class="loading">
+                Loading members...
+            </div>
 
+            <div id="tableContainer" class="table-wrap" style="display:none;">
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Account Status</th>
+                            <th>Membership Status</th>
+                            <th>Plan</th>
+                            <th>Expiry Date</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="membersTableBody"></tbody>
+                </table>
+
+            </div>
+
+            <div id="emptyState" class="empty" style="display:none;">
+                No members found.
+            </div>
+
+        </section>
+
+    </main>
+
+    <script>
+        const {
+            createClient
+        } = supabase;
+
+        const client = createClient(
+            SUPABASE_URL,
+            SUPABASE_ANON_KEY
+        );
+
+        const PLAN_NAMES = {
+            starter: "Starter",
+            standard: "Standard",
+            premium: "Premium",
+            elite: "Elite"
+        };
+
+        let profiles = [];
+        let memberships = [];
+
+        async function checkAdmin() {
+            const {
+                data: {
+                    user
+                },
+                error: authError
+            } = await client.auth.getUser();
+
+            if (authError || !user) {
+                window.location.href = "login.html";
+                return false;
+            }
+
+            const {
+                data: profile,
+                error
+            } = await client
+                .from("profiles")
+                .select("id, account_status, is_admin")
+                .eq("id", user.id)
+                .single();
+
+            if (
+                error ||
+                !profile ||
+                profile.is_admin !== true ||
+                profile.account_status !== "active"
+            ) {
+                alert("You do not have permission to access this page.");
+                window.location.href = "dashboard.html";
+                return false;
+            }
+
+            return true;
         }
 
-      )
-
-      .join("");
-
-
-  }
-
-
-  catch (error) {
-
-
-    console.error(
-      "Membership loading error:",
-      error
-    );
-
-
-
-    const errorMessage =
-
-      escapeHtml(
-
-        error.message ||
-
-        "Unknown error"
-
-      );
-
-
-
-    statsGrid.innerHTML = `
-
-
-      <div
-        class="error-box"
-      >
-
-        <strong>
-
-          Membership statistics could
-          not be loaded.
-
-        </strong>
-
-
-        <p>
-
-          ${errorMessage}
-
-        </p>
-
-
-      </div>
-
-
-    `;
-
-
-
-    membershipList.innerHTML = `
-
-
-      <div
-        class="error-box"
-      >
-
-        <strong>
-
-          Members could not be loaded.
-
-        </strong>
-
-
-        <p>
-
-          ${errorMessage}
-
-        </p>
-
-
-      </div>
-
-
-    `;
-
-
-  }
-
-
-}
-
-
-
-/* =========================================
-   START APPLICATION
-========================================= */
-
-(async function() {
-
-
-  const admin =
-
-    await checkAdmin();
-
-
-  if (!admin) {
-
-    return;
-
-  }
-
-
-  await loadMemberships();
-
-
-})();
-
-
-</script>
-
+        function showError(message) {
+            const box = document.getElementById("errorBox");
+            box.textContent = message;
+            box.style.display = "block";
+        }
+
+        function formatDate(dateValue) {
+            if (!dateValue) {
+                return "—";
+            }
+
+            const date = new Date(dateValue);
+
+            if (Number.isNaN(date.getTime())) {
+                return "—";
+            }
+
+            return new Intl.DateTimeFormat("en-NG", {
+                timeZone: "Africa/Lagos",
+                year: "numeric",
+                month: "short",
+                day: "numeric"
+            }).format(date);
+        }
+
+        function getMembershipStatus(membership) {
+            if (!membership) {
+                return {
+                    label: "No Membership",
+                    className: "status-none"
+                };
+            }
+
+            if (membership.status !== "active") {
+                const status = String(
+                    membership.status || "inactive"
+                ).toLowerCase();
+
+                if (status === "pending") {
+                    return {
+                        label: "Pending",
+                        className: "status-pending"
+                    };
+                }
+
+                return {
+                    label: "Inactive",
+                    className: "status-inactive"
+                };
+            }
+
+            if (
+                membership.current_period_end &&
+                new Date(membership.current_period_end).getTime() < Date.now()
+            ) {
+                return {
+                    label: "Expired",
+                    className: "status-expired"
+                };
+            }
+
+            return {
+                label: "Active",
+                className: "status-active"
+            };
+        }
+
+        function getAccountStatus(profile) {
+            const status = String(
+                profile.account_status || "inactive"
+            ).toLowerCase();
+
+            if (status === "active") {
+                return {
+                    label: "Active",
+                    className: "status-active"
+                };
+            }
+
+            if (status === "pending") {
+                return {
+                    label: "Pending",
+                    className: "status-pending"
+                };
+            }
+
+            return {
+                label: "Inactive",
+                className: "status-inactive"
+            };
+        }
+
+        function getPlanName(planCode) {
+            if (!planCode) {
+                return "Legacy / Unconfigured";
+            }
+
+            return PLAN_NAMES[planCode] || planCode;
+        }
+
+        function renderStats() {
+            let active = 0;
+            let inactive = 0;
+            let expired = 0;
+            let pending = 0;
+
+            const planCounts = {
+                starter: 0,
+                standard: 0,
+                premium: 0,
+                elite: 0,
+                legacy: 0
+            };
+
+            const membershipMap = new Map();
+
+            memberships.forEach(membership => {
+                membershipMap.set(
+                    membership.user_id,
+                    membership
+                );
+
+                if (membership.plan_code === "starter") {
+                    planCounts.starter++;
+                } else if (membership.plan_code === "standard") {
+                    planCounts.standard++;
+                } else if (membership.plan_code === "premium") {
+                    planCounts.premium++;
+                } else if (membership.plan_code === "elite") {
+                    planCounts.elite++;
+                } else {
+                    planCounts.legacy++;
+                }
+            });
+
+            profiles.forEach(profile => {
+                const membership =
+                    membershipMap.get(profile.id);
+
+                const membershipStatus =
+                    getMembershipStatus(membership);
+
+                if (membershipStatus.label === "Active") {
+                    active++;
+                } else if (
+                    membershipStatus.label === "Expired"
+                ) {
+                    expired++;
+                } else if (
+                    membershipStatus.label === "Pending"
+                ) {
+                    pending++;
+                } else {
+                    inactive++;
+                }
+            });
+
+            document.getElementById("totalMembers").textContent =
+                profiles.length;
+
+            document.getElementById("activeMembers").textContent =
+                active;
+
+            document.getElementById("inactiveMembers").textContent =
+                inactive;
+
+            document.getElementById("expiredMembers").textContent =
+                expired;
+
+            document.getElementById("pendingMembers").textContent =
+                pending;
+
+            document.getElementById("starterCount").textContent =
+                planCounts.starter;
+
+            document.getElementById("standardCount").textContent =
+                planCounts.standard;
+
+            document.getElementById("premiumCount").textContent =
+                planCounts.premium;
+
+            document.getElementById("eliteCount").textContent =
+                planCounts.elite;
+
+            document.getElementById("legacyCount").textContent =
+                planCounts.legacy;
+        }
+
+        function renderMembers() {
+            const tbody =
+                document.getElementById("membersTableBody");
+
+            const tableContainer =
+                document.getElementById("tableContainer");
+
+            const emptyState =
+                document.getElementById("emptyState");
+
+            const membershipMap = new Map();
+
+            memberships.forEach(membership => {
+                membershipMap.set(
+                    membership.user_id,
+                    membership
+                );
+            });
+
+            tbody.innerHTML = "";
+
+            if (!profiles.length) {
+                tableContainer.style.display = "none";
+                emptyState.style.display = "block";
+                return;
+            }
+
+            profiles.forEach(profile => {
+                const membership =
+                    membershipMap.get(profile.id);
+
+                const accountStatus =
+                    getAccountStatus(profile);
+
+                const membershipStatus =
+                    getMembershipStatus(membership);
+
+                const planName =
+                    getPlanName(
+                        membership
+                            ? membership.plan_code
+                            : null
+                    );
+
+                const row =
+                    document.createElement("tr");
+
+                const nameCell =
+                    document.createElement("td");
+
+                nameCell.innerHTML = `
+                    <strong>
+                        ${escapeHtml(
+                            profile.full_name ||
+                            "Unnamed Member"
+                        )}
+                    </strong>
+                `;
+
+                const accountCell =
+                    document.createElement("td");
+
+                accountCell.innerHTML = `
+                    <span class="status ${accountStatus.className}">
+                        ${accountStatus.label}
+                    </span>
+                `;
+
+                const membershipCell =
+                    document.createElement("td");
+
+                membershipCell.innerHTML = `
+                    <span class="status ${membershipStatus.className}">
+                        ${membershipStatus.label}
+                    </span>
+                `;
+
+                const planCell =
+                    document.createElement("td");
+
+                if (!membership || !membership.plan_code) {
+                    planCell.innerHTML = `
+                        <span class="plan-badge legacy">
+                            Legacy / Unconfigured
+                        </span>
+                    `;
+                } else {
+                    planCell.innerHTML = `
+                        <span class="plan-badge">
+                            ${escapeHtml(planName)}
+                        </span>
+                    `;
+                }
+
+                const expiryCell =
+                    document.createElement("td");
+
+                expiryCell.innerHTML =
+                    membership &&
+                    membership.current_period_end
+                        ? escapeHtml(
+                            formatDate(
+                                membership.current_period_end
+                            )
+                        )
+                        : `<span class="muted">—</span>`;
+
+                row.appendChild(nameCell);
+                row.appendChild(accountCell);
+                row.appendChild(membershipCell);
+                row.appendChild(planCell);
+                row.appendChild(expiryCell);
+
+                tbody.appendChild(row);
+            });
+
+            tableContainer.style.display = "block";
+            emptyState.style.display = "none";
+        }
+
+        function escapeHtml(value) {
+            return String(value)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        async function loadMembers() {
+            try {
+                const [
+                    profilesResult,
+                    membershipsResult
+                ] = await Promise.all([
+                    client
+                        .from("profiles")
+                        .select(`
+                            id,
+                            full_name,
+                            account_status,
+                            is_admin
+                        `)
+                        .order("full_name", {
+                            ascending: true
+                        }),
+
+                    client
+                        .from("memberships")
+                        .select(`
+                            id,
+                            user_id,
+                            status,
+                            plan_code,
+                            current_period_start,
+                            current_period_end,
+                            payment_count
+                        `)
+                ]);
+
+                if (profilesResult.error) {
+                    throw profilesResult.error;
+                }
+
+                if (membershipsResult.error) {
+                    throw membershipsResult.error;
+                }
+
+                profiles = profilesResult.data || [];
+                memberships = membershipsResult.data || [];
+
+                renderStats();
+                renderMembers();
+
+                document.getElementById("loading").style.display =
+                    "none";
+
+            } catch (error) {
+                console.error("Membership load error:", error);
+
+                document.getElementById("loading").style.display =
+                    "none";
+
+                showError(
+                    error.message ||
+                    "Unable to load membership information."
+                );
+            }
+        }
+
+        async function init() {
+            const allowed = await checkAdmin();
+
+            if (!allowed) {
+                return;
+            }
+
+            await loadMembers();
+        }
+
+        init();
+    </script>
 
 </body>
-
 </html>

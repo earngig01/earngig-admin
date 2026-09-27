@@ -24,42 +24,44 @@
     .page {
       max-width: 1250px;
       margin: 0 auto;
-      padding: 28px 20px 60px;
+      padding: 24px 18px 50px;
     }
 
     .topbar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 20px;
-      margin-bottom: 28px;
+      gap: 16px;
+      margin-bottom: 22px;
     }
 
     .brand {
-      font-size: 27px;
+      font-size: 24px;
       font-weight: 800;
       color: #7c3aed;
     }
 
     .back-btn {
       text-decoration: none;
-      padding: 11px 16px;
-      border-radius: 10px;
+      padding: 9px 14px;
+      border-radius: 9px;
       border: 1px solid #ddd;
       background: white;
       color: #292943;
       font-weight: 600;
+      font-size: 13px;
     }
 
     h1 {
-      margin: 0 0 8px;
-      font-size: 32px;
+      margin: 0 0 7px;
+      font-size: 28px;
     }
 
     .subtitle {
-      margin: 0 0 26px;
+      margin: 0 0 22px;
       color: #73738a;
       line-height: 1.5;
+      font-size: 14px;
     }
 
     /* STATS */
@@ -67,26 +69,26 @@
     .stats {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
-      gap: 14px;
-      margin-bottom: 24px;
+      gap: 10px;
+      margin-bottom: 18px;
     }
 
     .stat {
       background: white;
       border: 1px solid #e5e5ed;
-      border-radius: 15px;
-      padding: 18px;
-      box-shadow: 0 3px 12px rgba(20, 20, 50, 0.04);
+      border-radius: 12px;
+      padding: 14px;
+      box-shadow: 0 2px 8px rgba(20, 20, 50, 0.035);
     }
 
     .stat-label {
       color: #77778b;
-      font-size: 14px;
-      margin-bottom: 7px;
+      font-size: 12px;
+      margin-bottom: 6px;
     }
 
     .stat-value {
-      font-size: 27px;
+      font-size: 23px;
       font-weight: 800;
     }
 
@@ -95,22 +97,23 @@
     .filter-box {
       background: white;
       border: 1px solid #e5e5ed;
-      border-radius: 15px;
-      padding: 15px;
-      margin-bottom: 18px;
+      border-radius: 12px;
+      padding: 11px;
+      margin-bottom: 14px;
       display: flex;
       flex-wrap: wrap;
-      gap: 9px;
+      gap: 7px;
     }
 
     .filter-btn {
       border: 1px solid #dddde7;
       background: #fff;
       color: #45455c;
-      border-radius: 9px;
-      padding: 10px 14px;
+      border-radius: 8px;
+      padding: 8px 11px;
       cursor: pointer;
       font-weight: 600;
+      font-size: 12px;
     }
 
     .filter-btn.active {
@@ -124,26 +127,36 @@
     .campaign-list {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 7px;
     }
 
     .campaign-row {
       display: grid;
+
+      /*
+        Campaign
+        Advertiser
+        Placement
+        Status
+        Amount
+        View
+      */
       grid-template-columns:
         minmax(180px, 1.5fr)
         minmax(130px, 1fr)
         120px
         125px
+        110px
         75px;
 
       align-items: center;
-      gap: 16px;
+      gap: 12px;
 
       background: white;
       border: 1px solid #e4e4ec;
-      border-radius: 11px;
+      border-radius: 10px;
 
-      padding: 12px 15px;
+      padding: 10px 13px;
 
       text-decoration: none;
       color: inherit;
@@ -157,16 +170,17 @@
     .campaign-row:hover {
       transform: translateY(-1px);
       border-color: #9b6cff;
-      box-shadow: 0 5px 16px rgba(60, 30, 120, 0.08);
+      box-shadow: 0 4px 13px rgba(60, 30, 120, 0.07);
     }
 
-    .campaign-main {
+    .campaign-main,
+    .advertiser {
       min-width: 0;
     }
 
     .campaign-name {
       font-weight: 800;
-      font-size: 15px;
+      font-size: 14px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -175,18 +189,14 @@
     .campaign-id {
       margin-top: 3px;
       color: #9999aa;
-      font-size: 11px;
+      font-size: 10px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
 
-    .advertiser {
-      min-width: 0;
-    }
-
     .advertiser-name {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 600;
       white-space: nowrap;
       overflow: hidden;
@@ -196,20 +206,18 @@
     .advertiser-id {
       margin-top: 3px;
       color: #9999aa;
-      font-size: 10px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      font-size: 9px;
     }
 
     .placement {
       color: #55556b;
-      font-size: 13px;
+      font-size: 12px;
     }
 
     .amount {
       font-weight: 800;
-      font-size: 14px;
+      font-size: 13px;
+      white-space: nowrap;
     }
 
     .status {
@@ -218,9 +226,9 @@
       justify-content: center;
       width: fit-content;
       max-width: 120px;
-      padding: 6px 9px;
+      padding: 5px 8px;
       border-radius: 999px;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 800;
       white-space: nowrap;
     }
@@ -259,21 +267,70 @@
       text-align: right;
       color: #7c3aed;
       font-weight: 800;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    /* EMPTY / LOADING / ERROR */
+
+    .empty,
+    .loading {
+      background: white;
+      border: 1px solid #e5e5ed;
+      border-radius: 12px;
+      padding: 38px 20px;
+      text-align: center;
+      color: #77778b;
+      font-size: 14px;
+    }
+
+    .error {
+      background: #fff1f2;
+      color: #b91c1c;
+      border: 1px solid #fecdd3;
+      border-radius: 10px;
+      padding: 13px;
+      margin-bottom: 15px;
       font-size: 13px;
+    }
+
+    /* TABLET */
+
+    @media (max-width: 950px) {
+
+      .stats {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .campaign-row {
+        grid-template-columns:
+          minmax(170px, 1.4fr)
+          minmax(120px, 1fr)
+          100px
+          115px
+          95px
+          65px;
+
+        gap: 9px;
+      }
     }
 
     /* MOBILE */
 
-    @media (max-width: 850px) {
+    @media (max-width: 760px) {
 
       .stats {
         grid-template-columns: repeat(2, 1fr);
       }
 
       .campaign-row {
-        grid-template-columns: minmax(150px, 1fr) auto auto;
-        gap: 10px;
-        padding: 12px;
+        grid-template-columns:
+          minmax(0, 1fr)
+          auto
+          auto;
+
+        gap: 8px;
+        padding: 10px 11px;
       }
 
       .advertiser,
@@ -289,36 +346,58 @@
     @media (max-width: 520px) {
 
       .page {
-        padding: 20px 12px 50px;
+        padding: 18px 11px 45px;
       }
 
       .topbar {
-        margin-bottom: 20px;
+        margin-bottom: 17px;
       }
 
       .brand {
-        font-size: 22px;
+        font-size: 21px;
       }
 
       h1 {
-        font-size: 25px;
+        font-size: 23px;
+      }
+
+      .subtitle {
+        font-size: 13px;
+        margin-bottom: 17px;
       }
 
       .stats {
         grid-template-columns: 1fr 1fr;
-        gap: 8px;
+        gap: 7px;
       }
 
       .stat {
-        padding: 13px;
+        padding: 11px;
+      }
+
+      .stat-label {
+        font-size: 11px;
       }
 
       .stat-value {
-        font-size: 22px;
+        font-size: 20px;
+      }
+
+      .filter-box {
+        padding: 9px;
+      }
+
+      .filter-btn {
+        padding: 7px 9px;
+        font-size: 11px;
       }
 
       .campaign-row {
-        grid-template-columns: minmax(0, 1fr) auto;
+        grid-template-columns:
+          minmax(0, 1fr)
+          auto;
+
+        gap: 7px;
       }
 
       .status {
@@ -327,34 +406,12 @@
 
       .amount {
         text-align: right;
+        font-size: 12px;
       }
-    }
 
-    .empty {
-      background: white;
-      border: 1px solid #e5e5ed;
-      border-radius: 14px;
-      padding: 45px 20px;
-      text-align: center;
-      color: #77778b;
-    }
-
-    .loading {
-      background: white;
-      border: 1px solid #e5e5ed;
-      border-radius: 14px;
-      padding: 35px;
-      text-align: center;
-      color: #77778b;
-    }
-
-    .error {
-      background: #fff1f2;
-      color: #b91c1c;
-      border: 1px solid #fecdd3;
-      border-radius: 12px;
-      padding: 16px;
-      margin-bottom: 18px;
+      .view {
+        font-size: 11px;
+      }
     }
   </style>
 </head>

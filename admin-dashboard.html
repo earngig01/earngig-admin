@@ -22,7 +22,6 @@
 
   <style>
 
-
     /* ========================================
        GLOBAL
     ======================================== */
@@ -456,6 +455,188 @@
 
 
     /* ========================================
+       PLATFORM RULES
+    ======================================== */
+
+    .rules-card {
+
+      background:
+        white;
+
+      border:
+        1px solid
+        #e6e7ee;
+
+      border-radius:
+        15px;
+
+      padding:
+        24px;
+
+      box-shadow:
+        0 6px 20px
+        rgba(0,0,0,.04);
+
+    }
+
+
+    .rules-intro {
+
+      margin:
+        0 0 20px;
+
+      color:
+        #686a7d;
+
+      line-height:
+        1.55;
+
+      font-size:
+        14px;
+
+    }
+
+
+    .plan-rules-grid {
+
+      display:
+        grid;
+
+      grid-template-columns:
+        repeat(
+          auto-fit,
+          minmax(210px, 1fr)
+        );
+
+      gap:
+        14px;
+
+    }
+
+
+    .plan-rule {
+
+      border:
+        1px solid
+        #e2e4ee;
+
+      border-radius:
+        12px;
+
+      padding:
+        17px;
+
+      background:
+        #fafbff;
+
+    }
+
+
+    .plan-rule h3 {
+
+      margin:
+        0 0 14px;
+
+      font-size:
+        17px;
+
+    }
+
+
+    .rule-row {
+
+      display:
+        flex;
+
+      justify-content:
+        space-between;
+
+      align-items:
+        center;
+
+      gap:
+        10px;
+
+      padding:
+        9px 0;
+
+      border-bottom:
+        1px solid
+        #eceef5;
+
+      font-size:
+        13px;
+
+    }
+
+
+    .rule-row:last-child {
+
+      border-bottom:
+        0;
+
+    }
+
+
+    .rule-row span {
+
+      color:
+        #686a7d;
+
+    }
+
+
+    .rule-row strong {
+
+      color:
+        #17182f;
+
+      text-align:
+        right;
+
+    }
+
+
+    .rules-note {
+
+      margin-top:
+        18px;
+
+      padding:
+        14px 16px;
+
+      border-radius:
+        10px;
+
+      background:
+        #f4f1ff;
+
+      border:
+        1px solid
+        #ddd5ff;
+
+      color:
+        #49358f;
+
+      font-size:
+        13px;
+
+      line-height:
+        1.55;
+
+    }
+
+
+    .rules-note strong {
+
+      color:
+        #33216f;
+
+    }
+
+
+
+    /* ========================================
        LOADING
     ======================================== */
 
@@ -558,7 +739,6 @@
       max-width: 650px
     ) {
 
-
       .nav {
 
         flex-wrap:
@@ -597,8 +777,22 @@
       }
 
 
-    }
+      .rules-card {
 
+        padding:
+          18px;
+
+      }
+
+
+      .plan-rules-grid {
+
+        grid-template-columns:
+          1fr;
+
+      }
+
+    }
 
   </style>
 
@@ -615,9 +809,7 @@
 
 <header>
 
-
   <div class="nav">
-
 
     <a
       class="logo"
@@ -629,13 +821,11 @@
     </a>
 
 
-
     <div class="admin-badge">
 
       ADMIN PORTAL
 
     </div>
-
 
 
     <button
@@ -648,9 +838,7 @@
 
     </button>
 
-
   </div>
-
 
 </header>
 
@@ -669,7 +857,6 @@
 
   <section class="welcome">
 
-
     <h1 id="welcomeTitle">
 
       Admin Dashboard
@@ -683,7 +870,6 @@
       administration portal.
 
     </p>
-
 
   </section>
 
@@ -700,16 +886,231 @@
   </h2>
 
 
-
   <section
     id="stats"
     class="stats-grid"
   >
 
-
     <div class="loading">
 
       Loading real platform statistics...
+
+    </div>
+
+  </section>
+
+
+
+  <!-- ======================================
+       CURRENT PLATFORM RULES
+  ======================================= -->
+
+  <h2 class="section-title">
+
+    Current Platform Rules
+
+  </h2>
+
+
+  <section class="rules-card">
+
+
+    <p class="rules-intro">
+
+      These are the current member earning and
+      withdrawal rules enforced by the platform.
+      Referral bonuses and Create &amp; Earn writer
+      earnings are separate from the normal daily
+      earning limit.
+
+    </p>
+
+
+    <div class="plan-rules-grid">
+
+
+      <!-- STARTER -->
+
+      <div class="plan-rule">
+
+        <h3>
+          Starter
+        </h3>
+
+
+        <div class="rule-row">
+
+          <span>
+            Daily normal earning
+          </span>
+
+          <strong>
+            ₦200
+          </strong>
+
+        </div>
+
+
+        <div class="rule-row">
+
+          <span>
+            Minimum withdrawal
+          </span>
+
+          <strong>
+            ₦3,000
+          </strong>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- STANDARD -->
+
+      <div class="plan-rule">
+
+        <h3>
+          Standard
+        </h3>
+
+
+        <div class="rule-row">
+
+          <span>
+            Daily normal earning
+          </span>
+
+          <strong>
+            ₦400
+          </strong>
+
+        </div>
+
+
+        <div class="rule-row">
+
+          <span>
+            Minimum withdrawal
+          </span>
+
+          <strong>
+            ₦6,000
+          </strong>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- PREMIUM -->
+
+      <div class="plan-rule">
+
+        <h3>
+          Premium
+        </h3>
+
+
+        <div class="rule-row">
+
+          <span>
+            Daily normal earning
+          </span>
+
+          <strong>
+            ₦800
+          </strong>
+
+        </div>
+
+
+        <div class="rule-row">
+
+          <span>
+            Minimum withdrawal
+          </span>
+
+          <strong>
+            ₦12,000
+          </strong>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- ELITE -->
+
+      <div class="plan-rule">
+
+        <h3>
+          Elite
+        </h3>
+
+
+        <div class="rule-row">
+
+          <span>
+            Daily normal earning
+          </span>
+
+          <strong>
+            ₦1,600
+          </strong>
+
+        </div>
+
+
+        <div class="rule-row">
+
+          <span>
+            Minimum withdrawal
+          </span>
+
+          <strong>
+            ₦24,000
+          </strong>
+
+        </div>
+
+      </div>
+
+
+    </div>
+
+
+    <div class="rules-note">
+
+      <strong>
+        Withdrawal window:
+      </strong>
+
+      15th and 28th of every month,
+      from 12:00 AM to 11:59 PM Nigeria time
+      (Africa/Lagos).
+
+      <br><br>
+
+      <strong>
+        Daily earning limit:
+      </strong>
+
+      Applies to normal member activities such as
+      Tasks, Watch &amp; Earn and Read &amp; Earn.
+
+      <br><br>
+
+      <strong>
+        Exempt:
+      </strong>
+
+      Referral bonuses and Create &amp; Earn writer
+      earnings are not included in the daily normal
+      earning cap.
 
     </div>
 
@@ -729,37 +1130,26 @@
   </h2>
 
 
-
   <section class="cards">
 
 
-
-    <!-- ====================================
-         TASK MANAGEMENT
-    ===================================== -->
+    <!-- TASK MANAGEMENT -->
 
     <div class="card">
 
-
       <div class="card-icon">
-
         📋
-
       </div>
 
 
       <h2>
-
         Tasks
-
       </h2>
 
 
       <p>
-
         Review submitted tasks, approve or reject
         tasks and manage active task listings.
-
       </p>
 
 
@@ -767,42 +1157,30 @@
         type="button"
         onclick="location.href='admin-tasks.html'"
       >
-
         Manage Tasks
-
       </button>
-
 
     </div>
 
 
 
-    <!-- ====================================
-         NOVEL REVIEW
-    ===================================== -->
+    <!-- NOVEL REVIEW -->
 
     <div class="card">
 
-
       <div class="card-icon">
-
         📚
-
       </div>
 
 
       <h2>
-
         Novel Review
-
       </h2>
 
 
       <p>
-
         Review submitted novels, process manuscripts,
         approve submissions and set pricing.
-
       </p>
 
 
@@ -810,43 +1188,31 @@
         type="button"
         onclick="location.href='novel-review.html'"
       >
-
         Open Novel Review
-
       </button>
-
 
     </div>
 
 
 
-    <!-- ====================================
-         ADVERT MANAGEMENT
-    ===================================== -->
+    <!-- ADVERT MANAGEMENT -->
 
     <div class="card">
 
-
       <div class="card-icon">
-
         📢
-
       </div>
 
 
       <h2>
-
         Advert Management
-
       </h2>
 
 
       <p>
-
         Review business advertising requests,
         approve campaigns, request changes and
         manage advertiser submissions.
-
       </p>
 
 
@@ -854,43 +1220,31 @@
         type="button"
         onclick="location.href='admin-adverts.html'"
       >
-
         Manage Adverts
-
       </button>
-
 
     </div>
 
 
 
-    <!-- ====================================
-         WATCH & EARN
-    ===================================== -->
+    <!-- WATCH & EARN -->
 
     <div class="card">
 
-
       <div class="card-icon">
-
         ▶️
-
       </div>
 
 
       <h2>
-
-        Watch & Earn
-
+        Watch &amp; Earn
       </h2>
 
 
       <p>
-
         Manage approved adverts available for
         members to watch and configure viewer
         earning campaigns.
-
       </p>
 
 
@@ -898,42 +1252,30 @@
         type="button"
         onclick="location.href='admin-watch-ads.html'"
       >
-
-        Manage Watch & Earn
-
+        Manage Watch &amp; Earn
       </button>
-
 
     </div>
 
 
 
-    <!-- ====================================
-         COMPETITIONS
-    ===================================== -->
+    <!-- COMPETITIONS -->
 
     <div class="card">
 
-
       <div class="card-icon">
-
         🏆
-
       </div>
 
 
       <h2>
-
-        Competitions & Awards
-
+        Competitions &amp; Awards
       </h2>
 
 
       <p>
-
         Create and manage competitions, challenges,
         entry requirements, winners and awards.
-
       </p>
 
 
@@ -941,42 +1283,30 @@
         type="button"
         onclick="location.href='admin-competitions.html'"
       >
-
         Manage Competitions
-
       </button>
-
 
     </div>
 
 
 
-    <!-- ====================================
-         RANKINGS
-    ===================================== -->
+    <!-- RANKINGS -->
 
     <div class="card">
 
-
       <div class="card-icon">
-
         🥇
-
       </div>
 
 
       <h2>
-
         Rankings
-
       </h2>
 
 
       <p>
-
         View member rankings for referrals,
         novel earnings and total earnings by period.
-
       </p>
 
 
@@ -984,42 +1314,30 @@
         type="button"
         onclick="location.href='admin-rankings.html'"
       >
-
         Manage Rankings
-
       </button>
-
 
     </div>
 
 
 
-    <!-- ====================================
-         USERS
-    ===================================== -->
+    <!-- USERS -->
 
     <div class="card">
 
-
       <div class="card-icon">
-
         👥
-
       </div>
 
 
       <h2>
-
         Users
-
       </h2>
 
 
       <p>
-
         View and manage EarnGig member accounts,
         account status and administration access.
-
       </p>
 
 
@@ -1027,42 +1345,30 @@
         type="button"
         onclick="location.href='admin-users.html'"
       >
-
         Manage Users
-
       </button>
-
 
     </div>
 
 
 
-    <!-- ====================================
-         WITHDRAWALS
-    ===================================== -->
+    <!-- WITHDRAWALS -->
 
     <div class="card">
 
-
       <div class="card-icon">
-
         💸
-
       </div>
 
 
       <h2>
-
         Withdrawals
-
       </h2>
 
 
       <p>
-
         Review pending withdrawal requests and
         process member payouts.
-
       </p>
 
 
@@ -1070,42 +1376,30 @@
         type="button"
         onclick="location.href='admin-withdrawals.html'"
       >
-
         Manage Withdrawals
-
       </button>
-
 
     </div>
 
 
 
-    <!-- ====================================
-         MEMBERSHIPS
-    ===================================== -->
+    <!-- MEMBERSHIPS -->
 
     <div class="card">
 
-
       <div class="card-icon">
-
         💳
-
       </div>
 
 
       <h2>
-
         Memberships
-
       </h2>
 
 
       <p>
-
         Review membership payments, renewals and
         active member accounts.
-
       </p>
 
 
@@ -1113,42 +1407,30 @@
         type="button"
         onclick="location.href='admin-memberships.html'"
       >
-
         Manage Memberships
-
       </button>
-
 
     </div>
 
 
 
-    <!-- ====================================
-         TRANSACTIONS
-    ===================================== -->
+    <!-- TRANSACTIONS -->
 
     <div class="card">
 
-
       <div class="card-icon">
-
         📊
-
       </div>
 
 
       <h2>
-
         Transactions
-
       </h2>
 
 
       <p>
-
         Review wallet activity, rewards, fees and
         platform transactions.
-
       </p>
 
 
@@ -1156,11 +1438,8 @@
         type="button"
         onclick="location.href='admin-transactions.html'"
       >
-
         View Transactions
-
       </button>
-
 
     </div>
 
@@ -1195,36 +1474,25 @@ async function checkAdmin() {
     error
 
   } =
-  await supabaseClient
-    .auth
-    .getUser();
+    await supabaseClient
+      .auth
+      .getUser();
 
 
-
-  /*
-   * USER NOT LOGGED IN
-   */
 
   if (
     error ||
     !user
   ) {
 
-
     window.location.href =
       "index.html";
 
-
     return null;
-
 
   }
 
 
-
-  /* --------------------------------------
-     LOAD ADMIN PROFILE
-  --------------------------------------- */
 
   const {
 
@@ -1233,46 +1501,34 @@ async function checkAdmin() {
     error: profileError
 
   } =
-  await supabaseClient
+    await supabaseClient
+
+      .from("profiles")
+
+      .select(`
+
+        full_name,
+        is_admin,
+        account_status
+
+      `)
+
+      .eq(
+        "id",
+        user.id
+      )
+
+      .single();
 
 
-    .from("profiles")
-
-
-    .select(`
-
-      full_name,
-      is_admin,
-      account_status
-
-    `)
-
-
-    .eq(
-      "id",
-      user.id
-    )
-
-
-    .single();
-
-
-
-  /*
-   * CHECK ADMIN ACCESS
-   */
 
   if (
 
-
     profileError ||
-
 
     !profile ||
 
-
     profile.is_admin !== true
-
 
   ) {
 
@@ -1282,13 +1538,9 @@ async function checkAdmin() {
       .signOut();
 
 
-
     alert(
-
       "Access denied. Administrator privileges are required."
-
     );
-
 
 
     window.location.href =
@@ -1297,25 +1549,17 @@ async function checkAdmin() {
 
     return null;
 
-
   }
 
 
 
-  /*
-   * CHECK ADMIN ACCOUNT STATUS
-   */
-
   if (
 
-
     profile.account_status &&
-
 
     profile.account_status !==
     "active"
 
-
   ) {
 
 
@@ -1324,13 +1568,9 @@ async function checkAdmin() {
       .signOut();
 
 
-
     alert(
-
       "This administrator account is not active."
-
     );
-
 
 
     window.location.href =
@@ -1339,14 +1579,9 @@ async function checkAdmin() {
 
     return null;
 
-
   }
 
 
-
-  /*
-   * UPDATE WELCOME MESSAGE
-   */
 
   document.getElementById(
     "welcomeTitle"
@@ -1358,9 +1593,7 @@ async function checkAdmin() {
     }`;
 
 
-
   return user;
-
 
 }
 
@@ -1379,16 +1612,13 @@ async function loadStats() {
     );
 
 
-
   stats.innerHTML = `
-
 
     <div class="loading">
 
       Loading real platform statistics...
 
     </div>
-
 
   `;
 
@@ -1404,10 +1634,10 @@ async function loadStats() {
       error
 
     } =
-    await supabaseClient
-      .rpc(
-        "get_admin_dashboard_stats"
-      );
+      await supabaseClient
+        .rpc(
+          "get_admin_dashboard_stats"
+        );
 
 
 
@@ -1422,9 +1652,7 @@ async function loadStats() {
     if (!data) {
 
       throw new Error(
-
         "No dashboard statistics were returned."
-
       );
 
     }
@@ -1434,30 +1662,23 @@ async function loadStats() {
     stats.innerHTML = `
 
 
-      <!-- MEMBERS -->
-
       <div class="stat">
 
         <small>
           Total Members
         </small>
 
-
         <strong>
-
           ${
             Number(
               data.members || 0
             ).toLocaleString()
           }
-
         </strong>
 
       </div>
 
 
-
-      <!-- WALLETS -->
 
       <div class="stat">
 
@@ -1465,22 +1686,17 @@ async function loadStats() {
           Wallets
         </small>
 
-
         <strong>
-
           ${
             Number(
               data.wallets || 0
             ).toLocaleString()
           }
-
         </strong>
 
       </div>
 
 
-
-      <!-- WALLET BALANCE -->
 
       <div class="stat">
 
@@ -1488,9 +1704,7 @@ async function loadStats() {
           Total Wallet Balance
         </small>
 
-
         <strong class="money">
-
           ₦${
             Number(
               data.total_wallet_balance || 0
@@ -1498,14 +1712,11 @@ async function loadStats() {
               "en-NG"
             )
           }
-
         </strong>
 
       </div>
 
 
-
-      <!-- TOTAL EARNED -->
 
       <div class="stat">
 
@@ -1513,9 +1724,7 @@ async function loadStats() {
           Total Earned
         </small>
 
-
         <strong class="money">
-
           ₦${
             Number(
               data.total_earned || 0
@@ -1523,14 +1732,11 @@ async function loadStats() {
               "en-NG"
             )
           }
-
         </strong>
 
       </div>
 
 
-
-      <!-- TRANSACTIONS -->
 
       <div class="stat">
 
@@ -1538,22 +1744,17 @@ async function loadStats() {
           Transactions
         </small>
 
-
         <strong>
-
           ${
             Number(
               data.transactions || 0
             ).toLocaleString()
           }
-
         </strong>
 
       </div>
 
 
-
-      <!-- PENDING WITHDRAWALS -->
 
       <div class="stat">
 
@@ -1561,22 +1762,17 @@ async function loadStats() {
           Pending Withdrawals
         </small>
 
-
         <strong>
-
           ${
             Number(
               data.pending_withdrawals || 0
             ).toLocaleString()
           }
-
         </strong>
 
       </div>
 
 
-
-      <!-- PENDING WITHDRAWAL AMOUNT -->
 
       <div class="stat">
 
@@ -1584,9 +1780,7 @@ async function loadStats() {
           Pending Withdrawal Amount
         </small>
 
-
         <strong class="money">
-
           ₦${
             Number(
               data.pending_withdrawal_amount || 0
@@ -1594,14 +1788,11 @@ async function loadStats() {
               "en-NG"
             )
           }
-
         </strong>
 
       </div>
 
 
-
-      <!-- TOTAL NOVELS -->
 
       <div class="stat">
 
@@ -1609,22 +1800,17 @@ async function loadStats() {
           Total Novels
         </small>
 
-
         <strong>
-
           ${
             Number(
               data.novels || 0
             ).toLocaleString()
           }
-
         </strong>
 
       </div>
 
 
-
-      <!-- PUBLISHED NOVELS -->
 
       <div class="stat">
 
@@ -1632,22 +1818,17 @@ async function loadStats() {
           Published Novels
         </small>
 
-
         <strong>
-
           ${
             Number(
               data.published_novels || 0
             ).toLocaleString()
           }
-
         </strong>
 
       </div>
 
 
-
-      <!-- PENDING NOVELS -->
 
       <div class="stat">
 
@@ -1655,22 +1836,17 @@ async function loadStats() {
           Pending Novel Submissions
         </small>
 
-
         <strong>
-
           ${
             Number(
               data.pending_novel_submissions || 0
             ).toLocaleString()
           }
-
         </strong>
 
       </div>
 
 
-
-      <!-- WRITER EARNINGS -->
 
       <div class="stat">
 
@@ -1678,9 +1854,7 @@ async function loadStats() {
           Held Writer Earnings
         </small>
 
-
         <strong class="money">
-
           ₦${
             Number(
               data.held_writer_earnings || 0
@@ -1688,14 +1862,11 @@ async function loadStats() {
               "en-NG"
             )
           }
-
         </strong>
 
       </div>
 
 
-
-      <!-- READER REWARDS -->
 
       <div class="stat">
 
@@ -1703,9 +1874,7 @@ async function loadStats() {
           Pending Reader Rewards
         </small>
 
-
         <strong class="money">
-
           ₦${
             Number(
               data.pending_reader_rewards || 0
@@ -1713,14 +1882,11 @@ async function loadStats() {
               "en-NG"
             )
           }
-
         </strong>
 
       </div>
 
 
-
-      <!-- REFRESH -->
 
       <div
         style="
@@ -1728,7 +1894,6 @@ async function loadStats() {
           text-align: right;
         "
       >
-
 
         <button
           type="button"
@@ -1740,12 +1905,10 @@ async function loadStats() {
 
         </button>
 
-
       </div>
 
 
     `;
-
 
   }
 
@@ -1754,42 +1917,27 @@ async function loadStats() {
 
 
     console.error(
-
       "Admin statistics error:",
-
       error
-
     );
-
 
 
     stats.innerHTML = `
 
-
       <div class="error-box">
 
-
         <strong>
-
           Dashboard statistics could not be loaded.
-
         </strong>
 
-
         <p>
-
           ${
             escapeHtml(
-
               error.message ||
-
               "Unknown error"
-
             )
           }
-
         </p>
-
 
         <button
           type="button"
@@ -1801,15 +1949,11 @@ async function loadStats() {
 
         </button>
 
-
       </div>
-
 
     `;
 
-
   }
-
 
 }
 
@@ -1821,41 +1965,34 @@ async function loadStats() {
 
 function escapeHtml(value) {
 
-
   return String(
     value ?? ""
   )
-
 
     .replaceAll(
       "&",
       "&amp;"
     )
 
-
     .replaceAll(
       "<",
       "&lt;"
     )
-
 
     .replaceAll(
       ">",
       "&gt;"
     )
 
-
     .replaceAll(
       '"',
       "&quot;"
     )
 
-
     .replaceAll(
       "'",
       "&#039;"
     );
-
 
 }
 
@@ -1871,13 +2008,8 @@ document
     "logoutButton"
   )
 
-
   .addEventListener(
-
-
     "click",
-
-
     async function() {
 
 
@@ -1886,14 +2018,10 @@ document
         .signOut();
 
 
-
       window.location.href =
         "index.html";
 
-
     }
-
-
   );
 
 
@@ -1909,13 +2037,11 @@ document
     await checkAdmin();
 
 
-
   if (!user) {
 
     return;
 
   }
-
 
 
   await loadStats();

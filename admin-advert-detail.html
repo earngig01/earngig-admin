@@ -24,19 +24,19 @@
     .page {
       max-width: 1050px;
       margin: 0 auto;
-      padding: 25px 20px 60px;
+      padding: 22px 16px 50px;
     }
 
     .topbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 15px;
-      margin-bottom: 25px;
+      gap: 12px;
+      margin-bottom: 20px;
     }
 
     .brand {
-      font-size: 25px;
+      font-size: 23px;
       font-weight: 800;
       color: #7c3aed;
     }
@@ -46,41 +46,42 @@
       background: white;
       border: 1px solid #ddd;
       color: #33334a;
-      padding: 10px 15px;
-      border-radius: 9px;
+      padding: 8px 12px;
+      border-radius: 8px;
       font-weight: 700;
+      font-size: 12px;
     }
 
     .panel {
       background: white;
       border: 1px solid #e3e3eb;
-      border-radius: 16px;
-      padding: 22px;
-      margin-bottom: 18px;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 12px;
     }
 
     .campaign-header {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      gap: 20px;
+      gap: 15px;
     }
 
     h1 {
-      margin: 0 0 7px;
-      font-size: 28px;
+      margin: 0 0 5px;
+      font-size: 25px;
     }
 
     .campaign-id {
       color: #9999aa;
-      font-size: 12px;
+      font-size: 10px;
       word-break: break-all;
     }
 
     .status {
-      padding: 8px 12px;
+      padding: 6px 10px;
       border-radius: 999px;
-      font-size: 12px;
+      font-size: 10px;
       font-weight: 800;
       white-space: nowrap;
     }
@@ -116,44 +117,62 @@
     }
 
     .section-title {
-      font-size: 19px;
+      font-size: 16px;
       font-weight: 800;
-      margin: 0 0 15px;
+      margin: 0 0 11px;
     }
 
     .info-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
+      gap: 8px;
     }
 
     .info {
       background: #f8f8fc;
-      border-radius: 10px;
-      padding: 13px;
+      border-radius: 8px;
+      padding: 10px;
     }
 
     .info-label {
       color: #858598;
-      font-size: 12px;
-      margin-bottom: 5px;
+      font-size: 10px;
+      margin-bottom: 4px;
     }
 
     .info-value {
       font-weight: 700;
+      font-size: 13px;
       word-break: break-word;
+    }
+
+    .note {
+      background: #f8f8fc;
+      border-left: 3px solid #7c3aed;
+      padding: 11px;
+      border-radius: 7px;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      font-size: 13px;
+      word-break: break-word;
+    }
+
+    .destination-link {
+      color: #7c3aed;
+      word-break: break-all;
+      font-weight: 600;
     }
 
     .video-wrap {
       background: #11111c;
-      border-radius: 13px;
+      border-radius: 10px;
       overflow: hidden;
     }
 
     video {
       display: block;
       width: 100%;
-      max-height: 600px;
+      max-height: 520px;
       background: #000;
     }
 
@@ -161,14 +180,14 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
-      padding: 11px 12px;
+      gap: 10px;
+      padding: 9px 10px;
       background: #11111c;
     }
 
     .video-note {
       color: #aaaabb;
-      font-size: 12px;
+      font-size: 11px;
       line-height: 1.4;
     }
 
@@ -176,13 +195,12 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
       text-decoration: none;
       background: #7c3aed;
       color: white;
-      border-radius: 8px;
-      padding: 9px 13px;
-      font-size: 12px;
+      border-radius: 7px;
+      padding: 7px 10px;
+      font-size: 11px;
       font-weight: 800;
       white-space: nowrap;
     }
@@ -193,19 +211,29 @@
 
     .no-video {
       background: #f8f8fc;
-      border-radius: 10px;
-      padding: 25px;
+      border-radius: 8px;
+      padding: 18px;
       color: #77778b;
+      font-size: 12px;
+    }
+
+    .video-item {
+      margin-bottom: 10px;
+    }
+
+    .video-item:last-child {
+      margin-bottom: 0;
     }
 
     textarea {
       width: 100%;
-      min-height: 130px;
+      min-height: 105px;
       resize: vertical;
       border: 1px solid #d9d9e4;
-      border-radius: 11px;
-      padding: 13px;
+      border-radius: 9px;
+      padding: 10px;
       font: inherit;
+      font-size: 13px;
       outline: none;
     }
 
@@ -213,21 +241,28 @@
       border-color: #7c3aed;
     }
 
+    .review-help {
+      color: #77778b;
+      margin: 0 0 9px;
+      line-height: 1.45;
+      font-size: 12px;
+    }
+
     .button-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin-top: 14px;
+      gap: 8px;
+      margin-top: 10px;
     }
 
     button {
       border: 0;
-      border-radius: 10px;
-      padding: 13px;
+      border-radius: 8px;
+      padding: 11px;
       color: white;
       font-weight: 800;
       cursor: pointer;
-      font-size: 14px;
+      font-size: 12px;
     }
 
     .approve {
@@ -242,70 +277,74 @@
       background: #c82d3b;
     }
 
+    button:hover:not(:disabled) {
+      filter: brightness(0.95);
+    }
+
     button:disabled {
       opacity: 0.55;
       cursor: not-allowed;
     }
 
-    .note {
-      background: #f8f8fc;
-      border-left: 4px solid #7c3aed;
-      padding: 14px;
-      border-radius: 8px;
-      line-height: 1.6;
-      white-space: pre-wrap;
-    }
-
     .history-item {
-      padding: 13px 0;
+      padding: 10px 0;
       border-bottom: 1px solid #ececf2;
     }
 
     .history-item:last-child {
       border-bottom: 0;
+      padding-bottom: 0;
     }
 
     .history-top {
       display: flex;
       justify-content: space-between;
-      gap: 15px;
-      margin-bottom: 5px;
+      gap: 10px;
+      margin-bottom: 4px;
     }
 
     .history-action {
       font-weight: 800;
+      font-size: 13px;
     }
 
     .history-date {
       color: #9999aa;
-      font-size: 12px;
+      font-size: 10px;
+      white-space: nowrap;
     }
 
     .history-note {
       color: #55556b;
       white-space: pre-wrap;
-      line-height: 1.5;
+      line-height: 1.45;
+      font-size: 12px;
     }
 
     .loading {
       text-align: center;
-      padding: 50px;
+      padding: 40px;
       color: #77778b;
+      background: white;
+      border: 1px solid #e5e5ed;
+      border-radius: 12px;
+      font-size: 13px;
     }
 
     .error {
       background: #fff1f2;
       border: 1px solid #fecdd3;
       color: #b91c1c;
-      padding: 15px;
-      border-radius: 10px;
-      margin-bottom: 15px;
+      padding: 12px;
+      border-radius: 9px;
+      margin-bottom: 12px;
+      font-size: 12px;
     }
 
     @media (max-width: 700px) {
 
       .page {
-        padding: 18px 12px 45px;
+        padding: 16px 11px 40px;
       }
 
       .campaign-header {
@@ -321,11 +360,11 @@
       }
 
       h1 {
-        font-size: 23px;
+        font-size: 22px;
       }
 
       .panel {
-        padding: 16px;
+        padding: 13px;
       }
 
       .video-footer {
@@ -335,6 +374,15 @@
 
       .download-btn {
         width: 100%;
+      }
+
+      .history-top {
+        flex-direction: column;
+        gap: 3px;
+      }
+
+      .history-date {
+        white-space: normal;
       }
     }
   </style>
@@ -411,7 +459,7 @@
     </section>
 
 
-    <!-- INFORMATION -->
+    <!-- ADVERT INFORMATION -->
 
     <section class="panel">
 
@@ -615,7 +663,7 @@
     </section>
 
 
-    <!-- ADMIN ACTIONS -->
+    <!-- ADMIN REVIEW -->
 
     <section
       id="action-panel"
@@ -626,13 +674,7 @@
         Admin Review
       </h2>
 
-      <p
-        style="
-          color:#77778b;
-          margin-top:-5px;
-          line-height:1.5;
-        "
-      >
+      <p class="review-help">
         A note is required for Request Changes
         and Reject. Approval does not require
         a note.
@@ -680,9 +722,7 @@
         Review History
       </h2>
 
-      <div
-        id="review-history"
-      ></div>
+      <div id="review-history"></div>
 
     </section>
 
@@ -697,7 +737,6 @@ const VIDEO_BUCKET =
   "advert-videos";
 
 let campaign = null;
-
 let adminUser = null;
 
 
@@ -803,7 +842,9 @@ function getStatusClass(status) {
 
 function getPlacementLabel(value) {
 
-  if (!value) return "—";
+  if (!value) {
+    return "—";
+  }
 
   const parts =
     String(value).split(",");
@@ -847,9 +888,18 @@ function formatDate(value) {
     return "—";
   }
 
-  return new Date(
-    value
-  ).toLocaleString(
+  const date =
+    new Date(value);
+
+  if (
+    Number.isNaN(
+      date.getTime()
+    )
+  ) {
+    return "—";
+  }
+
+  return date.toLocaleString(
     "en-NG"
   );
 
@@ -975,8 +1025,7 @@ async function loadCampaign() {
   }
 
 
-  campaign =
-    data;
+  campaign = data;
 
 }
 
@@ -1035,16 +1084,10 @@ async function loadAdvertiser() {
 }
 
 
-/*
- * Get a signed video URL.
- *
- * The download option tells Supabase Storage
- * to return the file as a downloadable file.
- */
 
 async function getVideoUrl(
   storedValue,
-  downloadName = "earngig-advert-video.mp4"
+  downloadName
 ) {
 
   if (!storedValue) {
@@ -1052,14 +1095,20 @@ async function getVideoUrl(
   }
 
 
+  const value =
+    String(storedValue);
+
+
   if (
-    String(storedValue)
-      .startsWith("http://") ||
-    String(storedValue)
-      .startsWith("https://")
+    value.startsWith(
+      "http://"
+    ) ||
+    value.startsWith(
+      "https://"
+    )
   ) {
 
-    return storedValue;
+    return value;
 
   }
 
@@ -1075,7 +1124,8 @@ async function getVideoUrl(
         storedValue,
         3600,
         {
-          download: downloadName
+          download:
+            downloadName
         }
       );
 
@@ -1084,6 +1134,65 @@ async function getVideoUrl(
 
     console.error(
       "Video URL error:",
+      error
+    );
+
+    return null;
+
+  }
+
+
+  return data?.signedUrl ||
+    null;
+
+}
+
+
+
+async function getViewUrl(
+  storedValue
+) {
+
+  if (!storedValue) {
+    return null;
+  }
+
+
+  const value =
+    String(storedValue);
+
+
+  if (
+    value.startsWith(
+      "http://"
+    ) ||
+    value.startsWith(
+      "https://"
+    )
+  ) {
+
+    return value;
+
+  }
+
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .storage
+      .from(VIDEO_BUCKET)
+      .createSignedUrl(
+        storedValue,
+        3600
+      );
+
+
+  if (error) {
+
+    console.error(
+      "Video view URL error:",
       error
     );
 
@@ -1120,14 +1229,20 @@ async function renderVideo(
   }
 
 
-  const url =
-    await getVideoUrl(
-      path,
-      downloadName
-    );
+  const [
+    viewUrl,
+    downloadUrl
+  ] =
+    await Promise.all([
+      getViewUrl(path),
+      getVideoUrl(
+        path,
+        downloadName
+      )
+    ]);
 
 
-  if (!url) {
+  if (!viewUrl) {
 
     container.innerHTML = `
       <div class="no-video">
@@ -1140,30 +1255,6 @@ async function renderVideo(
     return;
 
   }
-
-
-  /*
-   * Create a separate viewing URL so that
-   * clicking the video plays normally.
-   */
-
-  const {
-    data: viewData,
-    error: viewError
-  } =
-    await supabaseClient
-      .storage
-      .from(VIDEO_BUCKET)
-      .createSignedUrl(
-        path,
-        3600
-      );
-
-
-  const viewUrl =
-    viewError
-      ? url
-      : viewData?.signedUrl || url;
 
 
   container.innerHTML = `
@@ -1182,12 +1273,18 @@ async function renderVideo(
           ${escapeHtml(label)}
         </div>
 
-        <a
-          class="download-btn"
-          href="${escapeHtml(url)}"
-        >
-          ⬇ Download Video
-        </a>
+        ${
+          downloadUrl
+            ? `
+              <a
+                class="download-btn"
+                href="${escapeHtml(downloadUrl)}"
+              >
+                ⬇ Download Video
+              </a>
+            `
+            : ""
+        }
 
       </div>
 
@@ -1205,9 +1302,7 @@ async function renderPage() {
 
 
   const status =
-    getStatus(
-      campaign
-    );
+    getStatus(campaign);
 
 
   document.getElementById(
@@ -1232,16 +1327,12 @@ async function renderPage() {
 
 
   statusElement.textContent =
-    getStatusLabel(
-      status
-    );
+    getStatusLabel(status);
 
 
   statusElement.className =
     "status " +
-    getStatusClass(
-      status
-    );
+    getStatusClass(status);
 
 
   document.getElementById(
@@ -1306,17 +1397,26 @@ async function renderPage() {
 
   let tiktokCount = 0;
 
+
   if (
     campaign.tiktok_video_1_url
-  ) tiktokCount++;
+  ) {
+    tiktokCount++;
+  }
+
 
   if (
     campaign.tiktok_video_2_url
-  ) tiktokCount++;
+  ) {
+    tiktokCount++;
+  }
+
 
   if (
     campaign.tiktok_video_3_url
-  ) tiktokCount++;
+  ) {
+    tiktokCount++;
+  }
 
 
   document.getElementById(
@@ -1349,11 +1449,14 @@ async function renderPage() {
 
     destination.innerHTML = `
       <a
+        class="destination-link"
         href="${escapeHtml(campaign.destination_url)}"
         target="_blank"
         rel="noopener noreferrer"
       >
-        ${escapeHtml(campaign.destination_url)}
+        ${escapeHtml(
+          campaign.destination_url
+        )}
       </a>
     `;
 
@@ -1364,10 +1467,6 @@ async function renderPage() {
 
   }
 
-
-  /*
-   * EarnGig video
-   */
 
   await renderVideo(
     document.getElementById(
@@ -1381,10 +1480,6 @@ async function renderPage() {
   );
 
 
-  /*
-   * TikTok videos
-   */
-
   const tiktokContainer =
     document.getElementById(
       "tiktok-videos"
@@ -1392,6 +1487,7 @@ async function renderPage() {
 
 
   const tiktokVideos = [
+
     {
       path:
         campaign.tiktok_video_1_url,
@@ -1415,12 +1511,16 @@ async function renderPage() {
       name:
         "TikTok Video 3"
     }
+
   ].filter(
-    item => item.path
+    item =>
+      item.path
   );
 
 
-  if (!tiktokVideos.length) {
+  if (
+    !tiktokVideos.length
+  ) {
 
     tiktokContainer.innerHTML = `
       <div class="no-video">
@@ -1431,6 +1531,7 @@ async function renderPage() {
   } else {
 
     tiktokContainer.innerHTML = "";
+
 
     for (
       let i = 0;
@@ -1443,8 +1544,10 @@ async function renderPage() {
           "div"
         );
 
-      wrapper.style.marginBottom =
-        "15px";
+
+      wrapper.className =
+        "video-item";
+
 
       tiktokContainer.appendChild(
         wrapper
@@ -1485,19 +1588,13 @@ async function renderPage() {
   }
 
 
-  if (
-    status === "rejected"
-  ) {
-
-    document.getElementById(
-      "action-panel"
-    ).style.display =
-      "none";
-
-  }
-
+  /*
+   * Once an advert is already paid or active,
+   * or has been rejected, hide review actions.
+   */
 
   if (
+    status === "rejected" ||
     status === "active" ||
     status === "paid"
   ) {
@@ -1532,7 +1629,9 @@ async function loadReviewHistory() {
     error
   } =
     await supabaseClient
-      .from("brand_ad_campaign_reviews")
+      .from(
+        "brand_ad_campaign_reviews"
+      )
       .select("*")
       .eq(
         "campaign_id",
@@ -1706,6 +1805,47 @@ async function saveReview(
   }
 
 
+  const status =
+    getStatus(
+      campaign
+    );
+
+
+  /*
+   * Prevent accidental re-review of a
+   * campaign that is already completed.
+   */
+
+  if (
+    status === "paid" ||
+    status === "active" ||
+    status === "rejected"
+  ) {
+
+    alert(
+      "This advert can no longer be reviewed from this page."
+    );
+
+    return;
+
+  }
+
+
+  const confirmed =
+    window.confirm(
+      action === "approved"
+        ? "Approve this advert and request payment from the advertiser?"
+        : action === "changes_requested"
+          ? "Request changes for this advert?"
+          : "Reject this advert?"
+    );
+
+
+  if (!confirmed) {
+    return;
+  }
+
+
   setButtonsDisabled(
     true
   );
@@ -1804,7 +1944,9 @@ async function saveReview(
       error: updateError
     } =
       await supabaseClient
-        .from("brand_ad_campaigns")
+        .from(
+          "brand_ad_campaigns"
+        )
         .update(
           updateData
         )
@@ -1828,7 +1970,9 @@ async function saveReview(
       error: historyError
     } =
       await supabaseClient
-        .from("brand_ad_campaign_reviews")
+        .from(
+          "brand_ad_campaign_reviews"
+        )
         .insert({
 
           campaign_id:

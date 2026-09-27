@@ -1,14 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
   <title>Watch & Earn Management - EarnGig Admin</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase.js"></script>
 
   <style>
+
     * {
       box-sizing: border-box;
     }
@@ -82,6 +90,7 @@
       margin: 0;
       color: #aeb4d4;
       font-size: 14px;
+      line-height: 1.5;
     }
 
     .panel {
@@ -110,6 +119,55 @@
     .panel-body {
       padding: 17px;
     }
+
+    /* =========================================
+       DAILY EARNING RULE
+    ========================================= */
+
+    .earning-rule {
+      background: #0d1129;
+      border: 1px solid #30365f;
+      border-radius: 11px;
+      padding: 13px 14px;
+      margin-bottom: 15px;
+      color: #aeb6d4;
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .earning-rule strong {
+      color: #cbb7ff;
+    }
+
+    .limit-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 9px;
+      margin-top: 12px;
+    }
+
+    .limit-card {
+      background: #111633;
+      border: 1px solid #292f5c;
+      border-radius: 9px;
+      padding: 10px;
+    }
+
+    .limit-plan {
+      color: #858dae;
+      font-size: 10px;
+      margin-bottom: 4px;
+    }
+
+    .limit-value {
+      color: #d8caff;
+      font-size: 15px;
+      font-weight: 800;
+    }
+
+    /* =========================================
+       STATUS
+    ========================================= */
 
     .status-row {
       display: flex;
@@ -155,6 +213,10 @@
       border: 1px solid rgba(248, 113, 113, .25);
     }
 
+    /* =========================================
+       BUTTONS
+    ========================================= */
+
     .btn {
       border: 0;
       border-radius: 9px;
@@ -190,6 +252,10 @@
       opacity: .55;
       cursor: not-allowed;
     }
+
+    /* =========================================
+       SETTINGS
+    ========================================= */
 
     .settings-grid {
       display: grid;
@@ -258,6 +324,10 @@
       resize: vertical;
     }
 
+    /* =========================================
+       TYPE OPTIONS
+    ========================================= */
+
     .type-options {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -300,6 +370,10 @@
       background: rgba(124, 58, 237, .13);
     }
 
+    /* =========================================
+       FILE
+    ========================================= */
+
     .file-box {
       background: #0c1027;
       border: 1px dashed #3a4171;
@@ -328,6 +402,10 @@
       margin-top: 16px;
     }
 
+    /* =========================================
+       MESSAGES
+    ========================================= */
+
     .message {
       display: none;
       padding: 11px 13px;
@@ -351,6 +429,10 @@
       border: 1px solid rgba(248, 113, 113, .25);
       color: #fca5a5;
     }
+
+    /* =========================================
+       VIDEO LIST
+    ========================================= */
 
     .videos-list {
       display: flex;
@@ -440,22 +522,12 @@
       font-size: 13px;
     }
 
-    .loading {
-      opacity: .6;
-      pointer-events: none;
-    }
-
     .hidden {
       display: none !important;
     }
 
-    .confirm-note {
-      color: #858dae;
-      font-size: 11px;
-      margin-top: 7px;
-    }
-
     @media (max-width: 700px) {
+
       .container {
         padding: 18px 11px 40px;
       }
@@ -471,6 +543,10 @@
 
       .type-options {
         grid-template-columns: 1fr;
+      }
+
+      .limit-grid {
+        grid-template-columns: repeat(2, 1fr);
       }
 
       .video-row {
@@ -493,1442 +569,2586 @@
         padding: 12px;
       }
     }
+
   </style>
+
 </head>
+
 
 <body>
 
-  <header class="topbar">
-    <div class="topbar-inner">
-      <div class="brand">Earn<span>Gig</span> Admin</div>
 
-      <button
-        class="back-btn"
-        type="button"
-        onclick="window.location.href='admin-dashboard.html'"
-      >
-        ← Dashboard
-      </button>
-    </div>
-  </header>
+<header class="topbar">
 
-  <main class="container">
+  <div class="topbar-inner">
 
-    <div class="page-header">
-      <h1>Watch & Earn</h1>
-      <p>Manage reward videos, paid adverts, availability and the global Watch & Earn switch.</p>
+    <div class="brand">
+      Earn<span>Gig</span> Admin
     </div>
 
-    <div id="message" class="message"></div>
+    <button
+      class="back-btn"
+      type="button"
+      onclick="window.location.href='admin-dashboard.html'"
+    >
+      ← Dashboard
+    </button>
 
-    <!-- SETTINGS -->
-    <section class="panel">
-      <div class="panel-header">
-        <h2>Watch & Earn Settings</h2>
+  </div>
 
-        <div class="status-control">
-          <span id="statusPill" class="status-pill on">ON</span>
+</header>
 
-          <button
-            id="toggleBtn"
-            class="btn danger"
-            type="button"
-          >
-            Turn OFF
-          </button>
-        </div>
-      </div>
 
-      <div class="panel-body">
 
-        <div class="status-row">
-          <div class="status-info">
-            <strong id="statusTitle">Watch & Earn is ON</strong>
-            <span id="statusDescription">
-              Members can watch available videos and earn rewards.
-            </span>
-          </div>
-        </div>
+<main class="container">
 
-        <div class="settings-grid">
 
-          <div class="setting-box">
-            <div class="setting-label">Reward Per Completed Video</div>
-            <div class="setting-value">₦<span id="rewardDisplay">50</span></div>
-          </div>
+  <div class="page-header">
 
-          <div class="setting-box">
-            <div class="setting-label">Maximum Videos Per Day</div>
-            <div class="setting-value" id="limitDisplay">20</div>
-          </div>
+    <h1>
+      Watch &amp; Earn
+    </h1>
 
-        </div>
+    <p>
+      Manage reward videos, paid adverts and availability.
+    </p>
 
-        <div class="form-grid" style="margin-top:16px;">
+  </div>
 
-          <div>
-            <label for="rewardInput">Reward Per Video (₦)</label>
-            <input
-              id="rewardInput"
-              type="number"
-              min="1"
-              step="0.01"
-              value="50"
-            >
-          </div>
 
-          <div>
-            <label for="limitInput">Daily Video Limit</label>
-            <input
-              id="limitInput"
-              type="number"
-              min="1"
-              step="1"
-              value="20"
-            >
-          </div>
+  <div
+    id="message"
+    class="message"
+  ></div>
 
+
+
+  <!-- =========================================
+       CURRENT EARNING RULE
+  ========================================== -->
+
+  <section class="earning-rule">
+
+    <strong>Current earning rule:</strong>
+
+    There is no separate daily video-count limit.
+
+    Every completed Watch &amp; Earn reward is treated as a
+    <strong>normal daily earning</strong>
+    and counts toward the member's plan-based daily earning limit.
+
+    Referral bonuses and Create &amp; Earn earnings are not included.
+
+    <div class="limit-grid">
+
+      <div class="limit-card">
+
+        <div class="limit-plan">
+          Starter
         </div>
 
-        <div class="actions">
-          <button
-            id="saveSettingsBtn"
-            class="btn primary"
-            type="button"
-          >
-            Save Settings
-          </button>
+        <div class="limit-value">
+          ₦200/day
         </div>
 
       </div>
-    </section>
 
 
-    <!-- UPLOAD VIDEO -->
-    <section class="panel">
+      <div class="limit-card">
 
-      <div class="panel-header">
-        <h2>Upload Watch & Earn Video</h2>
-      </div>
+        <div class="limit-plan">
+          Standard
+        </div>
 
-      <div class="panel-body">
-
-        <form id="videoForm">
-
-          <div class="form-grid">
-
-            <div class="full">
-              <label>Video Type</label>
-
-              <div class="type-options">
-
-                <div class="type-option">
-                  <input
-                    type="radio"
-                    id="typeNormal"
-                    name="videoType"
-                    value="normal"
-                    checked
-                  >
-
-                  <label class="type-card" for="typeNormal">
-                    <strong>🎬 Normal Video</strong>
-                    <span>
-                      EarnGig content. No clickable destination URL.
-                    </span>
-                  </label>
-                </div>
-
-                <div class="type-option">
-                  <input
-                    type="radio"
-                    id="typeAdvert"
-                    name="videoType"
-                    value="paid_advert"
-                  >
-
-                  <label class="type-card" for="typeAdvert">
-                    <strong>📢 Paid Advert</strong>
-                    <span>
-                      Advertiser video with a clickable destination URL.
-                    </span>
-                  </label>
-                </div>
-
-              </div>
-            </div>
-
-
-            <div>
-              <label for="title">Video / Advert Title</label>
-
-              <input
-                id="title"
-                type="text"
-                maxlength="200"
-                placeholder="Enter video title"
-                required
-              >
-            </div>
-
-
-            <div>
-              <label for="tenure">Availability / Tenure</label>
-
-              <select id="tenure" required>
-                <option value="24_hours">24 Hours</option>
-                <option value="3_days">3 Days</option>
-                <option value="7_days">7 Days</option>
-                <option value="30_days">30 Days</option>
-                <option value="unlimited" selected>Unlimited</option>
-              </select>
-
-              <div class="help">
-                Unlimited videos never expire and can continue rewarding members.
-              </div>
-            </div>
-
-
-            <div class="full">
-              <label for="description">Description</label>
-
-              <textarea
-                id="description"
-                maxlength="1000"
-                placeholder="Optional description"
-              ></textarea>
-            </div>
-
-
-            <div>
-              <label for="watchSeconds">
-                Required Watch Duration (seconds)
-              </label>
-
-              <input
-                id="watchSeconds"
-                type="number"
-                min="1"
-                step="1"
-                placeholder="Example: 30"
-                required
-              >
-
-              <div class="help">
-                Members must reach this playback duration before the ₦50 reward can be claimed.
-              </div>
-            </div>
-
-
-            <div id="urlGroup" class="hidden">
-              <label for="destinationUrl">
-                Advert Destination URL
-              </label>
-
-              <input
-                id="destinationUrl"
-                type="url"
-                placeholder="https://example.com/store"
-              >
-
-              <div class="help">
-                Members will see a clickable button below the paid advert.
-              </div>
-            </div>
-
-
-            <div id="buttonTextGroup" class="hidden">
-              <label for="buttonText">
-                Advert Button Text
-              </label>
-
-              <input
-                id="buttonText"
-                type="text"
-                maxlength="50"
-                value="Visit Store"
-                placeholder="Visit Store"
-              >
-            </div>
-
-
-            <div class="full">
-
-              <label for="videoFile">
-                Upload Video
-              </label>
-
-              <div class="file-box">
-
-                <input
-                  id="videoFile"
-                  type="file"
-                  accept="video/mp4,video/webm,video/quicktime,video/*"
-                  required
-                >
-
-                <div class="help">
-                  Upload the video that members will watch. Use a reasonably compressed MP4 where possible.
-                </div>
-
-              </div>
-
-            </div>
-
-          </div>
-
-          <div class="actions">
-
-            <button
-              id="resetBtn"
-              class="btn secondary"
-              type="button"
-            >
-              Clear
-            </button>
-
-            <button
-              id="uploadBtn"
-              class="btn primary"
-              type="submit"
-            >
-              Upload Video
-            </button>
-
-          </div>
-
-        </form>
+        <div class="limit-value">
+          ₦400/day
+        </div>
 
       </div>
-    </section>
 
 
-    <!-- VIDEO LIST -->
-    <section class="panel">
+      <div class="limit-card">
 
-      <div class="panel-header">
+        <div class="limit-plan">
+          Premium
+        </div>
 
-        <h2>Watch & Earn Videos</h2>
+        <div class="limit-value">
+          ₦800/day
+        </div>
+
+      </div>
+
+
+      <div class="limit-card">
+
+        <div class="limit-plan">
+          Elite
+        </div>
+
+        <div class="limit-value">
+          ₦1,600/day
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =========================================
+       SETTINGS
+  ========================================== -->
+
+  <section class="panel">
+
+    <div class="panel-header">
+
+      <h2>
+        Watch &amp; Earn Settings
+      </h2>
+
+
+      <div class="status-control">
+
+        <span
+          id="statusPill"
+          class="status-pill on"
+        >
+          ON
+        </span>
+
 
         <button
-          id="refreshBtn"
-          class="btn secondary"
+          id="toggleBtn"
+          class="btn danger"
           type="button"
         >
-          Refresh
+          Turn OFF
         </button>
 
       </div>
 
-      <div class="panel-body">
+    </div>
 
-        <div id="videosList" class="videos-list">
-          <div class="empty">Loading videos...</div>
+
+    <div class="panel-body">
+
+
+      <div class="status-row">
+
+        <div class="status-info">
+
+          <strong id="statusTitle">
+            Watch &amp; Earn is ON
+          </strong>
+
+          <span id="statusDescription">
+            Members can watch available videos and earn rewards.
+          </span>
+
         </div>
 
       </div>
 
-    </section>
 
-  </main>
+      <div class="settings-grid">
 
 
-  <script>
-    let currentUser = null;
-    let currentSettings = null;
+        <div class="setting-box">
 
-
-    // =====================================================
-    // MESSAGE
-    // =====================================================
-
-    function showMessage(text, type = "success") {
-      const box = document.getElementById("message");
-
-      box.textContent = text;
-      box.className = "message show " + type;
-
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
-
-      setTimeout(() => {
-        box.classList.remove("show");
-      }, 5000);
-    }
-
-
-    // =====================================================
-    // ADMIN CHECK
-    // =====================================================
-
-    async function verifyAdmin() {
-
-      const {
-        data: { user },
-        error
-      } = await supabaseClient.auth.getUser();
-
-      if (error || !user) {
-        window.location.href = "index.html";
-        return false;
-      }
-
-      const { data: profile, error: profileError } =
-        await supabaseClient
-          .from("profiles")
-          .select("id, is_admin, account_status")
-          .eq("id", user.id)
-          .maybeSingle();
-
-      if (
-        profileError ||
-        !profile ||
-        profile.is_admin !== true ||
-        profile.account_status !== "active"
-      ) {
-        alert("Administrator access required.");
-        window.location.href = "admin-dashboard.html";
-        return false;
-      }
-
-      currentUser = user;
-
-      return true;
-    }
-
-
-    // =====================================================
-    // LOAD SETTINGS
-    // =====================================================
-
-    async function loadSettings() {
-
-      const {
-        data,
-        error
-      } = await supabaseClient
-        .from("watch_earn_settings")
-        .select("*")
-        .eq("id", 1)
-        .maybeSingle();
-
-      if (error) {
-        console.error(error);
-        showMessage(
-          "Could not load Watch & Earn settings: " + error.message,
-          "error"
-        );
-        return;
-      }
-
-      if (!data) {
-        showMessage(
-          "Watch & Earn settings were not found.",
-          "error"
-        );
-        return;
-      }
-
-      currentSettings = data;
-
-      document.getElementById("rewardInput").value =
-        data.reward_per_video;
-
-      document.getElementById("limitInput").value =
-        data.daily_video_limit;
-
-      document.getElementById("rewardDisplay").textContent =
-        Number(data.reward_per_video).toLocaleString();
-
-      document.getElementById("limitDisplay").textContent =
-        data.daily_video_limit;
-
-      updateStatusUI(data.is_enabled);
-    }
-
-
-    // =====================================================
-    // STATUS UI
-    // =====================================================
-
-    function updateStatusUI(isEnabled) {
-
-      const pill = document.getElementById("statusPill");
-      const button = document.getElementById("toggleBtn");
-      const title = document.getElementById("statusTitle");
-      const description = document.getElementById("statusDescription");
-
-      if (isEnabled) {
-
-        pill.textContent = "ON";
-        pill.className = "status-pill on";
-
-        button.textContent = "Turn OFF";
-        button.className = "btn danger";
-
-        title.textContent = "Watch & Earn is ON";
-
-        description.textContent =
-          "Members can watch available videos and earn rewards.";
-
-      } else {
-
-        pill.textContent = "OFF";
-        pill.className = "status-pill off";
-
-        button.textContent = "Turn ON";
-        button.className = "btn success";
-
-        title.textContent = "Watch & Earn is OFF";
-
-        description.textContent =
-          "Members will see that no videos are currently available.";
-
-      }
-    }
-
-
-    // =====================================================
-    // SAVE SETTINGS
-    // =====================================================
-
-    async function saveSettings() {
-
-      const reward =
-        Number(document.getElementById("rewardInput").value);
-
-      const limit =
-        Number(document.getElementById("limitInput").value);
-
-      if (!Number.isFinite(reward) || reward <= 0) {
-        showMessage(
-          "Enter a valid reward amount.",
-          "error"
-        );
-        return;
-      }
-
-      if (!Number.isInteger(limit) || limit <= 0) {
-        showMessage(
-          "Enter a valid daily video limit.",
-          "error"
-        );
-        return;
-      }
-
-      const button =
-        document.getElementById("saveSettingsBtn");
-
-      button.disabled = true;
-      button.textContent = "Saving...";
-
-      const {
-        error
-      } = await supabaseClient
-        .from("watch_earn_settings")
-        .update({
-          reward_per_video: reward,
-          daily_video_limit: limit,
-          updated_at: new Date().toISOString()
-        })
-        .eq("id", 1);
-
-      button.disabled = false;
-      button.textContent = "Save Settings";
-
-      if (error) {
-        console.error(error);
-
-        showMessage(
-          "Could not save settings: " + error.message,
-          "error"
-        );
-
-        return;
-      }
-
-      showMessage("Watch & Earn settings saved.");
-
-      await loadSettings();
-    }
-
-
-    // =====================================================
-    // TOGGLE WATCH & EARN
-    // =====================================================
-
-    async function toggleWatchEarn() {
-
-      if (!currentSettings) {
-        return;
-      }
-
-      const newState = !currentSettings.is_enabled;
-
-      const button =
-        document.getElementById("toggleBtn");
-
-      button.disabled = true;
-      button.textContent = "Updating...";
-
-      const {
-        error
-      } = await supabaseClient
-        .from("watch_earn_settings")
-        .update({
-          is_enabled: newState,
-          updated_at: new Date().toISOString()
-        })
-        .eq("id", 1);
-
-      button.disabled = false;
-
-      if (error) {
-
-        console.error(error);
-
-        showMessage(
-          "Could not change Watch & Earn status: " +
-          error.message,
-          "error"
-        );
-
-        return;
-      }
-
-      showMessage(
-        newState
-          ? "Watch & Earn has been turned ON."
-          : "Watch & Earn has been turned OFF."
-      );
-
-      await loadSettings();
-    }
-
-
-    // =====================================================
-    // VIDEO TYPE
-    // =====================================================
-
-    function getVideoType() {
-
-      const selected =
-        document.querySelector(
-          'input[name="videoType"]:checked'
-        );
-
-      return selected
-        ? selected.value
-        : "normal";
-    }
-
-
-    function updateVideoTypeUI() {
-
-      const type = getVideoType();
-
-      const urlGroup =
-        document.getElementById("urlGroup");
-
-      const buttonTextGroup =
-        document.getElementById("buttonTextGroup");
-
-      const destinationUrl =
-        document.getElementById("destinationUrl");
-
-      if (type === "paid_advert") {
-
-        urlGroup.classList.remove("hidden");
-        buttonTextGroup.classList.remove("hidden");
-
-        destinationUrl.required = true;
-
-      } else {
-
-        urlGroup.classList.add("hidden");
-        buttonTextGroup.classList.add("hidden");
-
-        destinationUrl.required = false;
-        destinationUrl.value = "";
-      }
-    }
-
-
-    // =====================================================
-    // CALCULATE EXPIRY
-    // =====================================================
-
-    function calculateExpiry(tenure) {
-
-      const now = new Date();
-
-      switch (tenure) {
-
-        case "24_hours":
-          return new Date(
-            now.getTime() + 24 * 60 * 60 * 1000
-          ).toISOString();
-
-        case "3_days":
-          return new Date(
-            now.getTime() + 3 * 24 * 60 * 60 * 1000
-          ).toISOString();
-
-        case "7_days":
-          return new Date(
-            now.getTime() + 7 * 24 * 60 * 60 * 1000
-          ).toISOString();
-
-        case "30_days":
-          return new Date(
-            now.getTime() + 30 * 24 * 60 * 60 * 1000
-          ).toISOString();
-
-        case "unlimited":
-        default:
-          return null;
-      }
-    }
-
-
-    // =====================================================
-    // UPLOAD VIDEO
-    // =====================================================
-
-    async function uploadVideo(event) {
-
-      event.preventDefault();
-
-      const type = getVideoType();
-
-      const title =
-        document.getElementById("title").value.trim();
-
-      const description =
-        document.getElementById("description").value.trim();
-
-      const tenure =
-        document.getElementById("tenure").value;
-
-      const watchSeconds =
-        Number(document.getElementById("watchSeconds").value);
-
-      const destinationUrl =
-        document.getElementById("destinationUrl").value.trim();
-
-      const buttonText =
-        document.getElementById("buttonText").value.trim() ||
-        "Visit Store";
-
-      const file =
-        document.getElementById("videoFile").files[0];
-
-      if (!title) {
-        showMessage("Enter a video title.", "error");
-        return;
-      }
-
-      if (!file) {
-        showMessage("Select a video file.", "error");
-        return;
-      }
-
-      if (!Number.isInteger(watchSeconds) || watchSeconds <= 0) {
-        showMessage(
-          "Enter a valid required watch duration.",
-          "error"
-        );
-        return;
-      }
-
-      if (
-        type === "paid_advert" &&
-        !destinationUrl
-      ) {
-        showMessage(
-          "A destination URL is required for a paid advert.",
-          "error"
-        );
-        return;
-      }
-
-      if (
-        type === "paid_advert" &&
-        !/^https?:\/\//i.test(destinationUrl)
-      ) {
-        showMessage(
-          "The destination URL must begin with http:// or https://",
-          "error"
-        );
-        return;
-      }
-
-      const uploadButton =
-        document.getElementById("uploadBtn");
-
-      uploadButton.disabled = true;
-      uploadButton.textContent = "Uploading...";
-
-      try {
-
-        const extension =
-          file.name.includes(".")
-            ? file.name.split(".").pop().toLowerCase()
-            : "mp4";
-
-        const safeTitle =
-          title
-            .toLowerCase()
-            .replace(/[^a-z0-9]+/g, "-")
-            .replace(/^-+|-+$/g, "")
-            .slice(0, 60);
-
-        const uniqueName =
-          Date.now() +
-          "-" +
-          crypto.randomUUID() +
-          "-" +
-          safeTitle +
-          "." +
-          extension;
-
-        const storagePath =
-          "watch-earn/" + uniqueName;
-
-
-        // -------------------------------------------------
-        // Upload video to storage
-        // -------------------------------------------------
-
-        const {
-          error: uploadError
-        } = await supabaseClient
-          .storage
-          .from("advert-videos")
-          .upload(
-            storagePath,
-            file,
-            {
-              cacheControl: "3600",
-              upsert: false,
-              contentType: file.type || "video/mp4"
-            }
-          );
-
-        if (uploadError) {
-          throw new Error(
-            "Video upload failed: " +
-            uploadError.message
-          );
-        }
-
-
-        // -------------------------------------------------
-        // Calculate expiry
-        // -------------------------------------------------
-
-        const expiresAt =
-          calculateExpiry(tenure);
-
-
-        // -------------------------------------------------
-        // Insert database record
-        // -------------------------------------------------
-
-        const {
-          error: insertError
-        } = await supabaseClient
-          .from("watch_earn_videos")
-          .insert({
-            title,
-            description: description || null,
-            video_type: type,
-            video_path: storagePath,
-            destination_url:
-              type === "paid_advert"
-                ? destinationUrl
-                : null,
-            button_text:
-              type === "paid_advert"
-                ? buttonText
-                : null,
-            required_watch_seconds: watchSeconds,
-            tenure_type: tenure,
-            starts_at: new Date().toISOString(),
-            expires_at: expiresAt,
-            is_active: true,
-            created_by: currentUser.id
-          });
-
-        if (insertError) {
-
-          // Remove uploaded file if database insert fails.
-          await supabaseClient
-            .storage
-            .from("advert-videos")
-            .remove([storagePath]);
-
-          throw new Error(
-            "Video record could not be created: " +
-            insertError.message
-          );
-        }
-
-
-        showMessage(
-          "Video uploaded successfully."
-        );
-
-        resetForm();
-
-        await loadVideos();
-
-      } catch (error) {
-
-        console.error(error);
-
-        showMessage(
-          error.message ||
-          "Something went wrong while uploading the video.",
-          "error"
-        );
-
-      } finally {
-
-        uploadButton.disabled = false;
-        uploadButton.textContent = "Upload Video";
-      }
-    }
-
-
-    // =====================================================
-    // RESET FORM
-    // =====================================================
-
-    function resetForm() {
-
-      document.getElementById("videoForm").reset();
-
-      document.getElementById("typeNormal").checked = true;
-
-      document.getElementById("buttonText").value =
-        "Visit Store";
-
-      updateVideoTypeUI();
-    }
-
-
-    // =====================================================
-    // FORMAT DATE
-    // =====================================================
-
-    function formatDate(value) {
-
-      if (!value) {
-        return "Never";
-      }
-
-      const date = new Date(value);
-
-      if (Number.isNaN(date.getTime())) {
-        return "Unknown";
-      }
-
-      return date.toLocaleString();
-    }
-
-
-    // =====================================================
-    // VIDEO STATUS
-    // =====================================================
-
-    function getVideoStatus(video) {
-
-      const now = Date.now();
-
-      const starts =
-        new Date(video.starts_at).getTime();
-
-      const expires =
-        video.expires_at
-          ? new Date(video.expires_at).getTime()
-          : null;
-
-      if (!video.is_active) {
-        return {
-          text: "Inactive",
-          className: "inactive"
-        };
-      }
-
-      if (starts > now) {
-        return {
-          text: "Scheduled",
-          className: ""
-        };
-      }
-
-      if (expires && expires <= now) {
-        return {
-          text: "Expired",
-          className: "expired"
-        };
-      }
-
-      return {
-        text: "Active",
-        className: "active"
-      };
-    }
-
-
-    // =====================================================
-    // TENURE LABEL
-    // =====================================================
-
-    function tenureLabel(value) {
-
-      const labels = {
-        "24_hours": "24 Hours",
-        "3_days": "3 Days",
-        "7_days": "7 Days",
-        "30_days": "30 Days",
-        "unlimited": "Unlimited"
-      };
-
-      return labels[value] || value || "Unknown";
-    }
-
-
-    // =====================================================
-    // ESCAPE HTML
-    // =====================================================
-
-    function escapeHtml(value) {
-
-      return String(value ?? "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-    }
-
-
-    // =====================================================
-    // LOAD VIDEOS
-    // =====================================================
-
-    async function loadVideos() {
-
-      const list =
-        document.getElementById("videosList");
-
-      list.innerHTML =
-        '<div class="empty">Loading videos...</div>';
-
-      const {
-        data,
-        error
-      } = await supabaseClient
-        .from("watch_earn_videos")
-        .select("*")
-        .order("created_at", {
-          ascending: false
-        });
-
-      if (error) {
-
-        console.error(error);
-
-        list.innerHTML =
-          '<div class="empty">Could not load videos.</div>';
-
-        showMessage(
-          "Could not load videos: " + error.message,
-          "error"
-        );
-
-        return;
-      }
-
-      if (!data || data.length === 0) {
-
-        list.innerHTML =
-          '<div class="empty">No Watch & Earn videos have been uploaded yet.</div>';
-
-        return;
-      }
-
-      list.innerHTML = data
-        .map(video => renderVideo(video))
-        .join("");
-
-      attachVideoActions();
-    }
-
-
-    // =====================================================
-    // RENDER VIDEO
-    // =====================================================
-
-    function renderVideo(video) {
-
-      const status =
-        getVideoStatus(video);
-
-      const typeLabel =
-        video.video_type === "paid_advert"
-          ? "📢 Paid Advert"
-          : "🎬 Normal Video";
-
-      const typeClass =
-        video.video_type === "paid_advert"
-          ? "advert"
-          : "normal";
-
-      const expiryText =
-        video.expires_at
-          ? "Expires: " + formatDate(video.expires_at)
-          : "Never expires";
-
-      const urlText =
-        video.video_type === "paid_advert"
-          ? " • Clickable advert URL"
-          : "";
-
-      const activeButtonText =
-        video.is_active
-          ? "Deactivate"
-          : "Activate";
-
-      const activeButtonClass =
-        video.is_active
-          ? "danger"
-          : "success";
-
-      return `
-        <div class="video-row">
-
-          <div class="video-main">
-
-            <div class="video-title">
-              ${escapeHtml(video.title)}
-            </div>
-
-            <div class="meta">
-
-              <span class="badge ${typeClass}">
-                ${typeLabel}
-              </span>
-
-              <span class="badge">
-                ${escapeHtml(tenureLabel(video.tenure_type))}
-              </span>
-
-              <span class="badge">
-                ${Number(video.required_watch_seconds)}s watch
-              </span>
-
-              <span class="badge ${status.className}">
-                ${escapeHtml(status.text)}
-              </span>
-
-            </div>
-
-            <div class="video-details">
-              ${escapeHtml(expiryText)}
-              ${escapeHtml(urlText)}
-              <br>
-              Uploaded: ${escapeHtml(formatDate(video.created_at))}
-            </div>
-
+          <div class="setting-label">
+            Reward Per Completed Video
           </div>
 
-          <div class="video-actions">
+          <div class="setting-value">
 
-            <button
-              class="btn ${activeButtonClass}"
-              type="button"
-              data-action="toggle"
-              data-id="${escapeHtml(video.id)}"
-              data-active="${video.is_active ? "true" : "false"}"
-            >
-              ${activeButtonText}
-            </button>
-
-            <button
-              class="btn danger"
-              type="button"
-              data-action="delete"
-              data-id="${escapeHtml(video.id)}"
-            >
-              Delete
-            </button>
+            ₦<span id="rewardDisplay">
+              50
+            </span>
 
           </div>
 
         </div>
-      `;
+
+
+        <div class="setting-box">
+
+          <div class="setting-label">
+            Separate Video Count Limit
+          </div>
+
+          <div class="setting-value">
+            None
+          </div>
+
+        </div>
+
+
+      </div>
+
+
+      <div
+        class="form-grid"
+        style="margin-top:16px;"
+      >
+
+        <div>
+
+          <label for="rewardInput">
+            Reward Per Video (₦)
+          </label>
+
+          <input
+            id="rewardInput"
+            type="number"
+            min="1"
+            step="0.01"
+            value="50"
+          >
+
+        </div>
+
+
+        <div>
+
+          <label>
+            Daily Earning Enforcement
+          </label>
+
+          <div
+            style="
+              background:#0d1129;
+              border:1px solid #252b55;
+              border-radius:9px;
+              padding:11px 12px;
+              color:#cbb7ff;
+              font-size:13px;
+            "
+          >
+            Shared plan-based daily cap
+          </div>
+
+          <div class="help">
+            Server-side enforcement applies when the reward is credited.
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="actions">
+
+        <button
+          id="saveSettingsBtn"
+          class="btn primary"
+          type="button"
+        >
+          Save Settings
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =========================================
+       UPLOAD VIDEO
+  ========================================== -->
+
+  <section class="panel">
+
+    <div class="panel-header">
+
+      <h2>
+        Upload Watch &amp; Earn Video
+      </h2>
+
+    </div>
+
+
+    <div class="panel-body">
+
+
+      <form id="videoForm">
+
+
+        <div class="form-grid">
+
+
+          <!-- VIDEO TYPE -->
+
+          <div class="full">
+
+            <label>
+              Video Type
+            </label>
+
+
+            <div class="type-options">
+
+
+              <div class="type-option">
+
+                <input
+                  type="radio"
+                  id="typeNormal"
+                  name="videoType"
+                  value="normal"
+                  checked
+                >
+
+
+                <label
+                  class="type-card"
+                  for="typeNormal"
+                >
+
+                  <strong>
+                    🎬 Normal Video
+                  </strong>
+
+                  <span>
+                    EarnGig content. No clickable destination URL.
+                  </span>
+
+                </label>
+
+              </div>
+
+
+              <div class="type-option">
+
+                <input
+                  type="radio"
+                  id="typeAdvert"
+                  name="videoType"
+                  value="paid_advert"
+                >
+
+
+                <label
+                  class="type-card"
+                  for="typeAdvert"
+                >
+
+                  <strong>
+                    📢 Paid Advert
+                  </strong>
+
+                  <span>
+                    Advertiser video with a clickable destination URL.
+                  </span>
+
+                </label>
+
+              </div>
+
+
+            </div>
+
+          </div>
+
+
+
+          <!-- TITLE -->
+
+          <div>
+
+            <label for="title">
+              Video / Advert Title
+            </label>
+
+            <input
+              id="title"
+              type="text"
+              maxlength="200"
+              placeholder="Enter video title"
+              required
+            >
+
+          </div>
+
+
+
+          <!-- TENURE -->
+
+          <div>
+
+            <label for="tenure">
+              Availability / Tenure
+            </label>
+
+            <select
+              id="tenure"
+              required
+            >
+
+              <option value="24_hours">
+                24 Hours
+              </option>
+
+              <option value="3_days">
+                3 Days
+              </option>
+
+              <option value="7_days">
+                7 Days
+              </option>
+
+              <option value="30_days">
+                30 Days
+              </option>
+
+              <option
+                value="unlimited"
+                selected
+              >
+                Unlimited
+              </option>
+
+            </select>
+
+            <div class="help">
+              Unlimited videos never expire and can continue rewarding members.
+            </div>
+
+          </div>
+
+
+
+          <!-- DESCRIPTION -->
+
+          <div class="full">
+
+            <label for="description">
+              Description
+            </label>
+
+            <textarea
+              id="description"
+              maxlength="1000"
+              placeholder="Optional description"
+            ></textarea>
+
+          </div>
+
+
+
+          <!-- WATCH TIME -->
+
+          <div>
+
+            <label for="watchSeconds">
+              Required Watch Duration (seconds)
+            </label>
+
+            <input
+              id="watchSeconds"
+              type="number"
+              min="1"
+              step="1"
+              placeholder="Example: 30"
+              required
+            >
+
+            <div class="help">
+              Members must reach this playback duration before the reward can be claimed.
+            </div>
+
+          </div>
+
+
+
+          <!-- ADVERT URL -->
+
+          <div
+            id="urlGroup"
+            class="hidden"
+          >
+
+            <label for="destinationUrl">
+              Advert Destination URL
+            </label>
+
+            <input
+              id="destinationUrl"
+              type="url"
+              placeholder="https://example.com/store"
+            >
+
+            <div class="help">
+              Members will see a clickable button below the paid advert.
+            </div>
+
+          </div>
+
+
+
+          <!-- BUTTON TEXT -->
+
+          <div
+            id="buttonTextGroup"
+            class="hidden"
+          >
+
+            <label for="buttonText">
+              Advert Button Text
+            </label>
+
+            <input
+              id="buttonText"
+              type="text"
+              maxlength="50"
+              value="Visit Store"
+              placeholder="Visit Store"
+            >
+
+          </div>
+
+
+
+          <!-- FILE -->
+
+          <div class="full">
+
+            <label for="videoFile">
+              Upload Video
+            </label>
+
+
+            <div class="file-box">
+
+              <input
+                id="videoFile"
+                type="file"
+                accept="video/mp4,video/webm,video/quicktime,video/*"
+                required
+              >
+
+
+              <div class="help">
+                Upload the video that members will watch.
+                Use a reasonably compressed MP4 where possible.
+              </div>
+
+            </div>
+
+          </div>
+
+
+        </div>
+
+
+        <div class="actions">
+
+
+          <button
+            id="resetBtn"
+            class="btn secondary"
+            type="button"
+          >
+            Clear
+          </button>
+
+
+          <button
+            id="uploadBtn"
+            class="btn primary"
+            type="submit"
+          >
+            Upload Video
+          </button>
+
+
+        </div>
+
+
+      </form>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =========================================
+       VIDEO LIST
+  ========================================== -->
+
+  <section class="panel">
+
+
+    <div class="panel-header">
+
+      <h2>
+        Watch &amp; Earn Videos
+      </h2>
+
+
+      <button
+        id="refreshBtn"
+        class="btn secondary"
+        type="button"
+      >
+        Refresh
+      </button>
+
+    </div>
+
+
+    <div class="panel-body">
+
+      <div
+        id="videosList"
+        class="videos-list"
+      >
+
+        <div class="empty">
+          Loading videos...
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+</main>
+
+
+
+<script>
+
+let currentUser = null;
+
+let currentSettings = null;
+
+
+
+/* =========================================
+   MESSAGE
+========================================= */
+
+function showMessage(
+  text,
+  type = "success"
+) {
+
+  const box =
+    document.getElementById(
+      "message"
+    );
+
+
+  box.textContent =
+    text;
+
+
+  box.className =
+    "message show " +
+    type;
+
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+
+
+  setTimeout(
+    () => {
+
+      box.classList.remove(
+        "show"
+      );
+
+    },
+    5000
+  );
+
+}
+
+
+
+/* =========================================
+   ADMIN CHECK
+========================================= */
+
+async function verifyAdmin() {
+
+  const {
+    data: {
+      user
+    },
+    error
+  } =
+    await supabaseClient
+      .auth
+      .getUser();
+
+
+  if (
+    error ||
+    !user
+  ) {
+
+    window.location.href =
+      "index.html";
+
+    return false;
+
+  }
+
+
+  const {
+    data: profile,
+    error: profileError
+  } =
+    await supabaseClient
+
+      .from("profiles")
+
+      .select(
+        "id,is_admin,account_status"
+      )
+
+      .eq(
+        "id",
+        user.id
+      )
+
+      .maybeSingle();
+
+
+  if (
+    profileError ||
+    !profile ||
+    profile.is_admin !== true ||
+    profile.account_status !== "active"
+  ) {
+
+    alert(
+      "Administrator access required."
+    );
+
+    window.location.href =
+      "admin-dashboard.html";
+
+    return false;
+
+  }
+
+
+  currentUser =
+    user;
+
+
+  return true;
+
+}
+
+
+
+/* =========================================
+   LOAD SETTINGS
+========================================= */
+
+async function loadSettings() {
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+
+      .from("watch_earn_settings")
+
+      .select("*")
+
+      .eq(
+        "id",
+        1
+      )
+
+      .maybeSingle();
+
+
+  if (error) {
+
+    console.error(error);
+
+    showMessage(
+      "Could not load Watch & Earn settings: " +
+      error.message,
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  if (!data) {
+
+    showMessage(
+      "Watch & Earn settings were not found.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  currentSettings =
+    data;
+
+
+  document.getElementById(
+    "rewardInput"
+  ).value =
+    data.reward_per_video;
+
+
+  document.getElementById(
+    "rewardDisplay"
+  ).textContent =
+    Number(
+      data.reward_per_video
+    ).toLocaleString();
+
+
+  updateStatusUI(
+    data.is_enabled
+  );
+
+}
+
+
+
+/* =========================================
+   STATUS UI
+========================================= */
+
+function updateStatusUI(
+  isEnabled
+) {
+
+  const pill =
+    document.getElementById(
+      "statusPill"
+    );
+
+
+  const button =
+    document.getElementById(
+      "toggleBtn"
+    );
+
+
+  const title =
+    document.getElementById(
+      "statusTitle"
+    );
+
+
+  const description =
+    document.getElementById(
+      "statusDescription"
+    );
+
+
+  if (isEnabled) {
+
+    pill.textContent =
+      "ON";
+
+    pill.className =
+      "status-pill on";
+
+
+    button.textContent =
+      "Turn OFF";
+
+    button.className =
+      "btn danger";
+
+
+    title.textContent =
+      "Watch & Earn is ON";
+
+
+    description.textContent =
+      "Members can watch available videos and earn rewards.";
+
+  }
+
+  else {
+
+    pill.textContent =
+      "OFF";
+
+    pill.className =
+      "status-pill off";
+
+
+    button.textContent =
+      "Turn ON";
+
+    button.className =
+      "btn success";
+
+
+    title.textContent =
+      "Watch & Earn is OFF";
+
+
+    description.textContent =
+      "Members will see that no videos are currently available.";
+
+  }
+
+}
+
+
+
+/* =========================================
+   SAVE SETTINGS
+========================================= */
+
+async function saveSettings() {
+
+  const reward =
+    Number(
+      document.getElementById(
+        "rewardInput"
+      ).value
+    );
+
+
+  if (
+    !Number.isFinite(
+      reward
+    ) ||
+    reward <= 0
+  ) {
+
+    showMessage(
+      "Enter a valid reward amount.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  const button =
+    document.getElementById(
+      "saveSettingsBtn"
+    );
+
+
+  button.disabled =
+    true;
+
+
+  button.textContent =
+    "Saving...";
+
+
+  const {
+    error
+  } =
+    await supabaseClient
+
+      .from("watch_earn_settings")
+
+      .update({
+
+        reward_per_video:
+          reward,
+
+        updated_at:
+          new Date()
+            .toISOString()
+
+      })
+
+      .eq(
+        "id",
+        1
+      );
+
+
+  button.disabled =
+    false;
+
+
+  button.textContent =
+    "Save Settings";
+
+
+  if (error) {
+
+    console.error(error);
+
+    showMessage(
+      "Could not save settings: " +
+      error.message,
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  showMessage(
+    "Watch & Earn reward settings saved."
+  );
+
+
+  await loadSettings();
+
+}
+
+
+
+/* =========================================
+   TOGGLE WATCH & EARN
+========================================= */
+
+async function toggleWatchEarn() {
+
+  if (!currentSettings) {
+    return;
+  }
+
+
+  const newState =
+    !currentSettings.is_enabled;
+
+
+  const button =
+    document.getElementById(
+      "toggleBtn"
+    );
+
+
+  button.disabled =
+    true;
+
+
+  button.textContent =
+    "Updating...";
+
+
+  const {
+    error
+  } =
+    await supabaseClient
+
+      .from("watch_earn_settings")
+
+      .update({
+
+        is_enabled:
+          newState,
+
+        updated_at:
+          new Date()
+            .toISOString()
+
+      })
+
+      .eq(
+        "id",
+        1
+      );
+
+
+  button.disabled =
+    false;
+
+
+  if (error) {
+
+    console.error(error);
+
+    showMessage(
+      "Could not change Watch & Earn status: " +
+      error.message,
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  showMessage(
+    newState
+      ? "Watch & Earn has been turned ON."
+      : "Watch & Earn has been turned OFF."
+  );
+
+
+  await loadSettings();
+
+}
+
+
+
+/* =========================================
+   VIDEO TYPE
+========================================= */
+
+function getVideoType() {
+
+  const selected =
+    document.querySelector(
+      'input[name="videoType"]:checked'
+    );
+
+
+  return selected
+    ? selected.value
+    : "normal";
+
+}
+
+
+function updateVideoTypeUI() {
+
+  const type =
+    getVideoType();
+
+
+  const urlGroup =
+    document.getElementById(
+      "urlGroup"
+    );
+
+
+  const buttonTextGroup =
+    document.getElementById(
+      "buttonTextGroup"
+    );
+
+
+  const destinationUrl =
+    document.getElementById(
+      "destinationUrl"
+    );
+
+
+  if (
+    type ===
+    "paid_advert"
+  ) {
+
+    urlGroup.classList.remove(
+      "hidden"
+    );
+
+
+    buttonTextGroup.classList.remove(
+      "hidden"
+    );
+
+
+    destinationUrl.required =
+      true;
+
+  }
+
+  else {
+
+    urlGroup.classList.add(
+      "hidden"
+    );
+
+
+    buttonTextGroup.classList.add(
+      "hidden"
+    );
+
+
+    destinationUrl.required =
+      false;
+
+
+    destinationUrl.value =
+      "";
+
+  }
+
+}
+
+
+
+/* =========================================
+   CALCULATE EXPIRY
+========================================= */
+
+function calculateExpiry(
+  tenure
+) {
+
+  const now =
+    new Date();
+
+
+  switch (tenure) {
+
+    case "24_hours":
+
+      return new Date(
+        now.getTime() +
+        24 *
+        60 *
+        60 *
+        1000
+      ).toISOString();
+
+
+    case "3_days":
+
+      return new Date(
+        now.getTime() +
+        3 *
+        24 *
+        60 *
+        60 *
+        1000
+      ).toISOString();
+
+
+    case "7_days":
+
+      return new Date(
+        now.getTime() +
+        7 *
+        24 *
+        60 *
+        60 *
+        1000
+      ).toISOString();
+
+
+    case "30_days":
+
+      return new Date(
+        now.getTime() +
+        30 *
+        24 *
+        60 *
+        60 *
+        1000
+      ).toISOString();
+
+
+    case "unlimited":
+
+    default:
+
+      return null;
+
+  }
+
+}
+
+
+
+/* =========================================
+   UPLOAD VIDEO
+========================================= */
+
+async function uploadVideo(
+  event
+) {
+
+  event.preventDefault();
+
+
+  const type =
+    getVideoType();
+
+
+  const title =
+    document.getElementById(
+      "title"
+    ).value.trim();
+
+
+  const description =
+    document.getElementById(
+      "description"
+    ).value.trim();
+
+
+  const tenure =
+    document.getElementById(
+      "tenure"
+    ).value;
+
+
+  const watchSeconds =
+    Number(
+      document.getElementById(
+        "watchSeconds"
+      ).value
+    );
+
+
+  const destinationUrl =
+    document.getElementById(
+      "destinationUrl"
+    ).value.trim();
+
+
+  const buttonText =
+    document.getElementById(
+      "buttonText"
+    ).value.trim() ||
+    "Visit Store";
+
+
+  const file =
+    document.getElementById(
+      "videoFile"
+    ).files[0];
+
+
+  if (!title) {
+
+    showMessage(
+      "Enter a video title.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  if (!file) {
+
+    showMessage(
+      "Select a video file.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  if (
+    !Number.isInteger(
+      watchSeconds
+    ) ||
+    watchSeconds <= 0
+  ) {
+
+    showMessage(
+      "Enter a valid required watch duration.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  if (
+    type ===
+    "paid_advert" &&
+    !destinationUrl
+  ) {
+
+    showMessage(
+      "A destination URL is required for a paid advert.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  if (
+    type ===
+    "paid_advert" &&
+    !/^https?:\/\//i.test(
+      destinationUrl
+    )
+  ) {
+
+    showMessage(
+      "The destination URL must begin with http:// or https://",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  const uploadButton =
+    document.getElementById(
+      "uploadBtn"
+    );
+
+
+  uploadButton.disabled =
+    true;
+
+
+  uploadButton.textContent =
+    "Uploading...";
+
+
+  try {
+
+    const extension =
+      file.name.includes(".")
+        ? file.name
+            .split(".")
+            .pop()
+            .toLowerCase()
+        : "mp4";
+
+
+    const safeTitle =
+      title
+        .toLowerCase()
+        .replace(
+          /[^a-z0-9]+/g,
+          "-"
+        )
+        .replace(
+          /^-+|-+$/g,
+          ""
+        )
+        .slice(
+          0,
+          60
+        );
+
+
+    const uniqueName =
+      Date.now() +
+      "-" +
+      crypto.randomUUID() +
+      "-" +
+      safeTitle +
+      "." +
+      extension;
+
+
+    const storagePath =
+      "watch-earn/" +
+      uniqueName;
+
+
+
+    /* =====================================
+       UPLOAD FILE
+    ====================================== */
+
+    const {
+      error: uploadError
+    } =
+      await supabaseClient
+
+        .storage
+
+        .from(
+          "advert-videos"
+        )
+
+        .upload(
+          storagePath,
+          file,
+          {
+            cacheControl:
+              "3600",
+
+            upsert:
+              false,
+
+            contentType:
+              file.type ||
+              "video/mp4"
+
+          }
+        );
+
+
+    if (uploadError) {
+
+      throw new Error(
+        "Video upload failed: " +
+        uploadError.message
+      );
+
     }
 
 
-    // =====================================================
-    // VIDEO ACTIONS
-    // =====================================================
 
-    function attachVideoActions() {
+    /* =====================================
+       EXPIRY
+    ====================================== */
 
-      document
-        .querySelectorAll("[data-action='toggle']")
-        .forEach(button => {
+    const expiresAt =
+      calculateExpiry(
+        tenure
+      );
 
-          button.addEventListener("click", async () => {
 
-            await toggleVideo(
-              button.dataset.id,
-              button.dataset.active === "true"
-            );
 
-          });
+    /* =====================================
+       DATABASE RECORD
+    ====================================== */
+
+    const {
+      error: insertError
+    } =
+      await supabaseClient
+
+        .from(
+          "watch_earn_videos"
+        )
+
+        .insert({
+
+          title,
+
+          description:
+            description ||
+            null,
+
+          video_type:
+            type,
+
+          video_path:
+            storagePath,
+
+          destination_url:
+            type === "paid_advert"
+              ? destinationUrl
+              : null,
+
+          button_text:
+            type === "paid_advert"
+              ? buttonText
+              : null,
+
+          required_watch_seconds:
+            watchSeconds,
+
+          tenure_type:
+            tenure,
+
+          starts_at:
+            new Date()
+              .toISOString(),
+
+          expires_at:
+            expiresAt,
+
+          is_active:
+            true,
+
+          created_by:
+            currentUser.id
 
         });
 
 
-      document
-        .querySelectorAll("[data-action='delete']")
-        .forEach(button => {
+    if (insertError) {
 
-          button.addEventListener("click", async () => {
+      await supabaseClient
+
+        .storage
+
+        .from(
+          "advert-videos"
+        )
+
+        .remove([
+          storagePath
+        ]);
+
+
+      throw new Error(
+        "Video record could not be created: " +
+        insertError.message
+      );
+
+    }
+
+
+    showMessage(
+      "Video uploaded successfully."
+    );
+
+
+    resetForm();
+
+
+    await loadVideos();
+
+  }
+
+  catch (error) {
+
+    console.error(error);
+
+
+    showMessage(
+      error.message ||
+      "Something went wrong while uploading the video.",
+      "error"
+    );
+
+  }
+
+  finally {
+
+    uploadButton.disabled =
+      false;
+
+
+    uploadButton.textContent =
+      "Upload Video";
+
+  }
+
+}
+
+
+
+/* =========================================
+   RESET FORM
+========================================= */
+
+function resetForm() {
+
+  document
+    .getElementById(
+      "videoForm"
+    )
+    .reset();
+
+
+  document.getElementById(
+    "typeNormal"
+  ).checked =
+    true;
+
+
+  document.getElementById(
+    "buttonText"
+  ).value =
+    "Visit Store";
+
+
+  updateVideoTypeUI();
+
+}
+
+
+
+/* =========================================
+   FORMAT DATE
+========================================= */
+
+function formatDate(
+  value
+) {
+
+  if (!value) {
+    return "Never";
+  }
+
+
+  const date =
+    new Date(value);
+
+
+  if (
+    Number.isNaN(
+      date.getTime()
+    )
+  ) {
+
+    return "Unknown";
+
+  }
+
+
+  return date.toLocaleString(
+    "en-NG"
+  );
+
+}
+
+
+
+/* =========================================
+   VIDEO STATUS
+========================================= */
+
+function getVideoStatus(
+  video
+) {
+
+  const now =
+    Date.now();
+
+
+  const starts =
+    new Date(
+      video.starts_at
+    ).getTime();
+
+
+  const expires =
+    video.expires_at
+      ? new Date(
+          video.expires_at
+        ).getTime()
+      : null;
+
+
+  if (!video.is_active) {
+
+    return {
+
+      text:
+        "Inactive",
+
+      className:
+        "inactive"
+
+    };
+
+  }
+
+
+  if (
+    starts > now
+  ) {
+
+    return {
+
+      text:
+        "Scheduled",
+
+      className:
+        ""
+
+    };
+
+  }
+
+
+  if (
+    expires &&
+    expires <= now
+  ) {
+
+    return {
+
+      text:
+        "Expired",
+
+      className:
+        "expired"
+
+    };
+
+  }
+
+
+  return {
+
+    text:
+      "Active",
+
+    className:
+      "active"
+
+  };
+
+}
+
+
+
+/* =========================================
+   TENURE LABEL
+========================================= */
+
+function tenureLabel(
+  value
+) {
+
+  const labels = {
+
+    "24_hours":
+      "24 Hours",
+
+    "3_days":
+      "3 Days",
+
+    "7_days":
+      "7 Days",
+
+    "30_days":
+      "30 Days",
+
+    "unlimited":
+      "Unlimited"
+
+  };
+
+
+  return (
+    labels[value] ||
+    value ||
+    "Unknown"
+  );
+
+}
+
+
+
+/* =========================================
+   ESCAPE HTML
+========================================= */
+
+function escapeHtml(
+  value
+) {
+
+  return String(
+    value ?? ""
+  )
+
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+
+    .replace(
+      /</g,
+      "&lt;"
+    )
+
+    .replace(
+      />/g,
+      "&gt;"
+    )
+
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+
+    .replace(
+      /'/g,
+      "&#039;"
+    );
+
+}
+
+
+
+/* =========================================
+   LOAD VIDEOS
+========================================= */
+
+async function loadVideos() {
+
+  const list =
+    document.getElementById(
+      "videosList"
+    );
+
+
+  list.innerHTML =
+    '<div class="empty">Loading videos...</div>';
+
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+
+      .from(
+        "watch_earn_videos"
+      )
+
+      .select("*")
+
+      .order(
+        "created_at",
+        {
+          ascending:
+            false
+        }
+      );
+
+
+  if (error) {
+
+    console.error(error);
+
+
+    list.innerHTML =
+      '<div class="empty">Could not load videos.</div>';
+
+
+    showMessage(
+      "Could not load videos: " +
+      error.message,
+      "error"
+    );
+
+
+    return;
+
+  }
+
+
+  if (
+    !data ||
+    data.length === 0
+  ) {
+
+    list.innerHTML =
+      '<div class="empty">No Watch & Earn videos have been uploaded yet.</div>';
+
+
+    return;
+
+  }
+
+
+  list.innerHTML =
+    data
+      .map(
+        video =>
+          renderVideo(
+            video
+          )
+      )
+      .join("");
+
+
+  attachVideoActions();
+
+}
+
+
+
+/* =========================================
+   RENDER VIDEO
+========================================= */
+
+function renderVideo(
+  video
+) {
+
+  const status =
+    getVideoStatus(
+      video
+    );
+
+
+  const typeLabel =
+    video.video_type ===
+    "paid_advert"
+
+      ? "📢 Paid Advert"
+
+      : "🎬 Normal Video";
+
+
+  const typeClass =
+    video.video_type ===
+    "paid_advert"
+
+      ? "advert"
+
+      : "normal";
+
+
+  const expiryText =
+    video.expires_at
+
+      ? "Expires: " +
+        formatDate(
+          video.expires_at
+        )
+
+      : "Never expires";
+
+
+  const urlText =
+    video.video_type ===
+    "paid_advert"
+
+      ? " • Clickable advert URL"
+
+      : "";
+
+
+  const activeButtonText =
+    video.is_active
+
+      ? "Deactivate"
+
+      : "Activate";
+
+
+  const activeButtonClass =
+    video.is_active
+
+      ? "danger"
+
+      : "success";
+
+
+  return `
+
+    <div class="video-row">
+
+
+      <div class="video-main">
+
+
+        <div class="video-title">
+
+          ${escapeHtml(
+            video.title
+          )}
+
+        </div>
+
+
+        <div class="meta">
+
+
+          <span
+            class="badge ${typeClass}"
+          >
+
+            ${typeLabel}
+
+          </span>
+
+
+          <span class="badge">
+
+            ${escapeHtml(
+              tenureLabel(
+                video.tenure_type
+              )
+            )}
+
+          </span>
+
+
+          <span class="badge">
+
+            ${Number(
+              video.required_watch_seconds
+            )}s watch
+
+          </span>
+
+
+          <span
+            class="badge ${status.className}"
+          >
+
+            ${escapeHtml(
+              status.text
+            )}
+
+          </span>
+
+
+        </div>
+
+
+        <div class="video-details">
+
+          ${escapeHtml(
+            expiryText
+          )}
+
+          ${escapeHtml(
+            urlText
+          )}
+
+          <br>
+
+          Uploaded:
+          ${escapeHtml(
+            formatDate(
+              video.created_at
+            )
+          )}
+
+        </div>
+
+
+      </div>
+
+
+      <div class="video-actions">
+
+
+        <button
+          class="btn ${activeButtonClass}"
+          type="button"
+          data-action="toggle"
+          data-id="${escapeHtml(
+            video.id
+          )}"
+          data-active="${
+            video.is_active
+              ? "true"
+              : "false"
+          }"
+        >
+
+          ${activeButtonText}
+
+        </button>
+
+
+        <button
+          class="btn danger"
+          type="button"
+          data-action="delete"
+          data-id="${escapeHtml(
+            video.id
+          )}"
+        >
+
+          Delete
+
+        </button>
+
+
+      </div>
+
+
+    </div>
+
+  `;
+
+}
+
+
+
+/* =========================================
+   VIDEO ACTIONS
+========================================= */
+
+function attachVideoActions() {
+
+  document
+    .querySelectorAll(
+      "[data-action='toggle']"
+    )
+    .forEach(
+      button => {
+
+        button.addEventListener(
+          "click",
+          async () => {
+
+            await toggleVideo(
+
+              button.dataset.id,
+
+              button.dataset.active ===
+                "true"
+
+            );
+
+          }
+        );
+
+      }
+    );
+
+
+  document
+    .querySelectorAll(
+      "[data-action='delete']"
+    )
+    .forEach(
+      button => {
+
+        button.addEventListener(
+          "click",
+          async () => {
 
             await deleteVideo(
               button.dataset.id
             );
 
-          });
-
-        });
-    }
-
-
-    // =====================================================
-    // TOGGLE VIDEO
-    // =====================================================
-
-    async function toggleVideo(id, currentlyActive) {
-
-      const newState = !currentlyActive;
-
-      const {
-        error
-      } = await supabaseClient
-        .from("watch_earn_videos")
-        .update({
-          is_active: newState,
-          updated_at: new Date().toISOString()
-        })
-        .eq("id", id);
-
-      if (error) {
-
-        console.error(error);
-
-        showMessage(
-          "Could not update video: " +
-          error.message,
-          "error"
+          }
         );
 
-        return;
       }
+    );
 
-      showMessage(
-        newState
-          ? "Video activated."
-          : "Video deactivated."
-      );
-
-      await loadVideos();
-    }
+}
 
 
-    // =====================================================
-    // DELETE VIDEO
-    // =====================================================
 
-    async function deleteVideo(id) {
+/* =========================================
+   TOGGLE VIDEO
+========================================= */
 
-      const confirmed =
-        confirm(
-          "Delete this Watch & Earn video?\n\n" +
-          "This will also remove its uploaded video file."
-        );
+async function toggleVideo(
+  id,
+  currentlyActive
+) {
 
-      if (!confirmed) {
-        return;
-      }
+  const newState =
+    !currentlyActive;
 
 
-      // Get storage path first.
-      const {
-        data: video,
-        error: fetchError
-      } = await supabaseClient
-        .from("watch_earn_videos")
-        .select("id, video_path, title")
-        .eq("id", id)
-        .maybeSingle();
+  const {
+    error
+  } =
+    await supabaseClient
 
-      if (fetchError) {
-
-        showMessage(
-          "Could not find the video: " +
-          fetchError.message,
-          "error"
-        );
-
-        return;
-      }
-
-      if (!video) {
-
-        showMessage(
-          "Video not found.",
-          "error"
-        );
-
-        return;
-      }
-
-
-      // Delete database record.
-      const {
-        error: deleteError
-      } = await supabaseClient
-        .from("watch_earn_videos")
-        .delete()
-        .eq("id", id);
-
-      if (deleteError) {
-
-        console.error(deleteError);
-
-        showMessage(
-          "Could not delete video: " +
-          deleteError.message,
-          "error"
-        );
-
-        return;
-      }
-
-
-      // Delete storage file.
-      if (video.video_path) {
-
-        const {
-          error: storageError
-        } = await supabaseClient
-          .storage
-          .from("advert-videos")
-          .remove([video.video_path]);
-
-        if (storageError) {
-          console.warn(
-            "Database record deleted, but storage file could not be removed:",
-            storageError
-          );
-        }
-      }
-
-      showMessage("Video deleted.");
-
-      await loadVideos();
-    }
-
-
-    // =====================================================
-    // EVENTS
-    // =====================================================
-
-    document
-      .getElementById("saveSettingsBtn")
-      .addEventListener(
-        "click",
-        saveSettings
-      );
-
-
-    document
-      .getElementById("toggleBtn")
-      .addEventListener(
-        "click",
-        toggleWatchEarn
-      );
-
-
-    document
-      .getElementById("videoForm")
-      .addEventListener(
-        "submit",
-        uploadVideo
-      );
-
-
-    document
-      .getElementById("resetBtn")
-      .addEventListener(
-        "click",
-        resetForm
-      );
-
-
-    document
-      .getElementById("refreshBtn")
-      .addEventListener(
-        "click",
-        loadVideos
-      );
-
-
-    document
-      .querySelectorAll(
-        'input[name="videoType"]'
+      .from(
+        "watch_earn_videos"
       )
-      .forEach(input => {
 
-        input.addEventListener(
-          "change",
-          updateVideoTypeUI
-        );
+      .update({
 
-      });
+        is_active:
+          newState,
+
+        updated_at:
+          new Date()
+            .toISOString()
+
+      })
+
+      .eq(
+        "id",
+        id
+      );
 
 
-    // =====================================================
-    // START
-    // =====================================================
+  if (error) {
 
-    async function init() {
+    console.error(error);
 
-      const isAdmin =
-        await verifyAdmin();
 
-      if (!isAdmin) {
-        return;
-      }
+    showMessage(
+      "Could not update video: " +
+      error.message,
+      "error"
+    );
 
-      updateVideoTypeUI();
 
-      await loadSettings();
+    return;
 
-      await loadVideos();
+  }
+
+
+  showMessage(
+
+    newState
+      ? "Video activated."
+      : "Video deactivated."
+
+  );
+
+
+  await loadVideos();
+
+}
+
+
+
+/* =========================================
+   DELETE VIDEO
+========================================= */
+
+async function deleteVideo(
+  id
+) {
+
+  const confirmed =
+    confirm(
+
+      "Delete this Watch & Earn video?\n\n" +
+
+      "This will also remove its uploaded video file."
+
+    );
+
+
+  if (!confirmed) {
+    return;
+  }
+
+
+  const {
+    data: video,
+    error: fetchError
+  } =
+    await supabaseClient
+
+      .from(
+        "watch_earn_videos"
+      )
+
+      .select(
+        "id,video_path,title"
+      )
+
+      .eq(
+        "id",
+        id
+      )
+
+      .maybeSingle();
+
+
+  if (fetchError) {
+
+    showMessage(
+      "Could not find the video: " +
+      fetchError.message,
+      "error"
+    );
+
+
+    return;
+
+  }
+
+
+  if (!video) {
+
+    showMessage(
+      "Video not found.",
+      "error"
+    );
+
+
+    return;
+
+  }
+
+
+  const {
+    error: deleteError
+  } =
+    await supabaseClient
+
+      .from(
+        "watch_earn_videos"
+      )
+
+      .delete()
+
+      .eq(
+        "id",
+        id
+      );
+
+
+  if (deleteError) {
+
+    console.error(
+      deleteError
+    );
+
+
+    showMessage(
+      "Could not delete video: " +
+      deleteError.message,
+      "error"
+    );
+
+
+    return;
+
+  }
+
+
+  if (
+    video.video_path
+  ) {
+
+    const {
+      error: storageError
+    } =
+      await supabaseClient
+
+        .storage
+
+        .from(
+          "advert-videos"
+        )
+
+        .remove([
+          video.video_path
+        ]);
+
+
+    if (storageError) {
+
+      console.warn(
+        "Database record deleted, but storage file could not be removed:",
+        storageError
+      );
+
     }
 
-    init();
-  </script>
+  }
+
+
+  showMessage(
+    "Video deleted."
+  );
+
+
+  await loadVideos();
+
+}
+
+
+
+/* =========================================
+   EVENTS
+========================================= */
+
+document
+  .getElementById(
+    "saveSettingsBtn"
+  )
+  .addEventListener(
+    "click",
+    saveSettings
+  );
+
+
+document
+  .getElementById(
+    "toggleBtn"
+  )
+  .addEventListener(
+    "click",
+    toggleWatchEarn
+  );
+
+
+document
+  .getElementById(
+    "videoForm"
+  )
+  .addEventListener(
+    "submit",
+    uploadVideo
+  );
+
+
+document
+  .getElementById(
+    "resetBtn"
+  )
+  .addEventListener(
+    "click",
+    resetForm
+  );
+
+
+document
+  .getElementById(
+    "refreshBtn"
+  )
+  .addEventListener(
+    "click",
+    loadVideos
+  );
+
+
+document
+  .querySelectorAll(
+    'input[name="videoType"]'
+  )
+  .forEach(
+    input => {
+
+      input.addEventListener(
+        "change",
+        updateVideoTypeUI
+      );
+
+    }
+  );
+
+
+
+/* =========================================
+   START
+========================================= */
+
+async function init() {
+
+  const isAdmin =
+    await verifyAdmin();
+
+
+  if (!isAdmin) {
+    return;
+  }
+
+
+  updateVideoTypeUI();
+
+
+  await loadSettings();
+
+
+  await loadVideos();
+
+}
+
+
+init();
+
+</script>
+
 
 </body>
+
 </html>

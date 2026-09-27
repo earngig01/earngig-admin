@@ -1,14 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
     <title>Membership Management - EarnGig Admin</title>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="supabase.js"></script>
 
     <style>
+
         * {
             box-sizing: border-box;
         }
@@ -20,13 +27,20 @@
             color: #1f2937;
         }
 
+        /* ================================
+           HEADER
+        ================================= */
+
         .header {
             background: #111827;
             color: white;
+
             padding: 18px 24px;
+
             display: flex;
             align-items: center;
             justify-content: space-between;
+
             gap: 15px;
         }
 
@@ -38,17 +52,31 @@
         .back-btn {
             text-decoration: none;
             color: white;
+
             background: #374151;
+
             padding: 9px 14px;
+
             border-radius: 7px;
+
             font-size: 14px;
         }
 
+        /* ================================
+           CONTAINER
+        ================================= */
+
         .container {
             max-width: 1200px;
+
             margin: 0 auto;
+
             padding: 24px;
         }
+
+        /* ================================
+           PAGE TITLE
+        ================================= */
 
         .page-title {
             margin-bottom: 20px;
@@ -56,46 +84,92 @@
 
         .page-title h2 {
             margin: 0 0 6px;
+
             font-size: 24px;
         }
 
         .page-title p {
             margin: 0;
+
             color: #6b7280;
+
             font-size: 14px;
         }
 
+        /* ================================
+           ERROR
+        ================================= */
+
+        .error {
+            background: #fee2e2;
+
+            color: #991b1b;
+
+            border-radius: 8px;
+
+            padding: 15px;
+
+            margin-bottom: 20px;
+
+            display: none;
+
+            line-height: 1.5;
+        }
+
+        /* ================================
+           STATS
+        ================================= */
+
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
+
+            grid-template-columns:
+                repeat(5, 1fr);
+
             gap: 14px;
+
             margin-bottom: 24px;
         }
 
         .stat-card {
             background: white;
+
             border: 1px solid #e5e7eb;
+
             border-radius: 10px;
+
             padding: 18px;
         }
 
         .stat-label {
             color: #6b7280;
+
             font-size: 13px;
+
             margin-bottom: 8px;
         }
 
         .stat-value {
             font-size: 25px;
+
             font-weight: 700;
+
             color: #111827;
         }
 
+        /* ================================
+           SECTION
+        ================================= */
+
         .section {
             background: white;
+
             border: 1px solid #e5e7eb;
+
             border-radius: 10px;
+
             padding: 20px;
+
             margin-bottom: 20px;
         }
 
@@ -105,44 +179,70 @@
 
         .section-header h3 {
             margin: 0 0 5px;
+
             font-size: 18px;
         }
 
         .section-header p {
             margin: 0;
+
             color: #6b7280;
+
             font-size: 13px;
         }
 
+        /* ================================
+           PLAN CARDS
+        ================================= */
+
         .plans-grid {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
+
+            grid-template-columns:
+                repeat(5, 1fr);
+
             gap: 12px;
         }
 
         .plan-card {
             border: 1px solid #e5e7eb;
+
             border-radius: 9px;
+
             padding: 15px;
+
             background: #fafafa;
         }
 
         .plan-name {
             font-weight: 700;
+
             margin-bottom: 6px;
         }
 
         .plan-count {
             font-size: 22px;
+
             font-weight: 700;
+
             color: #111827;
         }
 
         .plan-note {
             font-size: 12px;
+
             color: #6b7280;
+
             margin-top: 4px;
         }
+
+        .legacy {
+            color: #92400e;
+        }
+
+        /* ================================
+           TABLE
+        ================================= */
 
         .table-wrap {
             overflow-x: auto;
@@ -150,23 +250,32 @@
 
         table {
             width: 100%;
+
             border-collapse: collapse;
+
             min-width: 760px;
         }
 
         th,
         td {
             padding: 13px 12px;
+
             text-align: left;
+
             border-bottom: 1px solid #e5e7eb;
+
             font-size: 14px;
         }
 
         th {
             background: #f9fafb;
+
             color: #4b5563;
+
             font-size: 12px;
+
             text-transform: uppercase;
+
             letter-spacing: 0.03em;
         }
 
@@ -174,83 +283,98 @@
             border-bottom: none;
         }
 
+        /* ================================
+           STATUS
+        ================================= */
+
         .status {
             display: inline-block;
+
             padding: 5px 9px;
+
             border-radius: 999px;
+
             font-size: 12px;
+
             font-weight: 600;
+
+            white-space: nowrap;
         }
 
         .status-active {
             background: #dcfce7;
+
             color: #166534;
         }
 
         .status-expired {
             background: #fee2e2;
+
             color: #991b1b;
         }
 
         .status-pending {
             background: #fef3c7;
+
             color: #92400e;
         }
 
         .status-inactive {
             background: #f3f4f6;
+
             color: #4b5563;
         }
 
         .status-none {
             background: #f3f4f6;
+
             color: #6b7280;
-        }
-
-        .plan-badge {
-            font-weight: 600;
-        }
-
-        .legacy {
-            color: #92400e;
         }
 
         .muted {
             color: #6b7280;
         }
 
+        /* ================================
+           LOADING
+        ================================= */
+
         .loading {
             text-align: center;
-            padding: 35px;
-            color: #6b7280;
-        }
 
-        .error {
-            background: #fee2e2;
-            color: #991b1b;
-            padding: 14px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            display: none;
+            padding: 35px;
+
+            color: #6b7280;
         }
 
         .empty {
             text-align: center;
+
             padding: 30px;
+
             color: #6b7280;
         }
 
+        /* ================================
+           MOBILE
+        ================================= */
+
         @media (max-width: 1000px) {
+
             .stats-grid {
-                grid-template-columns: repeat(3, 1fr);
+                grid-template-columns:
+                    repeat(3, 1fr);
             }
 
             .plans-grid {
-                grid-template-columns: repeat(3, 1fr);
+                grid-template-columns:
+                    repeat(3, 1fr);
             }
+
         }
 
         @media (max-width: 700px) {
+
             .header {
                 padding: 15px;
             }
@@ -264,601 +388,1411 @@
             }
 
             .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns:
+                    repeat(2, 1fr);
             }
 
             .plans-grid {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns:
+                    repeat(2, 1fr);
             }
 
             .stat-value {
                 font-size: 22px;
             }
+
         }
 
         @media (max-width: 450px) {
+
             .stats-grid,
             .plans-grid {
                 grid-template-columns: 1fr;
             }
+
         }
+
     </style>
+
 </head>
+
 
 <body>
 
-    <header class="header">
-        <h1>EarnGig Admin</h1>
-        <a href="admin-dashboard.html" class="back-btn">← Admin Dashboard</a>
-    </header>
 
-    <main class="container">
+<!-- =====================================
+     HEADER
+===================================== -->
 
-        <div class="page-title">
-            <h2>Membership Management</h2>
-            <p>Overview of members, membership status, plans and expiry dates.</p>
+<header class="header">
+
+    <h1>
+        EarnGig Admin
+    </h1>
+
+    <a
+        href="admin-dashboard.html"
+        class="back-btn"
+    >
+        ← Admin Dashboard
+    </a>
+
+</header>
+
+
+<main class="container">
+
+
+    <!-- =====================================
+         PAGE TITLE
+    ===================================== -->
+
+    <div class="page-title">
+
+        <h2>
+            Membership Management
+        </h2>
+
+        <p>
+            Overview of members, membership status, plans and expiry dates.
+        </p>
+
+    </div>
+
+
+    <!-- =====================================
+         ERROR
+    ===================================== -->
+
+    <div
+        id="errorBox"
+        class="error"
+    ></div>
+
+
+    <!-- =====================================
+         STATS
+    ===================================== -->
+
+    <section class="stats-grid">
+
+
+        <div class="stat-card">
+
+            <div class="stat-label">
+                Total Members
+            </div>
+
+            <div
+                id="totalMembers"
+                class="stat-value"
+            >
+                0
+            </div>
+
         </div>
 
-        <div id="errorBox" class="error"></div>
 
-        <!-- Summary -->
-        <section class="stats-grid">
+        <div class="stat-card">
 
-            <div class="stat-card">
-                <div class="stat-label">Total Members</div>
-                <div class="stat-value" id="totalMembers">0</div>
+            <div class="stat-label">
+                Active Members
             </div>
 
-            <div class="stat-card">
-                <div class="stat-label">Active Members</div>
-                <div class="stat-value" id="activeMembers">0</div>
+            <div
+                id="activeMembers"
+                class="stat-value"
+            >
+                0
             </div>
 
-            <div class="stat-card">
-                <div class="stat-label">Inactive Members</div>
-                <div class="stat-value" id="inactiveMembers">0</div>
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-label">
+                Inactive Members
             </div>
 
-            <div class="stat-card">
-                <div class="stat-label">Expired Memberships</div>
-                <div class="stat-value" id="expiredMembers">0</div>
+            <div
+                id="inactiveMembers"
+                class="stat-value"
+            >
+                0
             </div>
 
-            <div class="stat-card">
-                <div class="stat-label">Pending Memberships</div>
-                <div class="stat-value" id="pendingMembers">0</div>
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-label">
+                Expired Memberships
             </div>
 
-        </section>
-
-        <!-- Plan Distribution -->
-        <section class="section">
-
-            <div class="section-header">
-                <h3>Plan Distribution</h3>
-                <p>Current membership plans across the platform.</p>
+            <div
+                id="expiredMembers"
+                class="stat-value"
+            >
+                0
             </div>
 
-            <div class="plans-grid">
+        </div>
 
-                <div class="plan-card">
-                    <div class="plan-name">Starter</div>
-                    <div class="plan-count" id="starterCount">0</div>
-                    <div class="plan-note">₦4,500</div>
+
+        <div class="stat-card">
+
+            <div class="stat-label">
+                Pending Memberships
+            </div>
+
+            <div
+                id="pendingMembers"
+                class="stat-value"
+            >
+                0
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+    <!-- =====================================
+         PLAN DISTRIBUTION
+    ===================================== -->
+
+    <section class="section">
+
+        <div class="section-header">
+
+            <h3>
+                Plan Distribution
+            </h3>
+
+            <p>
+                Current membership plans across the platform.
+            </p>
+
+        </div>
+
+
+        <div class="plans-grid">
+
+
+            <div class="plan-card">
+
+                <div class="plan-name">
+                    Starter
                 </div>
 
-                <div class="plan-card">
-                    <div class="plan-name">Standard</div>
-                    <div class="plan-count" id="standardCount">0</div>
-                    <div class="plan-note">₦9,000</div>
+                <div
+                    id="starterCount"
+                    class="plan-count"
+                >
+                    0
                 </div>
 
-                <div class="plan-card">
-                    <div class="plan-name">Premium</div>
-                    <div class="plan-count" id="premiumCount">0</div>
-                    <div class="plan-note">₦18,000</div>
-                </div>
-
-                <div class="plan-card">
-                    <div class="plan-name">Elite</div>
-                    <div class="plan-count" id="eliteCount">0</div>
-                    <div class="plan-note">₦36,000</div>
-                </div>
-
-                <div class="plan-card">
-                    <div class="plan-name legacy">Legacy / Unconfigured</div>
-                    <div class="plan-count" id="legacyCount">0</div>
-                    <div class="plan-note">No plan code</div>
+                <div class="plan-note">
+                    ₦4,500
                 </div>
 
             </div>
 
-        </section>
 
-        <!-- Member List -->
-        <section class="section">
+            <div class="plan-card">
 
-            <div class="section-header">
-                <h3>Members</h3>
-                <p>Simple membership overview. Detailed user information remains on the User Details page.</p>
-            </div>
+                <div class="plan-name">
+                    Standard
+                </div>
 
-            <div id="loading" class="loading">
-                Loading members...
-            </div>
+                <div
+                    id="standardCount"
+                    class="plan-count"
+                >
+                    0
+                </div>
 
-            <div id="tableContainer" class="table-wrap" style="display:none;">
-
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Account Status</th>
-                            <th>Membership Status</th>
-                            <th>Plan</th>
-                            <th>Expiry Date</th>
-                        </tr>
-                    </thead>
-
-                    <tbody id="membersTableBody"></tbody>
-                </table>
+                <div class="plan-note">
+                    ₦9,000
+                </div>
 
             </div>
 
-            <div id="emptyState" class="empty" style="display:none;">
-                No members found.
+
+            <div class="plan-card">
+
+                <div class="plan-name">
+                    Premium
+                </div>
+
+                <div
+                    id="premiumCount"
+                    class="plan-count"
+                >
+                    0
+                </div>
+
+                <div class="plan-note">
+                    ₦18,000
+                </div>
+
             </div>
 
-        </section>
 
-    </main>
+            <div class="plan-card">
 
-    <script>
+                <div class="plan-name">
+                    Elite
+                </div>
+
+                <div
+                    id="eliteCount"
+                    class="plan-count"
+                >
+                    0
+                </div>
+
+                <div class="plan-note">
+                    ₦36,000
+                </div>
+
+            </div>
+
+
+            <div class="plan-card">
+
+                <div class="plan-name legacy">
+                    Legacy / Unconfigured
+                </div>
+
+                <div
+                    id="legacyCount"
+                    class="plan-count"
+                >
+                    0
+                </div>
+
+                <div class="plan-note">
+                    No plan code
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================
+         MEMBERS
+    ===================================== -->
+
+    <section class="section">
+
+        <div class="section-header">
+
+            <h3>
+                Members
+            </h3>
+
+            <p>
+                Simple membership overview. Detailed user information remains on the User Details page.
+            </p>
+
+        </div>
+
+
+        <div
+            id="loading"
+            class="loading"
+        >
+            Loading members...
+        </div>
+
+
+        <div
+            id="tableContainer"
+            class="table-wrap"
+            style="display:none;"
+        >
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Name
+                        </th>
+
+                        <th>
+                            Account Status
+                        </th>
+
+                        <th>
+                            Membership Status
+                        </th>
+
+                        <th>
+                            Plan
+                        </th>
+
+                        <th>
+                            Expiry Date
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody
+                    id="membersTableBody"
+                ></tbody>
+
+            </table>
+
+        </div>
+
+
+        <div
+            id="emptyState"
+            class="empty"
+            style="display:none;"
+        >
+            No members found.
+        </div>
+
+
+    </section>
+
+
+</main>
+
+
+<script>
+
+
+/* =========================================
+   SUPABASE CONNECTION
+========================================= */
+
+const SUPABASE_URL =
+    "https://ytvtdelwefykeqwztcyo.supabase.co";
+
+
+const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_CLTeqgEB6JSQ7Kqq6rQARw_RV31Ccg3";
+
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+    );
+
+
+/* =========================================
+   GLOBAL DATA
+========================================= */
+
+let profiles = [];
+
+let memberships = [];
+
+
+/* =========================================
+   PLAN NAMES
+========================================= */
+
+const PLAN_NAMES = {
+
+    starter: "Starter",
+
+    standard: "Standard",
+
+    premium: "Premium",
+
+    elite: "Elite"
+
+};
+
+
+/* =========================================
+   ADMIN CHECK
+========================================= */
+
+async function checkAdmin() {
+
+    try {
+
         const {
-            createClient
-        } = supabase;
+            data: {
+                user
+            },
+            error: authError
+        } =
+            await supabaseClient
+                .auth
+                .getUser();
 
-        const client = createClient(
-            SUPABASE_URL,
-            SUPABASE_ANON_KEY
-        );
 
-        const PLAN_NAMES = {
-            starter: "Starter",
-            standard: "Standard",
-            premium: "Premium",
-            elite: "Elite"
-        };
+        if (
+            authError ||
+            !user
+        ) {
 
-        let profiles = [];
-        let memberships = [];
+            window.location.href =
+                "login.html";
 
-        async function checkAdmin() {
-            const {
-                data: {
-                    user
-                },
-                error: authError
-            } = await client.auth.getUser();
+            return false;
 
-            if (authError || !user) {
-                window.location.href = "login.html";
-                return false;
-            }
+        }
 
-            const {
-                data: profile,
-                error
-            } = await client
+
+        const {
+            data: profile,
+            error
+        } =
+            await supabaseClient
+
                 .from("profiles")
-                .select("id, account_status, is_admin")
-                .eq("id", user.id)
+
+                .select(
+                    "id, account_status, is_admin"
+                )
+
+                .eq(
+                    "id",
+                    user.id
+                )
+
                 .single();
 
-            if (
-                error ||
-                !profile ||
-                profile.is_admin !== true ||
-                profile.account_status !== "active"
-            ) {
-                alert("You do not have permission to access this page.");
-                window.location.href = "dashboard.html";
-                return false;
-            }
 
-            return true;
+        if (
+            error ||
+            !profile ||
+            profile.is_admin !== true ||
+            profile.account_status !== "active"
+        ) {
+
+            alert(
+                "You do not have permission to access this page."
+            );
+
+            window.location.href =
+                "dashboard.html";
+
+            return false;
+
         }
 
-        function showError(message) {
-            const box = document.getElementById("errorBox");
-            box.textContent = message;
-            box.style.display = "block";
+
+        return true;
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Admin check error:",
+            error
+        );
+
+        showError(
+            "Unable to verify admin access: " +
+            (
+                error.message ||
+                "Unknown error"
+            )
+        );
+
+        return false;
+
+    }
+
+}
+
+
+/* =========================================
+   SHOW ERROR
+========================================= */
+
+function showError(
+    message
+) {
+
+    const errorBox =
+        document.getElementById(
+            "errorBox"
+        );
+
+
+    errorBox.textContent =
+        message;
+
+
+    errorBox.style.display =
+        "block";
+
+}
+
+
+/* =========================================
+   FORMAT DATE
+========================================= */
+
+function formatDate(
+    dateValue
+) {
+
+    if (!dateValue) {
+
+        return "—";
+
+    }
+
+
+    const date =
+        new Date(
+            dateValue
+        );
+
+
+    if (
+        Number.isNaN(
+            date.getTime()
+        )
+    ) {
+
+        return "—";
+
+    }
+
+
+    return new Intl.DateTimeFormat(
+        "en-NG",
+        {
+            timeZone: "Africa/Lagos",
+
+            year: "numeric",
+
+            month: "short",
+
+            day: "numeric"
         }
+    ).format(date);
 
-        function formatDate(dateValue) {
-            if (!dateValue) {
-                return "—";
-            }
+}
 
-            const date = new Date(dateValue);
 
-            if (Number.isNaN(date.getTime())) {
-                return "—";
-            }
+/* =========================================
+   ESCAPE HTML
+========================================= */
 
-            return new Intl.DateTimeFormat("en-NG", {
-                timeZone: "Africa/Lagos",
-                year: "numeric",
-                month: "short",
-                day: "numeric"
-            }).format(date);
-        }
+function escapeHtml(
+    value
+) {
 
-        function getMembershipStatus(membership) {
-            if (!membership) {
-                return {
-                    label: "No Membership",
-                    className: "status-none"
-                };
-            }
+    if (
+        value === null ||
+        value === undefined
+    ) {
 
-            if (membership.status !== "active") {
-                const status = String(
-                    membership.status || "inactive"
-                ).toLowerCase();
+        return "";
 
-                if (status === "pending") {
-                    return {
-                        label: "Pending",
-                        className: "status-pending"
-                    };
-                }
+    }
 
-                return {
-                    label: "Inactive",
-                    className: "status-inactive"
-                };
-            }
 
-            if (
-                membership.current_period_end &&
-                new Date(membership.current_period_end).getTime() < Date.now()
-            ) {
-                return {
-                    label: "Expired",
-                    className: "status-expired"
-                };
-            }
+    return String(value)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+/* =========================================
+   ACCOUNT STATUS
+========================================= */
+
+function getAccountStatus(
+    profile
+) {
+
+    const status =
+        String(
+            profile.account_status ||
+            "inactive"
+        ).toLowerCase();
+
+
+    if (
+        status === "active"
+    ) {
+
+        return {
+
+            label: "Active",
+
+            className: "status-active"
+
+        };
+
+    }
+
+
+    if (
+        status === "pending"
+    ) {
+
+        return {
+
+            label: "Pending",
+
+            className: "status-pending"
+
+        };
+
+    }
+
+
+    return {
+
+        label: "Inactive",
+
+        className: "status-inactive"
+
+    };
+
+}
+
+
+/* =========================================
+   MEMBERSHIP STATUS
+========================================= */
+
+function getMembershipStatus(
+    membership
+) {
+
+    if (!membership) {
+
+        return {
+
+            label: "No Membership",
+
+            className: "status-none"
+
+        };
+
+    }
+
+
+    if (
+        membership.status !==
+        "active"
+    ) {
+
+        if (
+            membership.status ===
+            "pending"
+        ) {
 
             return {
-                label: "Active",
-                className: "status-active"
+
+                label: "Pending",
+
+                className: "status-pending"
+
             };
+
         }
 
-        function getAccountStatus(profile) {
-            const status = String(
-                profile.account_status || "inactive"
-            ).toLowerCase();
 
-            if (status === "active") {
-                return {
-                    label: "Active",
-                    className: "status-active"
-                };
-            }
+        return {
 
-            if (status === "pending") {
-                return {
-                    label: "Pending",
-                    className: "status-pending"
-                };
-            }
+            label: "Inactive",
+
+            className: "status-inactive"
+
+        };
+
+    }
+
+
+    if (
+        membership.current_period_end
+    ) {
+
+        const expiry =
+            new Date(
+                membership.current_period_end
+            ).getTime();
+
+
+        if (
+            !Number.isNaN(expiry) &&
+            expiry < Date.now()
+        ) {
 
             return {
-                label: "Inactive",
-                className: "status-inactive"
+
+                label: "Expired",
+
+                className: "status-expired"
+
             };
+
         }
 
-        function getPlanName(planCode) {
-            if (!planCode) {
-                return "Legacy / Unconfigured";
+    }
+
+
+    return {
+
+        label: "Active",
+
+        className: "status-active"
+
+    };
+
+}
+
+
+/* =========================================
+   PLAN NAME
+========================================= */
+
+function getPlanName(
+    planCode
+) {
+
+    if (!planCode) {
+
+        return "Legacy / Unconfigured";
+
+    }
+
+
+    return (
+        PLAN_NAMES[planCode] ||
+        planCode
+    );
+
+}
+
+
+/* =========================================
+   RENDER STATISTICS
+========================================= */
+
+function renderStats() {
+
+    let active = 0;
+
+    let inactive = 0;
+
+    let expired = 0;
+
+    let pending = 0;
+
+
+    const planCounts = {
+
+        starter: 0,
+
+        standard: 0,
+
+        premium: 0,
+
+        elite: 0,
+
+        legacy: 0
+
+    };
+
+
+    const membershipMap =
+        new Map();
+
+
+    memberships.forEach(
+        membership => {
+
+            membershipMap.set(
+                membership.user_id,
+                membership
+            );
+
+
+            if (
+                membership.plan_code ===
+                "starter"
+            ) {
+
+                planCounts.starter++;
+
             }
 
-            return PLAN_NAMES[planCode] || planCode;
+            else if (
+                membership.plan_code ===
+                "standard"
+            ) {
+
+                planCounts.standard++;
+
+            }
+
+            else if (
+                membership.plan_code ===
+                "premium"
+            ) {
+
+                planCounts.premium++;
+
+            }
+
+            else if (
+                membership.plan_code ===
+                "elite"
+            ) {
+
+                planCounts.elite++;
+
+            }
+
+            else {
+
+                planCounts.legacy++;
+
+            }
+
         }
+    );
 
-        function renderStats() {
-            let active = 0;
-            let inactive = 0;
-            let expired = 0;
-            let pending = 0;
 
-            const planCounts = {
-                starter: 0,
-                standard: 0,
-                premium: 0,
-                elite: 0,
-                legacy: 0
-            };
+    profiles.forEach(
+        profile => {
 
-            const membershipMap = new Map();
+            const membership =
+                membershipMap.get(
+                    profile.id
+                );
 
-            memberships.forEach(membership => {
-                membershipMap.set(
-                    membership.user_id,
+
+            const status =
+                getMembershipStatus(
                     membership
                 );
 
-                if (membership.plan_code === "starter") {
-                    planCounts.starter++;
-                } else if (membership.plan_code === "standard") {
-                    planCounts.standard++;
-                } else if (membership.plan_code === "premium") {
-                    planCounts.premium++;
-                } else if (membership.plan_code === "elite") {
-                    planCounts.elite++;
-                } else {
-                    planCounts.legacy++;
-                }
-            });
 
-            profiles.forEach(profile => {
-                const membership =
-                    membershipMap.get(profile.id);
+            if (
+                status.label ===
+                "Active"
+            ) {
 
-                const membershipStatus =
-                    getMembershipStatus(membership);
+                active++;
 
-                if (membershipStatus.label === "Active") {
-                    active++;
-                } else if (
-                    membershipStatus.label === "Expired"
-                ) {
-                    expired++;
-                } else if (
-                    membershipStatus.label === "Pending"
-                ) {
-                    pending++;
-                } else {
-                    inactive++;
-                }
-            });
-
-            document.getElementById("totalMembers").textContent =
-                profiles.length;
-
-            document.getElementById("activeMembers").textContent =
-                active;
-
-            document.getElementById("inactiveMembers").textContent =
-                inactive;
-
-            document.getElementById("expiredMembers").textContent =
-                expired;
-
-            document.getElementById("pendingMembers").textContent =
-                pending;
-
-            document.getElementById("starterCount").textContent =
-                planCounts.starter;
-
-            document.getElementById("standardCount").textContent =
-                planCounts.standard;
-
-            document.getElementById("premiumCount").textContent =
-                planCounts.premium;
-
-            document.getElementById("eliteCount").textContent =
-                planCounts.elite;
-
-            document.getElementById("legacyCount").textContent =
-                planCounts.legacy;
-        }
-
-        function renderMembers() {
-            const tbody =
-                document.getElementById("membersTableBody");
-
-            const tableContainer =
-                document.getElementById("tableContainer");
-
-            const emptyState =
-                document.getElementById("emptyState");
-
-            const membershipMap = new Map();
-
-            memberships.forEach(membership => {
-                membershipMap.set(
-                    membership.user_id,
-                    membership
-                );
-            });
-
-            tbody.innerHTML = "";
-
-            if (!profiles.length) {
-                tableContainer.style.display = "none";
-                emptyState.style.display = "block";
-                return;
             }
 
-            profiles.forEach(profile => {
-                const membership =
-                    membershipMap.get(profile.id);
+            else if (
+                status.label ===
+                "Expired"
+            ) {
 
-                const accountStatus =
-                    getAccountStatus(profile);
+                expired++;
 
-                const membershipStatus =
-                    getMembershipStatus(membership);
+            }
 
-                const planName =
-                    getPlanName(
-                        membership
-                            ? membership.plan_code
-                            : null
-                    );
+            else if (
+                status.label ===
+                "Pending"
+            ) {
 
-                const row =
-                    document.createElement("tr");
+                pending++;
 
-                const nameCell =
-                    document.createElement("td");
+            }
 
-                nameCell.innerHTML = `
+            else {
+
+                inactive++;
+
+            }
+
+        }
+    );
+
+
+    document
+        .getElementById(
+            "totalMembers"
+        )
+        .textContent =
+        profiles.length;
+
+
+    document
+        .getElementById(
+            "activeMembers"
+        )
+        .textContent =
+        active;
+
+
+    document
+        .getElementById(
+            "inactiveMembers"
+        )
+        .textContent =
+        inactive;
+
+
+    document
+        .getElementById(
+            "expiredMembers"
+        )
+        .textContent =
+        expired;
+
+
+    document
+        .getElementById(
+            "pendingMembers"
+        )
+        .textContent =
+        pending;
+
+
+    document
+        .getElementById(
+            "starterCount"
+        )
+        .textContent =
+        planCounts.starter;
+
+
+    document
+        .getElementById(
+            "standardCount"
+        )
+        .textContent =
+        planCounts.standard;
+
+
+    document
+        .getElementById(
+            "premiumCount"
+        )
+        .textContent =
+        planCounts.premium;
+
+
+    document
+        .getElementById(
+            "eliteCount"
+        )
+        .textContent =
+        planCounts.elite;
+
+
+    document
+        .getElementById(
+            "legacyCount"
+        )
+        .textContent =
+        planCounts.legacy;
+
+}
+
+
+/* =========================================
+   RENDER MEMBERS
+========================================= */
+
+function renderMembers() {
+
+    const tbody =
+        document.getElementById(
+            "membersTableBody"
+        );
+
+
+    const tableContainer =
+        document.getElementById(
+            "tableContainer"
+        );
+
+
+    const emptyState =
+        document.getElementById(
+            "emptyState"
+        );
+
+
+    const membershipMap =
+        new Map();
+
+
+    memberships.forEach(
+        membership => {
+
+            membershipMap.set(
+                membership.user_id,
+                membership
+            );
+
+        }
+    );
+
+
+    tbody.innerHTML = "";
+
+
+    if (
+        profiles.length === 0
+    ) {
+
+        tableContainer.style.display =
+            "none";
+
+        emptyState.style.display =
+            "block";
+
+        return;
+
+    }
+
+
+    profiles.forEach(
+        profile => {
+
+            const membership =
+                membershipMap.get(
+                    profile.id
+                );
+
+
+            const accountStatus =
+                getAccountStatus(
+                    profile
+                );
+
+
+            const membershipStatus =
+                getMembershipStatus(
+                    membership
+                );
+
+
+            const plan =
+                membership
+                    ? getPlanName(
+                        membership.plan_code
+                    )
+                    : "Legacy / Unconfigured";
+
+
+            const row =
+                document.createElement(
+                    "tr"
+                );
+
+
+            row.innerHTML = `
+
+                <td>
+
                     <strong>
                         ${escapeHtml(
                             profile.full_name ||
                             "Unnamed Member"
                         )}
                     </strong>
-                `;
 
-                const accountCell =
-                    document.createElement("td");
+                </td>
 
-                accountCell.innerHTML = `
-                    <span class="status ${accountStatus.className}">
+
+                <td>
+
+                    <span
+                        class="status ${accountStatus.className}"
+                    >
                         ${accountStatus.label}
                     </span>
-                `;
 
-                const membershipCell =
-                    document.createElement("td");
+                </td>
 
-                membershipCell.innerHTML = `
-                    <span class="status ${membershipStatus.className}">
+
+                <td>
+
+                    <span
+                        class="status ${membershipStatus.className}"
+                    >
                         ${membershipStatus.label}
                     </span>
-                `;
 
-                const planCell =
-                    document.createElement("td");
+                </td>
 
-                if (!membership || !membership.plan_code) {
-                    planCell.innerHTML = `
-                        <span class="plan-badge legacy">
-                            Legacy / Unconfigured
-                        </span>
-                    `;
-                } else {
-                    planCell.innerHTML = `
-                        <span class="plan-badge">
-                            ${escapeHtml(planName)}
-                        </span>
-                    `;
-                }
 
-                const expiryCell =
-                    document.createElement("td");
+                <td>
 
-                expiryCell.innerHTML =
-                    membership &&
-                    membership.current_period_end
-                        ? escapeHtml(
-                            formatDate(
-                                membership.current_period_end
+                    ${
+                        membership &&
+                        membership.plan_code
+
+                            ?
+
+                            `
+                                <strong>
+                                    ${escapeHtml(plan)}
+                                </strong>
+                            `
+
+                            :
+
+                            `
+                                <span class="legacy">
+                                    Legacy / Unconfigured
+                                </span>
+                            `
+                    }
+
+                </td>
+
+
+                <td>
+
+                    ${
+                        membership &&
+                        membership.current_period_end
+
+                            ?
+
+                            escapeHtml(
+                                formatDate(
+                                    membership.current_period_end
+                                )
                             )
-                        )
-                        : `<span class="muted">—</span>`;
 
-                row.appendChild(nameCell);
-                row.appendChild(accountCell);
-                row.appendChild(membershipCell);
-                row.appendChild(planCell);
-                row.appendChild(expiryCell);
+                            :
 
-                tbody.appendChild(row);
-            });
+                            `<span class="muted">—</span>`
+                    }
 
-            tableContainer.style.display = "block";
-            emptyState.style.display = "none";
+                </td>
+
+            `;
+
+
+            tbody.appendChild(
+                row
+            );
+
         }
+    );
 
-        function escapeHtml(value) {
-            return String(value)
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#039;");
-        }
 
-        async function loadMembers() {
-            try {
-                const [
-                    profilesResult,
-                    membershipsResult
-                ] = await Promise.all([
-                    client
-                        .from("profiles")
-                        .select(`
-                            id,
-                            full_name,
-                            account_status,
-                            is_admin
-                        `)
-                        .order("full_name", {
-                            ascending: true
-                        }),
+    tableContainer.style.display =
+        "block";
 
-                    client
-                        .from("memberships")
-                        .select(`
-                            id,
-                            user_id,
-                            status,
-                            plan_code,
-                            current_period_start,
-                            current_period_end,
-                            payment_count
-                        `)
-                ]);
 
-                if (profilesResult.error) {
-                    throw profilesResult.error;
-                }
+    emptyState.style.display =
+        "none";
 
-                if (membershipsResult.error) {
-                    throw membershipsResult.error;
-                }
+}
 
-                profiles = profilesResult.data || [];
-                memberships = membershipsResult.data || [];
 
-                renderStats();
-                renderMembers();
+/* =========================================
+   LOAD DATA
+========================================= */
 
-                document.getElementById("loading").style.display =
-                    "none";
+async function loadMembers() {
 
-            } catch (error) {
-                console.error("Membership load error:", error);
+    const loading =
+        document.getElementById(
+            "loading"
+        );
 
-                document.getElementById("loading").style.display =
-                    "none";
 
-                showError(
-                    error.message ||
-                    "Unable to load membership information."
+    try {
+
+        /* =====================================
+           LOAD PROFILES
+        ===================================== */
+
+        const {
+            data: profileData,
+            error: profileError
+        } =
+            await supabaseClient
+
+                .from("profiles")
+
+                .select(`
+                    id,
+                    full_name,
+                    account_status,
+                    is_admin,
+                    created_at
+                `)
+
+                .order(
+                    "full_name",
+                    {
+                        ascending: true
+                    }
                 );
-            }
+
+
+        if (
+            profileError
+        ) {
+
+            throw new Error(
+                "Profiles: " +
+                profileError.message
+            );
+
         }
 
-        async function init() {
-            const allowed = await checkAdmin();
 
-            if (!allowed) {
-                return;
-            }
+        profiles =
+            profileData || [];
 
-            await loadMembers();
+
+        /* =====================================
+           LOAD MEMBERSHIPS
+        ===================================== */
+
+        const {
+            data: membershipData,
+            error: membershipError
+        } =
+            await supabaseClient
+
+                .from("memberships")
+
+                .select(`
+                    id,
+                    user_id,
+                    status,
+                    plan_code,
+                    current_period_start,
+                    current_period_end,
+                    payment_count
+                `);
+
+
+        if (
+            membershipError
+        ) {
+
+            throw new Error(
+                "Memberships: " +
+                membershipError.message
+            );
+
         }
 
-        init();
-    </script>
+
+        memberships =
+            membershipData || [];
+
+
+        /* =====================================
+           RENDER
+        ===================================== */
+
+        renderStats();
+
+        renderMembers();
+
+
+        loading.style.display =
+            "none";
+
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Membership loading error:",
+            error
+        );
+
+
+        loading.style.display =
+            "none";
+
+
+        showError(
+            error.message ||
+            "Unable to load membership information."
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   INITIALIZE
+========================================= */
+
+async function init() {
+
+    const allowed =
+        await checkAdmin();
+
+
+    if (!allowed) {
+
+        return;
+
+    }
+
+
+    await loadMembers();
+
+}
+
+
+init();
+
+
+</script>
+
 
 </body>
+
 </html>

@@ -1,14 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
   <title>EarnGig - Task Management</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase.js"></script>
 
   <style>
+
     * {
       box-sizing: border-box;
     }
@@ -78,7 +86,7 @@
       align-items: center;
       justify-content: space-between;
       gap: 15px;
-      margin-bottom: 18px;
+      margin-bottom: 14px;
     }
 
     .heading h1 {
@@ -103,71 +111,168 @@
       white-space: nowrap;
     }
 
+    .create-btn:hover {
+      opacity: .9;
+    }
+
+    /* =========================================
+       EARNING LIMIT NOTICE
+    ========================================= */
+
+    .earning-rule {
+      margin-bottom: 18px;
+
+      border: 1px solid #303754;
+
+      background: #0d1328;
+
+      border-radius: 10px;
+
+      padding: 11px 14px;
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 10px;
+
+      color: #aeb6d1;
+
+      font-size: 12px;
+
+      line-height: 1.45;
+    }
+
+    .earning-rule strong {
+      color: #d8caff;
+    }
+
+    .earning-rule-icon {
+      flex: 0 0 auto;
+
+      width: 27px;
+      height: 27px;
+
+      border-radius: 7px;
+
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      background: #21184b;
+
+      color: #c7b4ff;
+
+      font-size: 13px;
+    }
+
+    /* =========================================
+       SUMMARY
+    ========================================= */
+
     .summary {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+
+      grid-template-columns:
+        repeat(4, 1fr);
+
       gap: 10px;
+
       margin-bottom: 18px;
     }
 
     .summary-card {
       background: #11172d;
+
       border: 1px solid #252c49;
+
       border-radius: 12px;
+
       padding: 13px 15px;
     }
 
     .summary-label {
       color: #858eaf;
+
       font-size: 12px;
+
       margin-bottom: 5px;
     }
 
     .summary-value {
       font-size: 20px;
+
       font-weight: 800;
     }
 
+    /* =========================================
+       TOOLBAR
+    ========================================= */
+
     .toolbar {
       display: flex;
+
       gap: 8px;
+
       flex-wrap: wrap;
+
       margin-bottom: 12px;
     }
 
     .filter-btn {
       border: 1px solid #303754;
+
       background: #11172d;
+
       color: #b9c0dc;
+
       padding: 8px 12px;
+
       border-radius: 9px;
+
       cursor: pointer;
+
       font-size: 13px;
+    }
+
+    .filter-btn:hover {
+      background: #171e38;
     }
 
     .filter-btn.active {
       background: #21184b;
+
       color: #c7b4ff;
+
       border-color: #7c5ce6;
     }
 
+    /* =========================================
+       TASK LIST
+    ========================================= */
+
     .task-list {
       display: flex;
+
       flex-direction: column;
+
       gap: 7px;
     }
 
-    /*
-     * The action column is intentionally compact.
-     * Edit + Delete remain on the same line.
-     */
     .task-row {
       width: 100%;
+
       border: 1px solid #252c49;
+
       background: #11172d;
+
       border-radius: 11px;
+
       padding: 11px 13px;
+
       display: grid;
+
       grid-template-columns:
         minmax(170px, 2.1fr)
         95px
@@ -175,11 +280,16 @@
         90px
         90px
         150px;
+
       align-items: center;
+
       gap: 8px;
+
       text-align: left;
+
       color: inherit;
-      transition: 0.15s ease;
+
+      transition: .15s ease;
     }
 
     .task-row:not(.task-header) {
@@ -188,24 +298,35 @@
 
     .task-row:not(.task-header):hover {
       background: #161d38;
+
       border-color: #51459a;
+
       transform: translateY(-1px);
     }
 
     .task-header {
       cursor: default;
+
       background: #0c1227;
+
       border-color: #202640;
+
       color: #7f88a7;
+
       font-size: 11px;
+
       font-weight: 700;
+
       text-transform: uppercase;
+
       letter-spacing: .04em;
     }
 
     .task-header:hover {
       transform: none;
+
       background: #0c1227;
+
       border-color: #202640;
     }
 
@@ -215,84 +336,123 @@
 
     .task-title {
       font-weight: 700;
+
       font-size: 14px;
+
       white-space: nowrap;
+
       overflow: hidden;
+
       text-overflow: ellipsis;
     }
 
     .task-category {
       margin-top: 3px;
+
       color: #7f89aa;
+
       font-size: 11px;
     }
 
     .cell {
       color: #c1c7df;
+
       font-size: 12px;
     }
 
     .money {
       color: #d8caff;
+
       font-weight: 700;
     }
 
     .participants {
       color: #b7c0dc;
+
       font-weight: 600;
     }
 
+    /* =========================================
+       STATUS
+    ========================================= */
+
     .status {
       display: inline-flex;
+
       width: fit-content;
+
       padding: 5px 8px;
+
       border-radius: 7px;
+
       font-size: 10px;
+
       font-weight: 800;
+
       text-transform: uppercase;
     }
 
     .status.approved {
       background: rgba(34, 197, 94, .13);
+
       color: #62e391;
     }
 
     .status.pending {
       background: rgba(245, 158, 11, .13);
+
       color: #f7c35d;
     }
 
     .status.rejected {
       background: rgba(239, 68, 68, .13);
+
       color: #ff7d7d;
     }
 
     .status.other {
       background: rgba(139, 92, 246, .13);
+
       color: #b99cff;
     }
 
+    /* =========================================
+       ACTIONS
+    ========================================= */
+
     .actions {
       display: flex;
+
       align-items: center;
+
       justify-content: flex-start;
+
       gap: 5px;
+
       white-space: nowrap;
     }
 
     .action-btn {
       border: 1px solid #343b5d;
+
       border-radius: 7px;
+
       padding: 6px 8px;
+
       font-size: 10px;
+
       font-weight: 800;
+
       cursor: pointer;
+
       white-space: nowrap;
     }
 
     .view-btn {
       background: #21184b;
+
       color: #c7b4ff;
+
       border-color: #59459e;
     }
 
@@ -302,7 +462,9 @@
 
     .edit-btn {
       background: #17243d;
+
       color: #8fc7ff;
+
       border-color: #315277;
     }
 
@@ -312,7 +474,9 @@
 
     .delete-btn {
       background: #351925;
+
       color: #ff8e9a;
+
       border-color: #6b2c3b;
     }
 
@@ -320,48 +484,67 @@
       background: #48202d;
     }
 
-    .open-cell {
-      color: #a98aff;
-      font-weight: 700;
-      font-size: 12px;
-      text-align: right;
-    }
+    /* =========================================
+       EMPTY / LOADING / ERROR
+    ========================================= */
 
     .empty {
       padding: 40px 20px;
+
       text-align: center;
+
       border: 1px dashed #303754;
+
       border-radius: 12px;
+
       color: #7f88a7;
+
       background: #0d1328;
     }
 
     .loading {
       padding: 30px;
+
       text-align: center;
+
       color: #8d96b4;
     }
 
     .error {
       padding: 15px;
+
       border-radius: 10px;
+
       background: rgba(239, 68, 68, .1);
+
       border: 1px solid rgba(239, 68, 68, .25);
+
       color: #ff8f8f;
+
       margin-bottom: 15px;
+
       display: none;
     }
 
-    /* EDIT MODAL */
+    /* =========================================
+       MODAL
+    ========================================= */
 
     .modal-backdrop {
       position: fixed;
+
       inset: 0;
+
       background: rgba(0, 0, 0, .68);
+
       display: none;
+
       align-items: center;
+
       justify-content: center;
+
       padding: 16px;
+
       z-index: 100;
     }
 
@@ -371,23 +554,35 @@
 
     .modal {
       width: min(600px, 100%);
+
       max-height: 90vh;
+
       overflow-y: auto;
+
       background: #11172d;
+
       border: 1px solid #303754;
+
       border-radius: 14px;
+
       padding: 18px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, .5);
+
+      box-shadow:
+        0 20px 60px
+        rgba(0, 0, .5);
     }
 
     .modal h2 {
       margin: 0;
+
       font-size: 19px;
     }
 
     .modal-subtitle {
       margin: 5px 0 16px;
+
       color: #818aa8;
+
       font-size: 12px;
     }
 
@@ -397,9 +592,13 @@
 
     .form-label {
       display: block;
+
       margin-bottom: 6px;
+
       color: #aab2ce;
+
       font-size: 11px;
+
       font-weight: 700;
     }
 
@@ -407,18 +606,27 @@
     .form-textarea,
     .form-select {
       width: 100%;
+
       border: 1px solid #303754;
+
       background: #090e21;
+
       color: #f0f2ff;
+
       border-radius: 9px;
+
       padding: 10px;
+
       outline: none;
+
       font-family: inherit;
+
       font-size: 13px;
     }
 
     .form-textarea {
       min-height: 100px;
+
       resize: vertical;
     }
 
@@ -430,43 +638,68 @@
 
     .form-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+
+      grid-template-columns:
+        1fr 1fr;
+
       gap: 10px;
     }
 
     .modal-actions {
       display: flex;
+
       justify-content: flex-end;
+
       gap: 8px;
+
       margin-top: 15px;
     }
 
     .modal-btn {
       border: 1px solid #343a5d;
+
       border-radius: 9px;
+
       padding: 9px 13px;
+
       cursor: pointer;
+
       font-weight: 700;
+
       font-size: 12px;
     }
 
     .cancel-btn {
       background: #171d38;
+
       color: #c4cae1;
     }
 
     .save-btn {
-      background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+      background:
+        linear-gradient(
+          135deg,
+          #8b5cf6,
+          #6d28d9
+        );
+
       color: white;
+
       border: 0;
     }
 
     .save-btn:disabled {
       opacity: .5;
+
       cursor: not-allowed;
     }
 
+    /* =========================================
+       RESPONSIVE
+    ========================================= */
+
     @media (max-width: 1000px) {
+
       .task-row {
         grid-template-columns:
           minmax(160px, 2fr)
@@ -476,9 +709,11 @@
           80px
           135px;
       }
+
     }
 
     @media (max-width: 850px) {
+
       .task-row {
         grid-template-columns:
           minmax(160px, 2fr)
@@ -495,9 +730,11 @@
       .task-header > :nth-child(4) {
         display: none;
       }
+
     }
 
     @media (max-width: 650px) {
+
       .topbar {
         padding: 0 14px;
       }
@@ -508,11 +745,13 @@
 
       .heading {
         align-items: flex-start;
+
         flex-direction: column;
       }
 
       .summary {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns:
+          repeat(2, 1fr);
       }
 
       .task-row {
@@ -520,7 +759,9 @@
           minmax(135px, 1fr)
           70px
           128px;
+
         gap: 6px;
+
         padding: 9px;
       }
 
@@ -536,202 +777,367 @@
         display: none;
       }
 
-      .open-cell {
-        display: none;
-      }
-
-      .actions {
-        gap: 4px;
-      }
-
-      .action-btn {
-        padding: 6px 7px;
-        font-size: 9px;
-      }
-
       .heading h1 {
         font-size: 21px;
       }
 
       .form-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns:
+          1fr;
       }
+
+      .earning-rule {
+        align-items: flex-start;
+      }
+
     }
+
   </style>
+
 </head>
+
 
 <body>
 
-  <header class="topbar">
 
-    <div class="brand">
-      <div class="logo">E</div>
-      <span>EarnGig Admin</span>
+<header class="topbar">
+
+  <div class="brand">
+
+    <div class="logo">
+      E
     </div>
 
-    <button class="back-btn" onclick="goBack()">
-      ← Dashboard
+    <span>
+      EarnGig Admin
+    </span>
+
+  </div>
+
+
+  <button
+    class="back-btn"
+    onclick="goBack()"
+  >
+    ← Dashboard
+  </button>
+
+</header>
+
+
+<main class="page">
+
+
+  <!-- =========================================
+       HEADING
+  ========================================= -->
+
+  <div class="heading">
+
+    <div>
+
+      <h1>
+        Task Management
+      </h1>
+
+      <p>
+        Click a task to review its participants and submissions.
+      </p>
+
+    </div>
+
+
+    <button
+      class="create-btn"
+      onclick="createTask()"
+    >
+      + Create Task
     </button>
 
-  </header>
+  </div>
 
 
-  <main class="page">
+  <!-- =========================================
+       DAILY EARNING RULE
+  ========================================= -->
 
-    <div class="heading">
+  <div class="earning-rule">
 
-      <div>
-        <h1>Task Management</h1>
+    <div class="earning-rule-icon">
+      ₦
+    </div>
 
-        <p>
-          Click a task to review its participants and submissions.
-        </p>
-      </div>
+    <div>
 
-      <button
-        class="create-btn"
-        onclick="createTask()"
-      >
-        + Create Task
-      </button>
+      <strong>
+        Daily earning rule:
+      </strong>
+
+      Task rewards are treated as
+      <strong>normal daily earnings</strong>
+      and count toward the member's plan-based daily earning limit.
+
+      Referral bonuses and Create &amp; Earn earnings are
+      <strong>not</strong>
+      included in this limit.
+
+      The limit is enforced server-side when the reward is credited.
 
     </div>
 
+  </div>
 
-    <div class="summary">
 
-      <div class="summary-card">
-        <div class="summary-label">
-          Total Tasks
-        </div>
+  <!-- =========================================
+       SUMMARY
+  ========================================= -->
 
-        <div
-          class="summary-value"
-          id="totalTasks"
-        >
-          0
-        </div>
+  <div class="summary">
+
+
+    <div class="summary-card">
+
+      <div class="summary-label">
+        Total Tasks
       </div>
 
-
-      <div class="summary-card">
-        <div class="summary-label">
-          Pending
-        </div>
-
-        <div
-          class="summary-value"
-          id="pendingTasks"
-        >
-          0
-        </div>
-      </div>
-
-
-      <div class="summary-card">
-        <div class="summary-label">
-          Approved
-        </div>
-
-        <div
-          class="summary-value"
-          id="approvedTasks"
-        >
-          0
-        </div>
-      </div>
-
-
-      <div class="summary-card">
-        <div class="summary-label">
-          Rejected
-        </div>
-
-        <div
-          class="summary-value"
-          id="rejectedTasks"
-        >
-          0
-        </div>
+      <div
+        class="summary-value"
+        id="totalTasks"
+      >
+        0
       </div>
 
     </div>
 
 
-    <div
-      id="errorBox"
-      class="error"
-    ></div>
+    <div class="summary-card">
 
-
-    <div class="toolbar">
-
-      <button
-        class="filter-btn active"
-        data-filter="all"
-      >
-        All
-      </button>
-
-      <button
-        class="filter-btn"
-        data-filter="pending"
-      >
+      <div class="summary-label">
         Pending
-      </button>
+      </div>
 
-      <button
-        class="filter-btn"
-        data-filter="approved"
+      <div
+        class="summary-value"
+        id="pendingTasks"
       >
-        Approved
-      </button>
-
-      <button
-        class="filter-btn"
-        data-filter="rejected"
-      >
-        Rejected
-      </button>
-
-    </div>
-
-
-    <div id="taskList">
-
-      <div class="loading">
-        Loading tasks...
+        0
       </div>
 
     </div>
 
-  </main>
+
+    <div class="summary-card">
+
+      <div class="summary-label">
+        Approved
+      </div>
+
+      <div
+        class="summary-value"
+        id="approvedTasks"
+      >
+        0
+      </div>
+
+    </div>
 
 
-  <!-- EDIT TASK MODAL -->
+    <div class="summary-card">
+
+      <div class="summary-label">
+        Rejected
+      </div>
+
+      <div
+        class="summary-value"
+        id="rejectedTasks"
+      >
+        0
+      </div>
+
+    </div>
+
+
+  </div>
+
 
   <div
-    id="editModal"
-    class="modal-backdrop"
-  >
+    id="errorBox"
+    class="error"
+  ></div>
 
-    <div class="modal">
 
-      <h2>Edit Task</h2>
+  <!-- =========================================
+       FILTERS
+  ========================================= -->
 
-      <div class="modal-subtitle">
-        Update the task information below.
+  <div class="toolbar">
+
+
+    <button
+      class="filter-btn active"
+      data-filter="all"
+    >
+      All
+    </button>
+
+
+    <button
+      class="filter-btn"
+      data-filter="pending"
+    >
+      Pending
+    </button>
+
+
+    <button
+      class="filter-btn"
+      data-filter="approved"
+    >
+      Approved
+    </button>
+
+
+    <button
+      class="filter-btn"
+      data-filter="rejected"
+    >
+      Rejected
+    </button>
+
+
+  </div>
+
+
+  <div id="taskList">
+
+    <div class="loading">
+      Loading tasks...
+    </div>
+
+  </div>
+
+
+</main>
+
+
+<!-- =========================================
+     EDIT TASK MODAL
+========================================= -->
+
+<div
+  id="editModal"
+  class="modal-backdrop"
+>
+
+  <div class="modal">
+
+    <h2>
+      Edit Task
+    </h2>
+
+    <div class="modal-subtitle">
+      Update the task information below.
+    </div>
+
+
+    <div class="form-group">
+
+      <label class="form-label">
+        Task Title
+      </label>
+
+      <input
+        id="editTitle"
+        class="form-input"
+        type="text"
+      >
+
+    </div>
+
+
+    <div class="form-group">
+
+      <label class="form-label">
+        Description / Instructions
+      </label>
+
+      <textarea
+        id="editDescription"
+        class="form-textarea"
+      ></textarea>
+
+    </div>
+
+
+    <div class="form-grid">
+
+
+      <div class="form-group">
+
+        <label class="form-label">
+          Reward per Participant
+        </label>
+
+        <input
+          id="editReward"
+          class="form-input"
+          type="number"
+          min="0"
+          step="0.01"
+        >
+
       </div>
 
 
       <div class="form-group">
 
         <label class="form-label">
-          Task Title
+          Maximum Participants
         </label>
 
         <input
-          id="editTitle"
+          id="editParticipants"
+          class="form-input"
+          type="number"
+          min="1"
+          step="1"
+        >
+
+      </div>
+
+
+    </div>
+
+
+    <div class="form-group">
+
+      <label class="form-label">
+        Task Link
+      </label>
+
+      <input
+        id="editTaskLink"
+        class="form-input"
+        type="url"
+        placeholder="https://..."
+      >
+
+    </div>
+
+
+    <div class="form-grid">
+
+
+      <div class="form-group">
+
+        <label class="form-label">
+          Category
+        </label>
+
+        <input
+          id="editCategory"
           class="form-input"
           type="text"
         >
@@ -742,1206 +1148,1214 @@
       <div class="form-group">
 
         <label class="form-label">
-          Description / Instructions
+          Status
         </label>
 
-        <textarea
-          id="editDescription"
-          class="form-textarea"
-        ></textarea>
-
-      </div>
-
-
-      <div class="form-grid">
-
-        <div class="form-group">
-
-          <label class="form-label">
-            Reward per Participant
-          </label>
-
-          <input
-            id="editReward"
-            class="form-input"
-            type="number"
-            min="0"
-            step="0.01"
-          >
-
-        </div>
-
-
-        <div class="form-group">
-
-          <label class="form-label">
-            Maximum Participants
-          </label>
-
-          <input
-            id="editParticipants"
-            class="form-input"
-            type="number"
-            min="1"
-            step="1"
-          >
-
-        </div>
-
-      </div>
-
-
-      <div class="form-group">
-
-        <label class="form-label">
-          Task Link
-        </label>
-
-        <input
-          id="editTaskLink"
-          class="form-input"
-          type="url"
-          placeholder="https://..."
+        <select
+          id="editStatus"
+          class="form-select"
         >
 
-      </div>
+          <option value="pending">
+            Pending
+          </option>
 
+          <option value="approved">
+            Approved
+          </option>
 
-      <div class="form-grid">
+          <option value="rejected">
+            Rejected
+          </option>
 
-        <div class="form-group">
-
-          <label class="form-label">
-            Category
-          </label>
-
-          <input
-            id="editCategory"
-            class="form-input"
-            type="text"
-          >
-
-        </div>
-
-
-        <div class="form-group">
-
-          <label class="form-label">
-            Status
-          </label>
-
-          <select
-            id="editStatus"
-            class="form-select"
-          >
-
-            <option value="pending">
-              Pending
-            </option>
-
-            <option value="approved">
-              Approved
-            </option>
-
-            <option value="rejected">
-              Rejected
-            </option>
-
-          </select>
-
-        </div>
+        </select>
 
       </div>
 
 
-      <div class="modal-actions">
+    </div>
 
-        <button
-          type="button"
-          class="modal-btn cancel-btn"
-          onclick="closeEditModal()"
-        >
-          Cancel
-        </button>
 
-        <button
-          type="button"
-          id="saveEditBtn"
-          class="modal-btn save-btn"
-          onclick="saveTaskEdit()"
-        >
-          Save Changes
-        </button>
+    <div class="modal-actions">
 
-      </div>
+
+      <button
+        type="button"
+        class="modal-btn cancel-btn"
+        onclick="closeEditModal()"
+      >
+        Cancel
+      </button>
+
+
+      <button
+        type="button"
+        id="saveEditBtn"
+        class="modal-btn save-btn"
+        onclick="saveTaskEdit()"
+      >
+        Save Changes
+      </button>
+
 
     </div>
 
   </div>
 
-
-  <script>
-
-    let allTasks = [];
-    let currentFilter = "all";
-    let editingTask = null;
+</div>
 
 
-    document.addEventListener(
-      "DOMContentLoaded",
-      init
+<script>
+
+let allTasks = [];
+
+let currentFilter = "all";
+
+let editingTask = null;
+
+
+/* =========================================
+   START
+========================================= */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  init
+);
+
+
+async function init() {
+
+  try {
+
+    await verifyAdmin();
+
+    await loadTasks();
+
+
+    document
+      .querySelectorAll(".filter-btn")
+      .forEach(button => {
+
+        button.addEventListener(
+          "click",
+          () => {
+
+            document
+              .querySelectorAll(".filter-btn")
+              .forEach(btn =>
+                btn.classList.remove(
+                  "active"
+                )
+              );
+
+            button.classList.add(
+              "active"
+            );
+
+            currentFilter =
+              button.dataset.filter;
+
+            renderTasks();
+
+          }
+        );
+
+      });
+
+  }
+
+  catch (error) {
+
+    console.error(error);
+
+    showError(
+      error.message ||
+      "Unable to load task management."
+    );
+
+  }
+
+}
+
+
+/* =========================================
+   VERIFY ADMIN
+========================================= */
+
+async function verifyAdmin() {
+
+  const {
+    data: {
+      user
+    },
+    error
+  } =
+    await supabaseClient
+      .auth
+      .getUser();
+
+
+  if (error) {
+
+    throw new Error(
+      error.message
+    );
+
+  }
+
+
+  if (!user) {
+
+    window.location.href =
+      "index.html";
+
+    return;
+
+  }
+
+
+  const {
+    data: profile,
+    error: profileError
+  } =
+    await supabaseClient
+      .from("profiles")
+      .select(
+        "id,is_admin,account_status"
+      )
+      .eq(
+        "id",
+        user.id
+      )
+      .maybeSingle();
+
+
+  if (profileError) {
+
+    throw new Error(
+      profileError.message
+    );
+
+  }
+
+
+  if (
+    !profile ||
+    profile.is_admin !== true ||
+    profile.account_status !== "active"
+  ) {
+
+    throw new Error(
+      "Administrator access is required."
+    );
+
+  }
+
+}
+
+
+/* =========================================
+   LOAD TASKS
+========================================= */
+
+async function loadTasks() {
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("tasks")
+      .select(`
+        id,
+        title,
+        description,
+        category,
+        reward_amount,
+        status,
+        max_participants,
+        participant_count,
+        require_proof,
+        task_type,
+        action_type,
+        platform,
+        verification_type,
+        task_link,
+        created_at,
+        updated_at
+      `)
+      .order(
+        "created_at",
+        {
+          ascending: false
+        }
+      );
+
+
+  if (error) {
+
+    throw new Error(
+      error.message
+    );
+
+  }
+
+
+  allTasks =
+    data || [];
+
+
+  updateSummary();
+
+  renderTasks();
+
+}
+
+
+/* =========================================
+   SUMMARY
+========================================= */
+
+function updateSummary() {
+
+  document.getElementById(
+    "totalTasks"
+  ).textContent =
+    allTasks.length;
+
+
+  document.getElementById(
+    "pendingTasks"
+  ).textContent =
+    allTasks.filter(
+      task =>
+        String(
+          task.status || ""
+        ).toLowerCase() ===
+        "pending"
+    ).length;
+
+
+  document.getElementById(
+    "approvedTasks"
+  ).textContent =
+    allTasks.filter(
+      task =>
+        String(
+          task.status || ""
+        ).toLowerCase() ===
+        "approved"
+    ).length;
+
+
+  document.getElementById(
+    "rejectedTasks"
+  ).textContent =
+    allTasks.filter(
+      task =>
+        String(
+          task.status || ""
+        ).toLowerCase() ===
+        "rejected"
+    ).length;
+
+}
+
+
+/* =========================================
+   RENDER TASKS
+========================================= */
+
+function renderTasks() {
+
+  const container =
+    document.getElementById(
+      "taskList"
     );
 
 
-    async function init() {
+  let tasks =
+    allTasks;
 
-      try {
 
-        await verifyAdmin();
+  if (
+    currentFilter !==
+    "all"
+  ) {
 
-        await loadTasks();
+    tasks =
+      allTasks.filter(
+        task =>
+          String(
+            task.status || ""
+          ).toLowerCase() ===
+          currentFilter
+      );
 
-        document
-          .querySelectorAll(".filter-btn")
-          .forEach(button => {
+  }
 
-            button.addEventListener(
-              "click",
-              () => {
 
-                document
-                  .querySelectorAll(".filter-btn")
-                  .forEach(btn =>
-                    btn.classList.remove("active")
-                  );
+  if (!tasks.length) {
 
-                button.classList.add("active");
+    container.innerHTML = `
 
-                currentFilter =
-                  button.dataset.filter;
+      <div class="empty">
+        No tasks found for this filter.
+      </div>
 
-                renderTasks();
-              }
-            );
+    `;
 
-          });
+    return;
 
-      } catch (error) {
+  }
 
-        console.error(error);
 
-        showError(
-          error.message ||
-          "Unable to load task management."
-        );
+  container.innerHTML = `
 
-      }
+    <div class="task-row task-header">
 
-    }
+      <div>
+        Task
+      </div>
 
+      <div>
+        Category
+      </div>
 
-    async function verifyAdmin() {
+      <div>
+        Reward
+      </div>
 
-      const {
-        data: { user },
-        error
-      } =
-        await supabaseClient.auth.getUser();
+      <div>
+        Participants
+      </div>
 
-      if (error) {
-        throw new Error(
-          error.message
-        );
-      }
+      <div>
+        Status
+      </div>
 
-      if (!user) {
+      <div>
+        Actions
+      </div>
 
-        window.location.href =
-          "index.html";
+    </div>
 
-        return;
 
-      }
+    ${tasks
+      .map(
+        task =>
+          renderTaskRow(task)
+      )
+      .join("")}
 
+  `;
 
-      const {
-        data: profile,
-        error: profileError
-      } =
-        await supabaseClient
-          .from("profiles")
-          .select(
-            "id,is_admin,account_status"
-          )
-          .eq("id", user.id)
-          .maybeSingle();
 
+  container
+    .querySelectorAll(
+      ".task-row[data-task-id]"
+    )
+    .forEach(row => {
 
-      if (profileError) {
+      row.addEventListener(
+        "click",
+        () => {
 
-        throw new Error(
-          profileError.message
-        );
+          const taskId =
+            row.dataset.taskId;
 
-      }
-
-
-      if (
-        !profile ||
-        profile.is_admin !== true ||
-        profile.account_status !== "active"
-      ) {
-
-        throw new Error(
-          "Administrator access is required."
-        );
-
-      }
-
-    }
-
-
-    async function loadTasks() {
-
-      const {
-        data,
-        error
-      } =
-        await supabaseClient
-          .from("tasks")
-          .select(`
-            id,
-            title,
-            description,
-            category,
-            reward_amount,
-            status,
-            max_participants,
-            participant_count,
-            require_proof,
-            task_type,
-            action_type,
-            platform,
-            verification_type,
-            task_link,
-            created_at,
-            updated_at
-          `)
-          .order(
-            "created_at",
-            {
-              ascending: false
-            }
-          );
-
-
-      if (error) {
-
-        throw new Error(
-          error.message
-        );
-
-      }
-
-
-      allTasks =
-        data || [];
-
-
-      updateSummary();
-
-      renderTasks();
-
-    }
-
-
-    function updateSummary() {
-
-      document.getElementById(
-        "totalTasks"
-      ).textContent =
-        allTasks.length;
-
-
-      document.getElementById(
-        "pendingTasks"
-      ).textContent =
-        allTasks.filter(
-          task =>
-            String(
-              task.status || ""
-            ).toLowerCase() ===
-            "pending"
-        ).length;
-
-
-      document.getElementById(
-        "approvedTasks"
-      ).textContent =
-        allTasks.filter(
-          task =>
-            String(
-              task.status || ""
-            ).toLowerCase() ===
-            "approved"
-        ).length;
-
-
-      document.getElementById(
-        "rejectedTasks"
-      ).textContent =
-        allTasks.filter(
-          task =>
-            String(
-              task.status || ""
-            ).toLowerCase() ===
-            "rejected"
-        ).length;
-
-    }
-
-
-    function renderTasks() {
-
-      const container =
-        document.getElementById(
-          "taskList"
-        );
-
-
-      let tasks =
-        allTasks;
-
-
-      if (
-        currentFilter !==
-        "all"
-      ) {
-
-        tasks =
-          allTasks.filter(
-            task =>
-              String(
-                task.status || ""
-              ).toLowerCase() ===
-              currentFilter
-          );
-
-      }
-
-
-      if (!tasks.length) {
-
-        container.innerHTML = `
-          <div class="empty">
-            No tasks found for this filter.
-          </div>
-        `;
-
-        return;
-
-      }
-
-
-      container.innerHTML = `
-
-        <div class="task-row task-header">
-
-          <div>
-            Task
-          </div>
-
-          <div>
-            Category
-          </div>
-
-          <div>
-            Reward
-          </div>
-
-          <div>
-            Participants
-          </div>
-
-          <div>
-            Status
-          </div>
-
-          <div>
-            Actions
-          </div>
-
-        </div>
-
-
-        ${tasks
-          .map(
-            task =>
-              renderTaskRow(task)
-          )
-          .join("")}
-
-      `;
-
-
-      container
-        .querySelectorAll(
-          ".task-row[data-task-id]"
-        )
-        .forEach(row => {
-
-          row.addEventListener(
-            "click",
-            () => {
-
-              const taskId =
-                row.dataset.taskId;
-
-              window.location.href =
-                "admin-task-detail.html?id=" +
-                encodeURIComponent(
-                  taskId
-                );
-
-            }
-          );
-
-        });
-
-
-      container
-        .querySelectorAll(
-          "[data-edit-task]"
-        )
-        .forEach(button => {
-
-          button.addEventListener(
-            "click",
-            event => {
-
-              event.stopPropagation();
-
-              const taskId =
-                button.dataset.editTask;
-
-              openEditModal(
-                taskId
-              );
-
-            }
-          );
-
-        });
-
-
-      container
-        .querySelectorAll(
-          "[data-delete-task]"
-        )
-        .forEach(button => {
-
-          button.addEventListener(
-            "click",
-            event => {
-
-              event.stopPropagation();
-
-              const taskId =
-                button.dataset.deleteTask;
-
-              deleteTask(
-                taskId
-              );
-
-            }
-          );
-
-        });
-
-
-      container
-        .querySelectorAll(
-          "[data-view-task]"
-        )
-        .forEach(button => {
-
-          button.addEventListener(
-            "click",
-            event => {
-
-              event.stopPropagation();
-
-              const taskId =
-                button.dataset.viewTask;
-
-              window.location.href =
-                "admin-task-detail.html?id=" +
-                encodeURIComponent(
-                  taskId
-                );
-
-            }
-          );
-
-        });
-
-    }
-
-
-    function renderTaskRow(task) {
-
-      const status =
-        String(
-          task.status ||
-          "unknown"
-        ).toLowerCase();
-
-
-      const statusClass =
-        status === "approved"
-          ? "approved"
-          : status === "pending"
-            ? "pending"
-            : status === "rejected"
-              ? "rejected"
-              : "other";
-
-
-      const reward =
-        Number(
-          task.reward_amount || 0
-        );
-
-
-      const participantCount =
-        Number(
-          task.participant_count || 0
-        );
-
-
-      const maxParticipants =
-        task.max_participants == null
-          ? "∞"
-          : Number(
-              task.max_participants
-            );
-
-
-      const category =
-        task.category ||
-        task.platform ||
-        task.task_type ||
-        "General";
-
-
-      return `
-
-        <div
-          class="task-row"
-          data-task-id="${escapeHtml(
-            task.id
-          )}"
-          title="Open task participants"
-        >
-
-
-          <div class="title-cell">
-
-            <div class="task-title">
-              ${escapeHtml(
-                task.title ||
-                "Untitled Task"
-              )}
-            </div>
-
-            <div class="task-category">
-
-              ${escapeHtml(
-                task.action_type ||
-                task.verification_type ||
-                "Task"
-              )}
-
-            </div>
-
-          </div>
-
-
-          <div class="cell">
-
-            ${escapeHtml(
-              category
-            )}
-
-          </div>
-
-
-          <div class="cell money">
-
-            ₦${formatMoney(
-              reward
-            )}
-
-          </div>
-
-
-          <div class="cell participants">
-
-            ${participantCount}
-            /
-            ${maxParticipants}
-
-          </div>
-
-
-          <div>
-
-            <span
-              class="status ${statusClass}"
-            >
-              ${escapeHtml(
-                status
-              )}
-            </span>
-
-          </div>
-
-
-          <div
-            class="actions"
-            onclick="event.stopPropagation()"
-          >
-
-            <button
-              type="button"
-              class="action-btn view-btn"
-              data-view-task="${escapeHtml(
-                task.id
-              )}"
-            >
-              View
-            </button>
-
-
-            <button
-              type="button"
-              class="action-btn edit-btn"
-              data-edit-task="${escapeHtml(
-                task.id
-              )}"
-            >
-              Edit
-            </button>
-
-
-            <button
-              type="button"
-              class="action-btn delete-btn"
-              data-delete-task="${escapeHtml(
-                task.id
-              )}"
-            >
-              Delete
-            </button>
-
-          </div>
-
-
-        </div>
-
-      `;
-
-    }
-
-
-    function openEditModal(taskId) {
-
-      const task =
-        allTasks.find(
-          item =>
-            String(item.id) ===
-            String(taskId)
-        );
-
-
-      if (!task) {
-
-        showError(
-          "Task could not be found."
-        );
-
-        return;
-
-      }
-
-
-      editingTask =
-        task;
-
-
-      document.getElementById(
-        "editTitle"
-      ).value =
-        task.title || "";
-
-
-      document.getElementById(
-        "editDescription"
-      ).value =
-        task.description || "";
-
-
-      document.getElementById(
-        "editReward"
-      ).value =
-        task.reward_amount ?? 0;
-
-
-      document.getElementById(
-        "editParticipants"
-      ).value =
-        task.max_participants ?? 1;
-
-
-      document.getElementById(
-        "editTaskLink"
-      ).value =
-        task.task_link || "";
-
-
-      document.getElementById(
-        "editCategory"
-      ).value =
-        task.category || "";
-
-
-      document.getElementById(
-        "editStatus"
-      ).value =
-        String(
-          task.status || "pending"
-        ).toLowerCase();
-
-
-      document
-        .getElementById(
-          "editModal"
-        )
-        .classList.add(
-          "show"
-        );
-
-    }
-
-
-    function closeEditModal() {
-
-      editingTask =
-        null;
-
-
-      document
-        .getElementById(
-          "editModal"
-        )
-        .classList.remove(
-          "show"
-        );
-
-    }
-
-
-    async function saveTaskEdit() {
-
-      if (!editingTask) {
-        return;
-      }
-
-
-      const title =
-        document.getElementById(
-          "editTitle"
-        ).value.trim();
-
-
-      const description =
-        document.getElementById(
-          "editDescription"
-        ).value.trim();
-
-
-      const reward =
-        Number(
-          document.getElementById(
-            "editReward"
-          ).value
-        );
-
-
-      const maxParticipants =
-        Number(
-          document.getElementById(
-            "editParticipants"
-          ).value
-        );
-
-
-      const taskLink =
-        document.getElementById(
-          "editTaskLink"
-        ).value.trim();
-
-
-      const category =
-        document.getElementById(
-          "editCategory"
-        ).value.trim();
-
-
-      const status =
-        document.getElementById(
-          "editStatus"
-        ).value;
-
-
-      if (!title) {
-
-        alert(
-          "Please enter a task title."
-        );
-
-        return;
-
-      }
-
-
-      if (
-        !Number.isFinite(reward) ||
-        reward < 0
-      ) {
-
-        alert(
-          "Please enter a valid reward."
-        );
-
-        return;
-
-      }
-
-
-      if (
-        !Number.isInteger(
-          maxParticipants
-        ) ||
-        maxParticipants < 1
-      ) {
-
-        alert(
-          "Maximum participants must be at least 1."
-        );
-
-        return;
-
-      }
-
-
-      const saveButton =
-        document.getElementById(
-          "saveEditBtn"
-        );
-
-
-      saveButton.disabled =
-        true;
-
-
-      saveButton.textContent =
-        "Saving...";
-
-
-      try {
-
-        const {
-          error
-        } =
-          await supabaseClient
-            .from("tasks")
-            .update({
-
-              title,
-
-              description:
-                description ||
-                null,
-
-              category:
-                category ||
-                "General",
-
-              reward_amount:
-                reward,
-
-              max_participants:
-                maxParticipants,
-
-              task_link:
-                taskLink ||
-                null,
-
-              status,
-
-              updated_at:
-                new Date().toISOString()
-
-            })
-            .eq(
-              "id",
-              editingTask.id
-            );
-
-
-        if (error) {
-
-          throw new Error(
-            error.message
-          );
-
-        }
-
-
-        closeEditModal();
-
-        await loadTasks();
-
-
-      } catch (error) {
-
-        console.error(error);
-
-        alert(
-          error.message ||
-          "Unable to update task."
-        );
-
-      } finally {
-
-        saveButton.disabled =
-          false;
-
-        saveButton.textContent =
-          "Save Changes";
-
-      }
-
-    }
-
-
-    async function deleteTask(taskId) {
-
-      const task =
-        allTasks.find(
-          item =>
-            String(item.id) ===
-            String(taskId)
-        );
-
-
-      if (!task) {
-        return;
-      }
-
-
-      const participantCount =
-        Number(
-          task.participant_count || 0
-        );
-
-
-      const warning =
-        participantCount > 0
-          ? (
-            "This task has " +
-            participantCount +
-            " participant(s).\n\n" +
-            "Deleting it may also remove related task records.\n\n" +
-            "Are you sure you want to delete it?"
-          )
-          : (
-            "Are you sure you want to delete this task?"
-          );
-
-
-      const confirmed =
-        window.confirm(
-          warning
-        );
-
-
-      if (!confirmed) {
-        return;
-      }
-
-
-      try {
-
-        const {
-          error
-        } =
-          await supabaseClient
-            .from("tasks")
-            .delete()
-            .eq(
-              "id",
+          window.location.href =
+            "admin-task-detail.html?id=" +
+            encodeURIComponent(
               taskId
             );
 
-
-        if (error) {
-
-          throw new Error(
-            error.message
-          );
-
-        }
-
-
-        await loadTasks();
-
-
-      } catch (error) {
-
-        console.error(error);
-
-        alert(
-          "Unable to delete this task: " +
-          error.message
-        );
-
-      }
-
-    }
-
-
-    function createTask() {
-
-      window.location.href =
-        "admin-create-task.html";
-
-    }
-
-
-    function goBack() {
-
-      window.location.href =
-        "admin-dashboard.html";
-
-    }
-
-
-    function formatMoney(value) {
-
-      return Number(
-        value || 0
-      ).toLocaleString(
-        "en-NG",
-        {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2
         }
       );
 
-    }
+    });
 
 
-    function escapeHtml(value) {
+  container
+    .querySelectorAll(
+      "[data-edit-task]"
+    )
+    .forEach(button => {
 
-      return String(
-        value ?? ""
-      )
-        .replace(
-          /&/g,
-          "&amp;"
-        )
-        .replace(
-          /</g,
-          "&lt;"
-        )
-        .replace(
-          />/g,
-          "&gt;"
-        )
-        .replace(
-          /"/g,
-          "&quot;"
-        )
-        .replace(
-          /'/g,
-          "&#039;"
-        );
-
-    }
-
-
-    function showError(message) {
-
-      const box =
-        document.getElementById(
-          "errorBox"
-        );
-
-
-      box.textContent =
-        message;
-
-
-      box.style.display =
-        "block";
-
-    }
-
-
-    /*
-     * Clicking outside the edit modal closes it.
-     */
-    document
-      .getElementById("editModal")
-      .addEventListener(
+      button.addEventListener(
         "click",
         event => {
 
-          if (
-            event.target.id ===
-            "editModal"
-          ) {
+          event.stopPropagation();
 
-            closeEditModal();
+          const taskId =
+            button.dataset.editTask;
 
-          }
+          openEditModal(
+            taskId
+          );
 
         }
       );
 
+    });
 
-    /*
-     * Escape closes the edit modal.
-     */
-    document.addEventListener(
-      "keydown",
-      event => {
 
-        if (
-          event.key ===
-          "Escape"
-        ) {
+  container
+    .querySelectorAll(
+      "[data-delete-task]"
+    )
+    .forEach(button => {
 
-          closeEditModal();
+      button.addEventListener(
+        "click",
+        event => {
+
+          event.stopPropagation();
+
+          const taskId =
+            button.dataset.deleteTask;
+
+          deleteTask(
+            taskId
+          );
 
         }
+      );
 
-      }
+    });
+
+
+  container
+    .querySelectorAll(
+      "[data-view-task]"
+    )
+    .forEach(button => {
+
+      button.addEventListener(
+        "click",
+        event => {
+
+          event.stopPropagation();
+
+          const taskId =
+            button.dataset.viewTask;
+
+          window.location.href =
+            "admin-task-detail.html?id=" +
+            encodeURIComponent(
+              taskId
+            );
+
+        }
+      );
+
+    });
+
+}
+
+
+/* =========================================
+   TASK ROW
+========================================= */
+
+function renderTaskRow(task) {
+
+  const status =
+    String(
+      task.status ||
+      "unknown"
+    ).toLowerCase();
+
+
+  const statusClass =
+    status === "approved"
+      ? "approved"
+      : status === "pending"
+        ? "pending"
+        : status === "rejected"
+          ? "rejected"
+          : "other";
+
+
+  const reward =
+    Number(
+      task.reward_amount || 0
     );
 
-  </script>
+
+  const participantCount =
+    Number(
+      task.participant_count || 0
+    );
+
+
+  const maxParticipants =
+    task.max_participants == null
+      ? "∞"
+      : Number(
+          task.max_participants
+        );
+
+
+  const category =
+    task.category ||
+    task.platform ||
+    task.task_type ||
+    "General";
+
+
+  return `
+
+    <div
+      class="task-row"
+      data-task-id="${escapeHtml(
+        task.id
+      )}"
+      title="Open task participants"
+    >
+
+
+      <div class="title-cell">
+
+        <div class="task-title">
+
+          ${escapeHtml(
+            task.title ||
+            "Untitled Task"
+          )}
+
+        </div>
+
+        <div class="task-category">
+
+          ${escapeHtml(
+            task.action_type ||
+            task.verification_type ||
+            "Task"
+          )}
+
+        </div>
+
+      </div>
+
+
+      <div class="cell">
+
+        ${escapeHtml(
+          category
+        )}
+
+      </div>
+
+
+      <div class="cell money">
+
+        ₦${formatMoney(
+          reward
+        )}
+
+      </div>
+
+
+      <div class="cell participants">
+
+        ${participantCount}
+        /
+        ${maxParticipants}
+
+      </div>
+
+
+      <div>
+
+        <span
+          class="status ${statusClass}"
+        >
+          ${escapeHtml(
+            status
+          )}
+        </span>
+
+      </div>
+
+
+      <div
+        class="actions"
+        onclick="event.stopPropagation()"
+      >
+
+        <button
+          type="button"
+          class="action-btn view-btn"
+          data-view-task="${escapeHtml(
+            task.id
+          )}"
+        >
+          View
+        </button>
+
+
+        <button
+          type="button"
+          class="action-btn edit-btn"
+          data-edit-task="${escapeHtml(
+            task.id
+          )}"
+        >
+          Edit
+        </button>
+
+
+        <button
+          type="button"
+          class="action-btn delete-btn"
+          data-delete-task="${escapeHtml(
+            task.id
+          )}"
+        >
+          Delete
+        </button>
+
+      </div>
+
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================
+   EDIT MODAL
+========================================= */
+
+function openEditModal(taskId) {
+
+  const task =
+    allTasks.find(
+      item =>
+        String(item.id) ===
+        String(taskId)
+    );
+
+
+  if (!task) {
+
+    showError(
+      "Task could not be found."
+    );
+
+    return;
+
+  }
+
+
+  editingTask =
+    task;
+
+
+  document.getElementById(
+    "editTitle"
+  ).value =
+    task.title || "";
+
+
+  document.getElementById(
+    "editDescription"
+  ).value =
+    task.description || "";
+
+
+  document.getElementById(
+    "editReward"
+  ).value =
+    task.reward_amount ?? 0;
+
+
+  document.getElementById(
+    "editParticipants"
+  ).value =
+    task.max_participants ?? 1;
+
+
+  document.getElementById(
+    "editTaskLink"
+  ).value =
+    task.task_link || "";
+
+
+  document.getElementById(
+    "editCategory"
+  ).value =
+    task.category || "";
+
+
+  document.getElementById(
+    "editStatus"
+  ).value =
+    String(
+      task.status ||
+      "pending"
+    ).toLowerCase();
+
+
+  document
+    .getElementById(
+      "editModal"
+    )
+    .classList.add(
+      "show"
+    );
+
+}
+
+
+function closeEditModal() {
+
+  editingTask =
+    null;
+
+
+  document
+    .getElementById(
+      "editModal"
+    )
+    .classList.remove(
+      "show"
+    );
+
+}
+
+
+/* =========================================
+   SAVE TASK
+========================================= */
+
+async function saveTaskEdit() {
+
+  if (!editingTask) {
+    return;
+  }
+
+
+  const title =
+    document.getElementById(
+      "editTitle"
+    ).value.trim();
+
+
+  const description =
+    document.getElementById(
+      "editDescription"
+    ).value.trim();
+
+
+  const reward =
+    Number(
+      document.getElementById(
+        "editReward"
+      ).value
+    );
+
+
+  const maxParticipants =
+    Number(
+      document.getElementById(
+        "editParticipants"
+      ).value
+    );
+
+
+  const taskLink =
+    document.getElementById(
+      "editTaskLink"
+    ).value.trim();
+
+
+  const category =
+    document.getElementById(
+      "editCategory"
+    ).value.trim();
+
+
+  const status =
+    document.getElementById(
+      "editStatus"
+    ).value;
+
+
+  if (!title) {
+
+    alert(
+      "Please enter a task title."
+    );
+
+    return;
+
+  }
+
+
+  if (
+    !Number.isFinite(reward) ||
+    reward < 0
+  ) {
+
+    alert(
+      "Please enter a valid reward."
+    );
+
+    return;
+
+  }
+
+
+  if (
+    !Number.isInteger(
+      maxParticipants
+    ) ||
+    maxParticipants < 1
+  ) {
+
+    alert(
+      "Maximum participants must be at least 1."
+    );
+
+    return;
+
+  }
+
+
+  const saveButton =
+    document.getElementById(
+      "saveEditBtn"
+    );
+
+
+  saveButton.disabled =
+    true;
+
+  saveButton.textContent =
+    "Saving...";
+
+
+  try {
+
+    const {
+      error
+    } =
+      await supabaseClient
+        .from("tasks")
+        .update({
+
+          title,
+
+          description:
+            description ||
+            null,
+
+          category:
+            category ||
+            "General",
+
+          reward_amount:
+            reward,
+
+          max_participants:
+            maxParticipants,
+
+          task_link:
+            taskLink ||
+            null,
+
+          status,
+
+          updated_at:
+            new Date().toISOString()
+
+        })
+        .eq(
+          "id",
+          editingTask.id
+        );
+
+
+    if (error) {
+
+      throw new Error(
+        error.message
+      );
+
+    }
+
+
+    closeEditModal();
+
+    await loadTasks();
+
+  }
+
+  catch (error) {
+
+    console.error(error);
+
+    alert(
+      error.message ||
+      "Unable to update task."
+    );
+
+  }
+
+  finally {
+
+    saveButton.disabled =
+      false;
+
+    saveButton.textContent =
+      "Save Changes";
+
+  }
+
+}
+
+
+/* =========================================
+   DELETE TASK
+========================================= */
+
+async function deleteTask(taskId) {
+
+  const task =
+    allTasks.find(
+      item =>
+        String(item.id) ===
+        String(taskId)
+    );
+
+
+  if (!task) {
+    return;
+  }
+
+
+  const participantCount =
+    Number(
+      task.participant_count || 0
+    );
+
+
+  const warning =
+    participantCount > 0
+
+      ?
+
+      (
+        "This task has " +
+        participantCount +
+        " participant(s).\n\n" +
+        "Deleting it may also remove related task records.\n\n" +
+        "Are you sure you want to delete it?"
+      )
+
+      :
+
+      (
+        "Are you sure you want to delete this task?"
+      );
+
+
+  const confirmed =
+    window.confirm(
+      warning
+    );
+
+
+  if (!confirmed) {
+    return;
+  }
+
+
+  try {
+
+    const {
+      error
+    } =
+      await supabaseClient
+        .from("tasks")
+        .delete()
+        .eq(
+          "id",
+          taskId
+        );
+
+
+    if (error) {
+
+      throw new Error(
+        error.message
+      );
+
+    }
+
+
+    await loadTasks();
+
+  }
+
+  catch (error) {
+
+    console.error(error);
+
+    alert(
+      "Unable to delete this task: " +
+      error.message
+    );
+
+  }
+
+}
+
+
+/* =========================================
+   NAVIGATION
+========================================= */
+
+function createTask() {
+
+  window.location.href =
+    "admin-create-task.html";
+
+}
+
+
+function goBack() {
+
+  window.location.href =
+    "admin-dashboard.html";
+
+}
+
+
+/* =========================================
+   MONEY
+========================================= */
+
+function formatMoney(value) {
+
+  return Number(
+    value || 0
+  ).toLocaleString(
+    "en-NG",
+    {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 2
+    }
+  );
+
+}
+
+
+/* =========================================
+   ESCAPE HTML
+========================================= */
+
+function escapeHtml(value) {
+
+  return String(
+    value ?? ""
+  )
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+    .replace(
+      /</g,
+      "&lt;"
+    )
+    .replace(
+      />/g,
+      "&gt;"
+    )
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+    .replace(
+      /'/g,
+      "&#039;"
+    );
+
+}
+
+
+/* =========================================
+   ERROR
+========================================= */
+
+function showError(message) {
+
+  const box =
+    document.getElementById(
+      "errorBox"
+    );
+
+
+  box.textContent =
+    message;
+
+
+  box.style.display =
+    "block";
+
+}
+
+
+/* =========================================
+   CLOSE MODAL
+========================================= */
+
+document
+  .getElementById(
+    "editModal"
+  )
+  .addEventListener(
+    "click",
+    event => {
+
+      if (
+        event.target.id ===
+        "editModal"
+      ) {
+
+        closeEditModal();
+
+      }
+
+    }
+  );
+
+
+document.addEventListener(
+  "keydown",
+  event => {
+
+    if (
+      event.key ===
+      "Escape"
+    ) {
+
+      closeEditModal();
+
+    }
+
+  }
+);
+
+</script>
+
 
 </body>
+
 </html>

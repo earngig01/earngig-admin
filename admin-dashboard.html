@@ -3,1743 +3,1435 @@
 
 <head>
 
-  <meta charset="UTF-8">
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
+<title>Admin Dashboard | EarnGig</title>
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase.js"></script>
 
-  <title>Admin Dashboard | EarnGig</title>
+<style>
+
+* {
+  box-sizing: border-box;
+}
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f5f7ff;
+  color: #171b40;
+}
 
-  <script src="supabase.js"></script>
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+}
 
+button {
+  cursor: pointer;
+}
 
-  <style>
 
-    /* =========================================================
-       RESET
-    ========================================================= */
+/* =========================================================
+   SIDEBAR
+========================================================= */
 
-    * {
-      box-sizing: border-box;
-    }
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
 
-    html {
-      scroll-behavior: smooth;
-    }
+  width: 263px;
 
-    body {
-      margin: 0;
+  background:
+    linear-gradient(
+      180deg,
+      #11194f,
+      #091139
+    );
 
-      font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
+  color: white;
 
-      background:
-        linear-gradient(
-          135deg,
-          #f4f7ff 0%,
-          #f8f5ff 50%,
-          #f3f8ff 100%
-        );
+  z-index: 1000;
 
-      color:
-        #151936;
-    }
+  display: flex;
+  flex-direction: column;
+}
 
-    button,
-    a {
-      font-family: inherit;
-    }
+.sidebar-logo {
+  padding: 22px 20px;
 
-    button {
-      cursor: pointer;
-    }
+  border-bottom:
+    1px solid
+    rgba(255,255,255,.08);
+}
 
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
 
-    /* =========================================================
-       APP
-    ========================================================= */
+  color: white;
+  text-decoration: none;
+}
 
-    .app {
-      min-height: 100vh;
+.brand-icon {
+  width: 43px;
+  height: 43px;
 
-      display: flex;
-    }
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
+  border-radius: 12px;
 
-    /* =========================================================
-       SIDEBAR
-    ========================================================= */
+  background:
+    linear-gradient(
+      135deg,
+      #4268ff,
+      #923cff
+    );
 
-    .sidebar {
+  font-size: 21px;
+  font-weight: 900;
+}
 
-      width: 263px;
+.brand-text {
+  font-size: 24px;
+  font-weight: 800;
+}
 
-      min-height: 100vh;
+.brand-text span {
+  color: #7185ff;
+}
 
-      position: fixed;
+.admin-label {
+  margin: 7px 0 0 54px;
 
-      left: 0;
-      top: 0;
-      bottom: 0;
+  color: #858dc4;
 
-      z-index: 1000;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.7px;
+}
 
-      display: flex;
+.sidebar-nav {
+  flex: 1;
 
-      flex-direction: column;
+  overflow-y: auto;
 
-      background:
-        linear-gradient(
-          180deg,
-          #11194f 0%,
-          #10174a 48%,
-          #091139 100%
-        );
+  padding: 17px 13px;
+}
 
-      color: white;
+.nav-section {
+  margin: 15px 9px 8px;
 
-      border-right:
-        1px solid
-        rgba(255,255,255,.08);
-    }
+  color: #858dc7;
 
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
 
-    /* =========================================================
-       BRAND
-    ========================================================= */
+  text-transform: uppercase;
+}
 
-    .sidebar-logo {
+.nav-link {
+  min-height: 43px;
 
-      padding:
-        23px 20px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 
-      border-bottom:
-        1px solid
-        rgba(255,255,255,.08);
-    }
+  padding: 10px 12px;
+  margin-bottom: 3px;
 
-    .brand {
+  border-radius: 10px;
 
-      display: flex;
+  color: #d3d7ee;
 
-      align-items: center;
+  text-decoration: none;
 
-      gap: 11px;
+  font-size: 13px;
+  font-weight: 600;
+}
 
-      color: white;
+.nav-link:hover {
+  background: rgba(255,255,255,.08);
+  color: white;
+}
 
-      text-decoration: none;
-    }
+.nav-link.active {
+  background:
+    linear-gradient(
+      90deg,
+      #4c5fff,
+      #7b3df3
+    );
 
-    .brand-icon {
+  color: white;
+}
 
-      width: 44px;
-      height: 44px;
+.nav-icon {
+  width: 24px;
+  text-align: center;
+  font-size: 17px;
+}
 
-      display: flex;
+.sidebar-footer {
+  padding: 13px;
 
-      align-items: center;
+  border-top:
+    1px solid
+    rgba(255,255,255,.08);
+}
 
-      justify-content: center;
+.sidebar-logout {
+  width: 100%;
 
-      border-radius: 13px;
+  padding: 12px;
 
-      background:
-        linear-gradient(
-          135deg,
-          #3e69ff,
-          #963dff
-        );
+  display: flex;
+  align-items: center;
+  gap: 10px;
 
-      box-shadow:
-        0 8px 24px
-        rgba(83,74,255,.38);
+  border: 1px solid rgba(255,55,110,.25);
+  border-radius: 10px;
 
-      font-size: 21px;
+  background: rgba(255,45,105,.1);
 
-      font-weight: 900;
-    }
+  color: #ff7099;
 
-    .brand-text {
+  font-size: 13px;
+  font-weight: 800;
+}
 
-      font-size: 24px;
 
-      font-weight: 800;
+/* =========================================================
+   MAIN
+========================================================= */
 
-      letter-spacing:
-        -.7px;
-    }
+.main {
+  margin-left: 263px;
+  min-height: 100vh;
+}
 
-    .brand-text span {
 
-      color:
-        #758aff;
-    }
+/* =========================================================
+   TOP BAR
+========================================================= */
 
-    .admin-label {
+.topbar {
+  height: 73px;
 
-      margin:
-        8px 0 0 55px;
+  position: sticky;
+  top: 0;
 
-      color:
-        #858dc4;
+  z-index: 900;
 
-      font-size: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
-      font-weight: 800;
+  padding: 0 25px;
 
-      letter-spacing:
-        1.7px;
-    }
+  background: white;
 
+  border-bottom:
+    1px solid
+    #e2e5ef;
+}
 
-    /* =========================================================
-       SIDEBAR NAV
-    ========================================================= */
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
 
-    .sidebar-nav {
+.mobile-menu {
+  display: none;
 
-      flex: 1;
+  width: 42px;
+  height: 42px;
 
-      overflow-y: auto;
+  border: 0;
+  border-radius: 10px;
 
-      padding:
-        18px 13px;
-    }
+  background: #edf0ff;
 
-    .nav-section {
+  font-size: 21px;
+}
 
-      margin:
-        15px 9px 8px;
+.page-label {
+  color: #85899d;
+  font-size: 13px;
+}
 
-      color:
-        #858dc7;
+.page-label strong {
+  color: #25294b;
+}
 
-      font-size: 10px;
 
-      font-weight: 800;
+/* =========================================================
+   TOP RIGHT
+========================================================= */
 
-      letter-spacing:
-        1.5px;
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
 
-      text-transform:
-        uppercase;
-    }
 
-    .nav-link {
+/* =========================================================
+   BIG VISIBLE NOTIFICATION BUTTON
+========================================================= */
 
-      display: flex;
+.admin-notification-button {
+  position: relative;
 
-      align-items: center;
+  height: 43px;
 
-      gap: 12px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
 
-      min-height: 43px;
+  padding: 0 14px;
 
-      padding:
-        10px 12px;
+  border:
+    1px solid
+    #d9dcef;
 
-      margin-bottom: 3px;
+  border-radius: 11px;
 
-      border-radius: 10px;
+  background: white;
 
-      color:
-        #d3d7ee;
+  color: #252a4e;
 
-      text-decoration: none;
+  font-size: 11px;
+  font-weight: 900;
 
-      font-size: 13px;
+  box-shadow:
+    0 4px 12px
+    rgba(35,43,100,.06);
+}
 
-      font-weight: 600;
+.admin-notification-button:hover {
+  background: #f5f3ff;
 
-      transition:
-        .18s ease;
-    }
+  border-color: #7662e8;
+}
 
-    .nav-link:hover {
+.notification-bell {
+  font-size: 19px;
+}
 
-      background:
-        rgba(255,255,255,.08);
+.notification-label {
+  font-size: 10px;
+  letter-spacing: .2px;
+}
 
-      color: white;
+.notification-badge {
+  position: absolute;
 
-      transform:
-        translateX(2px);
-    }
+  top: -7px;
+  right: -7px;
 
-    .nav-link.active {
+  min-width: 20px;
+  height: 20px;
 
-      color: white;
+  padding: 0 5px;
 
-      background:
-        linear-gradient(
-          90deg,
-          #4c5fff,
-          #7b3df3
-        );
+  display: none;
 
-      box-shadow:
-        0 8px 20px
-        rgba(83,70,255,.28);
-    }
+  align-items: center;
+  justify-content: center;
 
-    .nav-icon {
+  border-radius: 50%;
 
-      width: 25px;
+  background: #ef315d;
 
-      flex-shrink: 0;
+  color: white;
 
-      text-align: center;
+  border: 2px solid white;
 
-      font-size: 17px;
-    }
+  font-size: 9px;
+  font-weight: 900;
+}
 
 
-    /* =========================================================
-       LOGOUT
-    ========================================================= */
+/* =========================================================
+   ADMIN ONLINE
+========================================================= */
 
-    .sidebar-footer {
+.admin-status {
+  height: 38px;
 
-      padding: 13px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
 
-      border-top:
-        1px solid
-        rgba(255,255,255,.08);
-    }
+  padding: 0 12px;
 
-    .sidebar-logout {
+  border-radius: 20px;
 
-      width: 100%;
+  background: #eefbf4;
 
-      display: flex;
+  color: #20864c;
 
-      align-items: center;
+  font-size: 10px;
+  font-weight: 800;
+}
 
-      gap: 11px;
+.status-dot {
+  width: 7px;
+  height: 7px;
 
-      padding:
-        12px;
+  border-radius: 50%;
 
-      border:
-        1px solid
-        rgba(255,55,110,.22);
+  background: #2bc76c;
+}
 
-      border-radius: 11px;
+.profile-mini {
+  width: 41px;
+  height: 41px;
 
-      background:
-        linear-gradient(
-          135deg,
-          rgba(102,50,255,.2),
-          rgba(255,45,105,.2)
-        );
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-      color:
-        #ff7099;
+  border-radius: 11px;
 
-      font-size: 13px;
+  background:
+    linear-gradient(
+      135deg,
+      #4968ff,
+      #8248ff
+    );
 
-      font-weight: 800;
+  color: white;
 
-      text-align: left;
-    }
+  font-weight: 900;
+}
 
-    .sidebar-logout:hover {
 
-      background:
-        linear-gradient(
-          135deg,
-          #5f3cff,
-          #ef3671
-        );
+/* =========================================================
+   NOTIFICATION PANEL
+========================================================= */
 
-      color: white;
-    }
+.notification-panel {
+  position: fixed;
 
+  top: 82px;
+  right: 22px;
 
-    /* =========================================================
-       MAIN
-    ========================================================= */
+  width: 390px;
+  max-width: calc(100vw - 30px);
 
-    .main {
+  background: white;
 
-      flex: 1;
+  border:
+    1px solid
+    #dfe2ed;
 
-      margin-left: 263px;
+  border-radius: 16px;
 
-      min-width: 0;
-    }
+  box-shadow:
+    0 20px 55px
+    rgba(25,32,86,.22);
 
+  z-index: 3000;
 
-    /* =========================================================
-       TOP BAR
-    ========================================================= */
+  display: none;
 
-    .topbar {
+  overflow: hidden;
+}
 
-      height: 73px;
+.notification-panel.open {
+  display: block;
+}
 
-      display: flex;
+.notification-panel-header {
+  padding: 17px;
 
-      align-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
-      justify-content: space-between;
+  border-bottom:
+    1px solid
+    #eceef5;
+}
 
-      padding:
-        0 27px;
+.notification-panel-header strong {
+  font-size: 14px;
+}
 
-      background:
-        rgba(255,255,255,.96);
+.notification-close {
+  width: 32px;
+  height: 32px;
 
-      border-bottom:
-        1px solid
-        #e3e6f2;
+  border: 0;
+  border-radius: 8px;
 
-      position: sticky;
+  background: #f0f2f8;
 
-      top: 0;
+  font-size: 18px;
+}
 
-      z-index: 500;
-    }
+.notification-body {
+  max-height: 410px;
 
-    .topbar-left {
+  overflow-y: auto;
 
-      display: flex;
+  padding: 13px 15px;
+}
 
-      align-items: center;
+.notification-title {
+  margin-bottom: 9px;
 
-      gap: 15px;
-    }
+  color: #85899d;
 
-    .mobile-menu-btn {
+  font-size: 9px;
+  font-weight: 900;
 
-      display: none;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
 
-      width: 42px;
-      height: 42px;
+.action-item {
+  padding: 11px 0;
 
-      border: 0;
+  display: flex;
+  gap: 10px;
 
-      border-radius: 11px;
+  border-bottom:
+    1px solid
+    #f0f1f5;
+}
 
-      background:
-        #edf0ff;
+.action-icon {
+  width: 35px;
+  height: 35px;
 
-      color:
-        #202854;
+  flex-shrink: 0;
 
-      font-size: 21px;
-    }
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    .page-label {
+  border-radius: 10px;
 
-      color:
-        #888ca1;
+  background: #eeeaff;
 
-      font-size: 13px;
-    }
+  font-size: 16px;
+}
 
-    .page-label strong {
+.action-content {
+  flex: 1;
+}
 
-      color:
-        #22264a;
-    }
+.action-content strong {
+  display: block;
 
-    .topbar-right {
+  color: #24284b;
 
-      display: flex;
+  font-size: 11px;
+}
 
-      align-items: center;
+.action-content span {
+  display: block;
 
-      gap: 12px;
-    }
+  margin-top: 4px;
 
-    .admin-status {
+  color: #85899d;
 
-      display: flex;
+  font-size: 9px;
+  line-height: 1.4;
+}
 
-      align-items: center;
+.action-link {
+  display: inline-block;
 
-      gap: 7px;
+  margin-top: 7px;
 
-      padding:
-        8px 13px;
+  padding: 6px 9px;
 
-      border-radius: 20px;
+  border: 0;
+  border-radius: 7px;
 
-      background:
-        #eefbf4;
+  background: #f0edff;
 
-      color:
-        #20864c;
+  color: #5943d5;
 
-      font-size: 11px;
+  font-size: 9px;
+  font-weight: 900;
+}
 
-      font-weight: 800;
-    }
+.member-notification {
+  padding: 10px;
 
-    .status-dot {
+  margin-bottom: 7px;
 
-      width: 7px;
-      height: 7px;
+  border-radius: 9px;
 
-      border-radius: 50%;
+  background: #fafaff;
 
-      background:
-        #2bc76c;
-    }
+  border: 1px solid #eef0f6;
+}
 
-    .profile-mini {
+.member-notification.unread {
+  background: #f2efff;
 
-      width: 41px;
-      height: 41px;
+  border-color: #ded8ff;
+}
 
-      display: flex;
+.member-notification strong {
+  display: block;
 
-      align-items: center;
+  color: #24284b;
 
-      justify-content: center;
+  font-size: 10px;
+}
 
-      border-radius: 12px;
+.member-notification p {
+  margin: 4px 0;
 
-      background:
-        linear-gradient(
-          135deg,
-          #4968ff,
-          #8248ff
-        );
+  color: #686d83;
 
-      color: white;
+  font-size: 9px;
+  line-height: 1.4;
+}
 
-      font-weight: 800;
-    }
+.member-notification small {
+  color: #999caf;
 
+  font-size: 8px;
+}
 
-    /* =========================================================
-       CONTENT
-    ========================================================= */
+.send-notification {
+  width: 100%;
 
-    .content {
+  padding: 14px;
 
-      max-width:
-        1550px;
+  border: 0;
 
-      margin: 0 auto;
+  background:
+    linear-gradient(
+      135deg,
+      #4b60ff,
+      #783af0
+    );
 
-      padding:
-        25px 23px 50px;
-    }
+  color: white;
 
+  font-size: 11px;
+  font-weight: 900;
+}
 
-    /* =========================================================
-       WELCOME BANNER
-    ========================================================= */
 
-    .welcome-banner {
+/* =========================================================
+   CONTENT
+========================================================= */
 
-      position: relative;
+.content {
+  padding: 25px 23px 50px;
 
-      overflow: hidden;
+  max-width: 1550px;
 
-      min-height: 135px;
+  margin: auto;
+}
 
-      padding:
-        25px 29px;
 
-      border-radius: 18px;
+/* =========================================================
+   WELCOME
+========================================================= */
 
-      background:
-        linear-gradient(
-          110deg,
-          #244bd9 0%,
-          #3c32d8 43%,
-          #7432ed 100%
-        );
+.welcome-banner {
+  position: relative;
+  overflow: hidden;
 
-      color: white;
+  min-height: 135px;
 
-      box-shadow:
-        0 12px 30px
-        rgba(62,55,202,.22);
-    }
+  padding: 26px 29px;
 
-    .welcome-banner::before {
+  border-radius: 18px;
 
-      content: "";
+  background:
+    linear-gradient(
+      110deg,
+      #244bd9,
+      #3c32d8 43%,
+      #7432ed
+    );
 
-      position: absolute;
+  color: white;
 
-      width: 430px;
-      height: 430px;
+  box-shadow:
+    0 12px 30px
+    rgba(62,55,202,.22);
+}
 
-      right: 80px;
-      top: -330px;
+.eyebrow {
+  margin-bottom: 7px;
 
-      border-radius: 50%;
+  color: #cdd4ff;
 
-      background:
-        rgba(255,255,255,.08);
-    }
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
 
-    .welcome-banner::after {
+.welcome-banner h1 {
+  margin: 0;
 
-      content: "";
+  font-size: 30px;
+}
 
-      position: absolute;
+.welcome-banner p {
+  margin: 7px 0 0;
 
-      width: 550px;
-      height: 160px;
+  color: #e0e5ff;
 
-      right: -80px;
-      bottom: -100px;
+  font-size: 13px;
+}
 
-      border-radius: 50%;
+.date-box {
+  position: absolute;
 
-      background:
-        linear-gradient(
-          90deg,
-          rgba(255,255,255,.02),
-          rgba(214,73,255,.4)
-        );
+  top: 22px;
+  right: 22px;
 
-      transform:
-        rotate(-9deg);
-    }
+  padding: 11px 14px;
 
-    .welcome-content {
+  border:
+    1px solid
+    rgba(255,255,255,.18);
 
-      position: relative;
+  border-radius: 10px;
 
-      z-index: 2;
-    }
+  background:
+    rgba(255,255,255,.12);
 
-    .eyebrow {
+  font-size: 10px;
+}
 
-      margin-bottom: 7px;
 
-      color:
-        #cdd4ff;
+/* =========================================================
+   SECTION HEAD
+========================================================= */
 
-      font-size: 10px;
+.section-head {
+  margin: 23px 2px 12px;
 
-      font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
-      letter-spacing:
-        2px;
-    }
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
 
-    .welcome-banner h1 {
+.section-icon {
+  width: 34px;
+  height: 34px;
 
-      margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-      font-size: 30px;
+  border-radius: 10px;
 
-      letter-spacing:
-        -.8px;
-    }
+  background: #ebe8ff;
 
-    .welcome-banner p {
+  color: #5738ec;
+}
 
-      margin:
-        7px 0 0;
+.section-title h2 {
+  margin: 0;
 
-      color:
-        #e0e5ff;
+  font-size: 18px;
+}
 
-      font-size: 13px;
-    }
+.section-title p {
+  margin: 2px 0 0;
 
-    .date-box {
+  color: #85899e;
 
-      position: absolute;
+  font-size: 10px;
+}
 
-      right: 22px;
-      top: 22px;
+.refresh-btn {
+  padding: 8px 13px;
 
-      z-index: 3;
+  border: 0;
+  border-radius: 8px;
 
-      padding:
-        12px 15px;
+  background:
+    linear-gradient(
+      135deg,
+      #4c60ff,
+      #783af0
+    );
 
-      border:
-        1px solid
-        rgba(255,255,255,.17);
+  color: white;
 
-      border-radius: 11px;
+  font-size: 10px;
+  font-weight: 800;
+}
 
-      background:
-        rgba(255,255,255,.11);
 
-      color: white;
+/* =========================================================
+   STATS
+========================================================= */
 
-      font-size: 11px;
+.stats-grid {
+  display: grid;
 
-      backdrop-filter:
-        blur(8px);
-    }
+  grid-template-columns:
+    repeat(4,1fr);
 
+  gap: 11px;
+}
 
-    /* =========================================================
-       SECTION HEAD
-    ========================================================= */
+.stat {
+  min-height: 107px;
 
-    .section-head {
+  padding: 14px;
 
-      display: flex;
+  position: relative;
 
-      align-items: center;
+  overflow: hidden;
 
-      justify-content: space-between;
+  border:
+    1px solid
+    #e4e7f0;
 
-      margin:
-        23px 2px 12px;
-    }
+  border-radius: 14px;
 
-    .section-title-wrap {
+  background: white;
 
-      display: flex;
+  box-shadow:
+    0 5px 18px
+    rgba(29,36,89,.045);
+}
 
-      align-items: center;
+.stat-icon {
+  width: 39px;
+  height: 39px;
 
-      gap: 9px;
-    }
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    .section-icon {
+  border-radius: 11px;
 
-      width: 34px;
-      height: 34px;
+  font-size: 18px;
+}
 
-      display: flex;
+.stat small {
+  display: block;
 
-      align-items: center;
+  margin-top: 10px;
+  margin-bottom: 5px;
 
-      justify-content: center;
+  color: #74798f;
 
-      border-radius: 10px;
+  font-size: 10px;
+  font-weight: 700;
+}
 
-      background:
-        linear-gradient(
-          135deg,
-          #e5eaff,
-          #eee4ff
-        );
+.stat strong {
+  font-size: 20px;
+}
 
-      color:
-        #5738ec;
+.blue .stat-icon {
+  background: #e7efff;
+}
 
-      font-size: 17px;
-    }
+.green .stat-icon {
+  background: #e4faee;
+}
 
-    .section-head h2 {
+.orange .stat-icon {
+  background: #fff1db;
+}
 
-      margin: 0;
+.purple .stat-icon {
+  background: #f0e7ff;
+}
 
-      font-size: 18px;
+.pink .stat-icon {
+  background: #ffe8f0;
+}
 
-      color:
-        #171b40;
-    }
+.red .stat-icon {
+  background: #ffe9eb;
+}
 
-    .section-head p {
+.cyan .stat-icon {
+  background: #e2f8ff;
+}
 
-      margin:
-        2px 0 0;
 
-      color:
-        #85899e;
+/* =========================================================
+   QUICK
+========================================================= */
 
-      font-size: 10px;
-    }
+.quick-grid {
+  display: grid;
 
+  grid-template-columns:
+    repeat(4,1fr);
 
-    /* =========================================================
-       STATS
-    ========================================================= */
+  gap: 11px;
+}
 
-    .stats-grid {
+.quick-card {
+  min-height: 70px;
 
-      display: grid;
+  padding: 12px 13px;
 
-      grid-template-columns:
-        repeat(
-          4,
-          minmax(0,1fr)
-        );
+  display: flex;
+  align-items: center;
+  gap: 11px;
 
-      gap: 11px;
-    }
+  border-radius: 13px;
 
-    .stat {
+  color: white;
+  text-decoration: none;
+}
 
-      position: relative;
+.quick-icon {
+  width: 42px;
+  height: 42px;
 
-      overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-      min-height: 107px;
+  border-radius: 11px;
 
-      padding:
-        14px;
+  background:
+    rgba(255,255,255,.18);
+}
 
-      border:
-        1px solid
-        rgba(65,73,160,.09);
+.quick-card strong {
+  display: block;
 
-      border-radius: 14px;
+  margin-bottom: 3px;
 
-      background: white;
+  font-size: 13px;
+}
 
-      box-shadow:
-        0 5px 18px
-        rgba(29,36,89,.045);
-    }
+.quick-card span {
+  font-size: 10px;
+  opacity: .9;
+}
 
-    .stat::after {
+.quick-arrow {
+  margin-left: auto;
+}
 
-      content: "";
+.quick-users {
+  background: linear-gradient(135deg,#3d69f5,#4289ff);
+}
 
-      position: absolute;
+.quick-memberships {
+  background: linear-gradient(135deg,#10ae6b,#20c77a);
+}
 
-      width: 75px;
-      height: 75px;
+.quick-withdrawals {
+  background: linear-gradient(135deg,#ff941f,#ffb02a);
+}
 
-      right: -26px;
-      top: -27px;
+.quick-transactions {
+  background: linear-gradient(135deg,#813be8,#a046f2);
+}
 
-      border-radius: 50%;
 
-      background:
-        currentColor;
+/* =========================================================
+   MANAGEMENT
+========================================================= */
 
-      opacity:
-        .06;
-    }
+.management-grid {
+  display: grid;
 
-    .stat-top {
+  grid-template-columns:
+    repeat(6,1fr);
 
-      display: flex;
+  gap: 9px;
+}
 
-      align-items: center;
+.management-card {
+  min-height: 124px;
 
-      justify-content: space-between;
+  padding: 13px;
 
-      gap: 8px;
-    }
+  border:
+    1px solid
+    #e2e5f0;
 
-    .stat-icon {
+  border-radius: 13px;
 
-      width: 39px;
-      height: 39px;
+  background: white;
+}
 
-      display: flex;
+.management-icon {
+  width: 36px;
+  height: 36px;
 
-      align-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-      justify-content: center;
+  border-radius: 10px;
 
-      border-radius: 11px;
+  background: #eeeaff;
 
-      font-size: 18px;
-    }
+  font-size: 17px;
+}
 
-    .stat small {
+.management-card h3 {
+  margin: 10px 0 3px;
 
-      display: block;
+  font-size: 13px;
+}
 
-      margin:
-        10px 0 5px;
+.management-card p {
+  margin: 0;
 
-      color:
-        #74798f;
+  color: #777b91;
 
-      font-size: 10px;
+  font-size: 9px;
+  line-height: 1.4;
+}
 
-      font-weight: 700;
-    }
+.management-link {
+  display: inline-block;
 
-    .stat strong {
+  margin-top: 9px;
 
-      display: block;
+  color: #5545dc;
 
-      color:
-        #151a3e;
+  text-decoration: none;
 
-      font-size: 21px;
+  font-size: 9px;
+  font-weight: 800;
+}
 
-      line-height: 1.1;
-    }
 
-    .money {
+/* =========================================================
+   RULES
+========================================================= */
 
-      font-size: 18px !important;
-    }
+.rules-card {
+  padding: 15px;
 
+  border:
+    1px solid
+    #e2e5ef;
 
-    /* STAT COLORS */
+  border-radius: 15px;
 
-    .blue {
-      color: #2871ff;
-    }
+  background: white;
+}
 
-    .blue .stat-icon {
-      background: #e7efff;
-      color: #2866f0;
-    }
+.rules-intro {
+  margin: 0 0 13px;
 
-    .green {
-      color: #15b96c;
-    }
+  color: #777b91;
 
-    .green .stat-icon {
-      background: #e4faee;
-      color: #12a963;
-    }
+  font-size: 10px;
+  line-height: 1.5;
+}
 
-    .orange {
-      color: #ff991d;
-    }
+.plan-rules-grid {
+  display: grid;
 
-    .orange .stat-icon {
-      background: #fff1db;
-      color: #ee8a0c;
-    }
+  grid-template-columns:
+    repeat(4,1fr);
 
-    .purple {
-      color: #833fe9;
-    }
+  gap: 9px;
+}
 
-    .purple .stat-icon {
-      background: #f0e7ff;
-      color: #7435d8;
-    }
+.plan-rule {
+  padding: 12px;
 
-    .pink {
-      color: #ef467e;
-    }
+  border:
+    1px solid
+    #e4e7f0;
 
-    .pink .stat-icon {
-      background: #ffe8f0;
-      color: #e63b70;
-    }
+  border-radius: 11px;
 
-    .red {
-      color: #ed4654;
-    }
+  background: #fafbff;
+}
 
-    .red .stat-icon {
-      background: #ffe9eb;
-      color: #e23a48;
-    }
+.plan-rule h3 {
+  margin: 0 0 8px;
 
-    .cyan {
-      color: #11a8d8;
-    }
+  font-size: 12px;
+}
 
-    .cyan .stat-icon {
-      background: #e2f8ff;
-      color: #0799c8;
-    }
+.rule-row {
+  display: flex;
+  justify-content: space-between;
 
+  padding: 6px 0;
 
-    /* =========================================================
-       QUICK MANAGEMENT
-    ========================================================= */
+  border-bottom:
+    1px solid
+    #e9ebf2;
 
-    .quick-grid {
+  font-size: 9px;
+}
 
-      display: grid;
+.rule-row span {
+  color: #7a7e91;
+}
 
-      grid-template-columns:
-        repeat(
-          4,
-          minmax(0,1fr)
-        );
+.rules-note {
+  margin-top: 10px;
 
-      gap: 11px;
-    }
+  padding: 11px 13px;
 
-    .quick-card {
+  border-radius: 9px;
 
-      min-height: 70px;
+  background: #f0edff;
 
-      display: flex;
+  color: #58458d;
 
-      align-items: center;
+  font-size: 9px;
 
-      gap: 11px;
+  line-height: 1.5;
+}
 
-      padding:
-        12px 13px;
 
-      border-radius: 13px;
+/* =========================================================
+   MODAL
+========================================================= */
 
-      text-decoration: none;
+.modal-overlay {
+  position: fixed;
+  inset: 0;
 
-      color: white;
+  z-index: 5000;
 
-      box-shadow:
-        0 8px 18px
-        rgba(33,41,100,.1);
+  display: none;
+  align-items: center;
+  justify-content: center;
 
-      transition:
-        transform .18s ease,
-        box-shadow .18s ease;
-    }
+  padding: 20px;
 
-    .quick-card:hover {
+  background:
+    rgba(5,9,35,.65);
+}
 
-      transform:
-        translateY(-2px);
+.modal-overlay.open {
+  display: flex;
+}
 
-      box-shadow:
-        0 12px 24px
-        rgba(33,41,100,.15);
-    }
+.modal {
+  width: 100%;
+  max-width: 540px;
 
-    .quick-icon {
+  padding: 22px;
 
-      width: 42px;
-      height: 42px;
+  border-radius: 18px;
 
-      display: flex;
+  background: white;
 
-      align-items: center;
+  box-shadow:
+    0 25px 70px
+    rgba(10,15,65,.28);
+}
 
-      justify-content: center;
+.modal-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
-      flex-shrink: 0;
+  margin-bottom: 18px;
+}
 
-      border-radius: 12px;
+.modal-head h2 {
+  margin: 0;
 
-      background:
-        rgba(255,255,255,.18);
+  font-size: 20px;
+}
 
-      font-size: 18px;
-    }
+.modal-head p {
+  margin: 5px 0 0;
 
-    .quick-card strong {
+  color: #85899e;
 
-      display: block;
+  font-size: 10px;
+}
 
-      margin-bottom: 3px;
+.close-modal {
+  width: 36px;
+  height: 36px;
 
-      font-size: 13px;
-    }
+  border: 0;
+  border-radius: 9px;
 
-    .quick-card span {
+  background: #f0f2f8;
 
-      font-size: 10px;
+  font-size: 20px;
+}
 
-      opacity: .88;
-    }
+.form-group {
+  margin-bottom: 14px;
+}
 
-    .quick-arrow {
+.form-group label {
+  display: block;
 
-      margin-left: auto;
+  margin-bottom: 6px;
 
-      width: 28px;
-      height: 28px;
+  color: #4a4e69;
 
-      display: flex;
+  font-size: 10px;
+  font-weight: 800;
+}
 
-      align-items: center;
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
 
-      justify-content: center;
+  padding: 12px;
 
-      border-radius: 50%;
+  border:
+    1px solid
+    #dfe3ef;
 
-      background:
-        rgba(255,255,255,.18);
-    }
+  border-radius: 10px;
 
-    .quick-users {
+  outline: none;
 
-      background:
-        linear-gradient(
-          135deg,
-          #3d69f5,
-          #4289ff
-        );
-    }
+  background: #fafbff;
 
-    .quick-memberships {
+  font-size: 13px;
+}
 
-      background:
-        linear-gradient(
-          135deg,
-          #10ae6b,
-          #20c77a
-        );
-    }
+.form-group textarea {
+  min-height: 125px;
 
-    .quick-withdrawals {
+  resize: vertical;
+}
 
-      background:
-        linear-gradient(
-          135deg,
-          #ff941f,
-          #ffb02a
-        );
-    }
+.audience {
+  padding: 11px 13px;
 
-    .quick-transactions {
+  border-radius: 9px;
 
-      background:
-        linear-gradient(
-          135deg,
-          #813be8,
-          #a046f2
-        );
-    }
+  background: #f0edff;
 
+  color: #5541ca;
 
-    /* =========================================================
-       COMPACT MANAGEMENT
-    ========================================================= */
+  font-size: 11px;
+  font-weight: 800;
+}
 
-    .management-grid {
+.modal-actions {
+  margin-top: 18px;
 
-      display: grid;
+  display: flex;
+  justify-content: flex-end;
+  gap: 9px;
+}
 
-      grid-template-columns:
-        repeat(
-          6,
-          minmax(0,1fr)
-        );
+.cancel-btn {
+  padding: 11px 17px;
 
-      gap: 9px;
-    }
+  border:
+    1px solid
+    #dfe2ed;
 
-    .management-card {
+  border-radius: 9px;
 
-      position: relative;
+  background: white;
 
-      overflow: hidden;
+  font-size: 11px;
+  font-weight: 800;
+}
 
-      min-height: 124px;
+.send-btn {
+  padding: 11px 19px;
 
-      padding:
-        13px;
+  border: 0;
+  border-radius: 9px;
 
-      border:
-        1px solid
-        #e2e5f0;
+  background:
+    linear-gradient(
+      135deg,
+      #4c60ff,
+      #783af0
+    );
 
-      border-radius: 13px;
+  color: white;
 
-      background: white;
+  font-size: 11px;
+  font-weight: 900;
+}
 
-      box-shadow:
-        0 5px 17px
-        rgba(28,35,90,.04);
 
-      transition:
-        transform .18s ease,
-        box-shadow .18s ease;
-    }
+/* =========================================================
+   MOBILE
+========================================================= */
 
-    .management-card:hover {
+.overlay {
+  display: none;
 
-      transform:
-        translateY(-2px);
+  position: fixed;
+  inset: 0;
 
-      box-shadow:
-        0 9px 22px
-        rgba(28,35,90,.08);
-    }
+  background:
+    rgba(4,8,35,.62);
 
-    .management-icon {
+  z-index: 950;
+}
 
-      width: 36px;
-      height: 36px;
+@media(max-width:1200px) {
 
-      display: flex;
+  .stats-grid {
+    grid-template-columns:
+      repeat(3,1fr);
+  }
 
-      align-items: center;
+  .management-grid {
+    grid-template-columns:
+      repeat(3,1fr);
+  }
 
-      justify-content: center;
+  .plan-rules-grid {
+    grid-template-columns:
+      repeat(2,1fr);
+  }
 
-      border-radius: 10px;
+}
 
-      font-size: 17px;
-    }
+@media(max-width:900px) {
 
-    .management-card h3 {
+  .sidebar {
+    transform:
+      translateX(-100%);
 
-      margin:
-        10px 0 3px;
+    transition:
+      transform .25s ease;
+  }
 
-      font-size: 13px;
+  .sidebar.open {
+    transform:
+      translateX(0);
+  }
 
-      color:
-        #171b40;
-    }
+  .overlay.show {
+    display: block;
+  }
 
-    .management-card p {
+  .main {
+    margin-left: 0;
+  }
 
-      margin: 0;
+  .mobile-menu {
+    display: block;
+  }
 
-      color:
-        #777b91;
+}
 
-      font-size: 9px;
+@media(max-width:650px) {
 
-      line-height: 1.4;
-    }
+  .topbar {
+    padding: 0 14px;
+  }
 
-    .management-link {
+  .page-label {
+    display: none;
+  }
 
-      display: inline-block;
+  .admin-status {
+    display: none;
+  }
 
-      margin-top: 9px;
+  .notification-label {
+    display: none;
+  }
 
-      color:
-        #5545dc;
+  .admin-notification-button {
+    width: 43px;
 
-      text-decoration: none;
+    justify-content: center;
 
-      font-size: 9px;
+    padding: 0;
+  }
 
-      font-weight: 800;
-    }
+  .content {
+    padding: 20px 15px 40px;
+  }
 
+  .welcome-banner {
+    padding: 21px 19px;
+  }
 
-    /* MANAGEMENT COLORS */
+  .welcome-banner h1 {
+    font-size: 24px;
+  }
 
-    .manage-blue {
-      background:
-        linear-gradient(
-          135deg,
-          #f0f6ff,
-          #ffffff
-        );
-    }
+  .date-box {
+    position: static;
 
-    .manage-blue .management-icon {
-      background: #e3edff;
-      color: #2868ee;
-    }
+    display: inline-block;
 
-    .manage-purple {
-      background:
-        linear-gradient(
-          135deg,
-          #f7f0ff,
-          #ffffff
-        );
-    }
+    margin-top: 15px;
+  }
 
-    .manage-purple .management-icon {
-      background: #eee1ff;
-      color: #7138d8;
-    }
+  .stats-grid,
+  .quick-grid {
+    grid-template-columns:
+      repeat(2,1fr);
+  }
 
-    .manage-pink {
-      background:
-        linear-gradient(
-          135deg,
-          #fff0f5,
-          #ffffff
-        );
-    }
+  .management-grid {
+    grid-template-columns:
+      repeat(2,1fr);
+  }
 
-    .manage-pink .management-icon {
-      background: #ffe2ed;
-      color: #e6376c;
-    }
+  .plan-rules-grid {
+    grid-template-columns: 1fr;
+  }
 
-    .manage-green {
-      background:
-        linear-gradient(
-          135deg,
-          #edfff6,
-          #ffffff
-        );
-    }
+  .notification-panel {
+    top: 72px;
+    right: 10px;
+    width: calc(100vw - 20px);
+  }
 
-    .manage-green .management-icon {
-      background: #ddf9eb;
-      color: #13a761;
-    }
+}
 
-    .manage-orange {
-      background:
-        linear-gradient(
-          135deg,
-          #fff8e9,
-          #ffffff
-        );
-    }
+@media(max-width:400px) {
 
-    .manage-orange .management-icon {
-      background: #fff0ce;
-      color: #df8508;
-    }
+  .stats-grid,
+  .quick-grid,
+  .management-grid {
+    grid-template-columns: 1fr;
+  }
 
-    .manage-cyan {
-      background:
-        linear-gradient(
-          135deg,
-          #edfbff,
-          #ffffff
-        );
-    }
+}
 
-    .manage-cyan .management-icon {
-      background: #def7ff;
-      color: #0798c6;
-    }
-
-
-    /* =========================================================
-       PLATFORM RULES
-    ========================================================= */
-
-    .rules-card {
-
-      background: white;
-
-      border:
-        1px solid
-        #e2e5ef;
-
-      border-radius: 15px;
-
-      padding:
-        15px;
-
-      box-shadow:
-        0 5px 18px
-        rgba(29,36,89,.04);
-    }
-
-    .rules-intro {
-
-      margin:
-        0 0 13px;
-
-      color:
-        #777b91;
-
-      font-size: 10px;
-
-      line-height: 1.5;
-    }
-
-    .plan-rules-grid {
-
-      display: grid;
-
-      grid-template-columns:
-        repeat(
-          4,
-          minmax(0,1fr)
-        );
-
-      gap: 9px;
-    }
-
-    .plan-rule {
-
-      padding:
-        12px;
-
-      border:
-        1px solid
-        #e4e7f0;
-
-      border-radius: 11px;
-
-      background:
-        #fafbff;
-    }
-
-    .plan-rule h3 {
-
-      margin:
-        0 0 8px;
-
-      font-size: 12px;
-    }
-
-    .rule-row {
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: space-between;
-
-      gap: 5px;
-
-      padding:
-        6px 0;
-
-      border-bottom:
-        1px solid
-        #e9ebf2;
-
-      font-size: 9px;
-    }
-
-    .rule-row:last-child {
-      border-bottom: 0;
-    }
-
-    .rule-row span {
-      color:
-        #7a7e91;
-    }
-
-    .rule-row strong {
-      color:
-        #242747;
-    }
-
-    .rules-note {
-
-      margin-top:
-        10px;
-
-      padding:
-        11px 13px;
-
-      border-radius: 9px;
-
-      background:
-        linear-gradient(
-          135deg,
-          #f0edff,
-          #f8edff
-        );
-
-      border:
-        1px solid
-        #dfd7ff;
-
-      color:
-        #58458d;
-
-      font-size: 9px;
-
-      line-height: 1.5;
-    }
-
-    .rules-note strong {
-      color:
-        #3e2d75;
-    }
-
-
-    /* =========================================================
-       LOADING
-    ========================================================= */
-
-    .loading {
-
-      grid-column:
-        1 / -1;
-
-      padding:
-        34px;
-
-      text-align: center;
-
-      background: white;
-
-      border:
-        1px solid
-        #e3e6f0;
-
-      border-radius: 14px;
-
-      color:
-        #777b91;
-
-      font-size: 12px;
-    }
-
-
-    /* =========================================================
-       ERROR
-    ========================================================= */
-
-    .error-box {
-
-      grid-column:
-        1 / -1;
-
-      padding:
-        19px;
-
-      border-radius: 13px;
-
-      background:
-        #fff5f6;
-
-      border:
-        1px solid
-        #efb5bd;
-
-      color:
-        #721c24;
-
-      font-size: 12px;
-    }
-
-    .error-box p {
-      line-height: 1.5;
-    }
-
-    .refresh-btn {
-
-      padding:
-        8px 13px;
-
-      border: 0;
-
-      border-radius: 8px;
-
-      background:
-        linear-gradient(
-          135deg,
-          #4c60ff,
-          #783af0
-        );
-
-      color: white;
-
-      font-size: 10px;
-
-      font-weight: 800;
-    }
-
-
-    /* =========================================================
-       MOBILE OVERLAY
-    ========================================================= */
-
-    .sidebar-overlay {
-
-      display: none;
-
-      position: fixed;
-
-      inset: 0;
-
-      background:
-        rgba(4,8,35,.62);
-
-      z-index: 900;
-    }
-
-
-    /* =========================================================
-       TABLET
-    ========================================================= */
-
-    @media (max-width: 1200px) {
-
-      .stats-grid {
-        grid-template-columns:
-          repeat(3, minmax(0,1fr));
-      }
-
-      .management-grid {
-        grid-template-columns:
-          repeat(3, minmax(0,1fr));
-      }
-
-      .plan-rules-grid {
-        grid-template-columns:
-          repeat(2, minmax(0,1fr));
-      }
-
-    }
-
-
-    /* =========================================================
-       MOBILE NAV
-    ========================================================= */
-
-    @media (max-width: 900px) {
-
-      .sidebar {
-
-        transform:
-          translateX(-100%);
-
-        transition:
-          transform .25s ease;
-      }
-
-      .sidebar.open {
-        transform:
-          translateX(0);
-      }
-
-      .sidebar-overlay.show {
-        display: block;
-      }
-
-      .main {
-        margin-left: 0;
-      }
-
-      .mobile-menu-btn {
-
-        display: flex;
-
-        align-items: center;
-
-        justify-content: center;
-      }
-
-      .topbar {
-        padding:
-          0 17px;
-      }
-
-      .content {
-        padding:
-          20px 16px 40px;
-      }
-
-    }
-
-
-    /* =========================================================
-       PHONE
-    ========================================================= */
-
-    @media (max-width: 650px) {
-
-      .topbar {
-        height: 65px;
-      }
-
-      .page-label {
-        display: none;
-      }
-
-      .admin-status {
-        display: none;
-      }
-
-      .welcome-banner {
-
-        min-height: 163px;
-
-        padding:
-          21px 19px;
-      }
-
-      .welcome-banner h1 {
-        max-width: 90%;
-        font-size: 24px;
-      }
-
-      .welcome-banner p {
-        max-width: 95%;
-        font-size: 10px;
-      }
-
-      .date-box {
-
-        position: relative;
-
-        right: auto;
-        top: auto;
-
-        display: inline-block;
-
-        margin-top: 17px;
-
-        padding:
-          8px 10px;
-      }
-
-      .stats-grid {
-
-        grid-template-columns:
-          repeat(2,minmax(0,1fr));
-
-        gap: 8px;
-      }
-
-      .stat {
-
-        min-height: 100px;
-
-        padding:
-          12px;
-      }
-
-      .stat-icon {
-
-        width: 34px;
-        height: 34px;
-
-        font-size: 15px;
-      }
-
-      .stat strong {
-        font-size: 18px;
-      }
-
-      .money {
-        font-size: 15px !important;
-      }
-
-      .quick-grid {
-
-        grid-template-columns:
-          repeat(2,minmax(0,1fr));
-
-        gap: 8px;
-      }
-
-      .management-grid {
-
-        grid-template-columns:
-          repeat(2,minmax(0,1fr));
-
-        gap: 8px;
-      }
-
-      .management-card {
-
-        min-height: 130px;
-
-        padding:
-          12px;
-      }
-
-      .plan-rules-grid {
-
-        grid-template-columns: 1fr;
-      }
-
-    }
-
-
-    @media (max-width: 400px) {
-
-      .stats-grid,
-      .quick-grid,
-      .management-grid {
-
-        grid-template-columns: 1fr;
-      }
-
-    }
-
-  </style>
+</style>
 
 </head>
 
@@ -1747,1075 +1439,1054 @@
 <body>
 
 
-<div class="app">
+<!-- =========================================================
+     SIDEBAR
+========================================================= -->
 
+<aside
+  class="sidebar"
+  id="sidebar"
+>
 
-  <!-- =======================================================
-       SIDEBAR
-  ======================================================== -->
+  <div class="sidebar-logo">
 
-  <aside
-    class="sidebar"
-    id="sidebar"
-  >
+    <a
+      href="admin-dashboard.html"
+      class="brand"
+    >
 
-    <div class="sidebar-logo">
-
-      <a
-        href="admin-dashboard.html"
-        class="brand"
-      >
-
-        <div class="brand-icon">
-          E
-        </div>
-
-        <div class="brand-text">
-          Earn<span>Gig</span>
-        </div>
-
-      </a>
-
-      <div class="admin-label">
-        ADMIN PORTAL
+      <div class="brand-icon">
+        E
       </div>
 
+      <div class="brand-text">
+        Earn<span>Gig</span>
+      </div>
+
+    </a>
+
+    <div class="admin-label">
+      ADMIN PORTAL
     </div>
 
+  </div>
 
-    <nav class="sidebar-nav">
 
+  <nav class="sidebar-nav">
 
-      <div class="nav-section">
-        Overview
-      </div>
-
-
-      <a
-        href="admin-dashboard.html"
-        class="nav-link active"
-      >
-
-        <span class="nav-icon">
-          🏠
-        </span>
-
-        Dashboard
-
-      </a>
-
-
-      <div class="nav-section">
-        Members
-      </div>
-
-
-      <a
-        href="admin-users.html"
-        class="nav-link"
-      >
-
-        <span class="nav-icon">
-          👥
-        </span>
-
-        Users
-
-      </a>
-
-
-      <a
-        href="admin-memberships.html"
-        class="nav-link"
-      >
-
-        <span class="nav-icon">
-          💳
-        </span>
-
-        Memberships
-
-      </a>
-
-
-      <a
-        href="admin-transactions.html"
-        class="nav-link"
-      >
-
-        <span class="nav-icon">
-          📊
-        </span>
-
-        Transactions
-
-      </a>
-
-
-      <a
-        href="admin-withdrawals.html"
-        class="nav-link"
-      >
-
-        <span class="nav-icon">
-          💸
-        </span>
-
-        Withdrawals
-
-      </a>
-
-
-      <div class="nav-section">
-        Earning System
-      </div>
-
-
-      <a
-        href="admin-tasks.html"
-        class="nav-link"
-      >
-
-        <span class="nav-icon">
-          📋
-        </span>
-
-        Tasks
-
-      </a>
-
-
-      <a
-        href="admin-watch-ads.html"
-        class="nav-link"
-      >
-
-        <span class="nav-icon">
-          ▶️
-        </span>
-
-        Watch &amp; Earn
-
-      </a>
-
-
-      <a
-        href="admin-adverts.html"
-        class="nav-link"
-      >
-
-        <span class="nav-icon">
-          📢
-        </span>
-
-        Adverts
-
-      </a>
-
-
-      <a
-        href="novel-review.html"
-        class="nav-link"
-      >
-
-        <span class="nav-icon">
-          📚
-        </span>
-
-        Novel Review
-
-      </a>
-
-
-      <div class="nav-section">
-        Competition
-      </div>
-
-
-      <a
-        href="admin-competitions.html"
-        class="nav-link"
-      >
-
-        <span class="nav-icon">
-          🏆
-        </span>
-
-        Competitions
-
-      </a>
-
-
-      <a
-        href="admin-rankings.html"
-        class="nav-link"
-      >
-
-        <span class="nav-icon">
-          📈
-        </span>
-
-        Rankings
-
-      </a>
-
-
-    </nav>
-
-
-    <div class="sidebar-footer">
-
-      <button
-        type="button"
-        class="sidebar-logout"
-        id="sidebarLogout"
-      >
-
-        <span class="nav-icon">
-          ↪
-        </span>
-
-        Logout
-
-      </button>
-
+    <div class="nav-section">
+      Overview
     </div>
 
-  </aside>
+    <a
+      href="admin-dashboard.html"
+      class="nav-link active"
+    >
+      <span class="nav-icon">🏠</span>
+      Dashboard
+    </a>
 
 
-  <div
-    class="sidebar-overlay"
-    id="sidebarOverlay"
-  ></div>
+    <div class="nav-section">
+      Members
+    </div>
+
+    <a href="admin-users.html" class="nav-link">
+      <span class="nav-icon">👥</span>
+      Users
+    </a>
+
+    <a href="admin-memberships.html" class="nav-link">
+      <span class="nav-icon">💳</span>
+      Memberships
+    </a>
+
+    <a href="admin-transactions.html" class="nav-link">
+      <span class="nav-icon">📊</span>
+      Transactions
+    </a>
+
+    <a href="admin-withdrawals.html" class="nav-link">
+      <span class="nav-icon">💸</span>
+      Withdrawals
+    </a>
 
 
-  <!-- =======================================================
-       MAIN
-  ======================================================== -->
+    <div class="nav-section">
+      Earning System
+    </div>
 
-  <div class="main">
+    <a href="admin-tasks.html" class="nav-link">
+      <span class="nav-icon">📋</span>
+      Tasks
+    </a>
 
+    <a href="admin-watch-ads.html" class="nav-link">
+      <span class="nav-icon">▶️</span>
+      Watch &amp; Earn
+    </a>
 
-    <!-- TOP BAR -->
+    <a href="admin-adverts.html" class="nav-link">
+      <span class="nav-icon">📢</span>
+      Adverts
+    </a>
 
-    <header class="topbar">
-
-      <div class="topbar-left">
-
-        <button
-          type="button"
-          class="mobile-menu-btn"
-          id="mobileMenuButton"
-        >
-          ☰
-        </button>
-
-
-        <div class="page-label">
-
-          EarnGig
-          <strong>
-            / Admin Dashboard
-          </strong>
-
-        </div>
-
-      </div>
+    <a href="novel-review.html" class="nav-link">
+      <span class="nav-icon">📚</span>
+      Novel Review
+    </a>
 
 
-      <div class="topbar-right">
+    <div class="nav-section">
+      Competition
+    </div>
 
-        <div class="admin-status">
+    <a href="admin-competitions.html" class="nav-link">
+      <span class="nav-icon">🏆</span>
+      Competitions
+    </a>
 
-          <span class="status-dot"></span>
+    <a href="admin-rankings.html" class="nav-link">
+      <span class="nav-icon">📈</span>
+      Rankings
+    </a>
 
-          Admin Online
-
-        </div>
+  </nav>
 
 
-        <div
-          class="profile-mini"
-          id="profileMini"
-        >
-          A
-        </div>
+  <div class="sidebar-footer">
 
-      </div>
+    <button
+      type="button"
+      class="sidebar-logout"
+      id="logoutButton"
+    >
+      <span class="nav-icon">↪</span>
+      Logout
+    </button>
 
-    </header>
+  </div>
+
+</aside>
+
+
+<div
+  class="overlay"
+  id="sidebarOverlay"
+></div>
+
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
+<div class="main">
+
+
+<!-- =========================================================
+     TOP BAR
+========================================================= -->
+
+<header class="topbar">
+
+  <div class="topbar-left">
+
+    <button
+      type="button"
+      class="mobile-menu"
+      id="mobileMenuButton"
+    >
+      ☰
+    </button>
+
+    <div class="page-label">
+      EarnGig
+      <strong>/ Admin Dashboard</strong>
+    </div>
+
+  </div>
+
+
+  <div class="topbar-right">
 
 
     <!-- =====================================================
-         CONTENT
+         NOTIFICATION BUTTON
     ====================================================== -->
 
-    <main class="content">
+    <button
+      type="button"
+      class="admin-notification-button"
+      id="notificationButton"
+    >
 
+      <span class="notification-bell">
+        🔔
+      </span>
 
-      <!-- WELCOME -->
+      <span class="notification-label">
+        NOTIFICATIONS
+      </span>
 
-      <section class="welcome-banner">
-
-        <div class="welcome-content">
-
-          <div class="eyebrow">
-            ADMINISTRATION
-          </div>
-
-          <h1 id="welcomeTitle">
-            Welcome, Administrator 👋
-          </h1>
-
-          <p>
-            Manage EarnGig, members, earnings,
-            withdrawals and platform activity.
-          </p>
-
-        </div>
-
-
-        <div
-          class="date-box"
-          id="dashboardDate"
-        >
-          Today
-        </div>
-
-      </section>
-
-
-
-      <!-- ===================================================
-           PLATFORM OVERVIEW
-      ==================================================== -->
-
-      <div class="section-head">
-
-        <div class="section-title-wrap">
-
-          <div class="section-icon">
-            📊
-          </div>
-
-          <div>
-
-            <h2>
-              Platform Overview
-            </h2>
-
-            <p>
-              Live platform statistics
-            </p>
-
-          </div>
-
-        </div>
-
-
-        <button
-          type="button"
-          class="refresh-btn"
-          onclick="loadStats()"
-        >
-          ↻ Refresh
-        </button>
-
-      </div>
-
-
-      <section
-        id="stats"
-        class="stats-grid"
+      <span
+        class="notification-badge"
+        id="notificationBadge"
       >
+        0
+      </span>
 
-        <div class="loading">
-          Loading real platform statistics...
+    </button>
+
+
+    <div class="admin-status">
+
+      <span class="status-dot"></span>
+
+      Admin Online
+
+    </div>
+
+
+    <div
+      class="profile-mini"
+      id="profileMini"
+    >
+      A
+    </div>
+
+  </div>
+
+</header>
+
+
+<!-- =========================================================
+     NOTIFICATION PANEL
+========================================================= -->
+
+<div
+  class="notification-panel"
+  id="notificationPanel"
+>
+
+  <div class="notification-panel-header">
+
+    <strong>
+      🔔 Notifications
+    </strong>
+
+    <button
+      type="button"
+      class="notification-close"
+      id="closeNotificationPanel"
+    >
+      ×
+    </button>
+
+  </div>
+
+
+  <div class="notification-body">
+
+
+    <div class="notification-title">
+      ACTION CENTER
+    </div>
+
+    <div id="actionCenter">
+
+      <div class="action-item">
+
+        <div class="action-icon">
+          ⏳
         </div>
 
-      </section>
+        <div class="action-content">
 
+          <strong>
+            Checking dashboard...
+          </strong>
 
-
-      <!-- ===================================================
-           QUICK MANAGEMENT
-      ==================================================== -->
-
-      <div class="section-head">
-
-        <div class="section-title-wrap">
-
-          <div class="section-icon">
-            ⚡
-          </div>
-
-          <div>
-
-            <h2>
-              Quick Management
-            </h2>
-
-            <p>
-              Frequently used areas
-            </p>
-
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <section class="quick-grid">
-
-
-        <a
-          href="admin-users.html"
-          class="quick-card quick-users"
-        >
-
-          <div class="quick-icon">
-            👤
-          </div>
-
-          <div>
-
-            <strong>
-              Users
-            </strong>
-
-            <span>
-              Member accounts
-            </span>
-
-          </div>
-
-          <div class="quick-arrow">
-            →
-          </div>
-
-        </a>
-
-
-        <a
-          href="admin-memberships.html"
-          class="quick-card quick-memberships"
-        >
-
-          <div class="quick-icon">
-            💳
-          </div>
-
-          <div>
-
-            <strong>
-              Memberships
-            </strong>
-
-            <span>
-              Plans &amp; payments
-            </span>
-
-          </div>
-
-          <div class="quick-arrow">
-            →
-          </div>
-
-        </a>
-
-
-        <a
-          href="admin-withdrawals.html"
-          class="quick-card quick-withdrawals"
-        >
-
-          <div class="quick-icon">
-            💰
-          </div>
-
-          <div>
-
-            <strong>
-              Withdrawals
-            </strong>
-
-            <span>
-              Member payouts
-            </span>
-
-          </div>
-
-          <div class="quick-arrow">
-            →
-          </div>
-
-        </a>
-
-
-        <a
-          href="admin-transactions.html"
-          class="quick-card quick-transactions"
-        >
-
-          <div class="quick-icon">
-            📊
-          </div>
-
-          <div>
-
-            <strong>
-              Transactions
-            </strong>
-
-            <span>
-              Wallet activity
-            </span>
-
-          </div>
-
-          <div class="quick-arrow">
-            →
-          </div>
-
-        </a>
-
-
-      </section>
-
-
-
-      <!-- ===================================================
-           MANAGEMENT
-      ==================================================== -->
-
-      <div class="section-head">
-
-        <div class="section-title-wrap">
-
-          <div class="section-icon">
-            ⚙️
-          </div>
-
-          <div>
-
-            <h2>
-              Management
-            </h2>
-
-            <p>
-              EarnGig administration
-            </p>
-
-          </div>
+          <span>
+            Loading items that require attention.
+          </span>
 
         </div>
 
       </div>
 
-
-      <section class="management-grid">
-
-
-        <div class="management-card manage-blue">
-
-          <div class="management-icon">
-            📋
-          </div>
-
-          <h3>
-            Tasks
-          </h3>
-
-          <p>
-            Manage task listings and submissions.
-          </p>
-
-          <a
-            href="admin-tasks.html"
-            class="management-link"
-          >
-            Manage Tasks →
-          </a>
-
-        </div>
+    </div>
 
 
-        <div class="management-card manage-purple">
-
-          <div class="management-icon">
-            📚
-          </div>
-
-          <h3>
-            Novel Review
-          </h3>
-
-          <p>
-            Review novels and submissions.
-          </p>
-
-          <a
-            href="novel-review.html"
-            class="management-link"
-          >
-            Open Review →
-          </a>
-
-        </div>
+    <div
+      class="notification-title"
+      style="margin-top:18px;"
+    >
+      ADMIN NOTIFICATIONS
+    </div>
 
 
-        <div class="management-card manage-pink">
+    <div id="notificationList">
 
-          <div class="management-icon">
-            📢
-          </div>
+      <div class="member-notification">
 
-          <h3>
-            Advert Management
-          </h3>
+        <strong>
+          No notifications loaded
+        </strong>
 
-          <p>
-            Manage advertising campaigns.
-          </p>
-
-          <a
-            href="admin-adverts.html"
-            class="management-link"
-          >
-            Manage Adverts →
-          </a>
-
-        </div>
-
-
-        <div class="management-card manage-green">
-
-          <div class="management-icon">
-            ▶️
-          </div>
-
-          <h3>
-            Watch &amp; Earn
-          </h3>
-
-          <p>
-            Manage viewer earning campaigns.
-          </p>
-
-          <a
-            href="admin-watch-ads.html"
-            class="management-link"
-          >
-            Manage Watch &amp; Earn →
-          </a>
-
-        </div>
-
-
-        <div class="management-card manage-orange">
-
-          <div class="management-icon">
-            🏆
-          </div>
-
-          <h3>
-            Competitions
-          </h3>
-
-          <p>
-            Manage challenges and awards.
-          </p>
-
-          <a
-            href="admin-competitions.html"
-            class="management-link"
-          >
-            Manage Competitions →
-          </a>
-
-        </div>
-
-
-        <div class="management-card manage-cyan">
-
-          <div class="management-icon">
-            📈
-          </div>
-
-          <h3>
-            Rankings
-          </h3>
-
-          <p>
-            View member leaderboards.
-          </p>
-
-          <a
-            href="admin-rankings.html"
-            class="management-link"
-          >
-            View Rankings →
-          </a>
-
-        </div>
-
-
-      </section>
-
-
-
-      <!-- ===================================================
-           CURRENT PLATFORM RULES
-      ==================================================== -->
-
-      <div class="section-head">
-
-        <div class="section-title-wrap">
-
-          <div class="section-icon">
-            📜
-          </div>
-
-          <div>
-
-            <h2>
-              Current Platform Rules
-            </h2>
-
-            <p>
-              Active earning and withdrawal rules
-            </p>
-
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <section class="rules-card">
-
-
-        <p class="rules-intro">
-
-          Current member earning and withdrawal rules.
-          Referral bonuses and Create &amp; Earn writer
-          earnings are separate from the normal daily
-          earning limit.
-
+        <p>
+          Your notifications will appear here.
         </p>
 
+      </div>
 
-        <div class="plan-rules-grid">
+    </div>
 
+  </div>
 
-          <div class="plan-rule">
 
-            <h3>
-              🥉 Starter
-            </h3>
+  <button
+    type="button"
+    class="send-notification"
+    id="sendNotificationButton"
+  >
+    ＋ SEND NOTIFICATION TO ALL MEMBERS
+  </button>
 
-            <div class="rule-row">
+</div>
 
-              <span>
-                Daily earning
-              </span>
 
-              <strong>
-                ₦200
-              </strong>
+<!-- =========================================================
+     CONTENT
+========================================================= -->
 
-            </div>
+<main class="content">
 
-            <div class="rule-row">
 
-              <span>
-                Min. withdrawal
-              </span>
+<section class="welcome-banner">
 
-              <strong>
-                ₦3,000
-              </strong>
+  <div class="eyebrow">
+    ADMINISTRATION
+  </div>
 
-            </div>
+  <h1 id="welcomeTitle">
+    Welcome, Administrator 👋
+  </h1>
 
-          </div>
+  <p>
+    Manage EarnGig members, memberships,
+    earnings, withdrawals and platform activity.
+  </p>
 
+  <div
+    class="date-box"
+    id="dashboardDate"
+  >
+    Today
+  </div>
 
-          <div class="plan-rule">
+</section>
 
-            <h3>
-              🥈 Standard
-            </h3>
 
-            <div class="rule-row">
+<!-- =========================================================
+     PLATFORM OVERVIEW
+========================================================= -->
 
-              <span>
-                Daily earning
-              </span>
+<div class="section-head">
 
-              <strong>
-                ₦400
-              </strong>
+  <div class="section-title">
 
-            </div>
+    <div class="section-icon">
+      📊
+    </div>
 
-            <div class="rule-row">
+    <div>
 
-              <span>
-                Min. withdrawal
-              </span>
+      <h2>
+        Platform Overview
+      </h2>
 
-              <strong>
-                ₦6,000
-              </strong>
+      <p>
+        Live platform statistics
+      </p>
 
-            </div>
+    </div>
 
-          </div>
+  </div>
 
 
-          <div class="plan-rule">
+  <button
+    type="button"
+    class="refresh-btn"
+    onclick="loadStats()"
+  >
+    ↻ Refresh
+  </button>
 
-            <h3>
-              🥇 Premium
-            </h3>
+</div>
 
-            <div class="rule-row">
 
-              <span>
-                Daily earning
-              </span>
+<section
+  class="stats-grid"
+  id="stats"
+>
 
-              <strong>
-                ₦800
-              </strong>
+  <div
+    style="
+      grid-column:1/-1;
+      padding:35px;
+      text-align:center;
+      background:white;
+      border-radius:14px;
+      color:#777b91;
+    "
+  >
+    Loading statistics...
+  </div>
 
-            </div>
+</section>
 
-            <div class="rule-row">
 
-              <span>
-                Min. withdrawal
-              </span>
+<!-- =========================================================
+     QUICK MANAGEMENT
+========================================================= -->
 
-              <strong>
-                ₦12,000
-              </strong>
+<div class="section-head">
 
-            </div>
+  <div class="section-title">
 
-          </div>
+    <div class="section-icon">
+      ⚡
+    </div>
 
+    <div>
 
-          <div class="plan-rule">
+      <h2>
+        Quick Management
+      </h2>
 
-            <h3>
-              👑 Elite
-            </h3>
+      <p>
+        Frequently used areas
+      </p>
 
-            <div class="rule-row">
-
-              <span>
-                Daily earning
-              </span>
-
-              <strong>
-                ₦1,600
-              </strong>
-
-            </div>
-
-            <div class="rule-row">
-
-              <span>
-                Min. withdrawal
-              </span>
-
-              <strong>
-                ₦24,000
-              </strong>
-
-            </div>
-
-          </div>
-
-
-        </div>
-
-
-        <div class="rules-note">
-
-          <strong>
-            Withdrawal window:
-          </strong>
-
-          15th and 28th of every month,
-          12:00 AM – 11:59 PM Nigeria time
-          (Africa/Lagos).
-
-          &nbsp;&nbsp;
-
-          <strong>
-            Daily earning limit:
-          </strong>
-
-          Applies to normal activities such as
-          Tasks, Watch &amp; Earn and Read &amp; Earn.
-
-          &nbsp;&nbsp;
-
-          <strong>
-            Exempt:
-          </strong>
-
-          Referral bonuses and Create &amp; Earn writer
-          earnings.
-
-        </div>
-
-
-      </section>
-
-
-    </main>
+    </div>
 
   </div>
 
 </div>
 
 
+<section class="quick-grid">
+
+
+<a
+  href="admin-users.html"
+  class="quick-card quick-users"
+>
+
+  <div class="quick-icon">
+    👤
+  </div>
+
+  <div>
+    <strong>Users</strong>
+    <span>Member accounts</span>
+  </div>
+
+  <div class="quick-arrow">
+    →
+  </div>
+
+</a>
+
+
+<a
+  href="admin-memberships.html"
+  class="quick-card quick-memberships"
+>
+
+  <div class="quick-icon">
+    💳
+  </div>
+
+  <div>
+    <strong>Memberships</strong>
+    <span>Plans &amp; payments</span>
+  </div>
+
+  <div class="quick-arrow">
+    →
+  </div>
+
+</a>
+
+
+<a
+  href="admin-withdrawals.html"
+  class="quick-card quick-withdrawals"
+>
+
+  <div class="quick-icon">
+    💰
+  </div>
+
+  <div>
+    <strong>Withdrawals</strong>
+    <span>Member payouts</span>
+  </div>
+
+  <div class="quick-arrow">
+    →
+  </div>
+
+</a>
+
+
+<a
+  href="admin-transactions.html"
+  class="quick-card quick-transactions"
+>
+
+  <div class="quick-icon">
+    📊
+  </div>
+
+  <div>
+    <strong>Transactions</strong>
+    <span>Wallet activity</span>
+  </div>
+
+  <div class="quick-arrow">
+    →
+  </div>
+
+</a>
+
+
+</section>
+
+
+<!-- =========================================================
+     MANAGEMENT
+========================================================= -->
+
+<div class="section-head">
+
+  <div class="section-title">
+
+    <div class="section-icon">
+      ⚙️
+    </div>
+
+    <div>
+
+      <h2>
+        Management
+      </h2>
+
+      <p>
+        EarnGig administration
+      </p>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<section class="management-grid">
+
+
+<div class="management-card">
+
+  <div class="management-icon">
+    📋
+  </div>
+
+  <h3>Tasks</h3>
+
+  <p>
+    Manage task listings and submissions.
+  </p>
+
+  <a
+    href="admin-tasks.html"
+    class="management-link"
+  >
+    Manage Tasks →
+  </a>
+
+</div>
+
+
+<div class="management-card">
+
+  <div class="management-icon">
+    📚
+  </div>
+
+  <h3>Novel Review</h3>
+
+  <p>
+    Review novels and submissions.
+  </p>
+
+  <a
+    href="novel-review.html"
+    class="management-link"
+  >
+    Open Review →
+  </a>
+
+</div>
+
+
+<div class="management-card">
+
+  <div class="management-icon">
+    📢
+  </div>
+
+  <h3>Advert Management</h3>
+
+  <p>
+    Manage advertising campaigns.
+  </p>
+
+  <a
+    href="admin-adverts.html"
+    class="management-link"
+  >
+    Manage Adverts →
+  </a>
+
+</div>
+
+
+<div class="management-card">
+
+  <div class="management-icon">
+    ▶️
+  </div>
+
+  <h3>Watch &amp; Earn</h3>
+
+  <p>
+    Manage viewer earning campaigns.
+  </p>
+
+  <a
+    href="admin-watch-ads.html"
+    class="management-link"
+  >
+    Manage Watch &amp; Earn →
+  </a>
+
+</div>
+
+
+<div class="management-card">
+
+  <div class="management-icon">
+    🏆
+  </div>
+
+  <h3>Competitions</h3>
+
+  <p>
+    Manage challenges and awards.
+  </p>
+
+  <a
+    href="admin-competitions.html"
+    class="management-link"
+  >
+    Manage Competitions →
+  </a>
+
+</div>
+
+
+<div class="management-card">
+
+  <div class="management-icon">
+    📈
+  </div>
+
+  <h3>Rankings</h3>
+
+  <p>
+    View member leaderboards.
+  </p>
+
+  <a
+    href="admin-rankings.html"
+    class="management-link"
+  >
+    View Rankings →
+  </a>
+
+</div>
+
+
+</section>
+
+
+<!-- =========================================================
+     RULES
+========================================================= -->
+
+<div class="section-head">
+
+  <div class="section-title">
+
+    <div class="section-icon">
+      📜
+    </div>
+
+    <div>
+
+      <h2>
+        Current Platform Rules
+      </h2>
+
+      <p>
+        Active earning and withdrawal rules
+      </p>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<section class="rules-card">
+
+<p class="rules-intro">
+
+Current member earning and withdrawal rules.
+Referral bonuses and Create &amp; Earn writer
+earnings are separate from the normal daily
+earning limit.
+
+</p>
+
+
+<div class="plan-rules-grid">
+
+
+<div class="plan-rule">
+
+<h3>🥉 Starter</h3>
+
+<div class="rule-row">
+<span>Daily earning</span>
+<strong>₦200</strong>
+</div>
+
+<div class="rule-row">
+<span>Min. withdrawal</span>
+<strong>₦3,000</strong>
+</div>
+
+</div>
+
+
+<div class="plan-rule">
+
+<h3>🥈 Standard</h3>
+
+<div class="rule-row">
+<span>Daily earning</span>
+<strong>₦400</strong>
+</div>
+
+<div class="rule-row">
+<span>Min. withdrawal</span>
+<strong>₦6,000</strong>
+</div>
+
+</div>
+
+
+<div class="plan-rule">
+
+<h3>🥇 Premium</h3>
+
+<div class="rule-row">
+<span>Daily earning</span>
+<strong>₦800</strong>
+</div>
+
+<div class="rule-row">
+<span>Min. withdrawal</span>
+<strong>₦12,000</strong>
+</div>
+
+</div>
+
+
+<div class="plan-rule">
+
+<h3>👑 Elite</h3>
+
+<div class="rule-row">
+<span>Daily earning</span>
+<strong>₦1,600</strong>
+</div>
+
+<div class="rule-row">
+<span>Min. withdrawal</span>
+<strong>₦24,000</strong>
+</div>
+
+</div>
+
+
+</div>
+
+
+<div class="rules-note">
+
+<strong>
+Withdrawal window:
+</strong>
+
+15th and 28th of every month,
+Nigeria time.
+
+<br><br>
+
+<strong>
+Daily earning limit:
+</strong>
+
+Applies to normal activities such as
+Tasks, Watch &amp; Earn and Read &amp; Earn.
+
+<br><br>
+
+<strong>
+Exempt:
+</strong>
+
+Referral bonuses and Create &amp; Earn writer earnings.
+
+</div>
+
+</section>
+
+
+</main>
+
+</div>
+
+
+<!-- =========================================================
+     SEND NOTIFICATION MODAL
+========================================================= -->
+
+<div
+  class="modal-overlay"
+  id="modalOverlay"
+>
+
+<div class="modal">
+
+  <div class="modal-head">
+
+    <div>
+
+      <h2>
+        Send Notification
+      </h2>
+
+      <p>
+        Send an announcement to all active members.
+      </p>
+
+    </div>
+
+    <button
+      type="button"
+      class="close-modal"
+      id="closeModal"
+    >
+      ×
+    </button>
+
+  </div>
+
+
+  <div class="form-group">
+
+    <label>
+      TITLE
+    </label>
+
+    <input
+      type="text"
+      id="notificationTitle"
+      maxlength="120"
+      placeholder="Important EarnGig Announcement"
+    >
+
+  </div>
+
+
+  <div class="form-group">
+
+    <label>
+      MESSAGE
+    </label>
+
+    <textarea
+      id="notificationMessage"
+      maxlength="3000"
+      placeholder="Write your notification here..."
+    ></textarea>
+
+  </div>
+
+
+  <div class="form-group">
+
+    <label>
+      TYPE
+    </label>
+
+    <select id="notificationType">
+
+      <option value="announcement">
+        General Announcement
+      </option>
+
+      <option value="important">
+        Important
+      </option>
+
+      <option value="update">
+        Platform Update
+      </option>
+
+      <option value="maintenance">
+        Maintenance
+      </option>
+
+    </select>
+
+  </div>
+
+
+  <div class="audience">
+
+    👥 Audience:
+    <strong>
+      All Active Members
+    </strong>
+
+  </div>
+
+
+  <div class="modal-actions">
+
+    <button
+      type="button"
+      class="cancel-btn"
+      id="cancelModal"
+    >
+      Cancel
+    </button>
+
+    <button
+      type="button"
+      class="send-btn"
+      id="sendNow"
+    >
+      Send Notification
+    </button>
+
+  </div>
+
+</div>
+
+</div>
+
 
 <script>
-
 
 /* =========================================================
    MOBILE MENU
 ========================================================= */
 
 const sidebar =
-  document.getElementById(
-    "sidebar"
-  );
+  document.getElementById("sidebar");
 
-const sidebarOverlay =
-  document.getElementById(
-    "sidebarOverlay"
-  );
+const overlay =
+  document.getElementById("sidebarOverlay");
 
-const mobileMenuButton =
-  document.getElementById(
-    "mobileMenuButton"
-  );
+const mobileMenu =
+  document.getElementById("mobileMenuButton");
 
 
-function openSidebar() {
-
-  sidebar.classList.add(
-    "open"
-  );
-
-  sidebarOverlay.classList.add(
-    "show"
-  );
-
-}
-
-
-function closeSidebar() {
-
-  sidebar.classList.remove(
-    "open"
-  );
-
-  sidebarOverlay.classList.remove(
-    "show"
-  );
-
-}
-
-
-mobileMenuButton.addEventListener(
+mobileMenu.addEventListener(
   "click",
-  openSidebar
+  function() {
+
+    sidebar.classList.toggle("open");
+
+    overlay.classList.toggle("show");
+
+  }
 );
 
 
-sidebarOverlay.addEventListener(
+overlay.addEventListener(
   "click",
-  closeSidebar
+  function() {
+
+    sidebar.classList.remove("open");
+
+    overlay.classList.remove("show");
+
+  }
 );
-
-
-document
-  .querySelectorAll(".nav-link")
-  .forEach(
-    function(link) {
-
-      link.addEventListener(
-        "click",
-        closeSidebar
-      );
-
-    }
-  );
 
 
 /* =========================================================
    DATE
 ========================================================= */
 
-function loadDashboardDate() {
-
-  const element =
-    document.getElementById(
-      "dashboardDate"
-    );
-
-  const now =
-    new Date();
-
-  element.textContent =
-    now.toLocaleDateString(
-      "en-NG",
-      {
-        weekday: "long",
-        day: "numeric",
-        month: "short",
-        year: "numeric"
-      }
-    );
-
-}
+document.getElementById(
+  "dashboardDate"
+).textContent =
+  new Date().toLocaleDateString(
+    "en-NG",
+    {
+      weekday: "long",
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+      timeZone: "Africa/Lagos"
+    }
+  );
 
 
 /* =========================================================
-   ADMIN SECURITY
+   ADMIN CHECK
 ========================================================= */
 
 async function checkAdmin() {
 
-
   const {
-
-    data: {
-      user
-    },
-
+    data: { user },
     error
-
   } =
-    await supabaseClient
-      .auth
-      .getUser();
+    await supabaseClient.auth.getUser();
 
 
-  if (
-    error ||
-    !user
-  ) {
+  if (error || !user) {
 
     window.location.href =
       "index.html";
@@ -2826,46 +2497,28 @@ async function checkAdmin() {
 
 
   const {
-
     data: profile,
-
     error: profileError
-
   } =
     await supabaseClient
-
       .from("profiles")
-
-      .select(`
-        full_name,
-        is_admin,
-        account_status
-      `)
-
-      .eq(
-        "id",
-        user.id
+      .select(
+        "full_name,is_admin,account_status"
       )
-
+      .eq("id", user.id)
       .single();
 
 
   if (
-
     profileError ||
-
     !profile ||
-
     profile.is_admin !== true
-
   ) {
 
-    await supabaseClient
-      .auth
-      .signOut();
+    await supabaseClient.auth.signOut();
 
     alert(
-      "Access denied. Administrator privileges are required."
+      "Administrator access required."
     );
 
     window.location.href =
@@ -2877,17 +2530,11 @@ async function checkAdmin() {
 
 
   if (
-
     profile.account_status &&
-
-    profile.account_status !==
-    "active"
-
+    profile.account_status !== "active"
   ) {
 
-    await supabaseClient
-      .auth
-      .signOut();
+    await supabaseClient.auth.signOut();
 
     alert(
       "This administrator account is not active."
@@ -2904,7 +2551,6 @@ async function checkAdmin() {
   document.getElementById(
     "welcomeTitle"
   ).textContent =
-
     `Welcome, ${
       profile.full_name ||
       "Administrator"
@@ -2914,7 +2560,6 @@ async function checkAdmin() {
   document.getElementById(
     "profileMini"
   ).textContent =
-
     (
       profile.full_name ||
       "A"
@@ -2930,34 +2575,130 @@ async function checkAdmin() {
 
 
 /* =========================================================
-   STAT CARD
+   LOAD STATS
 ========================================================= */
 
-function createStat(
+async function loadStats() {
+
+  const stats =
+    document.getElementById("stats");
+
+
+  stats.innerHTML = `
+    <div style="
+      grid-column:1/-1;
+      padding:35px;
+      text-align:center;
+      background:white;
+      border-radius:14px;
+      color:#777b91;
+    ">
+      Loading statistics...
+    </div>
+  `;
+
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .rpc(
+        "get_admin_dashboard_stats"
+      );
+
+
+  if (error) {
+
+    console.error(error);
+
+    stats.innerHTML = `
+      <div style="
+        grid-column:1/-1;
+        padding:20px;
+        background:#fff3f4;
+        border:1px solid #f0b7bf;
+        border-radius:12px;
+        color:#8a2631;
+      ">
+        Unable to load dashboard statistics.
+        <br><br>
+        ${escapeHtml(error.message)}
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  const n =
+    value =>
+      Number(value || 0)
+        .toLocaleString();
+
+
+  const money =
+    value =>
+      "₦" +
+      Number(value || 0)
+        .toLocaleString("en-NG");
+
+
+  stats.innerHTML = `
+
+    ${stat("blue","👥","Total Members",n(data.members))}
+
+    ${stat("green","💳","Wallets",n(data.wallets))}
+
+    ${stat("orange","🪙","Total Wallet Balance",money(data.total_wallet_balance))}
+
+    ${stat("purple","📈","Total Earned",money(data.total_earned))}
+
+    ${stat("pink","📄","Transactions",n(data.transactions))}
+
+    ${stat("red","⏱️","Pending Withdrawals",n(data.pending_withdrawals))}
+
+    ${stat("orange","💰","Pending Withdrawal Amount",money(data.pending_withdrawal_amount))}
+
+    ${stat("cyan","📚","Total Novels",n(data.novels))}
+
+    ${stat("purple","📖","Published Novels",n(data.published_novels))}
+
+    ${stat("blue","📝","Pending Novel Submissions",n(data.pending_novel_submissions))}
+
+    ${stat("green","✍️","Held Writer Earnings",money(data.held_writer_earnings))}
+
+    ${stat("pink","🎁","Pending Reader Rewards",money(data.pending_reader_rewards))}
+
+  `;
+
+
+  loadActionCenter(data);
+
+}
+
+
+function stat(
   color,
   icon,
   label,
-  value,
-  isMoney = false
+  value
 ) {
 
   return `
 
     <div class="stat ${color}">
 
-      <div class="stat-top">
-
-        <div class="stat-icon">
-          ${icon}
-        </div>
-
+      <div class="stat-icon">
+        ${icon}
       </div>
 
       <small>
         ${label}
       </small>
 
-      <strong class="${isMoney ? "money" : ""}">
+      <strong>
         ${value}
       </strong>
 
@@ -2969,231 +2710,693 @@ function createStat(
 
 
 /* =========================================================
-   LOAD STATISTICS
+   ACTION CENTER
 ========================================================= */
 
-async function loadStats() {
+function loadActionCenter(data) {
 
-
-  const stats =
+  const box =
     document.getElementById(
-      "stats"
+      "actionCenter"
     );
 
 
-  stats.innerHTML = `
-
-    <div class="loading">
-
-      Loading real platform statistics...
-
-    </div>
-
-  `;
+  const items = [];
 
 
-  try {
+  const withdrawals =
+    Number(
+      data.pending_withdrawals || 0
+    );
 
 
-    const {
+  const novels =
+    Number(
+      data.pending_novel_submissions || 0
+    );
 
-      data,
 
+  const writer =
+    Number(
+      data.held_writer_earnings || 0
+    );
+
+
+  const reader =
+    Number(
+      data.pending_reader_rewards || 0
+    );
+
+
+  if (withdrawals > 0) {
+
+    items.push(`
+      <div class="action-item">
+
+        <div class="action-icon">
+          💸
+        </div>
+
+        <div class="action-content">
+
+          <strong>
+            ${withdrawals.toLocaleString()}
+            pending withdrawal${withdrawals === 1 ? "" : "s"}
+          </strong>
+
+          <span>
+            Member withdrawal requests require attention.
+          </span>
+
+          <button
+            class="action-link"
+            onclick="location.href='admin-withdrawals.html'"
+          >
+            Review Withdrawals →
+          </button>
+
+        </div>
+
+      </div>
+    `);
+
+  }
+
+
+  if (novels > 0) {
+
+    items.push(`
+      <div class="action-item">
+
+        <div class="action-icon">
+          📚
+        </div>
+
+        <div class="action-content">
+
+          <strong>
+            ${novels.toLocaleString()}
+            pending novel submission${novels === 1 ? "" : "s"}
+          </strong>
+
+          <span>
+            Novel submissions are waiting for review.
+          </span>
+
+          <button
+            class="action-link"
+            onclick="location.href='novel-review.html'"
+          >
+            Review Novels →
+          </button>
+
+        </div>
+
+      </div>
+    `);
+
+  }
+
+
+  if (writer > 0) {
+
+    items.push(`
+      <div class="action-item">
+
+        <div class="action-icon">
+          ✍️
+        </div>
+
+        <div class="action-content">
+
+          <strong>
+            ₦${writer.toLocaleString()}
+            writer earnings held
+          </strong>
+
+          <span>
+            Writer earnings are currently held.
+          </span>
+
+        </div>
+
+      </div>
+    `);
+
+  }
+
+
+  if (reader > 0) {
+
+    items.push(`
+      <div class="action-item">
+
+        <div class="action-icon">
+          🎁
+        </div>
+
+        <div class="action-content">
+
+          <strong>
+            ₦${reader.toLocaleString()}
+            pending reader rewards
+          </strong>
+
+          <span>
+            Reader rewards are awaiting processing.
+          </span>
+
+        </div>
+
+      </div>
+    `);
+
+  }
+
+
+  if (!items.length) {
+
+    box.innerHTML = `
+      <div class="action-item">
+
+        <div class="action-icon">
+          ✓
+        </div>
+
+        <div class="action-content">
+
+          <strong>
+            Action center is clear
+          </strong>
+
+          <span>
+            There are currently no pending dashboard alerts.
+          </span>
+
+        </div>
+
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  box.innerHTML =
+    items.join("");
+
+}
+
+
+/* =========================================================
+   LOAD NOTIFICATIONS
+========================================================= */
+
+async function loadNotifications() {
+
+  const {
+    data: { user }
+  } =
+    await supabaseClient.auth.getUser();
+
+
+  if (!user) {
+    return;
+  }
+
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("notifications")
+      .select(`
+        id,
+        title,
+        message,
+        type,
+        is_read,
+        created_at
+      `)
+      .eq("user_id", user.id)
+      .order(
+        "created_at",
+        {
+          ascending: false
+        }
+      )
+      .limit(10);
+
+
+  if (error) {
+
+    console.error(
+      "Notification error:",
       error
+    );
 
-    } =
-      await supabaseClient
-        .rpc(
-          "get_admin_dashboard_stats"
-        );
+    return;
+
+  }
 
 
-    if (error) {
+  const unread =
+    (data || [])
+      .filter(
+        item =>
+          item.is_read === false
+      )
+      .length;
 
-      throw error;
+
+  const badge =
+    document.getElementById(
+      "notificationBadge"
+    );
+
+
+  if (unread > 0) {
+
+    badge.style.display =
+      "flex";
+
+    badge.textContent =
+      unread > 99
+        ? "99+"
+        : unread;
+
+  } else {
+
+    badge.style.display =
+      "none";
+
+  }
+
+
+  const list =
+    document.getElementById(
+      "notificationList"
+    );
+
+
+  if (!data || !data.length) {
+
+    list.innerHTML = `
+      <div class="member-notification">
+
+        <strong>
+          No notifications
+        </strong>
+
+        <p>
+          You have no administrator notifications yet.
+        </p>
+
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  list.innerHTML =
+    data
+      .map(
+        item => `
+
+          <div
+            class="member-notification ${
+              item.is_read
+                ? ""
+                : "unread"
+            }"
+          >
+
+            <strong>
+              ${escapeHtml(item.title)}
+            </strong>
+
+            <p>
+              ${escapeHtml(item.message)}
+            </p>
+
+            <small>
+              ${new Date(
+                item.created_at
+              ).toLocaleString(
+                "en-NG",
+                {
+                  timeZone:
+                    "Africa/Lagos"
+                }
+              )}
+            </small>
+
+          </div>
+
+        `
+      )
+      .join("");
+
+}
+
+
+/* =========================================================
+   NOTIFICATION PANEL
+========================================================= */
+
+const notificationButton =
+  document.getElementById(
+    "notificationButton"
+  );
+
+const notificationPanel =
+  document.getElementById(
+    "notificationPanel"
+  );
+
+
+notificationButton.addEventListener(
+  "click",
+  async function(event) {
+
+    event.stopPropagation();
+
+    notificationPanel.classList.toggle(
+      "open"
+    );
+
+    if (
+      notificationPanel.classList.contains(
+        "open"
+      )
+    ) {
+
+      await loadNotifications();
 
     }
 
+  }
+);
 
-    if (!data) {
 
-      throw new Error(
-        "No dashboard statistics were returned."
+document
+  .getElementById(
+    "closeNotificationPanel"
+  )
+  .addEventListener(
+    "click",
+    function() {
+
+      notificationPanel.classList.remove(
+        "open"
+      );
+
+    }
+  );
+
+
+document.addEventListener(
+  "click",
+  function(event) {
+
+    if (
+      !event.target.closest(
+        "#notificationPanel"
+      ) &&
+      !event.target.closest(
+        "#notificationButton"
+      )
+    ) {
+
+      notificationPanel.classList.remove(
+        "open"
       );
 
     }
 
+  }
+);
 
-    function number(value) {
 
-      return Number(
-        value || 0
-      ).toLocaleString();
+/* =========================================================
+   OPEN SEND NOTIFICATION MODAL
+========================================================= */
+
+const modalOverlay =
+  document.getElementById(
+    "modalOverlay"
+  );
+
+
+document
+  .getElementById(
+    "sendNotificationButton"
+  )
+  .addEventListener(
+    "click",
+    function() {
+
+      notificationPanel.classList.remove(
+        "open"
+      );
+
+      modalOverlay.classList.add(
+        "open"
+      );
 
     }
+  );
 
 
-    function money(value) {
+function closeModal() {
 
-      return "₦" +
-        Number(
-          value || 0
-        ).toLocaleString(
-          "en-NG"
-        );
-
-    }
-
-
-    stats.innerHTML = `
-
-
-      ${createStat(
-        "blue",
-        "👥",
-        "Total Members",
-        number(data.members)
-      )}
-
-
-      ${createStat(
-        "green",
-        "💳",
-        "Wallets",
-        number(data.wallets)
-      )}
-
-
-      ${createStat(
-        "orange",
-        "🪙",
-        "Total Wallet Balance",
-        money(data.total_wallet_balance),
-        true
-      )}
-
-
-      ${createStat(
-        "purple",
-        "📈",
-        "Total Earned",
-        money(data.total_earned),
-        true
-      )}
-
-
-      ${createStat(
-        "pink",
-        "📄",
-        "Transactions",
-        number(data.transactions)
-      )}
-
-
-      ${createStat(
-        "red",
-        "⏱️",
-        "Pending Withdrawals",
-        number(data.pending_withdrawals)
-      )}
-
-
-      ${createStat(
-        "orange",
-        "💰",
-        "Pending Withdrawal Amount",
-        money(data.pending_withdrawal_amount),
-        true
-      )}
-
-
-      ${createStat(
-        "cyan",
-        "📚",
-        "Total Novels",
-        number(data.novels)
-      )}
-
-
-      ${createStat(
-        "purple",
-        "📖",
-        "Published Novels",
-        number(data.published_novels)
-      )}
-
-
-      ${createStat(
-        "blue",
-        "📝",
-        "Pending Novel Submissions",
-        number(data.pending_novel_submissions)
-      )}
-
-
-      ${createStat(
-        "green",
-        "✍️",
-        "Held Writer Earnings",
-        money(data.held_writer_earnings),
-        true
-      )}
-
-
-      ${createStat(
-        "pink",
-        "🎁",
-        "Pending Reader Rewards",
-        money(data.pending_reader_rewards),
-        true
-      )}
-
-    `;
-
-  }
-
-
-  catch (error) {
-
-
-    console.error(
-      "Admin statistics error:",
-      error
-    );
-
-
-    stats.innerHTML = `
-
-      <div class="error-box">
-
-        <strong>
-          Dashboard statistics could not be loaded.
-        </strong>
-
-        <p>
-          ${
-            escapeHtml(
-              error.message ||
-              "Unknown error"
-            )
-          }
-        </p>
-
-        <button
-          type="button"
-          class="refresh-btn"
-          onclick="loadStats()"
-        >
-          Try Again
-        </button>
-
-      </div>
-
-    `;
-
-  }
+  modalOverlay.classList.remove(
+    "open"
+  );
 
 }
+
+
+document
+  .getElementById(
+    "closeModal"
+  )
+  .addEventListener(
+    "click",
+    closeModal
+  );
+
+
+document
+  .getElementById(
+    "cancelModal"
+  )
+  .addEventListener(
+    "click",
+    closeModal
+  );
+
+
+/* =========================================================
+   SEND NOTIFICATION
+========================================================= */
+
+document
+  .getElementById(
+    "sendNow"
+  )
+  .addEventListener(
+    "click",
+    async function() {
+
+      const button =
+        document.getElementById(
+          "sendNow"
+        );
+
+
+      const title =
+        document
+          .getElementById(
+            "notificationTitle"
+          )
+          .value
+          .trim();
+
+
+      const message =
+        document
+          .getElementById(
+            "notificationMessage"
+          )
+          .value
+          .trim();
+
+
+      const type =
+        document
+          .getElementById(
+            "notificationType"
+          )
+          .value;
+
+
+      if (!title) {
+
+        alert(
+          "Enter a notification title."
+        );
+
+        return;
+
+      }
+
+
+      if (!message) {
+
+        alert(
+          "Enter the notification message."
+        );
+
+        return;
+
+      }
+
+
+      if (
+        !confirm(
+          "Send this notification to all active members?"
+        )
+      ) {
+
+        return;
+
+      }
+
+
+      button.disabled =
+        true;
+
+      button.textContent =
+        "Sending...";
+
+
+      try {
+
+        const {
+          data,
+          error
+        } =
+          await supabaseClient
+            .rpc(
+              "admin_send_notification_to_all",
+              {
+                p_title:
+                  title,
+
+                p_message:
+                  message,
+
+                p_type:
+                  type,
+
+                p_action_url:
+                  null
+              }
+            );
+
+
+        if (error) {
+
+          throw error;
+
+        }
+
+
+        alert(
+          `Notification sent to ${
+            Number(data || 0).toLocaleString()
+          } active member${
+            Number(data || 0) === 1
+              ? ""
+              : "s"
+          }.`
+        );
+
+
+        document
+          .getElementById(
+            "notificationTitle"
+          )
+          .value = "";
+
+
+        document
+          .getElementById(
+            "notificationMessage"
+          )
+          .value = "";
+
+
+        closeModal();
+
+      }
+
+      catch (error) {
+
+        console.error(
+          error
+        );
+
+        alert(
+          "Notification failed:\n\n" +
+          (
+            error.message ||
+            "Unknown error"
+          )
+        );
+
+      }
+
+      finally {
+
+        button.disabled =
+          false;
+
+        button.textContent =
+          "Send Notification";
+
+      }
+
+    }
+  );
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+document
+  .getElementById(
+    "logoutButton"
+  )
+  .addEventListener(
+    "click",
+    async function() {
+
+      await supabaseClient
+        .auth
+        .signOut();
+
+      window.location.href =
+        "index.html";
+
+    }
+  );
 
 
 /* =========================================================
@@ -3205,59 +3408,13 @@ function escapeHtml(value) {
   return String(
     value ?? ""
   )
-
-    .replaceAll(
-      "&",
-      "&amp;"
-    )
-
-    .replaceAll(
-      "<",
-      "&lt;"
-    )
-
-    .replaceAll(
-      ">",
-      "&gt;"
-    )
-
-    .replaceAll(
-      '"',
-      "&quot;"
-    )
-
-    .replaceAll(
-      "'",
-      "&#039;"
-    );
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
 
 }
-
-
-/* =========================================================
-   LOGOUT
-========================================================= */
-
-async function logoutAdmin() {
-
-  await supabaseClient
-    .auth
-    .signOut();
-
-  window.location.href =
-    "index.html";
-
-}
-
-
-document
-  .getElementById(
-    "sidebarLogout"
-  )
-  .addEventListener(
-    "click",
-    logoutAdmin
-  );
 
 
 /* =========================================================
@@ -3265,9 +3422,6 @@ document
 ========================================================= */
 
 (async function() {
-
-  loadDashboardDate();
-
 
   const user =
     await checkAdmin();
@@ -3280,10 +3434,11 @@ document
 
   await loadStats();
 
+  await loadNotifications();
+
 })();
 
 </script>
-
 
 </body>
 

@@ -12,6 +12,7 @@
 
   <title>Admin Dashboard | EarnGig</title>
 
+  <!-- SUPABASE -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase.js"></script>
 
@@ -37,9 +38,9 @@
         Helvetica,
         sans-serif;
       background:
-        #f4f6fb;
+        #f4f6ff;
       color:
-        #171936;
+        #151936;
     }
 
     button,
@@ -53,7 +54,7 @@
 
 
     /* =========================================================
-       APP LAYOUT
+       APP
     ========================================================= */
 
     .app {
@@ -67,23 +68,29 @@
     ========================================================= */
 
     .sidebar {
-      width: 255px;
+      width: 263px;
       min-height: 100vh;
-      background:
-        linear-gradient(
-          180deg,
-          #0b1038 0%,
-          #11164d 55%,
-          #17185a 100%
-        );
-      color: white;
+
       position: fixed;
       left: 0;
       top: 0;
       bottom: 0;
+
       z-index: 1000;
+
       display: flex;
       flex-direction: column;
+
+      background:
+        linear-gradient(
+          180deg,
+          #10164b 0%,
+          #11194f 45%,
+          #0b123e 100%
+        );
+
+      color: white;
+
       border-right:
         1px solid
         rgba(255,255,255,.08);
@@ -94,7 +101,8 @@
 
     .sidebar-logo {
       padding:
-        24px 22px 22px;
+        23px 20px 20px;
+
       border-bottom:
         1px solid
         rgba(255,255,255,.08);
@@ -104,67 +112,79 @@
       display: flex;
       align-items: center;
       gap: 11px;
+
       color: white;
       text-decoration: none;
     }
 
     .brand-icon {
-      width: 42px;
-      height: 42px;
-      border-radius: 13px;
+      width: 43px;
+      height: 43px;
+
       display: flex;
       align-items: center;
       justify-content: center;
+
+      border-radius: 13px;
+
       background:
         linear-gradient(
           135deg,
-          #4f6cff,
-          #8b4dff
+          #496cff,
+          #a247ff
         );
-      font-size: 20px;
-      font-weight: 800;
+
       box-shadow:
-        0 8px 22px
-        rgba(86,89,255,.28);
+        0 8px 25px
+        rgba(96,74,255,.4);
+
+      font-size: 21px;
+      font-weight: 900;
     }
 
     .brand-text {
-      font-size: 23px;
+      font-size: 24px;
       font-weight: 800;
-      letter-spacing: -.5px;
+      letter-spacing: -.7px;
     }
 
     .brand-text span {
-      color: #7186ff;
+      color: #788dff;
     }
 
     .admin-label {
-      margin-top: 9px;
-      margin-left: 53px;
-      font-size: 10px;
-      letter-spacing: 1.5px;
-      color: #969dcc;
-      font-weight: 700;
+      margin:
+        8px 0 0 54px;
+
+      color:
+        #8991c7;
+
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 1.7px;
     }
 
 
-    /* NAV */
+    /* NAVIGATION */
 
     .sidebar-nav {
       flex: 1;
       overflow-y: auto;
+
       padding:
-        20px 13px;
+        19px 13px;
     }
 
     .nav-section {
       margin:
-        13px 9px 8px;
+        14px 9px 8px;
+
       color:
-        #777eb1;
+        #858dc7;
+
       font-size: 10px;
       font-weight: 800;
-      letter-spacing: 1.3px;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
     }
 
@@ -172,56 +192,70 @@
       display: flex;
       align-items: center;
       gap: 12px;
+
       min-height: 44px;
+
       padding:
         10px 12px;
-      margin-bottom: 4px;
-      border-radius: 10px;
+
+      margin-bottom: 3px;
+
+      border-radius: 11px;
+
       color:
-        #c9cde7;
+        #d1d5ed;
+
       text-decoration: none;
+
       font-size: 13px;
       font-weight: 600;
+
       transition:
-        background .18s ease,
-        color .18s ease,
-        transform .18s ease;
+        .18s ease;
     }
 
     .nav-link:hover {
       background:
         rgba(255,255,255,.08);
+
       color: white;
+
       transform:
         translateX(2px);
     }
 
     .nav-link.active {
       color: white;
+
       background:
         linear-gradient(
           90deg,
-          rgba(83,105,255,.35),
-          rgba(128,78,255,.24)
+          #4e5dff,
+          #783cff
         );
-      border:
-        1px solid
-        rgba(126,136,255,.18);
+
+      box-shadow:
+        0 7px 18px
+        rgba(76,73,255,.25);
     }
 
     .nav-icon {
       width: 25px;
-      text-align: center;
-      font-size: 17px;
+
       flex-shrink: 0;
+
+      text-align: center;
+
+      font-size: 17px;
     }
 
 
-    /* SIDEBAR FOOTER */
+    /* LOGOUT */
 
     .sidebar-footer {
       padding:
         13px;
+
       border-top:
         1px solid
         rgba(255,255,255,.08);
@@ -229,54 +263,80 @@
 
     .sidebar-logout {
       width: 100%;
+
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 11px;
+
       padding:
         12px;
-      border: 0;
-      border-radius: 10px;
+
+      border:
+        1px solid
+        rgba(255,75,130,.22);
+
+      border-radius: 11px;
+
       background:
-        rgba(255,255,255,.06);
+        linear-gradient(
+          135deg,
+          rgba(112,48,255,.2),
+          rgba(255,48,102,.2)
+        );
+
       color:
-        #d4d7ed;
-      font-weight: 700;
+        #ff719c;
+
+      font-size: 13px;
+      font-weight: 800;
+
       text-align: left;
     }
 
     .sidebar-logout:hover {
       background:
-        rgba(255,80,110,.13);
+        linear-gradient(
+          135deg,
+          #603cff,
+          #ef3672
+        );
+
       color: white;
     }
 
 
     /* =========================================================
-       MAIN AREA
+       MAIN
     ========================================================= */
 
     .main {
       flex: 1;
-      margin-left: 255px;
+      margin-left: 263px;
       min-width: 0;
     }
 
 
     /* =========================================================
-       TOP BAR
+       TOPBAR
     ========================================================= */
 
     .topbar {
-      height: 76px;
-      background: white;
-      border-bottom:
-        1px solid
-        #e7e9f1;
+      height: 74px;
+
       display: flex;
       align-items: center;
       justify-content: space-between;
+
       padding:
-        0 30px;
+        0 27px;
+
+      background:
+        rgba(255,255,255,.96);
+
+      border-bottom:
+        1px solid
+        #e5e7f2;
+
       position: sticky;
       top: 0;
       z-index: 500;
@@ -290,26 +350,32 @@
 
     .mobile-menu-btn {
       display: none;
-      width: 42px;
-      height: 42px;
+
+      width: 43px;
+      height: 43px;
+
       border: 0;
-      border-radius: 11px;
+      border-radius: 12px;
+
       background:
-        #f0f2fa;
+        #edf0ff;
+
       color:
-        #1b2050;
+        #253064;
+
       font-size: 21px;
     }
 
     .page-label {
-      font-size: 14px;
       color:
-        #72768d;
+        #8a8ea3;
+
+      font-size: 13px;
     }
 
     .page-label strong {
       color:
-        #181b3e;
+        #25294c;
     }
 
     .topbar-right {
@@ -322,13 +388,18 @@
       display: flex;
       align-items: center;
       gap: 7px;
+
       padding:
-        8px 12px;
+        8px 13px;
+
       border-radius: 20px;
+
       background:
-        #f1f2ff;
+        #effbf4;
+
       color:
-        #5542c7;
+        #228a50;
+
       font-size: 11px;
       font-weight: 800;
     }
@@ -336,25 +407,33 @@
     .status-dot {
       width: 7px;
       height: 7px;
+
       border-radius: 50%;
+
       background:
-        #32c56d;
+        #29c66d;
     }
 
     .profile-mini {
-      width: 39px;
-      height: 39px;
-      border-radius: 12px;
+      width: 41px;
+      height: 41px;
+
       display: flex;
       align-items: center;
       justify-content: center;
+
+      border-radius: 12px;
+
       background:
         linear-gradient(
           135deg,
-          #536cff,
-          #864cff
+          #4b68ff,
+          #8447ff
         );
+
       color: white;
+
+      font-size: 16px;
       font-weight: 800;
     }
 
@@ -364,89 +443,240 @@
     ========================================================= */
 
     .content {
-      max-width: 1450px;
-      margin: 0 auto;
+      max-width: 1500px;
+
+      margin:
+        0 auto;
+
       padding:
-        32px;
+        27px 25px 55px;
     }
 
 
     /* =========================================================
-       WELCOME
+       WELCOME BANNER
     ========================================================= */
 
-    .welcome-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      gap: 20px;
-      margin-bottom: 28px;
+    .welcome-banner {
+      position: relative;
+
+      overflow: hidden;
+
+      min-height: 137px;
+
+      padding:
+        25px 28px;
+
+      border-radius: 18px;
+
+      background:
+        linear-gradient(
+          115deg,
+          #2549d8 0%,
+          #4631d6 48%,
+          #7d32ed 100%
+        );
+
+      color: white;
+
+      box-shadow:
+        0 12px 30px
+        rgba(61,58,194,.22);
+    }
+
+    .welcome-banner::before {
+      content: "";
+
+      position: absolute;
+
+      width: 380px;
+      height: 380px;
+
+      right: 40px;
+      top: -260px;
+
+      border-radius: 50%;
+
+      background:
+        rgba(255,255,255,.08);
+    }
+
+    .welcome-banner::after {
+      content: "";
+
+      position: absolute;
+
+      width: 480px;
+      height: 130px;
+
+      right: -70px;
+      bottom: -80px;
+
+      border-radius: 50%;
+
+      background:
+        linear-gradient(
+          90deg,
+          rgba(255,255,255,.03),
+          rgba(230,78,255,.35)
+        );
+
+      transform:
+        rotate(-9deg);
+    }
+
+    .welcome-content {
+      position: relative;
+      z-index: 2;
     }
 
     .eyebrow {
+      margin-bottom: 7px;
+
       color:
-        #7057e9;
-      font-size: 11px;
+        #cbd2ff;
+
+      font-size: 10px;
       font-weight: 800;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      margin-bottom: 9px;
+      letter-spacing: 2px;
     }
 
-    .welcome h1 {
+    .welcome-banner h1 {
       margin: 0;
-      font-size: 31px;
-      letter-spacing: -.8px;
-      color:
-        #171a3d;
+
+      font-size: 29px;
+
+      letter-spacing:
+        -.8px;
     }
 
-    .welcome p {
+    .welcome-banner p {
       margin:
-        9px 0 0;
+        7px 0 0;
+
       color:
-        #74788e;
-      font-size: 14px;
+        #e2e5ff;
+
+      font-size: 13px;
     }
 
-    .dashboard-date {
+    .date-box {
+      position: absolute;
+
+      right: 22px;
+      top: 22px;
+
+      z-index: 4;
+
       padding:
-        11px 15px;
-      background: white;
+        12px 16px;
+
       border:
         1px solid
-        #e5e7ef;
-      border-radius: 10px;
-      color:
-        #696e85;
-      font-size: 12px;
-      white-space: nowrap;
+        rgba(255,255,255,.17);
+
+      border-radius: 12px;
+
+      background:
+        rgba(255,255,255,.1);
+
+      backdrop-filter:
+        blur(8px);
+
+      color: white;
+
+      font-size: 11px;
     }
 
 
     /* =========================================================
-       SECTION HEADERS
+       SECTION HEAD
     ========================================================= */
 
     .section-head {
       display: flex;
       align-items: center;
       justify-content: space-between;
+
       margin:
-        32px 0 14px;
+        25px 2px 13px;
+    }
+
+    .section-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-icon {
+      width: 34px;
+      height: 34px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 10px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #e6ebff,
+          #eee4ff
+        );
+
+      color:
+        #5437ed;
+
+      font-size: 17px;
     }
 
     .section-head h2 {
       margin: 0;
-      font-size: 17px;
+
+      font-size: 18px;
+
       color:
-        #202344;
+        #171b40;
     }
 
-    .section-head span {
-      font-size: 11px;
+    .section-head p {
+      margin:
+        2px 0 0;
+
       color:
         #85899d;
+
+      font-size: 10px;
+    }
+
+    .refresh-btn {
+      padding:
+        9px 14px;
+
+      border: 0;
+      border-radius: 9px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #4f5fff,
+          #7537f2
+        );
+
+      color: white;
+
+      font-size: 11px;
+      font-weight: 800;
+
+      box-shadow:
+        0 5px 15px
+        rgba(87,64,242,.18);
+    }
+
+    .refresh-btn:hover {
+      transform:
+        translateY(-1px);
     }
 
 
@@ -456,315 +686,608 @@
 
     .stats-grid {
       display: grid;
+
       grid-template-columns:
         repeat(
           4,
           minmax(0, 1fr)
         );
-      gap: 15px;
+
+      gap: 12px;
     }
 
     .stat {
       position: relative;
+
       overflow: hidden;
-      background: white;
+
+      min-height: 112px;
+
+      padding:
+        16px;
+
       border:
         1px solid
-        #e5e7ef;
+        rgba(90,96,170,.08);
+
       border-radius: 15px;
-      padding: 19px;
-      min-height: 120px;
+
+      background: white;
+
       box-shadow:
-        0 5px 18px
-        rgba(20,27,70,.035);
+        0 5px 20px
+        rgba(29,37,90,.045);
     }
 
     .stat::after {
       content: "";
+
       position: absolute;
-      width: 70px;
-      height: 70px;
-      right: -25px;
-      top: -25px;
+
+      width: 80px;
+      height: 80px;
+
+      right: -26px;
+      top: -30px;
+
       border-radius: 50%;
+
       background:
-        rgba(104,82,255,.07);
+        currentColor;
+
+      opacity:
+        .055;
+    }
+
+    .stat-icon {
+      width: 39px;
+      height: 39px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 11px;
+
+      font-size: 18px;
+
+      margin-bottom: 10px;
     }
 
     .stat small {
       display: block;
+
+      margin-bottom: 6px;
+
       color:
-        #7c8096;
-      font-size: 11px;
+        #73778f;
+
+      font-size: 10px;
       font-weight: 700;
-      margin-bottom: 9px;
     }
 
     .stat strong {
       display: block;
+
       color:
-        #181b3f;
-      font-size: 24px;
+        #171a3d;
+
+      font-size: 21px;
+
       line-height: 1.15;
-      font-weight: 800;
     }
 
     .money {
-      font-size: 20px !important;
+      font-size: 18px !important;
+    }
+
+
+    /* STAT COLORS */
+
+    .stat-blue {
+      color: #2c69ff;
+    }
+
+    .stat-blue .stat-icon {
+      background: #e8f0ff;
+      color: #2865ed;
+    }
+
+    .stat-green {
+      color: #18b66b;
+    }
+
+    .stat-green .stat-icon {
+      background: #e5faef;
+      color: #13a862;
+    }
+
+    .stat-orange {
+      color: #ff9a20;
+    }
+
+    .stat-orange .stat-icon {
+      background: #fff2dc;
+      color: #ef8a0c;
+    }
+
+    .stat-purple {
+      color: #8a42ed;
+    }
+
+    .stat-purple .stat-icon {
+      background: #f0e7ff;
+      color: #7c37df;
+    }
+
+    .stat-pink {
+      color: #ed477f;
+    }
+
+    .stat-pink .stat-icon {
+      background: #ffe8f0;
+      color: #e73870;
+    }
+
+    .stat-red {
+      color: #ef4050;
+    }
+
+    .stat-red .stat-icon {
+      background: #ffe9eb;
+      color: #e93646;
+    }
+
+    .stat-cyan {
+      color: #13a8d8;
+    }
+
+    .stat-cyan .stat-icon {
+      background: #e3f8ff;
+      color: #079acb;
     }
 
 
     /* =========================================================
-       QUICK ACTIONS
+       QUICK MANAGEMENT
     ========================================================= */
 
     .quick-grid {
       display: grid;
-      grid-template-columns:
-        repeat(
-          4,
-          minmax(0, 1fr)
-        );
-      gap: 14px;
-    }
 
-    .quick-card {
-      display: flex;
-      align-items: center;
-      gap: 13px;
-      padding: 17px;
-      background: white;
-      border:
-        1px solid
-        #e5e7ef;
-      border-radius: 14px;
-      text-decoration: none;
-      color:
-        #1a1d40;
-      transition:
-        transform .18s ease,
-        box-shadow .18s ease,
-        border-color .18s ease;
-    }
-
-    .quick-card:hover {
-      transform:
-        translateY(-2px);
-      border-color:
-        #c9c4ff;
-      box-shadow:
-        0 9px 25px
-        rgba(67,55,170,.09);
-    }
-
-    .quick-icon {
-      width: 43px;
-      height: 43px;
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 12px;
-      background:
-        linear-gradient(
-          135deg,
-          #eef0ff,
-          #f2edff
-        );
-      font-size: 19px;
-    }
-
-    .quick-card strong {
-      display: block;
-      font-size: 13px;
-      margin-bottom: 3px;
-    }
-
-    .quick-card span {
-      color:
-        #85899d;
-      font-size: 11px;
-    }
-
-    .quick-arrow {
-      margin-left: auto;
-      color:
-        #7b6ae8;
-      font-size: 17px;
-    }
-
-
-    /* =========================================================
-       MANAGEMENT
-    ========================================================= */
-
-    .management-grid {
-      display: grid;
-      grid-template-columns:
-        repeat(
-          3,
-          minmax(0, 1fr)
-        );
-      gap: 15px;
-    }
-
-    .management-card {
-      background: white;
-      border:
-        1px solid
-        #e5e7ef;
-      border-radius: 15px;
-      padding: 20px;
-      box-shadow:
-        0 5px 18px
-        rgba(20,27,70,.035);
-      transition:
-        transform .18s ease,
-        box-shadow .18s ease;
-    }
-
-    .management-card:hover {
-      transform:
-        translateY(-2px);
-      box-shadow:
-        0 10px 28px
-        rgba(20,27,70,.07);
-    }
-
-    .management-top {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 10px;
-    }
-
-    .management-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background:
-        linear-gradient(
-          135deg,
-          #eff1ff,
-          #f4edff
-        );
-      font-size: 20px;
-    }
-
-    .management-arrow {
-      color:
-        #9a9db0;
-      font-size: 17px;
-    }
-
-    .management-card h3 {
-      margin:
-        17px 0 7px;
-      font-size: 17px;
-      color:
-        #1b1e40;
-    }
-
-    .management-card p {
-      margin:
-        0 0 17px;
-      min-height: 45px;
-      color:
-        #777b91;
-      font-size: 12px;
-      line-height: 1.55;
-    }
-
-    .manage-btn {
-      width: 100%;
-      padding:
-        10px 12px;
-      border: 0;
-      border-radius: 9px;
-      background:
-        #f0efff;
-      color:
-        #5843c9;
-      font-size: 12px;
-      font-weight: 800;
-    }
-
-    .manage-btn:hover {
-      background:
-        linear-gradient(
-          135deg,
-          #5c70ff,
-          #814bff
-        );
-      color: white;
-    }
-
-
-    /* =========================================================
-       RULES
-    ========================================================= */
-
-    .rules-card {
-      background: white;
-      border:
-        1px solid
-        #e5e7ef;
-      border-radius: 16px;
-      padding: 22px;
-      box-shadow:
-        0 5px 18px
-        rgba(20,27,70,.035);
-    }
-
-    .rules-intro {
-      margin:
-        0 0 20px;
-      color:
-        #777b91;
-      line-height: 1.6;
-      font-size: 12px;
-    }
-
-    .plan-rules-grid {
-      display: grid;
       grid-template-columns:
         repeat(
           4,
           minmax(0,1fr)
         );
-      gap: 13px;
+
+      gap: 12px;
+    }
+
+    .quick-card {
+      min-height: 74px;
+
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      padding:
+        13px 14px;
+
+      border-radius: 13px;
+
+      text-decoration: none;
+
+      color: white;
+
+      box-shadow:
+        0 8px 18px
+        rgba(36,45,100,.1);
+
+      transition:
+        transform .18s ease,
+        box-shadow .18s ease;
+    }
+
+    .quick-card:hover {
+      transform:
+        translateY(-3px);
+
+      box-shadow:
+        0 12px 25px
+        rgba(36,45,100,.16);
+    }
+
+    .quick-icon {
+      width: 43px;
+      height: 43px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      flex-shrink: 0;
+
+      border-radius: 12px;
+
+      background:
+        rgba(255,255,255,.18);
+
+      font-size: 19px;
+    }
+
+    .quick-card strong {
+      display: block;
+
+      font-size: 13px;
+
+      margin-bottom: 3px;
+    }
+
+    .quick-card span {
+      font-size: 10px;
+
+      opacity: .87;
+    }
+
+    .quick-arrow {
+      margin-left: auto;
+
+      width: 29px;
+      height: 29px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 50%;
+
+      background:
+        rgba(255,255,255,.18);
+
+      font-size: 16px;
+    }
+
+    .quick-users {
+      background:
+        linear-gradient(
+          135deg,
+          #4566ff,
+          #3487ff
+        );
+    }
+
+    .quick-memberships {
+      background:
+        linear-gradient(
+          135deg,
+          #12ad69,
+          #22c97b
+        );
+    }
+
+    .quick-withdrawals {
+      background:
+        linear-gradient(
+          135deg,
+          #ff8b22,
+          #ffb329
+        );
+    }
+
+    .quick-transactions {
+      background:
+        linear-gradient(
+          135deg,
+          #833bea,
+          #a04cf4
+        );
+    }
+
+
+    /* =========================================================
+       MANAGEMENT CARDS
+    ========================================================= */
+
+    .management-grid {
+      display: grid;
+
+      grid-template-columns:
+        repeat(
+          4,
+          minmax(0,1fr)
+        );
+
+      gap: 12px;
+    }
+
+    .management-card {
+      position: relative;
+
+      overflow: hidden;
+
+      min-height: 184px;
+
+      padding:
+        17px;
+
+      border:
+        1px solid
+        #e4e6f1;
+
+      border-radius: 15px;
+
+      background:
+        white;
+
+      box-shadow:
+        0 5px 20px
+        rgba(30,36,90,.045);
+    }
+
+    .management-card::after {
+      content: "";
+
+      position: absolute;
+
+      width: 100px;
+      height: 100px;
+
+      right: -38px;
+      top: -42px;
+
+      border-radius: 50%;
+
+      background:
+        currentColor;
+
+      opacity:
+        .045;
+    }
+
+    .management-icon {
+      width: 40px;
+      height: 40px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 11px;
+
+      font-size: 18px;
+    }
+
+    .management-card h3 {
+      margin:
+        13px 0 5px;
+
+      font-size: 15px;
+
+      color:
+        #171a3d;
+    }
+
+    .management-card p {
+      min-height: 43px;
+
+      margin:
+        0 0 13px;
+
+      color:
+        #74788f;
+
+      font-size: 10.5px;
+
+      line-height: 1.5;
+    }
+
+    .manage-btn {
+      width: 100%;
+
+      padding:
+        9px 10px;
+
+      border: 0;
+
+      border-radius: 9px;
+
+      color: white;
+
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+
+    /* MANAGEMENT COLORS */
+
+    .management-blue {
+      color: #3970ff;
+    }
+
+    .management-blue .management-icon {
+      background: #e8f0ff;
+      color: #2864ef;
+    }
+
+    .management-blue .manage-btn {
+      background:
+        linear-gradient(
+          135deg,
+          #3970ff,
+          #2862ef
+        );
+    }
+
+    .management-purple {
+      color: #7d43ed;
+    }
+
+    .management-purple .management-icon {
+      background: #f0e7ff;
+      color: #7137dd;
+    }
+
+    .management-purple .manage-btn {
+      background:
+        linear-gradient(
+          135deg,
+          #7639e9,
+          #9b45ee
+        );
+    }
+
+    .management-pink {
+      color: #ec4777;
+    }
+
+    .management-pink .management-icon {
+      background: #ffe8f0;
+      color: #e8396b;
+    }
+
+    .management-pink .manage-btn {
+      background:
+        linear-gradient(
+          135deg,
+          #ed3d6d,
+          #f04d7d
+        );
+    }
+
+    .management-green {
+      color: #20b66d;
+    }
+
+    .management-green .management-icon {
+      background: #e5faef;
+      color: #15a861;
+    }
+
+    .management-green .manage-btn {
+      background:
+        linear-gradient(
+          135deg,
+          #12ad69,
+          #1bc579
+        );
+    }
+
+    .management-orange {
+      color: #ef941f;
+    }
+
+    .management-orange .management-icon {
+      background: #fff2dc;
+      color: #e6870e;
+    }
+
+    .management-orange .manage-btn {
+      background:
+        linear-gradient(
+          135deg,
+          #f29420,
+          #ffac2c
+        );
+    }
+
+    .management-cyan {
+      color: #16a8d2;
+    }
+
+    .management-cyan .management-icon {
+      background: #e4f8ff;
+      color: #0799c6;
+    }
+
+    .management-cyan .manage-btn {
+      background:
+        linear-gradient(
+          135deg,
+          #079acb,
+          #16afd7
+        );
+    }
+
+
+    /* =========================================================
+       PLATFORM RULES
+    ========================================================= */
+
+    .rules-card {
+      background: white;
+
+      border:
+        1px solid
+        #e4e6f0;
+
+      border-radius: 16px;
+
+      padding:
+        18px;
+
+      box-shadow:
+        0 5px 20px
+        rgba(30,36,90,.045);
+    }
+
+    .rules-intro {
+      margin:
+        0 0 16px;
+
+      color:
+        #777b90;
+
+      font-size: 11px;
+
+      line-height: 1.55;
+    }
+
+    .plan-rules-grid {
+      display: grid;
+
+      grid-template-columns:
+        repeat(
+          4,
+          minmax(0,1fr)
+        );
+
+      gap: 10px;
     }
 
     .plan-rule {
+      padding:
+        14px;
+
+      border-radius: 12px;
+
+      background:
+        #fafbff;
+
       border:
         1px solid
-        #e4e6ef;
-      border-radius: 12px;
-      padding: 16px;
-      background:
-        #fafbfe;
+        #e5e7f0;
     }
 
     .plan-rule h3 {
       margin:
-        0 0 13px;
-      font-size: 15px;
+        0 0 10px;
+
+      font-size: 14px;
     }
 
     .rule-row {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      gap: 8px;
+
       padding:
-        9px 0;
+        7px 0;
+
       border-bottom:
         1px solid
-        #e9ebf2;
-      font-size: 11px;
+        #e8eaf2;
+
+      font-size: 10px;
     }
 
     .rule-row:last-child {
@@ -773,103 +1296,95 @@
 
     .rule-row span {
       color:
-        #7a7e92;
+        #7b7f92;
     }
 
     .rule-row strong {
       color:
-        #24274a;
+        #232747;
     }
 
     .rules-note {
-      margin-top: 17px;
+      margin-top:
+        14px;
+
       padding:
-        14px 15px;
+        13px 14px;
+
       border-radius: 10px;
+
       background:
-        #f3f1ff;
+        linear-gradient(
+          135deg,
+          #f0edff,
+          #f8edff
+        );
+
       border:
         1px solid
-        #dfd8ff;
+        #e2d9ff;
+
       color:
-        #574692;
-      font-size: 11px;
-      line-height: 1.6;
+        #58458f;
+
+      font-size: 10px;
+
+      line-height: 1.55;
     }
 
     .rules-note strong {
       color:
-        #3e2d7c;
+        #3d2d74;
     }
 
 
     /* =========================================================
-       LOADING
+       LOADING / ERROR
     ========================================================= */
 
     .loading {
       grid-column:
         1 / -1;
+
+      padding:
+        35px;
+
       text-align: center;
-      padding: 35px;
+
       background: white;
+
       border:
         1px solid
-        #e5e7ef;
+        #e3e6f0;
+
       border-radius: 14px;
+
       color:
         #777b91;
-      font-size: 13px;
+
+      font-size: 12px;
     }
-
-
-    /* =========================================================
-       ERROR
-    ========================================================= */
 
     .error-box {
       grid-column:
         1 / -1;
-      padding: 20px;
+
+      padding:
+        20px;
+
       border-radius: 13px;
+
       background:
-        #fff5f5;
+        #fff5f6;
+
       border:
         1px solid
-        #f0b5b5;
+        #f0b6be;
+
       color:
         #721c24;
-      font-size: 13px;
-    }
 
-    .error-box p {
-      line-height: 1.5;
-    }
-
-
-    /* =========================================================
-       REFRESH
-    ========================================================= */
-
-    .refresh-btn {
-      margin-top: 15px;
-      padding:
-        10px 15px;
-      border: 0;
-      border-radius: 9px;
-      background:
-        linear-gradient(
-          135deg,
-          #596dff,
-          #814cff
-        );
-      color: white;
-      font-weight: 700;
       font-size: 12px;
-    }
-
-    .refresh-btn:hover {
-      opacity: .9;
     }
 
 
@@ -879,33 +1394,32 @@
 
     .sidebar-overlay {
       display: none;
+
       position: fixed;
+
       inset: 0;
+
       background:
-        rgba(8,10,35,.55);
+        rgba(5,8,35,.62);
+
       z-index: 900;
     }
 
 
     /* =========================================================
-       RESPONSIVE
+       TABLET
     ========================================================= */
 
-    @media (max-width: 1150px) {
+    @media (max-width: 1200px) {
 
       .stats-grid {
         grid-template-columns:
           repeat(3, minmax(0,1fr));
       }
 
-      .quick-grid {
-        grid-template-columns:
-          repeat(2, minmax(0,1fr));
-      }
-
       .management-grid {
         grid-template-columns:
-          repeat(2, minmax(0,1fr));
+          repeat(3, minmax(0,1fr));
       }
 
       .plan-rules-grid {
@@ -916,11 +1430,16 @@
     }
 
 
-    @media (max-width: 850px) {
+    /* =========================================================
+       MOBILE SIDEBAR
+    ========================================================= */
+
+    @media (max-width: 900px) {
 
       .sidebar {
         transform:
           translateX(-100%);
+
         transition:
           transform .25s ease;
       }
@@ -940,22 +1459,27 @@
 
       .mobile-menu-btn {
         display: flex;
+
         align-items: center;
         justify-content: center;
       }
 
       .topbar {
         padding:
-          0 18px;
+          0 17px;
       }
 
       .content {
         padding:
-          25px 18px 45px;
+          22px 17px 45px;
       }
 
     }
 
+
+    /* =========================================================
+       PHONE
+    ========================================================= */
 
     @media (max-width: 650px) {
 
@@ -971,55 +1495,127 @@
         display: none;
       }
 
-      .welcome-row {
-        display: block;
+      .welcome-banner {
+        min-height: 165px;
+
+        padding:
+          22px 20px;
       }
 
-      .dashboard-date {
+      .welcome-banner h1 {
+        max-width: 90%;
+
+        font-size: 25px;
+      }
+
+      .welcome-banner p {
+        max-width: 95%;
+
+        font-size: 11px;
+      }
+
+      .date-box {
+        position: relative;
+
         display: inline-block;
-        margin-top: 16px;
-      }
 
-      .welcome h1 {
-        font-size: 27px;
+        top: auto;
+        right: auto;
+
+        margin-top: 18px;
+
+        padding:
+          8px 11px;
       }
 
       .stats-grid {
         grid-template-columns:
           repeat(2, minmax(0,1fr));
-        gap: 10px;
+
+        gap: 9px;
       }
 
       .stat {
-        padding: 15px;
-        min-height: 100px;
+        min-height: 105px;
+
+        padding:
+          13px;
+      }
+
+      .stat-icon {
+        width: 35px;
+        height: 35px;
+
+        font-size: 16px;
       }
 
       .stat strong {
-        font-size: 20px;
+        font-size: 19px;
       }
 
       .money {
-        font-size: 17px !important;
+        font-size: 16px !important;
       }
 
-      .quick-grid,
-      .management-grid,
+      .quick-grid {
+        grid-template-columns:
+          repeat(2, minmax(0,1fr));
+      }
+
+      .quick-card {
+        min-height: 70px;
+        padding: 11px;
+      }
+
+      .quick-card span {
+        display: block;
+      }
+
+      .management-grid {
+        grid-template-columns:
+          repeat(2, minmax(0,1fr));
+      }
+
+      .management-card {
+        min-height: 190px;
+
+        padding:
+          14px;
+      }
+
+      .management-card p {
+        font-size: 10px;
+      }
+
       .plan-rules-grid {
         grid-template-columns: 1fr;
-      }
-
-      .section-head {
-        margin-top: 27px;
       }
 
     }
 
 
-    @media (max-width: 390px) {
+    @media (max-width: 420px) {
+
+      .content {
+        padding:
+          18px 12px 40px;
+      }
 
       .stats-grid {
         grid-template-columns: 1fr;
+      }
+
+      .quick-grid,
+      .management-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .welcome-banner h1 {
+        font-size: 23px;
+      }
+
+      .section-head h2 {
+        font-size: 16px;
       }
 
     }
@@ -1081,7 +1677,9 @@
         class="nav-link active"
       >
 
-        <span class="nav-icon">⌂</span>
+        <span class="nav-icon">
+          🏠
+        </span>
 
         Dashboard
 
@@ -1098,7 +1696,9 @@
         class="nav-link"
       >
 
-        <span class="nav-icon">👥</span>
+        <span class="nav-icon">
+          👥
+        </span>
 
         Users
 
@@ -1110,7 +1710,9 @@
         class="nav-link"
       >
 
-        <span class="nav-icon">💳</span>
+        <span class="nav-icon">
+          💳
+        </span>
 
         Memberships
 
@@ -1122,7 +1724,9 @@
         class="nav-link"
       >
 
-        <span class="nav-icon">📊</span>
+        <span class="nav-icon">
+          📊
+        </span>
 
         Transactions
 
@@ -1134,7 +1738,9 @@
         class="nav-link"
       >
 
-        <span class="nav-icon">💸</span>
+        <span class="nav-icon">
+          💸
+        </span>
 
         Withdrawals
 
@@ -1151,7 +1757,9 @@
         class="nav-link"
       >
 
-        <span class="nav-icon">📋</span>
+        <span class="nav-icon">
+          📋
+        </span>
 
         Tasks
 
@@ -1163,7 +1771,9 @@
         class="nav-link"
       >
 
-        <span class="nav-icon">▶</span>
+        <span class="nav-icon">
+          ▶️
+        </span>
 
         Watch &amp; Earn
 
@@ -1175,7 +1785,9 @@
         class="nav-link"
       >
 
-        <span class="nav-icon">📢</span>
+        <span class="nav-icon">
+          📢
+        </span>
 
         Adverts
 
@@ -1187,7 +1799,9 @@
         class="nav-link"
       >
 
-        <span class="nav-icon">📚</span>
+        <span class="nav-icon">
+          📚
+        </span>
 
         Novel Review
 
@@ -1204,7 +1818,9 @@
         class="nav-link"
       >
 
-        <span class="nav-icon">🏆</span>
+        <span class="nav-icon">
+          🏆
+        </span>
 
         Competitions
 
@@ -1216,7 +1832,9 @@
         class="nav-link"
       >
 
-        <span class="nav-icon">🥇</span>
+        <span class="nav-icon">
+          📈
+        </span>
 
         Rankings
 
@@ -1234,7 +1852,9 @@
         id="sidebarLogout"
       >
 
-        <span class="nav-icon">↪</span>
+        <span class="nav-icon">
+          ↪
+        </span>
 
         Logout
 
@@ -1279,7 +1899,9 @@
         <div class="page-label">
 
           EarnGig
-          <strong>/ Admin Dashboard</strong>
+          <strong>
+            / Admin Dashboard
+          </strong>
 
         </div>
 
@@ -1301,9 +1923,7 @@
           class="profile-mini"
           id="profileMini"
         >
-
           A
-
         </div>
 
       </div>
@@ -1318,18 +1938,20 @@
     <main class="content">
 
 
-      <!-- WELCOME -->
+      <!-- ===================================================
+           WELCOME
+      ==================================================== -->
 
-      <section class="welcome-row">
+      <section class="welcome-banner">
 
-        <div class="welcome">
+        <div class="welcome-content">
 
           <div class="eyebrow">
-            Administration
+            ADMINISTRATION
           </div>
 
           <h1 id="welcomeTitle">
-            Admin Dashboard
+            Welcome, Administrator 👋
           </h1>
 
           <p>
@@ -1341,7 +1963,7 @@
 
 
         <div
-          class="dashboard-date"
+          class="date-box"
           id="dashboardDate"
         >
           Today
@@ -1357,13 +1979,34 @@
 
       <div class="section-head">
 
-        <h2>
-          Platform Overview
-        </h2>
+        <div class="section-title-wrap">
 
-        <span>
-          Live platform statistics
-        </span>
+          <div class="section-icon">
+            📊
+          </div>
+
+          <div>
+
+            <h2>
+              Platform Overview
+            </h2>
+
+            <p>
+              Live platform statistics
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <button
+          type="button"
+          class="refresh-btn"
+          onclick="loadStats()"
+        >
+          ↻ Refresh
+        </button>
 
       </div>
 
@@ -1382,18 +2025,30 @@
 
 
       <!-- ===================================================
-           QUICK ACTIONS
+           QUICK MANAGEMENT
       ==================================================== -->
 
       <div class="section-head">
 
-        <h2>
-          Quick Management
-        </h2>
+        <div class="section-title-wrap">
 
-        <span>
-          Frequently used areas
-        </span>
+          <div class="section-icon">
+            ⚡
+          </div>
+
+          <div>
+
+            <h2>
+              Quick Management
+            </h2>
+
+            <p>
+              Frequently used admin areas
+            </p>
+
+          </div>
+
+        </div>
 
       </div>
 
@@ -1403,11 +2058,11 @@
 
         <a
           href="admin-users.html"
-          class="quick-card"
+          class="quick-card quick-users"
         >
 
           <div class="quick-icon">
-            👥
+            👤
           </div>
 
           <div>
@@ -1431,7 +2086,7 @@
 
         <a
           href="admin-memberships.html"
-          class="quick-card"
+          class="quick-card quick-memberships"
         >
 
           <div class="quick-icon">
@@ -1459,11 +2114,11 @@
 
         <a
           href="admin-withdrawals.html"
-          class="quick-card"
+          class="quick-card quick-withdrawals"
         >
 
           <div class="quick-icon">
-            💸
+            💰
           </div>
 
           <div>
@@ -1487,7 +2142,7 @@
 
         <a
           href="admin-transactions.html"
-          class="quick-card"
+          class="quick-card quick-transactions"
         >
 
           <div class="quick-icon">
@@ -1523,13 +2178,25 @@
 
       <div class="section-head">
 
-        <h2>
-          Management
-        </h2>
+        <div class="section-title-wrap">
 
-        <span>
-          EarnGig administration
-        </span>
+          <div class="section-icon">
+            ⚙️
+          </div>
+
+          <div>
+
+            <h2>
+              Management
+            </h2>
+
+            <p>
+              EarnGig administration
+            </p>
+
+          </div>
+
+        </div>
 
       </div>
 
@@ -1539,18 +2206,10 @@
 
         <!-- TASKS -->
 
-        <div class="management-card">
+        <div class="management-card management-blue">
 
-          <div class="management-top">
-
-            <div class="management-icon">
-              📋
-            </div>
-
-            <div class="management-arrow">
-              ↗
-            </div>
-
+          <div class="management-icon">
+            📋
           </div>
 
           <h3>
@@ -1559,7 +2218,7 @@
 
           <p>
             Review submitted tasks, approve or reject
-            submissions and manage active task listings.
+            submissions and manage task listings.
           </p>
 
           <button
@@ -1567,26 +2226,18 @@
             class="manage-btn"
             onclick="location.href='admin-tasks.html'"
           >
-            Manage Tasks
+            Manage Tasks →
           </button>
 
         </div>
 
 
-        <!-- NOVELS -->
+        <!-- NOVEL REVIEW -->
 
-        <div class="management-card">
+        <div class="management-card management-purple">
 
-          <div class="management-top">
-
-            <div class="management-icon">
-              📚
-            </div>
-
-            <div class="management-arrow">
-              ↗
-            </div>
-
+          <div class="management-icon">
+            📚
           </div>
 
           <h3>
@@ -1603,7 +2254,7 @@
             class="manage-btn"
             onclick="location.href='novel-review.html'"
           >
-            Open Novel Review
+            Open Novel Review →
           </button>
 
         </div>
@@ -1611,18 +2262,10 @@
 
         <!-- ADVERTS -->
 
-        <div class="management-card">
+        <div class="management-card management-pink">
 
-          <div class="management-top">
-
-            <div class="management-icon">
-              📢
-            </div>
-
-            <div class="management-arrow">
-              ↗
-            </div>
-
+          <div class="management-icon">
+            📢
           </div>
 
           <h3>
@@ -1630,8 +2273,8 @@
           </h3>
 
           <p>
-            Review business advertising requests,
-            approve campaigns and manage submissions.
+            Review advertising requests, approve
+            campaigns and manage advertiser submissions.
           </p>
 
           <button
@@ -1639,7 +2282,7 @@
             class="manage-btn"
             onclick="location.href='admin-adverts.html'"
           >
-            Manage Adverts
+            Manage Adverts →
           </button>
 
         </div>
@@ -1647,18 +2290,10 @@
 
         <!-- WATCH -->
 
-        <div class="management-card">
+        <div class="management-card management-green">
 
-          <div class="management-top">
-
-            <div class="management-icon">
-              ▶️
-            </div>
-
-            <div class="management-arrow">
-              ↗
-            </div>
-
+          <div class="management-icon">
+            ▶️
           </div>
 
           <h3>
@@ -1666,8 +2301,8 @@
           </h3>
 
           <p>
-            Manage approved adverts available for
-            members and configure viewer earning campaigns.
+            Manage approved adverts available for members
+            and configure viewer earning campaigns.
           </p>
 
           <button
@@ -1675,7 +2310,7 @@
             class="manage-btn"
             onclick="location.href='admin-watch-ads.html'"
           >
-            Manage Watch &amp; Earn
+            Manage Watch &amp; Earn →
           </button>
 
         </div>
@@ -1683,18 +2318,10 @@
 
         <!-- COMPETITIONS -->
 
-        <div class="management-card">
+        <div class="management-card management-orange">
 
-          <div class="management-top">
-
-            <div class="management-icon">
-              🏆
-            </div>
-
-            <div class="management-arrow">
-              ↗
-            </div>
-
+          <div class="management-icon">
+            🏆
           </div>
 
           <h3>
@@ -1711,7 +2338,7 @@
             class="manage-btn"
             onclick="location.href='admin-competitions.html'"
           >
-            Manage Competitions
+            Manage Competitions →
           </button>
 
         </div>
@@ -1719,18 +2346,10 @@
 
         <!-- RANKINGS -->
 
-        <div class="management-card">
+        <div class="management-card management-cyan">
 
-          <div class="management-top">
-
-            <div class="management-icon">
-              🥇
-            </div>
-
-            <div class="management-arrow">
-              ↗
-            </div>
-
+          <div class="management-icon">
+            📈
           </div>
 
           <h3>
@@ -1747,7 +2366,7 @@
             class="manage-btn"
             onclick="location.href='admin-rankings.html'"
           >
-            Manage Rankings
+            Manage Rankings →
           </button>
 
         </div>
@@ -1755,18 +2374,10 @@
 
         <!-- USERS -->
 
-        <div class="management-card">
+        <div class="management-card management-blue">
 
-          <div class="management-top">
-
-            <div class="management-icon">
-              👥
-            </div>
-
-            <div class="management-arrow">
-              ↗
-            </div>
-
+          <div class="management-icon">
+            👥
           </div>
 
           <h3>
@@ -1774,8 +2385,8 @@
           </h3>
 
           <p>
-            View and manage EarnGig member accounts,
-            account status and administration access.
+            View and manage member accounts, account
+            status and administration access.
           </p>
 
           <button
@@ -1783,43 +2394,7 @@
             class="manage-btn"
             onclick="location.href='admin-users.html'"
           >
-            Manage Users
-          </button>
-
-        </div>
-
-
-        <!-- WITHDRAWALS -->
-
-        <div class="management-card">
-
-          <div class="management-top">
-
-            <div class="management-icon">
-              💸
-            </div>
-
-            <div class="management-arrow">
-              ↗
-            </div>
-
-          </div>
-
-          <h3>
-            Withdrawals
-          </h3>
-
-          <p>
-            Review pending withdrawal requests and
-            process member payouts.
-          </p>
-
-          <button
-            type="button"
-            class="manage-btn"
-            onclick="location.href='admin-withdrawals.html'"
-          >
-            Manage Withdrawals
+            Manage Users →
           </button>
 
         </div>
@@ -1827,18 +2402,10 @@
 
         <!-- MEMBERSHIPS -->
 
-        <div class="management-card">
+        <div class="management-card management-purple">
 
-          <div class="management-top">
-
-            <div class="management-icon">
-              💳
-            </div>
-
-            <div class="management-arrow">
-              ↗
-            </div>
-
+          <div class="management-icon">
+            💳
           </div>
 
           <h3>
@@ -1855,7 +2422,35 @@
             class="manage-btn"
             onclick="location.href='admin-memberships.html'"
           >
-            Manage Memberships
+            Manage Memberships →
+          </button>
+
+        </div>
+
+
+        <!-- WITHDRAWALS -->
+
+        <div class="management-card management-orange">
+
+          <div class="management-icon">
+            💸
+          </div>
+
+          <h3>
+            Withdrawals
+          </h3>
+
+          <p>
+            Review pending withdrawal requests and
+            process member payouts.
+          </p>
+
+          <button
+            type="button"
+            class="manage-btn"
+            onclick="location.href='admin-withdrawals.html'"
+          >
+            Manage Withdrawals →
           </button>
 
         </div>
@@ -1863,18 +2458,10 @@
 
         <!-- TRANSACTIONS -->
 
-        <div class="management-card">
+        <div class="management-card management-cyan">
 
-          <div class="management-top">
-
-            <div class="management-icon">
-              📊
-            </div>
-
-            <div class="management-arrow">
-              ↗
-            </div>
-
+          <div class="management-icon">
+            📊
           </div>
 
           <h3>
@@ -1891,7 +2478,7 @@
             class="manage-btn"
             onclick="location.href='admin-transactions.html'"
           >
-            View Transactions
+            View Transactions →
           </button>
 
         </div>
@@ -1907,13 +2494,25 @@
 
       <div class="section-head">
 
-        <h2>
-          Current Platform Rules
-        </h2>
+        <div class="section-title-wrap">
 
-        <span>
-          Active earning rules
-        </span>
+          <div class="section-icon">
+            📜
+          </div>
+
+          <div>
+
+            <h2>
+              Current Platform Rules
+            </h2>
+
+            <p>
+              Active earning and withdrawal rules
+            </p>
+
+          </div>
+
+        </div>
 
       </div>
 
@@ -1940,7 +2539,7 @@
           <div class="plan-rule">
 
             <h3>
-              Starter
+              🥉 Starter
             </h3>
 
             <div class="rule-row">
@@ -1975,7 +2574,7 @@
           <div class="plan-rule">
 
             <h3>
-              Standard
+              🥈 Standard
             </h3>
 
             <div class="rule-row">
@@ -2010,7 +2609,7 @@
           <div class="plan-rule">
 
             <h3>
-              Premium
+              🥇 Premium
             </h3>
 
             <div class="rule-row">
@@ -2045,7 +2644,7 @@
           <div class="plan-rule">
 
             <h3>
-              Elite
+              👑 Elite
             </h3>
 
             <div class="rule-row">
@@ -2129,29 +2728,43 @@
 ========================================================= */
 
 const sidebar =
-  document.getElementById("sidebar");
+  document.getElementById(
+    "sidebar"
+  );
 
 const sidebarOverlay =
-  document.getElementById("sidebarOverlay");
+  document.getElementById(
+    "sidebarOverlay"
+  );
 
 const mobileMenuButton =
-  document.getElementById("mobileMenuButton");
+  document.getElementById(
+    "mobileMenuButton"
+  );
 
 
 function openSidebar() {
 
-  sidebar.classList.add("open");
+  sidebar.classList.add(
+    "open"
+  );
 
-  sidebarOverlay.classList.add("show");
+  sidebarOverlay.classList.add(
+    "show"
+  );
 
 }
 
 
 function closeSidebar() {
 
-  sidebar.classList.remove("open");
+  sidebar.classList.remove(
+    "open"
+  );
 
-  sidebarOverlay.classList.remove("show");
+  sidebarOverlay.classList.remove(
+    "show"
+  );
 
 }
 
@@ -2168,20 +2781,18 @@ sidebarOverlay.addEventListener(
 );
 
 
-/* Close menu after selecting a link
-   on mobile. */
-
 document
   .querySelectorAll(".nav-link")
-  .forEach(function(link) {
+  .forEach(
+    function(link) {
 
-    link.addEventListener(
-      "click",
-      closeSidebar
-    );
+      link.addEventListener(
+        "click",
+        closeSidebar
+      );
 
-  });
-
+    }
+  );
 
 
 /* =========================================================
@@ -2212,7 +2823,6 @@ function loadDashboardDate() {
 }
 
 
-
 /* =========================================================
    ADMIN SECURITY CHECK
 ========================================================= */
@@ -2234,7 +2844,6 @@ async function checkAdmin() {
       .getUser();
 
 
-
   if (
     error ||
     !user
@@ -2246,7 +2855,6 @@ async function checkAdmin() {
     return null;
 
   }
-
 
 
   const {
@@ -2274,7 +2882,6 @@ async function checkAdmin() {
       .single();
 
 
-
   if (
 
     profileError ||
@@ -2289,20 +2896,16 @@ async function checkAdmin() {
       .auth
       .signOut();
 
-
     alert(
       "Access denied. Administrator privileges are required."
     );
 
-
     window.location.href =
       "index.html";
-
 
     return null;
 
   }
-
 
 
   if (
@@ -2318,20 +2921,16 @@ async function checkAdmin() {
       .auth
       .signOut();
 
-
     alert(
       "This administrator account is not active."
     );
 
-
     window.location.href =
       "index.html";
-
 
     return null;
 
   }
-
 
 
   document.getElementById(
@@ -2341,7 +2940,7 @@ async function checkAdmin() {
     `Welcome, ${
       profile.full_name ||
       "Administrator"
-    }`;
+    } 👋`;
 
 
   const profileMini =
@@ -2350,13 +2949,11 @@ async function checkAdmin() {
     );
 
 
-  const name =
-    profile.full_name ||
-    "A";
-
-
   profileMini.textContent =
-    name
+    (
+      profile.full_name ||
+      "A"
+    )
       .trim()
       .charAt(0)
       .toUpperCase();
@@ -2366,6 +2963,40 @@ async function checkAdmin() {
 
 }
 
+
+/* =========================================================
+   STAT CARD HELPER
+========================================================= */
+
+function createStatCard(
+  color,
+  icon,
+  label,
+  value,
+  money = false
+) {
+
+  return `
+
+    <div class="stat ${color}">
+
+      <div class="stat-icon">
+        ${icon}
+      </div>
+
+      <small>
+        ${label}
+      </small>
+
+      <strong class="${money ? "money" : ""}">
+        ${value}
+      </strong>
+
+    </div>
+
+  `;
+
+}
 
 
 /* =========================================================
@@ -2392,7 +3023,6 @@ async function loadStats() {
   `;
 
 
-
   try {
 
 
@@ -2409,13 +3039,11 @@ async function loadStats() {
         );
 
 
-
     if (error) {
 
       throw error;
 
     }
-
 
 
     if (!data) {
@@ -2427,255 +3055,131 @@ async function loadStats() {
     }
 
 
+    const money =
+      function(value) {
+
+        return "₦" +
+          Number(
+            value || 0
+          ).toLocaleString(
+            "en-NG"
+          );
+
+      };
+
+
+    const number =
+      function(value) {
+
+        return Number(
+          value || 0
+        ).toLocaleString();
+
+      };
+
 
     stats.innerHTML = `
 
 
-      <div class="stat">
-
-        <small>
-          Total Members
-        </small>
-
-        <strong>
-          ${
-            Number(
-              data.members || 0
-            ).toLocaleString()
-          }
-        </strong>
-
-      </div>
-
-
-
-      <div class="stat">
-
-        <small>
-          Wallets
-        </small>
-
-        <strong>
-          ${
-            Number(
-              data.wallets || 0
-            ).toLocaleString()
-          }
-        </strong>
-
-      </div>
-
-
-
-      <div class="stat">
-
-        <small>
-          Total Wallet Balance
-        </small>
-
-        <strong class="money">
-          ₦${
-            Number(
-              data.total_wallet_balance || 0
-            ).toLocaleString(
-              "en-NG"
-            )
-          }
-        </strong>
-
-      </div>
-
-
-
-      <div class="stat">
-
-        <small>
-          Total Earned
-        </small>
-
-        <strong class="money">
-          ₦${
-            Number(
-              data.total_earned || 0
-            ).toLocaleString(
-              "en-NG"
-            )
-          }
-        </strong>
-
-      </div>
-
-
-
-      <div class="stat">
-
-        <small>
-          Transactions
-        </small>
-
-        <strong>
-          ${
-            Number(
-              data.transactions || 0
-            ).toLocaleString()
-          }
-        </strong>
-
-      </div>
-
-
-
-      <div class="stat">
-
-        <small>
-          Pending Withdrawals
-        </small>
-
-        <strong>
-          ${
-            Number(
-              data.pending_withdrawals || 0
-            ).toLocaleString()
-          }
-        </strong>
-
-      </div>
-
-
-
-      <div class="stat">
-
-        <small>
-          Pending Withdrawal Amount
-        </small>
-
-        <strong class="money">
-          ₦${
-            Number(
-              data.pending_withdrawal_amount || 0
-            ).toLocaleString(
-              "en-NG"
-            )
-          }
-        </strong>
-
-      </div>
-
-
-
-      <div class="stat">
-
-        <small>
-          Total Novels
-        </small>
-
-        <strong>
-          ${
-            Number(
-              data.novels || 0
-            ).toLocaleString()
-          }
-        </strong>
-
-      </div>
-
-
-
-      <div class="stat">
-
-        <small>
-          Published Novels
-        </small>
-
-        <strong>
-          ${
-            Number(
-              data.published_novels || 0
-            ).toLocaleString()
-          }
-        </strong>
-
-      </div>
-
-
-
-      <div class="stat">
-
-        <small>
-          Pending Novel Submissions
-        </small>
-
-        <strong>
-          ${
-            Number(
-              data.pending_novel_submissions || 0
-            ).toLocaleString()
-          }
-        </strong>
-
-      </div>
-
-
-
-      <div class="stat">
-
-        <small>
-          Held Writer Earnings
-        </small>
-
-        <strong class="money">
-          ₦${
-            Number(
-              data.held_writer_earnings || 0
-            ).toLocaleString(
-              "en-NG"
-            )
-          }
-        </strong>
-
-      </div>
-
-
-
-      <div class="stat">
-
-        <small>
-          Pending Reader Rewards
-        </small>
-
-        <strong class="money">
-          ₦${
-            Number(
-              data.pending_reader_rewards || 0
-            ).toLocaleString(
-              "en-NG"
-            )
-          }
-        </strong>
-
-      </div>
-
-
-
-      <div
-        style="
-          grid-column: 1 / -1;
-          text-align: right;
-        "
-      >
-
-        <button
-          type="button"
-          class="refresh-btn"
-          onclick="loadStats()"
-        >
-
-          ↻ Refresh Statistics
-
-        </button>
-
-      </div>
-
+      ${createStatCard(
+        "stat-blue",
+        "👥",
+        "Total Members",
+        number(data.members)
+      )}
+
+
+      ${createStatCard(
+        "stat-green",
+        "💳",
+        "Wallets",
+        number(data.wallets)
+      )}
+
+
+      ${createStatCard(
+        "stat-orange",
+        "🪙",
+        "Total Wallet Balance",
+        money(data.total_wallet_balance),
+        true
+      )}
+
+
+      ${createStatCard(
+        "stat-purple",
+        "📈",
+        "Total Earned",
+        money(data.total_earned),
+        true
+      )}
+
+
+      ${createStatCard(
+        "stat-pink",
+        "📄",
+        "Transactions",
+        number(data.transactions)
+      )}
+
+
+      ${createStatCard(
+        "stat-red",
+        "⏱️",
+        "Pending Withdrawals",
+        number(data.pending_withdrawals)
+      )}
+
+
+      ${createStatCard(
+        "stat-orange",
+        "💰",
+        "Pending Withdrawal Amount",
+        money(data.pending_withdrawal_amount),
+        true
+      )}
+
+
+      ${createStatCard(
+        "stat-cyan",
+        "📚",
+        "Total Novels",
+        number(data.novels)
+      )}
+
+
+      ${createStatCard(
+        "stat-purple",
+        "📖",
+        "Published Novels",
+        number(data.published_novels)
+      )}
+
+
+      ${createStatCard(
+        "stat-blue",
+        "📝",
+        "Pending Novel Submissions",
+        number(data.pending_novel_submissions)
+      )}
+
+
+      ${createStatCard(
+        "stat-green",
+        "✍️",
+        "Held Writer Earnings",
+        money(data.held_writer_earnings),
+        true
+      )}
+
+
+      ${createStatCard(
+        "stat-pink",
+        "🎁",
+        "Pending Reader Rewards",
+        money(data.pending_reader_rewards),
+        true
+      )}
 
     `;
 
@@ -2713,9 +3217,7 @@ async function loadStats() {
           class="refresh-btn"
           onclick="loadStats()"
         >
-
           Try Again
-
         </button>
 
       </div>
@@ -2725,7 +3227,6 @@ async function loadStats() {
   }
 
 }
-
 
 
 /* =========================================================
@@ -2766,7 +3267,6 @@ function escapeHtml(value) {
 }
 
 
-
 /* =========================================================
    LOGOUT
 ========================================================= */
@@ -2784,16 +3284,17 @@ async function logoutAdmin() {
 
 
 document
-  .getElementById("sidebarLogout")
+  .getElementById(
+    "sidebarLogout"
+  )
   .addEventListener(
     "click",
     logoutAdmin
   );
 
 
-
 /* =========================================================
-   START ADMIN APPLICATION
+   START
 ========================================================= */
 
 (async function() {
@@ -2815,7 +3316,6 @@ document
   await loadStats();
 
 })();
-
 
 </script>
 

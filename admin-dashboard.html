@@ -726,6 +726,148 @@ button {
 
 
 /* =========================================================
+   GLOBAL ACTIVITY CONTROL
+========================================================= */
+
+.maintenance-card {
+  margin-top: 20px;
+
+  padding: 17px 19px;
+
+  border-radius: 15px;
+
+  background: white;
+
+  border: 1px solid #e2e5ef;
+
+  box-shadow:
+    0 5px 18px
+    rgba(29,36,89,.045);
+
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.maintenance-icon {
+  width: 48px;
+  height: 48px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 13px;
+
+  background: #e8f9ef;
+
+  font-size: 22px;
+}
+
+.maintenance-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.maintenance-info h3 {
+  margin: 0 0 4px;
+
+  font-size: 14px;
+}
+
+.maintenance-info p {
+  margin: 0;
+
+  color: #777b91;
+
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.maintenance-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  margin-top: 8px;
+
+  padding: 6px 9px;
+
+  border-radius: 20px;
+
+  background: #eafaf1;
+
+  color: #21864c;
+
+  font-size: 9px;
+  font-weight: 900;
+}
+
+.maintenance-status.paused {
+  background: #fff0f2;
+
+  color: #d22f4d;
+}
+
+.maintenance-status-dot {
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: #28c56a;
+}
+
+.maintenance-status.paused .maintenance-status-dot {
+  background: #ef315d;
+}
+
+.maintenance-action {
+  flex-shrink: 0;
+}
+
+.maintenance-button {
+  min-width: 175px;
+
+  padding: 12px 16px;
+
+  border: 0;
+
+  border-radius: 10px;
+
+  color: white;
+
+  font-size: 10px;
+  font-weight: 900;
+}
+
+.maintenance-button.pause {
+  background:
+    linear-gradient(
+      135deg,
+      #e93858,
+      #c92049
+    );
+}
+
+.maintenance-button.resume {
+  background:
+    linear-gradient(
+      135deg,
+      #16a765,
+      #0d8e54
+    );
+}
+
+.maintenance-button:disabled {
+  opacity: .6;
+  cursor: wait;
+}
+
+
+/* =========================================================
    SECTION HEAD
 ========================================================= */
 
@@ -1289,6 +1431,37 @@ button {
 
 
 /* =========================================================
+   MAINTENANCE MODAL
+========================================================= */
+
+.maintenance-warning {
+  padding: 12px 13px;
+
+  margin-bottom: 16px;
+
+  border-radius: 10px;
+
+  background: #fff1f3;
+
+  border: 1px solid #ffd5dc;
+
+  color: #a52b42;
+
+  font-size: 10px;
+
+  line-height: 1.5;
+}
+
+.maintenance-warning.resume {
+  background: #eafaf1;
+
+  border-color: #c9efd9;
+
+  color: #1d7d49;
+}
+
+
+/* =========================================================
    MOBILE
 ========================================================= */
 
@@ -1348,6 +1521,10 @@ button {
 
   .mobile-menu {
     display: block;
+  }
+
+  .maintenance-card {
+    align-items: flex-start;
   }
 
 }
@@ -1417,6 +1594,18 @@ button {
     top: 72px;
     right: 10px;
     width: calc(100vw - 20px);
+  }
+
+  .maintenance-card {
+    flex-direction: column;
+  }
+
+  .maintenance-action {
+    width: 100%;
+  }
+
+  .maintenance-button {
+    width: 100%;
   }
 
 }
@@ -1610,10 +1799,6 @@ button {
   <div class="topbar-right">
 
 
-    <!-- =====================================================
-         NOTIFICATION BUTTON
-    ====================================================== -->
-
     <button
       type="button"
       class="admin-notification-button"
@@ -1782,6 +1967,64 @@ button {
     id="dashboardDate"
   >
     Today
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     GLOBAL ACTIVITY CONTROL
+========================================================= -->
+
+<section
+  class="maintenance-card"
+  id="maintenanceCard"
+>
+
+  <div
+    class="maintenance-icon"
+    id="maintenanceIcon"
+  >
+    🟢
+  </div>
+
+  <div class="maintenance-info">
+
+    <h3>
+      Global Activity Control
+    </h3>
+
+    <p id="maintenanceDescription">
+      All member earning activities are currently available.
+      Use this control when the platform is undergoing maintenance,
+      updates or issue resolution.
+    </p>
+
+    <div
+      class="maintenance-status"
+      id="maintenanceStatus"
+    >
+
+      <span class="maintenance-status-dot"></span>
+
+      <span id="maintenanceStatusText">
+        ACTIVITIES RUNNING
+      </span>
+
+    </div>
+
+  </div>
+
+  <div class="maintenance-action">
+
+    <button
+      type="button"
+      class="maintenance-button pause"
+      id="maintenanceButton"
+    >
+      ⏸ PAUSE ALL ACTIVITIES
+    </button>
+
   </div>
 
 </section>
@@ -2414,6 +2657,107 @@ Referral bonuses and Create &amp; Earn writer earnings.
 </div>
 
 
+<!-- =========================================================
+     ACTIVITY MAINTENANCE MODAL
+========================================================= -->
+
+<div
+  class="modal-overlay"
+  id="maintenanceModalOverlay"
+>
+
+<div class="modal">
+
+  <div class="modal-head">
+
+    <div>
+
+      <h2 id="maintenanceModalTitle">
+        Pause All Activities
+      </h2>
+
+      <p id="maintenanceModalSubtitle">
+        Temporarily stop member earning activities.
+      </p>
+
+    </div>
+
+    <button
+      type="button"
+      class="close-modal"
+      id="closeMaintenanceModal"
+    >
+      ×
+    </button>
+
+  </div>
+
+
+  <div
+    class="maintenance-warning"
+    id="maintenanceWarning"
+  >
+    Pausing activities will prevent members from using
+    protected earning activities while you perform maintenance
+    or resolve an issue.
+  </div>
+
+
+  <div class="form-group">
+
+    <label>
+      MAINTENANCE TITLE
+    </label>
+
+    <input
+      type="text"
+      id="maintenanceTitleInput"
+      maxlength="160"
+      value="EarnGig is temporarily under maintenance"
+    >
+
+  </div>
+
+
+  <div class="form-group">
+
+    <label>
+      MEMBER MESSAGE
+    </label>
+
+    <textarea
+      id="maintenanceMessageInput"
+      maxlength="3000"
+    >Our earning activities are currently paused while we carry out system updates and improvements. Your account, wallet balance, membership and transaction history are safe. Please check back shortly.</textarea>
+
+  </div>
+
+
+  <div class="modal-actions">
+
+    <button
+      type="button"
+      class="cancel-btn"
+      id="cancelMaintenanceModal"
+    >
+      Cancel
+    </button>
+
+    <button
+      type="button"
+      class="send-btn"
+      id="saveMaintenance"
+    >
+      Pause Activities
+    </button>
+
+  </div>
+
+</div>
+
+</div>
+
+
 <script>
 
 /* =========================================================
@@ -2572,6 +2916,519 @@ async function checkAdmin() {
   return user;
 
 }
+
+
+/* =========================================================
+   GLOBAL ACTIVITY MAINTENANCE
+========================================================= */
+
+let activityMaintenancePaused = false;
+
+let activityMaintenanceData = {
+  activities_paused: false,
+  maintenance_title:
+    "EarnGig is temporarily under maintenance",
+  maintenance_message:
+    "Our earning activities are currently paused while we carry out system updates and improvements. Your account, wallet balance, membership and transaction history are safe. Please check back shortly."
+};
+
+
+async function loadActivityMaintenanceStatus() {
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .rpc(
+        "get_activity_maintenance_status"
+      );
+
+
+  if (error) {
+
+    console.error(
+      "Maintenance status error:",
+      error
+    );
+
+    document.getElementById(
+      "maintenanceDescription"
+    ).textContent =
+      "Unable to load activity control status. Please refresh the page.";
+
+
+    document.getElementById(
+      "maintenanceButton"
+    ).disabled = true;
+
+
+    return;
+
+  }
+
+
+  let row = null;
+
+
+  if (Array.isArray(data)) {
+    row = data[0] || null;
+  } else if (data) {
+    row = data;
+  }
+
+
+  if (!row) {
+
+    console.error(
+      "No maintenance status returned."
+    );
+
+    return;
+
+  }
+
+
+  activityMaintenanceData = row;
+
+  activityMaintenancePaused =
+    row.activities_paused === true;
+
+
+  renderActivityMaintenance();
+
+}
+
+
+function renderActivityMaintenance() {
+
+  const icon =
+    document.getElementById(
+      "maintenanceIcon"
+    );
+
+  const status =
+    document.getElementById(
+      "maintenanceStatus"
+    );
+
+  const statusText =
+    document.getElementById(
+      "maintenanceStatusText"
+    );
+
+  const description =
+    document.getElementById(
+      "maintenanceDescription"
+    );
+
+  const button =
+    document.getElementById(
+      "maintenanceButton"
+    );
+
+
+  if (activityMaintenancePaused) {
+
+    icon.textContent = "🔴";
+
+
+    status.classList.add(
+      "paused"
+    );
+
+
+    statusText.textContent =
+      "ACTIVITIES PAUSED";
+
+
+    description.textContent =
+      activityMaintenanceData
+        .maintenance_message ||
+      "Member earning activities are currently paused.";
+
+
+    button.classList.remove(
+      "pause"
+    );
+
+    button.classList.add(
+      "resume"
+    );
+
+    button.textContent =
+      "▶ RESUME ALL ACTIVITIES";
+
+  } else {
+
+    icon.textContent = "🟢";
+
+
+    status.classList.remove(
+      "paused"
+    );
+
+
+    statusText.textContent =
+      "ACTIVITIES RUNNING";
+
+
+    description.textContent =
+      "All member earning activities are currently available. Use this control when the platform is undergoing maintenance, updates or issue resolution.";
+
+
+    button.classList.remove(
+      "resume"
+    );
+
+    button.classList.add(
+      "pause"
+    );
+
+    button.textContent =
+      "⏸ PAUSE ALL ACTIVITIES";
+
+  }
+
+}
+
+
+function openMaintenanceModal() {
+
+  const overlay =
+    document.getElementById(
+      "maintenanceModalOverlay"
+    );
+
+  const titleInput =
+    document.getElementById(
+      "maintenanceTitleInput"
+    );
+
+  const messageInput =
+    document.getElementById(
+      "maintenanceMessageInput"
+    );
+
+  const modalTitle =
+    document.getElementById(
+      "maintenanceModalTitle"
+    );
+
+  const modalSubtitle =
+    document.getElementById(
+      "maintenanceModalSubtitle"
+    );
+
+  const warning =
+    document.getElementById(
+      "maintenanceWarning"
+    );
+
+  const saveButton =
+    document.getElementById(
+      "saveMaintenance"
+    );
+
+
+  titleInput.value =
+    activityMaintenanceData
+      .maintenance_title ||
+    "EarnGig is temporarily under maintenance";
+
+
+  messageInput.value =
+    activityMaintenanceData
+      .maintenance_message ||
+    "Our earning activities are currently paused while we carry out system updates and improvements. Your account, wallet balance, membership and transaction history are safe. Please check back shortly.";
+
+
+  if (activityMaintenancePaused) {
+
+    modalTitle.textContent =
+      "Resume All Activities";
+
+
+    modalSubtitle.textContent =
+      "Turn member earning activities back on.";
+
+
+    warning.classList.add(
+      "resume"
+    );
+
+
+    warning.textContent =
+      "Resuming activities will make protected earning activities available to members again.";
+
+
+    saveButton.textContent =
+      "Resume Activities";
+
+
+  } else {
+
+    modalTitle.textContent =
+      "Pause All Activities";
+
+
+    modalSubtitle.textContent =
+      "Temporarily stop member earning activities.";
+
+
+    warning.classList.remove(
+      "resume"
+    );
+
+
+    warning.textContent =
+      "Pausing activities will prevent members from using protected earning activities while you perform maintenance or resolve an issue.";
+
+
+    saveButton.textContent =
+      "Pause Activities";
+
+  }
+
+
+  overlay.classList.add(
+    "open"
+  );
+
+}
+
+
+function closeMaintenanceModal() {
+
+  document
+    .getElementById(
+      "maintenanceModalOverlay"
+    )
+    .classList.remove(
+      "open"
+    );
+
+}
+
+
+document
+  .getElementById(
+    "maintenanceButton"
+  )
+  .addEventListener(
+    "click",
+    openMaintenanceModal
+  );
+
+
+document
+  .getElementById(
+    "closeMaintenanceModal"
+  )
+  .addEventListener(
+    "click",
+    closeMaintenanceModal
+  );
+
+
+document
+  .getElementById(
+    "cancelMaintenanceModal"
+  )
+  .addEventListener(
+    "click",
+    closeMaintenanceModal
+  );
+
+
+document
+  .getElementById(
+    "maintenanceModalOverlay"
+  )
+  .addEventListener(
+    "click",
+    function(event) {
+
+      if (
+        event.target ===
+        this
+      ) {
+
+        closeMaintenanceModal();
+
+      }
+
+    }
+  );
+
+
+document
+  .getElementById(
+    "saveMaintenance"
+  )
+  .addEventListener(
+    "click",
+    async function() {
+
+      const button =
+        document.getElementById(
+          "saveMaintenance"
+        );
+
+
+      const title =
+        document
+          .getElementById(
+            "maintenanceTitleInput"
+          )
+          .value
+          .trim();
+
+
+      const message =
+        document
+          .getElementById(
+            "maintenanceMessageInput"
+          )
+          .value
+          .trim();
+
+
+      if (!title) {
+
+        alert(
+          "Enter a maintenance title."
+        );
+
+        return;
+
+      }
+
+
+      if (!message) {
+
+        alert(
+          "Enter the message members should see."
+        );
+
+        return;
+
+      }
+
+
+      const newPausedState =
+        !activityMaintenancePaused;
+
+
+      const confirmation =
+        newPausedState
+          ? "Pause all protected member activities now?"
+          : "Resume all protected member activities now?";
+
+
+      if (!confirm(confirmation)) {
+
+        return;
+
+      }
+
+
+      button.disabled =
+        true;
+
+      button.textContent =
+        newPausedState
+          ? "Pausing..."
+          : "Resuming...";
+
+
+      try {
+
+        const {
+          data,
+          error
+        } =
+          await supabaseClient
+            .rpc(
+              "admin_set_activity_maintenance",
+              {
+                p_paused:
+                  newPausedState,
+
+                p_title:
+                  title,
+
+                p_message:
+                  message
+              }
+            );
+
+
+        if (error) {
+
+          throw error;
+
+        }
+
+
+        activityMaintenanceData = {
+
+          activities_paused:
+            newPausedState,
+
+          maintenance_title:
+            title,
+
+          maintenance_message:
+            message
+
+        };
+
+
+        activityMaintenancePaused =
+          newPausedState;
+
+
+        renderActivityMaintenance();
+
+        closeMaintenanceModal();
+
+
+        alert(
+          newPausedState
+            ? "All protected activities have been paused."
+            : "All protected activities have been resumed."
+        );
+
+      }
+
+      catch (error) {
+
+        console.error(
+          "Maintenance update error:",
+          error
+        );
+
+
+        alert(
+          "Unable to change activity status:\n\n" +
+          (
+            error.message ||
+            "Unknown error"
+          )
+        );
+
+      }
+
+      finally {
+
+        button.disabled =
+          false;
+
+      }
+
+    }
+  );
 
 
 /* =========================================================
@@ -3431,6 +4288,8 @@ function escapeHtml(value) {
     return;
   }
 
+
+  await loadActivityMaintenanceStatus();
 
   await loadStats();
 

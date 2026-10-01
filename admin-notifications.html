@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Notifications | EarnGig Admin</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase.js"></script>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background:
+        linear-gradient(
+          135deg,
+          #f5f3ff 0%,
+          #eef4ff 50%,
+          #fdf4ff 100%
+        );
+      color: #17182f;
+      min-height: 100vh;
+    }
+
+    /* =========================================
+       HEADER
+    ========================================= */
+
+    header {
+      background:
+        linear-gradient(
+          135deg,
+          #11154a,
+          #24116b,
+          #351080
+        );
+      color: white;
+      box-shadow:
+        0 8px 30px rgba(45, 30, 120, .18);
+    }
+
+    .nav {
+      max-width: 1200px;
+      margin: auto;
+      padding: 16px 20px;
+
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .menu-button {
+      width: 46px;
+      height: 46px;
+
+      border: 0;
+      border-radius: 14px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #2563eb,
+          #7c3aed
+        );
+
+      color: white;
+      font-size: 23px;
+      cursor: pointer;
+    }
+
+    .logo {
+      color: white;
+      text-decoration: none;
+      font-size: 24px;
+      font-weight: 800;
+    }
+
+    .logo span {
+      color: #7c8cff;
+    }
+
+    .header-spacer {
+      flex: 1;
+    }
+
+    .admin-pill {
+      padding: 9px 14px;
+      border-radius: 999px;
+
+      background:
+        rgba(255,255,255,.1);
+
+      border:
+        1px solid rgba(255,255,255,.15);
+
+      font-size: 13px;
+    }
+
+    .back-button {
+      text-decoration: none;
+      color: white;
+
+      padding: 10px 15px;
+
+      border:
+        1px solid rgba(255,255,255,.2);
+
+      border-radius: 10px;
+
+      background:
+        rgba(255,255,255,.06);
+    }
+
+    /* =========================================
+       MAIN
+    ========================================= */
+
+    main {
+      max-width: 1000px;
+      margin: auto;
+      padding: 38px 20px 70px;
+    }
+
+    .eyebrow {
+      color: #7048e8;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 8px 0 8px;
+      font-size: 34px;
+    }
+
+    .intro {
+      margin: 0 0 30px;
+      color: #6d7085;
+      line-height: 1.6;
+    }
+
+    /* =========================================
+       COMPOSER
+    ========================================= */
+
+    .composer {
+      background: white;
+      border-radius: 24px;
+      padding: 28px;
+
+      border:
+        1px solid rgba(111, 78, 220, .12);
+
+      box-shadow:
+        0 18px 50px rgba(43, 34, 100, .08);
+    }
+
+    .composer-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .composer-icon {
+      width: 54px;
+      height: 54px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 16px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #2563eb,
+          #9333ea
+        );
+
+      color: white;
+      font-size: 25px;
+    }
+
+    .composer-header h2 {
+      margin: 0 0 5px;
+      font-size: 21px;
+    }
+
+    .composer-header p {
+      margin: 0;
+      color: #77798b;
+      font-size: 13px;
+    }
+
+    /* =========================================
+       FORM
+    ========================================= */
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+
+      padding: 14px 15px;
+
+      border:
+        1px solid #dddff0;
+
+      border-radius: 12px;
+
+      background: #fafaff;
+
+      color: #17182f;
+
+      font-family: inherit;
+      font-size: 14px;
+
+      outline: none;
+
+      transition:
+        border-color .2s ease,
+        box-shadow .2s ease;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      border-color: #7350e8;
+
+      box-shadow:
+        0 0 0 4px
+        rgba(115,80,232,.1);
+
+      background: white;
+    }
+
+    textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+
+    .form-help {
+      margin-top: 7px;
+      color: #85879a;
+      font-size: 12px;
+    }
+
+    /* =========================================
+       AUDIENCE
+    ========================================= */
+
+    .audience-box {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+
+      padding: 16px;
+
+      border-radius: 14px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #f2efff,
+          #eef5ff
+        );
+
+      border:
+        1px solid #ddd8ff;
+    }
+
+    .audience-icon {
+      width: 42px;
+      height: 42px;
+
+      border-radius: 12px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      background:
+        linear-gradient(
+          135deg,
+          #2563eb,
+          #7c3aed
+        );
+
+      color: white;
+      font-size: 20px;
+    }
+
+    .audience-text strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .audience-text span {
+      color: #71738a;
+      font-size: 12px;
+    }
+
+    /* =========================================
+       SEND BUTTON
+    ========================================= */
+
+    .send-button {
+      width: 100%;
+
+      margin-top: 8px;
+
+      padding: 16px;
+
+      border: 0;
+      border-radius: 14px;
+
+      background:
+        linear-gradient(
+          90deg,
+          #2563eb,
+          #6366f1,
+          #9333ea
+        );
+
+      color: white;
+
+      font-size: 15px;
+      font-weight: 800;
+
+      cursor: pointer;
+
+      box-shadow:
+        0 12px 25px
+        rgba(99,102,241,.22);
+    }
+
+    .send-button:hover {
+      opacity: .94;
+      transform: translateY(-1px);
+    }
+
+    .send-button:disabled {
+      opacity: .55;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* =========================================
+       RESULT
+    ========================================= */
+
+    .result {
+      display: none;
+
+      margin-top: 20px;
+
+      padding: 16px;
+
+      border-radius: 12px;
+
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .result.success {
+      display: block;
+
+      background: #ecfdf3;
+      border: 1px solid #a7e8c1;
+      color: #17633a;
+    }
+
+    .result.error {
+      display: block;
+
+      background: #fff4f4;
+      border: 1px solid #efb4b4;
+      color: #8a2020;
+    }
+
+    /* =========================================
+       WARNING
+    ========================================= */
+
+    .warning {
+      margin-top: 22px;
+
+      padding: 15px 17px;
+
+      border-radius: 13px;
+
+      background: #fff8e8;
+      border: 1px solid #f3d58b;
+
+      color: #72520b;
+
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    /* =========================================
+       MOBILE
+    ========================================= */
+
+    @media (max-width: 650px) {
+
+      .nav {
+        padding: 13px 15px;
+      }
+
+      .admin-pill {
+        display: none;
+      }
+
+      .back-button {
+        font-size: 13px;
+        padding: 9px 11px;
+      }
+
+      main {
+        padding: 28px 15px 50px;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+
+      .composer {
+        padding: 20px;
+        border-radius: 20px;
+      }
+
+      .composer-header {
+        align-items: flex-start;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+  <div class="nav">
+
+    <button
+      type="button"
+      class="menu-button"
+      onclick="goBack()"
+      aria-label="Back"
+    >
+      ☰
+    </button>
+
+    <a
+      href="admin-dashboard.html"
+      class="logo"
+    >
+      Earn<span>Gig</span>
+    </a>
+
+    <div class="header-spacer"></div>
+
+    <div class="admin-pill">
+      🟢 Admin
+    </div>
+
+    <a
+      href="admin-dashboard.html"
+      class="back-button"
+    >
+      Dashboard
+    </a>
+
+  </div>
+
+</header>
+
+
+
+<main>
+
+  <span class="eyebrow">
+    ADMIN NOTIFICATIONS
+  </span>
+
+  <h1>
+    Send a Notification
+  </h1>
+
+  <p class="intro">
+    Create an announcement and send it directly
+    to all EarnGig members. Each member will receive
+    the message in their notification center.
+  </p>
+
+
+
+  <section class="composer">
+
+
+    <div class="composer-header">
+
+      <div class="composer-icon">
+        🔔
+      </div>
+
+      <div>
+
+        <h2>
+          New Member Announcement
+        </h2>
+
+        <p>
+          Broadcast an important message to your members.
+        </p>
+
+      </div>
+
+    </div>
+
+
+
+    <form id="notification-form">
+
+
+      <!-- TITLE -->
+
+      <div class="form-group">
+
+        <label for="notification-title">
+          Notification Title
+        </label>
+
+        <input
+          id="notification-title"
+          type="text"
+          maxlength="120"
+          placeholder="Example: New EarnGig Update"
+          required
+        >
+
+        <div class="form-help">
+          Keep the title short and easy to understand.
+        </div>
+
+      </div>
+
+
+
+      <!-- MESSAGE -->
+
+      <div class="form-group">
+
+        <label for="notification-message">
+          Message
+        </label>
+
+        <textarea
+          id="notification-message"
+          maxlength="2000"
+          placeholder="Write your announcement here..."
+          required
+        ></textarea>
+
+        <div class="form-help">
+          Maximum 2,000 characters.
+        </div>
+
+      </div>
+
+
+
+      <!-- TYPE -->
+
+      <div class="form-group">
+
+        <label for="notification-type">
+          Notification Type
+        </label>
+
+        <select id="notification-type">
+
+          <option value="announcement">
+            📢 Announcement
+          </option>
+
+          <option value="important">
+            ⚠️ Important
+          </option>
+
+          <option value="update">
+            ✨ Platform Update
+          </option>
+
+          <option value="competition">
+            🏆 Competition
+          </option>
+
+          <option value="general">
+            🔔 General
+          </option>
+
+        </select>
+
+      </div>
+
+
+
+      <!-- ACTION URL -->
+
+      <div class="form-group">
+
+        <label for="notification-url">
+          Action Link
+          <span
+            style="
+              font-weight:400;
+              color:#888;
+            "
+          >
+            (optional)
+          </span>
+        </label>
+
+        <input
+          id="notification-url"
+          type="text"
+          maxlength="500"
+          placeholder="Example: competitions.html"
+        >
+
+        <div class="form-help">
+          If provided, members can open the related
+          page directly from the notification.
+        </div>
+
+      </div>
+
+
+
+      <!-- AUDIENCE -->
+
+      <div class="form-group">
+
+        <label>
+          Audience
+        </label>
+
+        <div class="audience-box">
+
+          <div class="audience-icon">
+            👥
+          </div>
+
+          <div class="audience-text">
+
+            <strong>
+              All Members
+            </strong>
+
+            <span>
+              This notification will be sent to every
+              EarnGig member profile.
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- SEND -->
+
+      <button
+        type="submit"
+        class="send-button"
+        id="send-button"
+      >
+
+        🔔 Send Notification to All Members
+
+      </button>
+
+
+    </form>
+
+
+
+    <div
+      id="result"
+      class="result"
+    ></div>
+
+
+
+    <div class="warning">
+
+      <strong>Before sending:</strong>
+
+      This will immediately create a notification
+      for every member. Make sure the title and
+      message are correct before pressing Send.
+
+    </div>
+
+
+  </section>
+
+</main>
+
+
+
+<script>
+
+
+/* =====================================================
+   BACK BUTTON
+===================================================== */
+
+function goBack() {
+
+  window.location.href =
+    "admin-dashboard.html";
+
+}
+
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHtml(value) {
+
+  return String(value ?? "")
+
+    .replaceAll("&", "&amp;")
+
+    .replaceAll("<", "&lt;")
+
+    .replaceAll(">", "&gt;")
+
+    .replaceAll('"', "&quot;")
+
+    .replaceAll("'", "&#039;");
+
+}
+
+
+
+/* =====================================================
+   ADMIN SECURITY
+===================================================== */
+
+async function checkAdmin() {
+
+  const {
+    data: {
+      user
+    },
+    error: userError
+  } =
+    await supabaseClient
+      .auth
+      .getUser();
+
+
+  if (
+    userError ||
+    !user
+  ) {
+
+    window.location.href =
+      "login.html";
+
+    return false;
+
+  }
+
+
+  const {
+    data: profile,
+    error: profileError
+  } =
+    await supabaseClient
+      .from("profiles")
+      .select(`
+        is_admin,
+        account_status
+      `)
+      .eq(
+        "id",
+        user.id
+      )
+      .single();
+
+
+  if (
+    profileError ||
+    !profile ||
+    profile.is_admin !== true
+  ) {
+
+    await supabaseClient
+      .auth
+      .signOut();
+
+    alert(
+      "Administrator privileges are required."
+    );
+
+    window.location.href =
+      "login.html";
+
+    return false;
+
+  }
+
+
+  if (
+    profile.account_status &&
+    profile.account_status !== "active"
+  ) {
+
+    await supabaseClient
+      .auth
+      .signOut();
+
+    alert(
+      "This administrator account is not active."
+    );
+
+    window.location.href =
+      "login.html";
+
+    return false;
+
+  }
+
+
+  return true;
+
+}
+
+
+
+/* =====================================================
+   SEND NOTIFICATION
+===================================================== */
+
+document
+  .getElementById("notification-form")
+  .addEventListener(
+    "submit",
+    async function(event) {
+
+      event.preventDefault();
+
+
+      const title =
+        document
+          .getElementById(
+            "notification-title"
+          )
+          .value
+          .trim();
+
+
+      const message =
+        document
+          .getElementById(
+            "notification-message"
+          )
+          .value
+          .trim();
+
+
+      const type =
+        document
+          .getElementById(
+            "notification-type"
+          )
+          .value;
+
+
+      const actionUrl =
+        document
+          .getElementById(
+            "notification-url"
+          )
+          .value
+          .trim();
+
+
+      const button =
+        document
+          .getElementById(
+            "send-button"
+          );
+
+
+      const result =
+        document
+          .getElementById(
+            "result"
+          );
+
+
+      if (!title) {
+
+        alert(
+          "Please enter a notification title."
+        );
+
+        return;
+
+      }
+
+
+      if (!message) {
+
+        alert(
+          "Please enter a notification message."
+        );
+
+        return;
+
+      }
+
+
+
+      const confirmed =
+        window.confirm(
+          "Send this notification to ALL EarnGig members?"
+        );
+
+
+      if (!confirmed) {
+
+        return;
+
+      }
+
+
+      button.disabled = true;
+
+      button.textContent =
+        "Sending notification...";
+
+
+      result.className =
+        "result";
+
+      result.style.display =
+        "none";
+
+
+      try {
+
+
+        const {
+          data,
+          error
+        } =
+          await supabaseClient
+            .rpc(
+              "send_broadcast_notification",
+              {
+                p_title:
+                  title,
+
+                p_message:
+                  message,
+
+                p_type:
+                  type,
+
+                p_action_url:
+                  actionUrl || null
+              }
+            );
+
+
+        if (error) {
+
+          throw error;
+
+        }
+
+
+        const count =
+          Number(
+            data || 0
+          );
+
+
+        result.className =
+          "result success";
+
+
+        result.innerHTML = `
+
+          <strong>
+            ✓ Notification sent successfully.
+          </strong>
+
+          <br>
+
+          ${
+            count.toLocaleString()
+          }
+          member${
+            count === 1
+              ? ""
+              : "s"
+          }
+          received the notification.
+
+        `;
+
+
+        document
+          .getElementById(
+            "notification-form"
+          )
+          .reset();
+
+
+      }
+
+      catch (error) {
+
+        console.error(
+          "Notification error:",
+          error
+        );
+
+
+        result.className =
+          "result error";
+
+
+        result.innerHTML = `
+
+          <strong>
+            Unable to send notification.
+          </strong>
+
+          <br><br>
+
+          ${
+            escapeHtml(
+              error.message ||
+              "Unknown error"
+            )
+          }
+
+        `;
+
+      }
+
+      finally {
+
+        button.disabled =
+          false;
+
+        button.textContent =
+          "🔔 Send Notification to All Members";
+
+      }
+
+    }
+  );
+
+
+
+/* =====================================================
+   START
+===================================================== */
+
+(async function() {
+
+  await checkAdmin();
+
+})();
+
+</script>
+
+
+</body>
+
+</html>
